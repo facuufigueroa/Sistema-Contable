@@ -1,5 +1,4 @@
 package sistemacontable.sistemacontable;
-
 import DataBase.ConexionBD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
