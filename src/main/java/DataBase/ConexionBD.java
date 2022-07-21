@@ -2,7 +2,7 @@ package DataBase;
 import java.sql.*;
 public class ConexionBD {
     final String user = "postgres";
-    final String password = "unnoba";
+    final String password = "1234";
 
     public void conexion(){
         try{
