@@ -5,10 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-
 public class HelloApplication extends Application {
 
     @Override
@@ -20,9 +18,7 @@ public class HelloApplication extends Application {
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();
-        }catch (Exception e){
-                System.out.println(e);
-        }
+        }catch (IOException e){ System.out.println(e.getMessage()); }
     }
 
     public static void main(String[] args) {
