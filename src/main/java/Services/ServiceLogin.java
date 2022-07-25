@@ -65,6 +65,4 @@ public class ServiceLogin {
         return existeU;
     }
 
-
-
 }

@@ -1,14 +1,10 @@
 package Controller;
 
 import Services.ServiceLogin;
-import Model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import java.util.Locale;
-
 
 public class LoginController {
 
@@ -30,14 +26,6 @@ public class LoginController {
     //Metodos
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
     private String obtenerContrasena(){ return getCampoContrasena().getText(); }
-
-    public User obtenerUsuario(){
-        User user = null;
-        String email = obtenerEmail().toLowerCase(Locale.ROOT);
-        user.setEmail(email);
-        user.setPassword(obtenerContrasena());
-        return user;
-    }
 
     public boolean existeUserEmail(String email){
         if(serviceLogin.existeUser(email)){

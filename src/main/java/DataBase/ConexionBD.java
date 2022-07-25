@@ -1,8 +1,8 @@
 package DataBase;
 import java.sql.*;
 public class ConexionBD {
-    private static String user = "postgres";
-    private static String password = "1234";
+    final static String user = "postgres";
+    final static String password = "1234";
     private static Connection connection;
 
     public ConexionBD(){}
@@ -11,8 +11,6 @@ public class ConexionBD {
         try{
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/SistemaContable",user,password);
-            if(connection != null){ System.out.println("The connection is succesfull"); }
-            else{ System.out.println("The connection is not succesfull"); }
         }
         catch (Exception e){ System.out.println(e.getMessage()); }
         return connection;
