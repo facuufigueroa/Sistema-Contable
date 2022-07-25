@@ -13,8 +13,9 @@ public class HelloApplication extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/login-user.fxml"));
             Parent root = fxmlLoader.load();
+            getClass().getClassLoader().getResource("/Controller/LoginController");
             Scene scene = new Scene(root);
-            stage.setTitle("Hello!");
+            stage.setTitle("Login");
             stage.setScene(scene);
             stage.show();
         }catch (Exception e){

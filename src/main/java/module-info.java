@@ -6,4 +6,6 @@ module sistemacontable.sistemacontable {
 
     opens sistemacontable.sistemacontable to javafx.fxml;
     exports sistemacontable.sistemacontable;
+    exports Controller;
+    opens Controller to javafx.fxml;
 }
