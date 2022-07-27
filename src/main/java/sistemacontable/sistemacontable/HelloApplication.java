@@ -1,10 +1,11 @@
 package sistemacontable.sistemacontable;
-import DataBase.ConexionBD;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import java.io.IOException;
 public class HelloApplication extends Application {
 
@@ -15,18 +16,13 @@ public class HelloApplication extends Application {
             Parent root = fxmlLoader.load();
             getClass().getClassLoader().getResource("/Controller/LoginController");
             Scene scene = new Scene(root);
-            stage.setTitle("Login");
+            stage.setTitle("FBF System");
             stage.setScene(scene);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.show();
-        }catch (Exception e){
-                System.out.println(e);
-        }
+        }catch (Exception e){ System.out.println(e.getMessage()); }
     }
 
-    public static void main(String[] args) {
-        /* Database connection test */
-        ConexionBD conexionBD = new ConexionBD();
-        conexionBD.conexion();
-        launch();
-    }
+    public static void main(String[] args) { launch(); }
 }

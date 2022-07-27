@@ -65,4 +65,22 @@ public class ServiceLogin {
         return existeU;
     }
 
+    /**
+     * Verifica que la contraseña ingresada sea igual a la correspondiente del email en la base de datos.
+     */
+    public boolean coincidenContrasenas(String email, String contrasena){ // 1|email
+        try {
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(UserQuery.obtenerContrasena()));
+
+            getPreparedStatement().setString(1, email);
+            setResultSet(getPreparedStatement().executeQuery());
+            if (getResultSet().next()){
+                return compararContrasenas(getResultSet().getString(1), contrasena);
+            }
+        }catch (SQLException exception){ System.out.println(exception.getMessage()); }
+        return false;
+    }
+    //Metodo auxiliar
+    private boolean compararContrasenas(String password1, String password2){ return password1.equals(password2); }
 }

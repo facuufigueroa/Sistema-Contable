@@ -9,4 +9,5 @@ public class UserQuery {
                 "FROM usuario as u\n" +
                 "WHERE u.email = '"+ email + "'";
     }
+    public static String obtenerContrasena(){ return "SELECT password FROM usuario WHERE email = ?"; }
 }
