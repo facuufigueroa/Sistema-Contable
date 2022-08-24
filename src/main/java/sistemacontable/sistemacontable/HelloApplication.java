@@ -1,4 +1,5 @@
 package sistemacontable.sistemacontable;
+import Controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 public class HelloApplication extends Application {
 
+    private LoginController loginController = new LoginController();
     @Override
     public void start(Stage stage) throws IOException {
         try {
@@ -21,6 +23,7 @@ public class HelloApplication extends Application {
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.show();
+
         }catch (Exception e){ System.out.println(e.getMessage()); }
     }
 

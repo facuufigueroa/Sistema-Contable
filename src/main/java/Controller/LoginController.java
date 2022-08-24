@@ -3,24 +3,78 @@ package Controller;
 import Model.User;
 import Services.ServiceLogin;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
+import org.w3c.dom.events.MouseEvent;
 
-public class LoginController implements Alerta{
+
+public class LoginController  implements Alerta{
 
     //Atributos
     @FXML private Button botonIniciarSesion;
     @FXML private PasswordField campoContrasena;
     @FXML private TextField campoUsuario;
+
+    @FXML private Button btnMinimize;
+
+    @FXML private Button btnClose;
+
+    @FXML private AnchorPane frameLogin;
+
     private User user;
 
+    private Stage stage;
+
+
     private ServiceLogin serviceLogin = new ServiceLogin();
+
+
+
     //Getters y Setters
+
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public AnchorPane getFrameLogin() {
+        return frameLogin;
+    }
+
+    public void setFrameLogin(AnchorPane frameLogin) {
+        this.frameLogin = frameLogin;
+    }
+
+    public Button getBtnMinimize() {
+        return btnMinimize;
+    }
+
+    public void setBtnMinimize(Button btnMinimize) {
+        this.btnMinimize = btnMinimize;
+    }
+
+    public Button getBtnClose() {
+        return btnClose;
+    }
+
+    public void setBtnClose(Button btnClose) {
+        this.btnClose = btnClose;
+    }
+
     public Button getBotonIniciarSesion() { return botonIniciarSesion; }
     public void setBotonIniciarSesion(Button botonIniciarSesion) { this.botonIniciarSesion = botonIniciarSesion; }
     public PasswordField getCampoContrasena() { return campoContrasena; }
@@ -95,4 +149,33 @@ public class LoginController implements Alerta{
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+
+    /* Metodos para btns de login */
+    @FXML
+    public void btnClose(){
+        System.exit(0);
+    }
+    @FXML
+    public void min(MouseDragEvent mouseEvent){
+
+       Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+       
+       stage.setIconified(true);
+    }
+
+    /* Metodo para ser llamada en la accion del boton
+    public void btnMinimizeEjecute(Stage stage){
+        try {
+            FXMLLoader f = FXMLLoader.load(getClass().getResource("login-user.fxml"));
+            f.setController(this);
+            Parent root = f.load();
+            Scene sc = new Scene(root);
+            stage.setScene(sc);
+            stage.setIconified(true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }*/
+
 }
