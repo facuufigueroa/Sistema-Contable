@@ -62,7 +62,7 @@
       </Pane>
       <Pane prefHeight="41.0" prefWidth="767.0" style="-fx-background-color: #44878f;">
          <children>
-            <Button fx:id="btnMinimize" layoutX="672.0" layoutY="1.0" mnemonicParsing="false" onMousePressed="#min" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnMinimize" layoutX="672.0" layoutY="1.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;" onMouseClicked="#min">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
