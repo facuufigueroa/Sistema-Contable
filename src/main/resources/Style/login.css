@@ -1,0 +1,8 @@
+
+FontAwesomeIcon:hover{
+    -fx-cursor: hand;
+}
+
+.content-login{
+    -fx-font-family: 'Open Sans';
+}
