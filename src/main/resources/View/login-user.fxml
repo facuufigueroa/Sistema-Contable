@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="frameLogin" prefHeight="400.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
-      <Pane prefHeight="400.0" prefWidth="413.0" style="-fx-background-color: #0D3E59;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="400.0" prefWidth="413.0" style="-fx-background-color: #0D3E59;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="354.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="197.0" fitWidth="200.0" layoutX="100.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -21,7 +21,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane layoutX="413.0" prefHeight="400.0" prefWidth="354.0" style="-fx-background-color: #14648f;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="413.0" prefHeight="400.0" prefWidth="354.0" style="-fx-background-color: #14648f;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <PasswordField fx:id="campoContrasena" layoutX="98.0" layoutY="243.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
                <font>
@@ -60,9 +60,9 @@
             </ImageView>
          </children>
       </Pane>
-      <Pane prefHeight="41.0" prefWidth="767.0" style="-fx-background-color: #44878f;">
+      <Pane prefHeight="41.0" prefWidth="767.0" style="-fx-background-color: #44878f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="btnMinimize" layoutX="672.0" layoutY="1.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;" onMouseClicked="#min">
+            <Button fx:id="btnMinimize" layoutX="656.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#min" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,7 +70,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="btnClose" layoutX="718.0" layoutY="1.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnClose" layoutX="702.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
