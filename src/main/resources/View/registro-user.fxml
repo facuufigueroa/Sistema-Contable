@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #44878f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="706.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/cancel.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="667.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/minimize.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="14.0" prefHeight="17.0" prefWidth="160.0" text="Registro" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutY="40.0" prefHeight="360.0" prefWidth="312.0" style="-fx-background-color: #0D3E59;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="438.0">
+         <children>
+            <ImageView fitHeight="197.0" fitWidth="200.0" layoutX="61.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Icono.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="310.0" layoutY="40.0" prefHeight="360.0" prefWidth="440.0" style="-fx-background-color: #14648f;" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <PasswordField fx:id="campoContrasena" layoutX="127.0" layoutY="136.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <TextField fx:id="campoUsuario" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </TextField>
+            <Button fx:id="botonIniciarSesion" layoutX="127.0" layoutY="296.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </Button>
+            <Label layoutX="112.0" layoutY="14.0" text="Crear Cuenta" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="38.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="campoContrasena1" layoutX="127.0" layoutY="186.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="campoContrasena2" layoutX="127.0" layoutY="236.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/user2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/email.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/lock.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
