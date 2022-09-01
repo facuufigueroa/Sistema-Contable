@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="frameLogin" prefHeight="400.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<AnchorPane fx:id="frameLogin" prefHeight="400.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
       <Pane prefHeight="400.0" prefWidth="394.0" style="-fx-background-color: #0D3E59;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="354.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,27 +24,17 @@
       </Pane>
       <Pane layoutX="413.0" prefHeight="400.0" prefWidth="354.0" style="-fx-background-color: #14648f;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <PasswordField fx:id="campoContrasena" layoutX="98.0" layoutY="243.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </PasswordField>
-            <TextField fx:id="campoUsuario" layoutX="98.0" layoutY="130.0" prefHeight="35.0" prefWidth="228.0" promptText="Usuario">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </TextField>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="39.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="52.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/user.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="39.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="52.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/lock.png" />
                </image>
             </ImageView>
-            <Button fx:id="botonIniciarSesion" layoutX="96.0" layoutY="341.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="botonIniciarSesion" layoutX="98.0" layoutY="281.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
@@ -53,16 +44,28 @@
                   <Font name="Lucida Sans Unicode" size="38.0" />
                </font>
             </Label>
-            <ImageView fitHeight="27.0" fitWidth="54.0" layoutX="115.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="27.0" fitWidth="54.0" layoutX="116.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/login.png" />
                </image>
             </ImageView>
+            <Text fill="WHITE" layoutX="122.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿No tienes cuenta? " />
+            <Text fx:id="botonRegistrarse" accessibleRole="BUTTON" fill="#06acff" layoutX="228.0" layoutY="353.0" onMouseClicked="#accionRegistrarUsuario" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrarse" />
+            <PasswordField fx:id="campoContrasena" layoutX="98.0" layoutY="205.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <TextField fx:id="campoUsuario" layoutX="98.0" layoutY="130.0" prefHeight="35.0" prefWidth="228.0" promptText="Usuario">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
       <Pane prefHeight="41.0" prefWidth="767.0" style="-fx-background-color: #44878f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="btnMinimize" layoutX="656.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#min" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnMinimize" layoutX="656.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,7 +73,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="btnClose" layoutX="702.0" layoutY="2.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnClose" layoutX="702.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>

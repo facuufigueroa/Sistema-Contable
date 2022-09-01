@@ -10,17 +10,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterController">
    <children>
       <Pane prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #44878f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="706.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="714.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/cancel.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="667.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="678.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/minimize.png" />
                </image>
@@ -30,6 +29,8 @@
                   <Font name="Lucida Sans Unicode" size="25.0" />
                </font>
             </Label>
+            <Button fx:id="buttonMin" layoutX="678.0" layoutY="5.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
+            <Button fx:id="buttonClose" layoutX="714.0" layoutY="5.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;" />
          </children>
       </Pane>
       <Pane layoutY="40.0" prefHeight="360.0" prefWidth="312.0" style="-fx-background-color: #0D3E59;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="438.0">
@@ -43,36 +44,11 @@
       </Pane>
       <Pane layoutX="310.0" layoutY="40.0" prefHeight="360.0" prefWidth="440.0" style="-fx-background-color: #14648f;" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <PasswordField fx:id="campoContrasena" layoutX="127.0" layoutY="136.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </PasswordField>
-            <TextField fx:id="campoUsuario" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </TextField>
-            <Button fx:id="botonIniciarSesion" layoutX="127.0" layoutY="296.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </Button>
             <Label layoutX="112.0" layoutY="14.0" text="Crear Cuenta" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="38.0" />
                </font>
             </Label>
-            <PasswordField fx:id="campoContrasena1" layoutX="127.0" layoutY="186.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </PasswordField>
-            <PasswordField fx:id="campoContrasena2" layoutX="127.0" layoutY="236.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </PasswordField>
             <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/user.png" />
@@ -93,6 +69,31 @@
                   <Image url="@../Images/lock.png" />
                </image>
             </ImageView>
+            <TextField fx:id="campoUsuario" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="campoApellido" layoutX="127.0" layoutY="136.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="campoEmail" layoutX="127.0" layoutY="186.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="campoContrasena" layoutX="127.0" layoutY="236.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="296.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
