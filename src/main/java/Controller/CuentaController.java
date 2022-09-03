@@ -1,9 +1,12 @@
 package Controller;
 
+import Model.Cuenta;
 import Model.ViewFuntionality;
 import Services.ServicePDC;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.ArrayList;
 
 public class CuentaController extends ViewFuntionality {
 
@@ -22,7 +25,15 @@ public class CuentaController extends ViewFuntionality {
     private ServicePDC servicePDC = new ServicePDC();
 
     public void listarCuentas(){
-        System.out.println("codigo:" + servicePDC.listCuentas().size());
+        ArrayList <Cuenta> arrayList = servicePDC.listCuentas();
+        System.out.println(servicePDC.listCuentas());
+        for (Cuenta cuenta : arrayList) {
+
+            System.out.println("codigo:" + cuenta.getCodigo());
+            System.out.println("codigo:" + cuenta.getNombre());
+            System.out.println("----------------------------");
+        }
+
     }
 
 

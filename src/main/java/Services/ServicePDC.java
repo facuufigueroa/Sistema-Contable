@@ -18,22 +18,19 @@ public class ServicePDC {
     CuentaQuery cuentaQuery = new CuentaQuery();
 
     public ArrayList<Cuenta> listCuentas() {
-        Cuenta cuenta = new Cuenta();
         ArrayList<Cuenta> cuentas = new ArrayList<>();
         try{
             setConnection(ConexionBD.conexion());
             setPreparedStatement(getConnection().prepareStatement(cuentaQuery.listarCuentas()));
             setResultSet(preparedStatement.executeQuery());
-
             while(resultSet.next()){
-                
+                Cuenta cuenta = new Cuenta();
                 cuenta.codigo= getResultSet().getString(2);
                 cuenta.nombre=getResultSet().getString(3);
                 cuenta.recibe_salgo=getResultSet().getString(4);
                 cuenta.tipo=getResultSet().getString(5);
                 cuentas.add(cuenta);
             }
-
 
         }catch (Exception exception){
             System.out.println(exception);
