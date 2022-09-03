@@ -2,13 +2,13 @@ package Controller;
 import Model.User;
 import Model.ViewFuntionality;
 import Services.ServiceLogin;
-import javafx.event.ActionEvent;
+import com.administrativos.sistema.utilidades.Alerta;
+import com.administrativos.sistema.utilidades.Utilidades;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,10 +18,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 
-public class LoginController extends ViewFuntionality implements Alerta{
+public class LoginController extends ViewFuntionality{
     //Atributos
     @FXML private Button botonIniciarSesion;
     @FXML private PasswordField campoContrasena;
@@ -88,7 +87,7 @@ public class LoginController extends ViewFuntionality implements Alerta{
 
     @FXML
     public void accionBotonIniciarSesion(){
-        if (estanCamposVacios()){ alertaCamposIncompletos(); }
+        if (estanCamposVacios()){ Alerta.alertaCamposIncompletos(); }
         else { alertaEmailContrasena(); }
     }
     @FXML
@@ -114,19 +113,22 @@ public class LoginController extends ViewFuntionality implements Alerta{
      *  De no ser asi, tambien genera un mensaje de error.
      */
     private void alertaEmailContrasena(){
-        if (!alertaEmail()){ alertaEmailInexistente(); }
+        if (!alertaEmail()){ Alerta.alertaEmailInexistente(); }
         else{
-            if (!alertaContrasena()){ alertaContrasenaInvalida(); }
+            if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida(); }
             else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
         }
     }
 
-    private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
+    private boolean estanCamposVacios(){
+        return Utilidades.campoVacio(getCampoUsuario()) || Utilidades.campoVacio(getCampoContrasena());
+    }
 
     private boolean alertaContrasena(){ return compararContrasenas(); }
 
     private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
 
+    /*
     @Override
     public boolean alertaCamposIncompletos() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -155,6 +157,8 @@ public class LoginController extends ViewFuntionality implements Alerta{
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+
+     */
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
     private RegisterController loadRegister(RegisterController controller){ return controller; }

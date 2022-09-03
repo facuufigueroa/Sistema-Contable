@@ -27,6 +27,12 @@ public class RegisterController extends ViewFuntionality{
         showStage();
     }
 
+    @Override
+    public void actionCloseStage(ActionEvent event) {
+        super.actionCloseStage(event);
+        showStage();
+    }
+
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
 }
