@@ -2,7 +2,10 @@ package Controller;
 import Model.User;
 import Model.ViewFuntionality;
 import Services.ServiceLogin;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,8 +21,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class LoginController extends ViewFuntionality implements Alerta{
     //Atributos
@@ -35,6 +40,7 @@ public class LoginController extends ViewFuntionality implements Alerta{
     private Stage stage;
     private ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
+    private MenuPrincipalController menuPrincipalController;
 
     //Getters y Setters
     public Stage getStage() {
@@ -73,6 +79,13 @@ public class LoginController extends ViewFuntionality implements Alerta{
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
+    public void setMenuPrincipalController(MenuPrincipalController menuPrincipalController) {
+        this.menuPrincipalController = menuPrincipalController;
+    }
+
+    public MenuPrincipalController getMenuPrincipalController() {
+        return menuPrincipalController;
+    }
 
     //Metodos
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
@@ -87,10 +100,22 @@ public class LoginController extends ViewFuntionality implements Alerta{
     public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
 
     @FXML
-    public void accionBotonIniciarSesion(){
-        if (estanCamposVacios()){ alertaCamposIncompletos(); }
-        else { alertaEmailContrasena(); }
+    public void btnIniciarSesion(ActionEvent event) throws IOException {
+        if (estanCamposVacios()) {
+            alertaCamposIncompletos();
+        }
+        else {
+            existeUseroLoguearse(event);
+        }
+
     }
+
+    private void existeUseroLoguearse(ActionEvent event) throws IOException {
+        if(alertaEmailContrasena()){
+            loginAccion(event);
+        }
+    }
+
     @FXML
     public void accionRegistrarUsuario(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registro-user.fxml"));
@@ -113,13 +138,22 @@ public class LoginController extends ViewFuntionality implements Alerta{
      *  Luego, verifica la contraseña ingresada con la de la base de datos.
      *  De no ser asi, tambien genera un mensaje de error.
      */
-    private void alertaEmailContrasena(){
-        if (!alertaEmail()){ alertaEmailInexistente(); }
-        else{
-            if (!alertaContrasena()){ alertaContrasenaInvalida(); }
-            else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
+    private boolean alertaEmailContrasena(){
+        if (!alertaEmail()){
+            alertaEmailInexistente();
+            return false;
         }
-    }
+        else{
+            if (!alertaContrasena()){
+                alertaContrasenaInvalida();
+                return false;
+            }
+            else{
+                setUser(new User(obtenerEmail(), obtenerContrasena()));
+                return true;
+            }
+        }
+     }
 
     private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
 
@@ -158,4 +192,24 @@ public class LoginController extends ViewFuntionality implements Alerta{
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
     private RegisterController loadRegister(RegisterController controller){ return controller; }
+
+    private MenuPrincipalController loadMenuPrincipal(MenuPrincipalController controller){ return controller; }
+
+
+    public void loginAccion(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
+        Parent parent = fxmlLoader.load();
+        setMenuPrincipalController(loadMenuPrincipal(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getMenuPrincipalController().setVentana(loginStage);
+        getMenuPrincipalController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.showAndWait();
+    }
+
+
 }
