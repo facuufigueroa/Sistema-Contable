@@ -17,5 +17,6 @@ public class MenuPrincipalController extends ViewFuntionality {
 
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
-    
+
+
 }
