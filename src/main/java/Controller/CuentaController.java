@@ -17,23 +17,17 @@ public class CuentaController extends ViewFuntionality {
     @FXML private ComboBox cbbTipo;
     @FXML private TableView tableCuentas;
 
+    private CuentaController cuentaController;
+
     private ServicePDC servicePDC = new ServicePDC();
 
     public void listarCuentas(){
-
+        System.out.println("codigo:" + servicePDC.listCuentas().size());
     }
 
 
 
 
-
-
-
-
-
-
-
-    private CuentaController cuentaController;
 
     public Button getBtnMinimize() {
         return btnMinimize;

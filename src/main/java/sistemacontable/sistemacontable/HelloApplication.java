@@ -1,4 +1,5 @@
 package sistemacontable.sistemacontable;
+import Controller.CuentaController;
 import Controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
+            /*
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/login-user.fxml"));
             Parent root = fxmlLoader.load();
             getClass().getClassLoader().getResource("/Controller/LoginController");
@@ -20,7 +22,9 @@ public class HelloApplication extends Application {
             stage.setScene(scene);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
             stage.initStyle(StageStyle.TRANSPARENT);
-            stage.show();
+            stage.show();*/
+            CuentaController cuentaController = new CuentaController();
+            cuentaController.listarCuentas();
         }catch (Exception e){ System.out.println(e.getMessage()); }
     }
     public static void main(String[] args) { launch(); }

@@ -6,6 +6,7 @@ import Querys.CuentaQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class ServicePDC {
 
@@ -16,27 +17,28 @@ public class ServicePDC {
 
     CuentaQuery cuentaQuery = new CuentaQuery();
 
-    public Cuenta listCuentas() {
+    public ArrayList<Cuenta> listCuentas() {
         Cuenta cuenta = new Cuenta();
+        ArrayList<Cuenta> cuentas = new ArrayList<>();
         try{
             setConnection(ConexionBD.conexion());
-
-            // Consulta a la tabla
             setPreparedStatement(getConnection().prepareStatement(cuentaQuery.listarCuentas()));
-            // Ejecuto la consulta
-            getPreparedStatement().executeUpdate();
+            setResultSet(preparedStatement.executeQuery());
 
-            if(getResultSet().next()){
+            while(resultSet.next()){
+                
                 cuenta.codigo= getResultSet().getString(2);
                 cuenta.nombre=getResultSet().getString(3);
                 cuenta.recibe_salgo=getResultSet().getString(4);
                 cuenta.tipo=getResultSet().getString(5);
+                cuentas.add(cuenta);
             }
+
 
         }catch (Exception exception){
             System.out.println(exception);
         }
-        return cuenta;
+        return cuentas;
     }
 
 
