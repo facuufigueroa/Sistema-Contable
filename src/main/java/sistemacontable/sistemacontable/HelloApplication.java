@@ -1,6 +1,4 @@
 package sistemacontable.sistemacontable;
-import Controller.CuentaController;
-import Controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
