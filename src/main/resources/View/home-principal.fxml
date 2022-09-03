@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomePrincipal">
    <children>
@@ -36,7 +35,7 @@
       </Pane>
       <ImageView fitHeight="65.0" fitWidth="64.0" layoutX="31.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Downloads/ciencias-economicas%20(1).png" />
+            <Image url="@../Images/ciencias-economicas.png" />
          </image>
       </ImageView>
       <Label layoutX="123.0" layoutY="78.0" prefHeight="30.0" prefWidth="265.0" text="Menu Principal de Operaciones " textFill="WHITE">
@@ -119,6 +118,10 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField disable="true" layoutX="224.0" layoutY="406.0" prefHeight="25.0" prefWidth="160.0" />
+      <TextField editable="false" layoutX="220.0" layoutY="406.0" prefHeight="26.0" prefWidth="160.0">
+         <font>
+            <Font name="Lucida Sans Unicode" size="11.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>
