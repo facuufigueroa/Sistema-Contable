@@ -121,7 +121,7 @@ public class LoginController extends ViewFuntionality{
     }
 
     private boolean estanCamposVacios(){
-        return Utilidades.campoVacio(getCampoUsuario()) || Utilidades.campoVacio(getCampoContrasena());
+        return Utilidades.estaCampoVacio(getCampoUsuario()) || Utilidades.estaCampoVacio(getCampoContrasena());
     }
 
     private boolean alertaContrasena(){ return compararContrasenas(); }
