@@ -4,7 +4,7 @@ public class Cuenta {
 
     public String codigo;
     public String nombre;
-    public String recibe_salgo;
+    public String recibe_saldo;
     public String tipo;
 
     public String getCodigo() {
@@ -23,12 +23,12 @@ public class Cuenta {
         this.nombre = nombre;
     }
 
-    public String getRecibe_salgo() {
-        return recibe_salgo;
+    public String getRecibe_saldo() {
+        return recibe_saldo;
     }
 
-    public void setRecibe_salgo(String recibe_salgo) {
-        this.recibe_salgo = recibe_salgo;
+    public void setRecibe_saldo(String recibe_saldo) {
+        this.recibe_saldo = recibe_saldo;
     }
 
     public String getTipo() {

@@ -27,7 +27,7 @@ public class ServicePDC {
                 Cuenta cuenta = new Cuenta();
                 cuenta.codigo= getResultSet().getString(2);
                 cuenta.nombre=getResultSet().getString(3);
-                cuenta.recibe_salgo=getResultSet().getString(4);
+                cuenta.recibe_saldo=getResultSet().getString(4);
                 cuenta.tipo=getResultSet().getString(5);
                 cuentas.add(cuenta);
             }

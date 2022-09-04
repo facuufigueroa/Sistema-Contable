@@ -46,10 +46,10 @@
             </Pane>
             <TableView fx:id="tableCuentas" layoutX="16.0" layoutY="307.0" prefHeight="191.0" prefWidth="552.0">
               <columns>
-                <TableColumn editable="false" prefWidth="145.0" text="Nombre" />
-                <TableColumn editable="false" prefWidth="127.0" text="Codigo" />
-                  <TableColumn editable="false" prefWidth="139.0" text="Recibe saldo" />
-                  <TableColumn editable="false" prefWidth="138.0" text="Tipo" />
+                <TableColumn fx:id="columName" editable="false" prefWidth="145.0" text="Nombre" />
+                <TableColumn fx:id="columCodigo" editable="false" prefWidth="127.0" text="Codigo" />
+                  <TableColumn fx:id="columRecibeSaldo" editable="false" prefWidth="139.0" text="Recibe saldo" />
+                  <TableColumn fx:id="columTipo" editable="false" prefWidth="138.0" text="Tipo" />
               </columns>
             </TableView>
             <Line endX="-233.0001220703125" endY="142.0" layoutX="805.0" layoutY="154.0" startX="-233.0001220703125" startY="-56.0" stroke="#0c1b40" />
