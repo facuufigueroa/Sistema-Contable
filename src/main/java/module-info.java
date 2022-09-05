@@ -12,4 +12,5 @@ module sistemacontable.sistemacontable {
     exports Controller;
     exports Model;
     exports Services;
+    exports Test;
 }

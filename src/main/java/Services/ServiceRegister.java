@@ -5,30 +5,16 @@ import Querys.UserQuery;
 import com.administrativos.sistema.utilidades.Alerta;
 import javafx.scene.control.Alert;
 import javafx.stage.StageStyle;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ServiceRegister {
-    private Connection conexion;
-    private PreparedStatement sentencia;
-    private ResultSet tupla; //Es el conjunto de datos obtenidos desde la BD
-
-    public Connection getConexion() { return conexion; }
-    public void setConexion(Connection conexion) { this.conexion = conexion; }
-    public PreparedStatement getSentencia() { return sentencia ;}
-    public void setSentencia(PreparedStatement sentencia) { this.sentencia = sentencia; }
-    public ResultSet getTupla() { return tupla; }
-    public void setTupla(ResultSet tupla) { this.tupla = tupla; }
-
-
+public class ServiceRegister extends Service{
     public boolean existeUser(String email) {
         try {
             setConexion(ConexionBD.conexion());
             String userEmail = UserQuery.existeUser(email);
-            setSentencia(getConexion().prepareStatement(userEmail));
-            setTupla(getSentencia().executeQuery());
+            setPs(getConexion().prepareStatement(userEmail));
+            setTupla(getPs().executeQuery());
             return getTupla().next();
         } catch (SQLException exception) { System.out.println(exception.getMessage()); }
         return false;
@@ -36,9 +22,9 @@ public class ServiceRegister {
     public boolean insertarUsuario(User usuario) throws SQLException{ // 1|nombre  2|apellido  3|email  4|constrasena
         try{
             setConexion(ConexionBD.conexion());
-            setSentencia(getConexion().prepareStatement(UserQuery.insertarUsuario()));
-            agregarAtributosUsuario(getSentencia(), usuario);
-            getSentencia().executeUpdate();
+            setPs(getConexion().prepareStatement(UserQuery.insertarUsuario()));
+            agregarAtributosUsuario(getPs(), usuario);
+            getPs().executeUpdate();
             Alerta.alertaRegistradoCorrectamente();
             return true;
         }catch (SQLException excepcion){
