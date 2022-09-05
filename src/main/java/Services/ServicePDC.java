@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ServicePDC {
 
@@ -27,7 +28,8 @@ public class ServicePDC {
                 Cuenta cuenta = new Cuenta();
                 cuenta.codigo= getResultSet().getString(2);
                 cuenta.nombre=getResultSet().getString(3);
-                cuenta.recibe_saldo=getResultSet().getString(4);
+                cuenta.recibe_saldo=cuentasRecibeSaldoSiNo(getResultSet().getString(4));
+                /*cuenta.recibe_saldo=getResultSet().getString(4);*/
                 cuenta.tipo=getResultSet().getString(5);
                 cuentas.add(cuenta);
             }
@@ -36,6 +38,18 @@ public class ServicePDC {
             System.out.println(exception);
         }
         return cuentas;
+    }
+
+    /*Metodo que convierte los valores 0 y 1 del campo recibe_saldo en Si y No*/
+   public String cuentasRecibeSaldoSiNo(String recibe_saldo){
+        String recibe;
+        if(Objects.equals(recibe_saldo, "1")){
+            recibe="Si";
+        }
+        else{
+            recibe="No";
+        }
+        return recibe;
     }
 
 
