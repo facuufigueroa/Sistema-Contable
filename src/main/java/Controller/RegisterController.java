@@ -30,7 +30,9 @@ public class RegisterController extends ViewFuntionality{
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
 
-    public void prueba(){
-        
-    }
+
+        public void prueba() {
+
+        }
+
 }
