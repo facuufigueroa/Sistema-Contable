@@ -9,68 +9,60 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CuentaController extends ViewFuntionality implements Initializable {
+public class CuentaDeshabilitadaController extends ViewFuntionality implements Initializable {
 
     @FXML private Button btnMinimize;
     @FXML private Button btnClose;
     @FXML private Button btnVolver;
+
     @FXML private Button btnAgregarCuenta;
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtCodigo;
-    @FXML private ComboBox cbbRecibeSaldo;
-    @FXML private ComboBox cbbTipo;
-    @FXML private TableView<Cuenta> tableCuentas;
-
+    @FXML private TableView<Cuenta> tableCuentasD;
     @FXML private TableColumn<Cuenta,String> columName;
-
     @FXML private TableColumn<Cuenta,String> columCodigo;
-
     @FXML private TableColumn<Cuenta,String> columRecibeSaldo;
-
     @FXML private TableColumn<Cuenta,String> columTipo;
 
-    private CuentaController cuentaController;
+    private CuentaDeshabilitadaController cuentaDeshabilitadaController;
 
     private ServicePDC servicePDC = new ServicePDC();
 
-    private ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
+    private ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
 
     public void listarCuentas(){
-
-
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
         columTipo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("tipo"));
-        tableCuentas.setItems(obCuentas);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        listarCuentas();
+        tableCuentasD.setItems(obCuentas);
     }
 
     @FXML
     public void accionVolver(){
 
     }
-
     @FXML
-    public void accionAgregarCuenta(){
+    public void accionHabilitarCuenta(){
 
     }
 
-    @FXML
-    public void accionDeshabilitarCuenta(){
 
-    }
 
-    @FXML
-    public void accionVerCuentasDeshabilitadas(){
 
+
+
+
+
+
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        listarCuentas();
     }
 
     public Button getBtnMinimize() {
@@ -89,20 +81,28 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         this.btnClose = btnClose;
     }
 
-    public CuentaController getCuentaController() {
-        return cuentaController;
+    public Button getBtnVolver() {
+        return btnVolver;
     }
 
-    public void setCuentaController(CuentaController cuentaController) {
-        this.cuentaController = cuentaController;
+    public void setBtnVolver(Button btnVolver) {
+        this.btnVolver = btnVolver;
     }
 
-    public TableView getTableCuentas() {
-        return tableCuentas;
+    public Button getBtnAgregarCuenta() {
+        return btnAgregarCuenta;
     }
 
-    public void setTableCuentas(TableView tableCuentas) {
-        this.tableCuentas = tableCuentas;
+    public void setBtnAgregarCuenta(Button btnAgregarCuenta) {
+        this.btnAgregarCuenta = btnAgregarCuenta;
+    }
+
+    public TableView<Cuenta> getTableCuentasD() {
+        return tableCuentasD;
+    }
+
+    public void setTableCuentasD(TableView<Cuenta> tableCuentasD) {
+        this.tableCuentasD = tableCuentasD;
     }
 
     public TableColumn<Cuenta, String> getColumName() {
@@ -136,6 +136,16 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     public void setColumTipo(TableColumn<Cuenta, String> columTipo) {
         this.columTipo = columTipo;
     }
+
+    public CuentaDeshabilitadaController getCuentaDeshabilitadaController() {
+        return cuentaDeshabilitadaController;
+    }
+
+    public void setCuentaDeshabilitadaController(CuentaDeshabilitadaController cuentaDeshabilitadaController) {
+        this.cuentaDeshabilitadaController = cuentaDeshabilitadaController;
+    }
+
+
 
 
 }

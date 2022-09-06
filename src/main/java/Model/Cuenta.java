@@ -7,6 +7,20 @@ public class Cuenta {
     public String recibe_saldo;
     public String tipo;
 
+    public Boolean estado;
+
+    public Cuenta() {
+        this.estado = true;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public String getCodigo() {
         return codigo;
     }

@@ -18,18 +18,17 @@ public class ServicePDC {
 
     CuentaQuery cuentaQuery = new CuentaQuery();
 
-    public ArrayList<Cuenta> listCuentas() {
+    public ArrayList<Cuenta> listCuentasHabilitadas() {
         ArrayList<Cuenta> cuentas = new ArrayList<>();
         try{
             setConnection(ConexionBD.conexion());
-            setPreparedStatement(getConnection().prepareStatement(cuentaQuery.listarCuentas()));
+            setPreparedStatement(getConnection().prepareStatement(cuentaQuery.listarCuentasHabilitadas()));
             setResultSet(preparedStatement.executeQuery());
             while(resultSet.next()){
                 Cuenta cuenta = new Cuenta();
                 cuenta.codigo= getResultSet().getString(2);
                 cuenta.nombre=getResultSet().getString(3);
                 cuenta.recibe_saldo=cuentasRecibeSaldoSiNo(getResultSet().getString(4));
-                /*cuenta.recibe_saldo=getResultSet().getString(4);*/
                 cuenta.tipo=getResultSet().getString(5);
                 cuentas.add(cuenta);
             }
@@ -51,6 +50,29 @@ public class ServicePDC {
         }
         return recibe;
     }
+
+    public ArrayList<Cuenta> listCuentasDeshabilitadas() {
+        ArrayList<Cuenta> cuentas = new ArrayList<>();
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(cuentaQuery.listarCuentasDeshabilitadas()));
+            setResultSet(preparedStatement.executeQuery());
+            while(resultSet.next()){
+                Cuenta cuenta = new Cuenta();
+                cuenta.codigo= getResultSet().getString(2);
+                cuenta.nombre=getResultSet().getString(3);
+                cuenta.recibe_saldo=cuentasRecibeSaldoSiNo(getResultSet().getString(4));
+                cuenta.tipo=getResultSet().getString(5);
+                cuentas.add(cuenta);
+            }
+
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return cuentas;
+    }
+
+
 
 
     public ConexionBD getConexionBD() {
