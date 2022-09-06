@@ -3,7 +3,6 @@ module sistemacontable.sistemacontable {
     requires javafx.fxml;
     requires java.sql;
     requires org.postgresql.jdbc;
-    requires com.administrativos.sistema.utilidades;
 
     opens sistemacontable.sistemacontable to javafx.fxml;
     opens Model to javafx.fxml ;

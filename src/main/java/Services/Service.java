@@ -1,8 +1,8 @@
 package Services;
 import DataBase.ConexionBD;
+import Model.Alerta;
 import Model.User;
 import Querys.UserQuery;
-import com.administrativos.sistema.utilidades.Alerta;
 import javafx.scene.control.Alert;
 import javafx.stage.StageStyle;
 

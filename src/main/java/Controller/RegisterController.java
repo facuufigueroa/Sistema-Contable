@@ -1,9 +1,9 @@
 package Controller;
+import Model.Alerta;
 import Model.User;
+import Model.Utilidades;
 import Model.ViewFuntionality;
 import Services.ServiceRegister;
-import com.administrativos.sistema.utilidades.Alerta;
-import com.administrativos.sistema.utilidades.Utilidades;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,7 +49,7 @@ public class RegisterController extends ViewFuntionality{
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
     private void comprobarCampoVacionOEmailExistente(){
-        if (estanCamposVacios()){   Alerta.alertaCamposIncompletos(); }
+        if (estanCamposVacios()){ Alerta.alertaCamposIncompletos(); }
         else{ Alerta.alertaEmailYaExiste(); }
     }
     private boolean estanCamposVacios(){

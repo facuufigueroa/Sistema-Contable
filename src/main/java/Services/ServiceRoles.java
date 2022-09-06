@@ -1,7 +1,6 @@
 package Services;
+import Model.Alerta;
 import Model.Roles;
-import com.administrativos.sistema.utilidades.Alerta;
-
 public class ServiceRoles extends Service{
     private Roles rol;
 
@@ -14,9 +13,7 @@ public class ServiceRoles extends Service{
     public void obtenerUsuario(String email) {
         if (existeObjeto("usuarios", "email", (String) email)) {
             getRol().setUser(obtenerUsuarioPorEmail(email));
-        } else {
-            Alerta.alertaEmailInexistente();
-        }
+        } else { Alerta.alertaEmailInexistente(); }
     }
 
 }
