@@ -2,13 +2,13 @@ package Controller;
 import Model.User;
 import Model.ViewFuntionality;
 import Services.ServiceLogin;
-import com.administrativos.sistema.utilidades.Alerta;
-import com.administrativos.sistema.utilidades.Utilidades;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,10 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import java.io.IOException;
-import java.sql.SQLException;
 
-public class LoginController extends ViewFuntionality{
+import java.io.IOException;
+
+public class LoginController extends ViewFuntionality implements Alerta{
     //Atributos
     @FXML private Button botonIniciarSesion;
     @FXML private PasswordField campoContrasena;
@@ -31,15 +31,7 @@ public class LoginController extends ViewFuntionality{
     @FXML private AnchorPane frameLogin;
     @FXML private Text botonRegistrarse;
 
-    public LoginController(){}
-    public static User getUserInstance(){
-        if (getUser() == null){
-            setUser(new User());
-        }
-        return getUser();
-    }
-
-    private static User user = null;
+    private User user;
     private Stage stage;
     private ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
@@ -75,8 +67,8 @@ public class LoginController extends ViewFuntionality{
     public void setCampoContrasena(PasswordField campoContrasena) { this.campoContrasena = campoContrasena; }
     public TextField getCampoUsuario() { return campoUsuario; }
     public void setCampoUsuario(TextField campoUsuario) { this.campoUsuario = campoUsuario; }
-    private static void setUser(User usuario) { user = usuario; }
-    public static User getUser(){ return user; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
     public Text getBotonRegistrarse() { return botonRegistrarse; }
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }
@@ -86,21 +78,17 @@ public class LoginController extends ViewFuntionality{
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
     private String obtenerContrasena(){ return getCampoContrasena().getText(); }
 
-    public boolean existeUserEmail(String email) throws SQLException {
-        /*
+    public boolean existeUserEmail(String email){
         if(serviceLogin.existeUser(email)){
             return true;
         }
         return false;
-
-         */
-        return serviceLogin.existeUser2(email);
     }
     public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
 
     @FXML
-    public void accionBotonIniciarSesion() throws SQLException {
-        if (estanCamposVacios()){ Alerta.alertaCamposIncompletos(); }
+    public void accionBotonIniciarSesion(){
+        if (estanCamposVacios()){ alertaCamposIncompletos(); }
         else { alertaEmailContrasena(); }
     }
     @FXML
@@ -125,23 +113,20 @@ public class LoginController extends ViewFuntionality{
      *  Luego, verifica la contraseña ingresada con la de la base de datos.
      *  De no ser asi, tambien genera un mensaje de error.
      */
-    private void alertaEmailContrasena() throws SQLException {
-        if (!alertaEmail()){ Alerta.alertaEmailInexistente(); }
+    private void alertaEmailContrasena(){
+        if (!alertaEmail()){ alertaEmailInexistente(); }
         else{
-            if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida(); }
+            if (!alertaContrasena()){ alertaContrasenaInvalida(); }
             else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
         }
     }
 
-    private boolean estanCamposVacios(){
-        return Utilidades.estaCampoVacio(getCampoUsuario()) || Utilidades.estaCampoVacio(getCampoContrasena());
-    }
+    private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
 
     private boolean alertaContrasena(){ return compararContrasenas(); }
 
-    private boolean alertaEmail() throws SQLException { return !existeUserEmail(obtenerEmail()) ? false : true; }
+    private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
 
-    /*
     @Override
     public boolean alertaCamposIncompletos() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -170,8 +155,6 @@ public class LoginController extends ViewFuntionality{
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
-
-     */
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
     private RegisterController loadRegister(RegisterController controller){ return controller; }
