@@ -11,7 +11,7 @@ public class CuentaQuery {
     }
 
     public static String habilitarCuenta(String codigo){
-        return "UPDATE cuentas SET estado = true WHERE codigo ="+codigo;
+        return "UPDATE cuentas SET estado = true WHERE codigo ='"+codigo+"'";
     }
 
     public static String deshabilitarCuenta(String codigo){

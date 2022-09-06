@@ -9,8 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.stage.StageStyle;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CuentaDeshabilitadaController extends ViewFuntionality implements Initializable {
@@ -46,20 +47,38 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
     }
     @FXML
     public void accionHabilitarCuenta(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Esta ?");
+        alert.setHeaderText("Confirmación de habilitacion de cuenta");
+        alert.setTitle("No seleccion de cuenta");
+        alert.setContentText("¿Está seguro de habilitar la cuenta con codigo: " );
+        alert.initStyle(StageStyle.TRANSPARENT);
 
+        List<Cuenta> filaSeleccionada = tableCuentasD.getSelectionModel().getSelectedItems();
+        if(filaSeleccionada.size() == 1 ){
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    servicePDC.habilitarCuenta(accionTablaCuentasD());
+                }
+            });
+        }
+        else{
+            alertaFilaNoSeleccionada();
+        }
     }
 
+    @FXML
+    public String accionTablaCuentasD(){
+        String codigo_cuenta = String.valueOf(tableCuentasD.getSelectionModel().getSelectedItem().codigo);
+        return codigo_cuenta;
+    }
 
-
-
-
-
-
-
-
-
-
-
+    public void alertaFilaNoSeleccionada() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Cuenta NO seleccionada");
+        alert.setContentText("¡No selecciono ninguna fila de la tabla cuentas, para habilitar seleccione una fila!");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

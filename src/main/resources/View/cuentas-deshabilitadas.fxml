@@ -41,7 +41,7 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="tableCuentasD" layoutX="17.0" layoutY="136.0" prefHeight="191.0" prefWidth="605.0">
+            <TableView fx:id="tableCuentasD" layoutX="17.0" layoutY="136.0" onMouseClicked="#accionTablaCuentasD" prefHeight="191.0" prefWidth="605.0">
                <columns>
                   <TableColumn fx:id="columName" editable="false" prefWidth="239.6666717529297" text="Nombre" />
                   <TableColumn fx:id="columCodigo" editable="false" prefWidth="156.3333282470703" text="Codigo" />

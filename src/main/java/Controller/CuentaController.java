@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.StageStyle;
-
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -84,7 +83,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         else{
             alertaFilaNoSeleccionada();
         }
-
     }
 
     public void alertaFilaNoSeleccionada() {
