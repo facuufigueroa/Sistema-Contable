@@ -32,7 +32,7 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
     private ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
 
-    public void listarCuentas(){
+    public void listarCuentasDeshabilitadas(){
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
@@ -60,9 +60,10 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listarCuentas();
+        listarCuentasDeshabilitadas();
     }
 
     public Button getBtnMinimize() {

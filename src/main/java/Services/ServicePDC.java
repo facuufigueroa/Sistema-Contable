@@ -73,7 +73,15 @@ public class ServicePDC {
     }
 
 
-
+    public void deshabilitarCuenta(String codigo){
+       try{
+           setConnection(ConexionBD.conexion());
+           setPreparedStatement(getConnection().prepareStatement(cuentaQuery.deshabilitarCuenta(codigo)));
+           getPreparedStatement().executeUpdate();
+       }catch (Exception e){
+           System.out.println(e);
+       }
+    }
 
     public ConexionBD getConexionBD() {
         return conexionBD;
