@@ -18,6 +18,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import java.io.IOException;
+import java.net.URL;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -43,6 +46,7 @@ public class LoginController extends ViewFuntionality{
     private Stage stage;
     private ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
+    private MenuPrincipalController menuPrincipalController;
 
     //Getters y Setters
     public Stage getStage() {
@@ -81,6 +85,13 @@ public class LoginController extends ViewFuntionality{
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
+    public void setMenuPrincipalController(MenuPrincipalController menuPrincipalController) {
+        this.menuPrincipalController = menuPrincipalController;
+    }
+
+    public MenuPrincipalController getMenuPrincipalController() {
+        return menuPrincipalController;
+    }
 
     //Metodos
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
@@ -99,10 +110,24 @@ public class LoginController extends ViewFuntionality{
     public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
 
     @FXML
+    public void btnIniciarSesion(ActionEvent event) throws IOException {
+        if (estanCamposVacios()) {
+            alertaCamposIncompletos();
+        }
+        else {
+            existeUseroLoguearse(event);
+        }
     public void accionBotonIniciarSesion() throws SQLException {
         if (estanCamposVacios()){ Alerta.alertaCamposIncompletos(); }
         else { alertaEmailContrasena(); }
     }
+
+    private void existeUseroLoguearse(ActionEvent event) throws IOException {
+        if(alertaEmailContrasena()){
+            loginAccion(event);
+        }
+    }
+
     @FXML
     public void accionRegistrarUsuario(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registro-user.fxml"));
@@ -125,13 +150,27 @@ public class LoginController extends ViewFuntionality{
      *  Luego, verifica la contraseña ingresada con la de la base de datos.
      *  De no ser asi, tambien genera un mensaje de error.
      */
+    private boolean alertaEmailContrasena(){
+        if (!alertaEmail()){
+            alertaEmailInexistente();
+            return false;
+        }
+        else{
+            if (!alertaContrasena()){
+                alertaContrasenaInvalida();
+                return false;
+            }
+            else{
+                setUser(new User(obtenerEmail(), obtenerContrasena()));
+                return true;
+            }
     private void alertaEmailContrasena() throws SQLException {
         if (!alertaEmail()){ Alerta.alertaEmailInexistente(); }
         else{
             if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida(); }
             else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
         }
-    }
+     }
 
     private boolean estanCamposVacios(){
         return Utilidades.estaCampoVacio(getCampoUsuario()) || Utilidades.estaCampoVacio(getCampoContrasena());
@@ -175,4 +214,24 @@ public class LoginController extends ViewFuntionality{
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
     private RegisterController loadRegister(RegisterController controller){ return controller; }
+
+    private MenuPrincipalController loadMenuPrincipal(MenuPrincipalController controller){ return controller; }
+
+
+    public void loginAccion(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
+        Parent parent = fxmlLoader.load();
+        setMenuPrincipalController(loadMenuPrincipal(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getMenuPrincipalController().setVentana(loginStage);
+        getMenuPrincipalController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.showAndWait();
+    }
+
+
 }

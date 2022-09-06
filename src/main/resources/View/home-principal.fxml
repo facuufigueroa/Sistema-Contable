@@ -10,27 +10,31 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomePrincipal">
+<AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MenuPrincipalController">
    <children>
       <Pane layoutY="-1.0" prefHeight="36.0" prefWidth="777.0" style="-fx-background-color: #44878f;">
          <children>
-            <Button fx:id="btnMinimize" layoutX="656.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;" />
-            <Button fx:id="btnClose" layoutX="702.0" layoutY="2.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;" />
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="740.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/cancel.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="701.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/minimize.png" />
-               </image>
-            </ImageView>
             <Label layoutX="14.0" layoutY="2.0" prefHeight="33.0" prefWidth="160.0" text="Menu Principal" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="21.0" />
                </font>
             </Label>
+            <Button fx:id="btnMinimize" layoutX="693.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/minimize.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnClose" layoutX="731.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/cancel.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </Pane>
       <ImageView fitHeight="65.0" fitWidth="64.0" layoutX="31.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
@@ -44,9 +48,9 @@
          </font>
       </Label>
       <Line endX="144.0" fill="WHITE" layoutX="224.0" layoutY="115.0" startX="-100.0" stroke="WHITE" />
-      <Pane layoutX="123.0" layoutY="177.0" prefHeight="173.0" prefWidth="522.0" style="-fx-background-color: #14648f;">
+      <Pane layoutX="123.0" layoutY="177.0" prefHeight="204.0" prefWidth="522.0" style="-fx-background-color: #14648f;">
          <children>
-            <Button layoutX="27.0" layoutY="22.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="   Plan de Cuentas">
+            <Button layoutX="27.0" layoutY="44.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="   Plan de Cuentas">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -70,7 +74,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="325.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" text=" Ver Asientos ">
+            <Button layoutX="325.0" layoutY="80.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" text=" Ver Asientos ">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -82,7 +86,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="27.0" layoutY="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="    Libro Mayor" textAlignment="CENTER">
+            <Button layoutX="27.0" layoutY="113.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="    Libro Mayor" textAlignment="CENTER">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -90,6 +94,18 @@
                   <ImageView fitHeight="42.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/libro-mayor.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="325.0" layoutY="135.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" text="Libro Diario">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/libro-diario-icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -102,7 +118,7 @@
          </image>
       </ImageView>
       <Line endX="417.0" fill="BLACK" layoutX="225.0" layoutY="164.0" opacity="0.85" startX="-112.5" startY="-0.5" stroke="WHITE" />
-      <Line endX="100.0" endY="25.0" layoutX="12.0" layoutY="139.0" opacity="0.73" startX="100.0" startY="211.0" stroke="WHITE" />
+      <Line endX="100.0" endY="25.0" layoutX="12.0" layoutY="139.0" opacity="0.73" startX="100.0" startY="239.0" stroke="WHITE" />
       <Line endX="132.0" layoutX="626.0" layoutY="439.0" opacity="0.35" startX="-605.0" stroke="WHITE" />
       <Line endX="-100.0" endY="50.0" layoutX="858.0" layoutY="387.0" opacity="0.46" startX="-100.0" startY="-225.0" />
       <Line endX="-100.0" endY="-79.0" layoutX="120.0" layoutY="438.0" startX="-100.0" />
