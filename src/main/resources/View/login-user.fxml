@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="frameLogin" prefHeight="400.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<AnchorPane fx:id="frameLogin" prefHeight="400.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
       <Pane prefHeight="400.0" prefWidth="394.0" style="-fx-background-color: #0D3E59;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="354.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -34,7 +34,7 @@
                   <Image url="@../Images/lock.png" />
                </image>
             </ImageView>
-            <Button fx:id="botonIniciarSesion" layoutX="98.0" layoutY="281.0" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="botonIniciarSesion" layoutX="98.0" layoutY="281.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
