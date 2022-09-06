@@ -48,9 +48,9 @@
          </font>
       </Label>
       <Line endX="144.0" fill="WHITE" layoutX="224.0" layoutY="115.0" startX="-100.0" stroke="WHITE" />
-      <Pane layoutX="123.0" layoutY="177.0" prefHeight="173.0" prefWidth="522.0" style="-fx-background-color: #14648f;">
+      <Pane layoutX="123.0" layoutY="177.0" prefHeight="204.0" prefWidth="522.0" style="-fx-background-color: #14648f;">
          <children>
-            <Button layoutX="27.0" layoutY="22.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="   Plan de Cuentas">
+            <Button layoutX="27.0" layoutY="44.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="   Plan de Cuentas">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -74,7 +74,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="325.0" layoutY="100.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" text=" Ver Asientos ">
+            <Button layoutX="325.0" layoutY="80.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" text=" Ver Asientos ">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -86,7 +86,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="27.0" layoutY="100.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="    Libro Mayor" textAlignment="CENTER">
+            <Button layoutX="27.0" layoutY="113.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="    Libro Mayor" textAlignment="CENTER">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -94,6 +94,18 @@
                   <ImageView fitHeight="42.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/libro-mayor.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="325.0" layoutY="135.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="160.0" text="Libro Diario">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/libro-diario-icon.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -106,7 +118,7 @@
          </image>
       </ImageView>
       <Line endX="417.0" fill="BLACK" layoutX="225.0" layoutY="164.0" opacity="0.85" startX="-112.5" startY="-0.5" stroke="WHITE" />
-      <Line endX="100.0" endY="25.0" layoutX="12.0" layoutY="139.0" opacity="0.73" startX="100.0" startY="211.0" stroke="WHITE" />
+      <Line endX="100.0" endY="25.0" layoutX="12.0" layoutY="139.0" opacity="0.73" startX="100.0" startY="239.0" stroke="WHITE" />
       <Line endX="132.0" layoutX="626.0" layoutY="439.0" opacity="0.35" startX="-605.0" stroke="WHITE" />
       <Line endX="-100.0" endY="50.0" layoutX="858.0" layoutY="387.0" opacity="0.46" startX="-100.0" startY="-225.0" />
       <Line endX="-100.0" endY="-79.0" layoutX="120.0" layoutY="438.0" startX="-100.0" />
