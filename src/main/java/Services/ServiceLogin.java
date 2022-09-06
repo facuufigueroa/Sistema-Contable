@@ -5,7 +5,7 @@ import Model.*;
 
 import java.sql.*;
 
-public class ServiceLogin {
+public class ServiceLogin extends Service{
     //Atributos
     private ConexionBD conexionBD;
     private Connection connection;
@@ -42,7 +42,7 @@ public class ServiceLogin {
 
             // Ingreso valores de user
             getPreparedStatement().setString(1, user.getEmail());
-            getPreparedStatement().setString(2, user.getPassword());
+            getPreparedStatement().setString(2, user.getContrasena());
 
             // Ejecuto la consulta
             getPreparedStatement().executeUpdate();
@@ -63,6 +63,9 @@ public class ServiceLogin {
             System.out.println(exception.getMessage());
         }
         return existeU;
+    }
+    public boolean existeUser2(String email) throws SQLException {
+        return existeObjeto("usuarios","email",(String) email);
     }
 
     /**
