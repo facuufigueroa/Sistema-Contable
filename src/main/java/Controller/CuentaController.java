@@ -11,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.StageStyle;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -62,8 +64,39 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     }
 
     @FXML
-    public void accionAgregarCuenta(){
+    public void accionAgregarCuenta() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Campos vacios");
+        alert.setTitle("No seleccion de cuenta");
+        alert.setContentText("Debe completar y seleccionar todos los campos para agregar cuenta" );
+        alert.initStyle(StageStyle.TRANSPARENT);
 
+        Alert alertCodigo = new Alert(Alert.AlertType.ERROR);
+        alertCodigo.setHeaderText("Codigo ya existente");
+        alertCodigo.setTitle("No seleccion de cuenta");
+        alertCodigo.setContentText("El codigo ingresado de la cuenta ya se encuentra registrado en el sistema, por favor inserte una cuenta con diferente codigo" );
+        alertCodigo.initStyle(StageStyle.TRANSPARENT);
+
+        Cuenta cuenta = new Cuenta();
+        cuenta.setNombre(txtNombre.getText());
+        cuenta.setCodigo(txtCodigo.getText());
+        cuenta.setRecibe_saldo(itemRecibeSaldo());
+        cuenta.setTipo(itemTipo());
+        try {
+            if(evaluarCamposVacios()){
+                alert.showAndWait();
+            }
+            else{
+                if(servicePDC.existeCuenta(obtenerCodigoCuenta())){
+                    alertCodigo.showAndWait();
+                }
+                else{
+                    servicePDC.insertarCuenta(cuenta);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @FXML
@@ -118,8 +151,36 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     /*Método para iniciar el combobox tipo*/
     public void iniciarCbbTipo(){
         ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Activo", "Pasivo","Patrimonio","Resultado +","Resultado -");
+        items.addAll("Ac", "Pa","Pm","R+","R-");
         cbbTipo.setItems(items);
+    }
+
+    /*Método que captura la selección del comboBox recibe_saldo*/
+    @FXML
+    public String itemRecibeSaldo(){
+        String itemRecibeSaldo = (String) cbbRecibeSaldo.getSelectionModel().getSelectedItem();
+        return itemRecibeSaldo;
+    }
+
+    /*Método que captura la selección del comboBox tipo*/
+    @FXML
+    public String itemTipo(){
+        String itemTipo = (String) cbbTipo.getSelectionModel().getSelectedItem();
+        return itemTipo;
+    }
+
+    /*Método que evalua campos vacios*/
+    public boolean evaluarCamposVacios(){
+        return Objects.equals(txtCodigo.getText(), "")
+                || Objects.equals(txtNombre.getText(), "")
+                || cbbTipo.getSelectionModel().getSelectedItem() == ""
+                || cbbRecibeSaldo.getSelectionModel().getSelectedItem() == "";
+    }
+
+    /*Método para traer codigo de cuenta*/
+    public String obtenerCodigoCuenta(){
+        String codigo= txtCodigo.getText();
+        return codigo;
     }
 
     public Button getBtnMinimize() {

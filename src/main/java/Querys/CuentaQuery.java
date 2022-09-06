@@ -1,5 +1,7 @@
 package Querys;
 
+import Model.Cuenta;
+
 public class CuentaQuery {
 
     public static String listarCuentasHabilitadas(){
@@ -16,6 +18,14 @@ public class CuentaQuery {
 
     public static String deshabilitarCuenta(String codigo){
         return "UPDATE cuentas SET estado = false WHERE codigo ='"+codigo+"'";
+    }
+
+    public static String insertarCuenta(){
+        return "INSERT INTO cuentas (codigo,nombre,recibe_saldo,tipo,estado) VALUES (?,?,?,?,?)";
+    }
+
+    public static String existeCodigoCuenta(String codigo){
+        return "SELECT * FROM cuentas as c WHERE c.codigo='"+codigo+"'";
     }
 
 }

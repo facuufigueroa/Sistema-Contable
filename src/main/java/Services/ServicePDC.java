@@ -6,6 +6,7 @@ import Querys.CuentaQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -91,6 +92,36 @@ public class ServicePDC {
         }catch (Exception e){
             System.out.println(e);
         }
+    }
+    public void insertarCuenta(Cuenta cuenta) throws SQLException {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(cuentaQuery.insertarCuenta()));
+            getPreparedStatement().setString(1, cuenta.codigo);
+            getPreparedStatement().setString(2, cuenta.nombre);
+            getPreparedStatement().setString(3,cuenta.recibe_saldo);
+            getPreparedStatement().setString(4,cuenta.tipo);
+            getPreparedStatement().setBoolean(5, cuenta.estado);
+
+            // Ejecuto la consulta
+            getPreparedStatement().executeUpdate();
+        }catch (SQLException exception){ System.out.println(exception.getMessage()); }
+    }
+
+    public boolean existeCuenta(String codigo){
+        boolean codigo_existe = false;
+        try {
+            setConnection(ConexionBD.conexion());
+            String codigoCuenta = cuentaQuery.existeCodigoCuenta(codigo);
+            setPreparedStatement(getConnection().prepareStatement(codigoCuenta));
+            setResultSet(preparedStatement.executeQuery());
+            if (resultSet.next()) {
+                codigo_existe = true;
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return codigo_existe;
     }
 
     public ConexionBD getConexionBD() {
