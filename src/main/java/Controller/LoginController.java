@@ -1,6 +1,7 @@
 package Controller;
 import Model.User;
 import Model.ViewFuntionality;
+import Services.Service;
 import Services.ServiceLogin;
 import com.administrativos.sistema.utilidades.Alerta;
 import com.administrativos.sistema.utilidades.Utilidades;
@@ -21,7 +22,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class LoginController extends ViewFuntionality{
+public class LoginController extends ViewFuntionality {
     //Atributos
     @FXML private Button botonIniciarSesion;
     @FXML private PasswordField campoContrasena;
@@ -32,16 +33,10 @@ public class LoginController extends ViewFuntionality{
     @FXML private Text botonRegistrarse;
 
     public LoginController(){}
-    public static User getUserInstance(){
-        if (getUser() == null){
-            setUser(new User());
-        }
-        return getUser();
-    }
 
     private static User user = null;
     private Stage stage;
-    private ServiceLogin serviceLogin = new ServiceLogin();
+    private static ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
 
     //Getters y Setters
@@ -83,25 +78,23 @@ public class LoginController extends ViewFuntionality{
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
 
     //Metodos
+    public static User getUserInstance(String email){
+        if (getUser() == null){
+            setUser(serviceLogin.obtenerUsuarioPorEmail(email));
+        }
+        return getUser();
+    }
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
     private String obtenerContrasena(){ return getCampoContrasena().getText(); }
 
-    public boolean existeUserEmail(String email) throws SQLException {
-        /*
-        if(serviceLogin.existeUser(email)){
-            return true;
-        }
-        return false;
-
-         */
-        return serviceLogin.existeUser2(email);
-    }
+    public boolean existeUserEmail(String email) throws SQLException { return serviceLogin.existeUser2(email); }
     public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
 
     @FXML
     public void accionBotonIniciarSesion() throws SQLException {
         if (estanCamposVacios()){ Alerta.alertaCamposIncompletos(); }
         else { alertaEmailContrasena(); }
+
     }
     @FXML
     public void accionRegistrarUsuario(MouseEvent event) throws IOException {
@@ -129,7 +122,11 @@ public class LoginController extends ViewFuntionality{
         if (!alertaEmail()){ Alerta.alertaEmailInexistente(); }
         else{
             if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida(); }
-            else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
+            //else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
+            else {
+                setUser(serviceLogin.obtenerUsuarioPorEmail(obtenerEmail()));
+                System.out.println(getUser());
+            }
         }
     }
 
