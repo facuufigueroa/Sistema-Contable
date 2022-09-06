@@ -69,31 +69,31 @@
                   <Image url="@../Images/lock.png" />
                </image>
             </ImageView>
-            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="296.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="13.0" />
-               </font>
-            </Button>
             <TextField fx:id="campoNombre" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="campoApellido" layoutX="127.0" layoutY="137.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
+            <PasswordField fx:id="campoApellido" layoutX="127.0" layoutY="136.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
-            </TextField>
-            <TextField fx:id="campoEmail" layoutX="127.0" layoutY="187.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
+            </PasswordField>
+            <PasswordField fx:id="campoEmail" layoutX="127.0" layoutY="186.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
-            </TextField>
+            </PasswordField>
             <PasswordField fx:id="campoContrasena" layoutX="127.0" layoutY="236.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </PasswordField>
+            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="296.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

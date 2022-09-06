@@ -2,7 +2,10 @@ package Controller;
 import Model.User;
 import Model.ViewFuntionality;
 import Services.Service;
+
 import Services.ServiceLogin;
+import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -30,6 +34,7 @@ public class LoginController extends ViewFuntionality implements Alerta{
     @FXML private Button btnClose;
     @FXML private AnchorPane frameLogin;
     @FXML private Text botonRegistrarse;
+
 
     public LoginController(){}
 
@@ -69,28 +74,28 @@ public class LoginController extends ViewFuntionality implements Alerta{
     public void setCampoContrasena(PasswordField campoContrasena) { this.campoContrasena = campoContrasena; }
     public TextField getCampoUsuario() { return campoUsuario; }
     public void setCampoUsuario(TextField campoUsuario) { this.campoUsuario = campoUsuario; }
-    private static void setUser(User usuario) { user = usuario; }
-    public static User getUser(){ return user; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
     public Text getBotonRegistrarse() { return botonRegistrarse; }
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
 
     //Metodos
-    public static User getUserInstance(String email){
-        if (getUser() == null){
-            setUser(serviceLogin.obtenerUsuarioPorEmail(email));
-        }
-        return getUser();
-    }
+
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
     private String obtenerContrasena(){ return getCampoContrasena().getText(); }
 
-    public boolean existeUserEmail(String email) throws SQLException { return serviceLogin.existeUser2(email); }
+    public boolean existeUserEmail(String email){
+        if(serviceLogin.existeUser(email)){
+            return true;
+        }
+        return false;
+    }
     public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
 
     @FXML
-    public void accionBotonIniciarSesion() throws SQLException {
+    public void accionBotonIniciarSesion(){
         if (estanCamposVacios()){ alertaCamposIncompletos(); }
         else { alertaEmailContrasena(); }
 
@@ -117,29 +122,26 @@ public class LoginController extends ViewFuntionality implements Alerta{
      *  Luego, verifica la contraseña ingresada con la de la base de datos.
      *  De no ser asi, tambien genera un mensaje de error.
      */
-    private void alertaEmailContrasena() throws SQLException {
-        if (!alertaEmail()){ alertaEmailInexistente(); }
-        else{
-            if (!alertaContrasena()){ alertaContrasenaInvalida(); }
-            //else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
-            else {
-                setUser(serviceLogin.obtenerUsuarioPorEmail(obtenerEmail()));
-                System.out.println(getUser());
-            }
-        }
-    }
 
-    private boolean estanCamposVacios(){
-        return estaCampoVacio(getCampoUsuario()) || estaCampoVacio(getCampoContrasena());
-    }
 
     private boolean estaCampoVacio(TextField campo) {
         return campo.getText().isEmpty();
     }
 
+    private void alertaEmailContrasena(){
+        if (!alertaEmail()){ alertaEmailInexistente(); }
+        else{
+            if (!alertaContrasena()){ alertaContrasenaInvalida(); }
+            else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
+        }
+    }
+
+    private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
+
+
     private boolean alertaContrasena(){ return compararContrasenas(); }
 
-    private boolean alertaEmail() throws SQLException { return !existeUserEmail(obtenerEmail()) ? false : true; }
+    private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
 
 
     @Override
