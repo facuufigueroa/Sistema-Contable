@@ -101,6 +101,7 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     @FXML
     public void accionDeshabilitarCuenta(){
+        String codigoDeshabilitado = txtCodigo.getText();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Esta ?");
         alert.setHeaderText("Confirmación de deshabilitación de cuenta");
         alert.setTitle("No seleccion de cuenta");
