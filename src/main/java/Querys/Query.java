@@ -1,2 +1,4 @@
-package Querys;public class Query {
+package Querys;
+
+public class Query {
 }
