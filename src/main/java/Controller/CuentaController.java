@@ -52,6 +52,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listarCuentasHabilitadas();
+        iniciarCbbRS();
+        iniciarCbbTipo();
     }
 
     @FXML
@@ -104,6 +106,20 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     public String accionTablaCuentasH(){
         String codigo_cuenta = String.valueOf(tableCuentas.getSelectionModel().getSelectedItem().codigo);
         return codigo_cuenta;
+    }
+
+    /*Método para iniciar el combobox recibe saldo*/
+    public void iniciarCbbRS(){
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll("Si", "No");
+        cbbRecibeSaldo.setItems(items);
+    }
+
+    /*Método para iniciar el combobox tipo*/
+    public void iniciarCbbTipo(){
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll("Activo", "Pasivo","Patrimonio","Resultado +","Resultado -");
+        cbbTipo.setItems(items);
     }
 
     public Button getBtnMinimize() {
