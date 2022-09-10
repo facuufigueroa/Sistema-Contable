@@ -124,6 +124,16 @@ public class ServicePDC {
         return codigo_existe;
     }
 
+    public void actualizarTablaCuentas(){
+       try{
+           setConnection(ConexionBD.conexion());
+           setPreparedStatement(getConnection().prepareStatement(cuentaQuery.updateCuentas()));
+           setResultSet(preparedStatement.executeQuery());
+       }catch (Exception e){
+           System.out.println(e);
+       }
+    }
+
     public ConexionBD getConexionBD() {
         return conexionBD;
     }

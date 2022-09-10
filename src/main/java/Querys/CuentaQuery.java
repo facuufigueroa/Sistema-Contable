@@ -28,4 +28,8 @@ public class CuentaQuery {
         return "SELECT * FROM cuentas as c WHERE c.codigo='"+codigo+"'";
     }
 
+    public static String updateCuentas(){
+        return "SELECT * FROM cuentas";
+    }
+
 }
