@@ -1,16 +1,19 @@
 package Controller;
+import Model.*;
 import Model.Alerta;
-import Model.User;
-import Model.Utilidades;
-import Model.ViewFuntionality;
 import Services.ServiceRegister;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import java.sql.SQLException;
+import javafx.scene.input.MouseEvent;
 
-public class RegisterController extends ViewFuntionality{
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+public class RegisterController extends ViewFuntionality implements Initializable {
     @FXML private TextField campoNombre;
     @FXML private TextField campoApellido;
     @FXML private TextField campoEmail;
@@ -21,8 +24,14 @@ public class RegisterController extends ViewFuntionality{
     private RegisterController controller;
     private ServiceRegister serviceRegister = new ServiceRegister();
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        getBotonRegistrarse().setDisable(false);
+    }
+
     public Button getButtonMin() { return buttonMin; }
     public Button getButtonClose() { return buttonClose ;}
+    public Button getBotonRegistrarse() { return botonRegistrarse; }
     public TextField getCampoNombre() { return campoNombre; }
     public TextField getCampoApellido() { return campoApellido; }
     public TextField getCampoEmail() { return campoEmail; }
@@ -33,7 +42,7 @@ public class RegisterController extends ViewFuntionality{
 
     @FXML
     public void actionRegister(ActionEvent event) throws SQLException {
-        if (!estanCamposVacios() && !getServiceRegister().existeUser(Utilidades.obtenerValor(getCampoEmail()))){
+        if (noEstanCamposVaciosYExisteEmail()){
             getServiceRegister().insertarUsuario(obtenerFormulario());
             super.actionCloseStage(event);
             showStage();
@@ -45,9 +54,29 @@ public class RegisterController extends ViewFuntionality{
         super.actionCloseStage(event);
         showStage();
     }
-
+    @FXML
+    private boolean datoEsTexto(){
+        if(Validacion.esTexto(getCampoNombre().getText()) && Validacion.esTexto(getCampoApellido().getText())){
+            getBotonRegistrarse().setDisable(false);
+            return true;
+        }
+        getBotonRegistrarse().setDisable(true);
+        return false;
+    }
+    @FXML
+    private boolean datoEsEmail(){
+        if (Validacion.validarEmail(getCampoEmail().getText())){
+            getBotonRegistrarse().setDisable(false);
+            return true;
+        }
+        getBotonRegistrarse().setDisable(true);
+        return false;
+    }
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
+    private boolean noEstanCamposVaciosYExisteEmail(){
+        return !estanCamposVacios() && !getServiceRegister().existeUser(Utilidades.obtenerValor(getCampoEmail()));
+    }
     private void comprobarCampoVacionOEmailExistente(){
         if (estanCamposVacios()){ Alerta.alertaCamposIncompletos(); }
         else{ Alerta.alertaEmailYaExiste(); }
@@ -57,11 +86,23 @@ public class RegisterController extends ViewFuntionality{
                 || Utilidades.estaCampoVacio(getCampoEmail()) || Utilidades.estaCampoVacio(getCampoContrasena());
     }
     private User obtenerFormulario(){
-        return new User(Utilidades.obtenerValor(getCampoNombre()),
-                        Utilidades.obtenerValor(getCampoApellido()),
-                        Utilidades.obtenerValor(getCampoEmail()),
-                        Utilidades.obtenerValor(getCampoContrasena())
-        );
+        String nombre = Utilidades.obtenerValor(getCampoNombre());
+        String apellido = Utilidades.obtenerValor(getCampoApellido());
+        String email = Utilidades.obtenerValor(getCampoEmail());
+        String contrasena = Utilidades.obtenerValor(getCampoContrasena());
+        return new User(  Utilidades.capitalizarTexto(nombre)
+                        , Utilidades.capitalizarTexto(apellido)
+                        , email
+                        , contrasena);
     }
 
+    private boolean validarDatos(String nombre, String apellido, String email){
+        if (Validacion.esTexto(nombre) && Validacion.esNumero(apellido) && Validacion.validarEmail(email)){
+            getBotonRegistrarse().setDisable(false);
+            return true;
+        }else{
+            getBotonRegistrarse().setDisable(true);
+            return false;
+        }
+    }
 }

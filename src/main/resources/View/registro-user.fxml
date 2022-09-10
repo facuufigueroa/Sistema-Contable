@@ -74,17 +74,17 @@
                   <Font name="Arial" size="13.0" />
                </font>
             </Button>
-            <TextField fx:id="campoNombre" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
+            <TextField fx:id="campoNombre" onKeyReleased="#datoEsTexto" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="campoApellido" layoutX="127.0" layoutY="137.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
+            <TextField fx:id="campoApellido" onKeyReleased="#datoEsTexto" layoutX="127.0" layoutY="137.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="campoEmail" layoutX="127.0" layoutY="187.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
+            <TextField fx:id="campoEmail" onKeyReleased="#datoEsEmail" layoutX="127.0" layoutY="187.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>

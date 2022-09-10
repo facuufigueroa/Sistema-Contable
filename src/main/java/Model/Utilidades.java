@@ -7,4 +7,5 @@ public class Utilidades {
     public static void cargarValor(TextField textField, String valor){ textField.setText(valor); }
     public static boolean sonEnterosIguales(Integer valor1, Integer valor2){ return valor1.equals(valor2); }
     public static boolean sonEnterosIguales(int valor1, int valor2){ return valor1 == valor2; }
+    public static String capitalizarTexto(String texto){ return texto.substring(0,1).toUpperCase() + texto.substring(1).toLowerCase(); }
 }

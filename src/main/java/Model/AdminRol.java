@@ -1,7 +1,4 @@
 package Model;
-
-import Test.testController;
-
 public class AdminRol extends Roles{
     public AdminRol(){
         super();
@@ -27,13 +24,5 @@ public class AdminRol extends Roles{
     @Override
     public void permisos() {
 
-    }
-
-    @Override
-    public void restricciones(testController test) {
-        test.deshabilitarPanel(test.panelAzul);
-        test.habilitarPanel(test.panelRojo);
-        test.habilitarFecha(test.fecha);
-        test.habilitarBoton(test.btn3);
     }
 }
