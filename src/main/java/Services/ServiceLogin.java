@@ -38,11 +38,11 @@ public class ServiceLogin {
 
             // Consulta a la tabla
             // RETURN_GENERATED_KEYS Genera la clave iduser automaticamente.
-            setPreparedStatement(getConnection().prepareStatement(UserQuery.insertarUsuario(), PreparedStatement.RETURN_GENERATED_KEYS));
+            setPreparedStatement(getConnection().prepareStatement(UserQuery.insertarUsuario()));
 
             // Ingreso valores de user
             getPreparedStatement().setString(1, user.getEmail());
-            getPreparedStatement().setString(2, user.getPassword());
+            getPreparedStatement().setString(2, user.getContrasena());
 
             // Ejecuto la consulta
             getPreparedStatement().executeUpdate();

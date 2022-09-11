@@ -1,24 +1,53 @@
 package Model;
 public class User {
     private String email;
-    private String password;
+    private String contrasena;
 
-    public User(){}
+    private String nombre;
+
+    private String apellido;
+
     public User(String email, String password) {
         setEmail(email);
-        setPassword(password);
+        setContrasena(password);
+    }
+
+    public User(String email, String contrasena, String nombre, String apellido) {
+        this.email = email;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
     }
 
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getPassword() {
-        return password;
+
+    public String getContrasena() {
+        return contrasena;
     }
-    public void setPassword(String password) {
-        this.password = password;
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 }

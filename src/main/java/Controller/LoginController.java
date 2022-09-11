@@ -1,8 +1,11 @@
 package Controller;
 import Model.User;
 import Model.ViewFuntionality;
+import Services.Service;
+
 import Services.ServiceLogin;
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LoginController extends ViewFuntionality implements Alerta{
     //Atributos
@@ -31,9 +35,12 @@ public class LoginController extends ViewFuntionality implements Alerta{
     @FXML private AnchorPane frameLogin;
     @FXML private Text botonRegistrarse;
 
-    private User user;
+
+    public LoginController(){}
+
+    private static User user = null;
     private Stage stage;
-    private ServiceLogin serviceLogin = new ServiceLogin();
+    private static ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
 
     //Getters y Setters
@@ -75,6 +82,7 @@ public class LoginController extends ViewFuntionality implements Alerta{
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
 
     //Metodos
+
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
     private String obtenerContrasena(){ return getCampoContrasena().getText(); }
 
@@ -90,6 +98,7 @@ public class LoginController extends ViewFuntionality implements Alerta{
     public void accionBotonIniciarSesion(){
         if (estanCamposVacios()){ alertaCamposIncompletos(); }
         else { alertaEmailContrasena(); }
+
     }
     @FXML
     public void accionRegistrarUsuario(MouseEvent event) throws IOException {
@@ -113,6 +122,12 @@ public class LoginController extends ViewFuntionality implements Alerta{
      *  Luego, verifica la contraseña ingresada con la de la base de datos.
      *  De no ser asi, tambien genera un mensaje de error.
      */
+
+
+    private boolean estaCampoVacio(TextField campo) {
+        return campo.getText().isEmpty();
+    }
+
     private void alertaEmailContrasena(){
         if (!alertaEmail()){ alertaEmailInexistente(); }
         else{
@@ -123,9 +138,11 @@ public class LoginController extends ViewFuntionality implements Alerta{
 
     private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
 
+
     private boolean alertaContrasena(){ return compararContrasenas(); }
 
     private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
+
 
     @Override
     public boolean alertaCamposIncompletos() {
