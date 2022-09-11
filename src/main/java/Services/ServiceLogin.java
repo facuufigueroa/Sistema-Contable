@@ -42,7 +42,7 @@ public class ServiceLogin {
 
             // Ingreso valores de user
             getPreparedStatement().setString(1, user.getEmail());
-            getPreparedStatement().setString(2, user.getPassword());
+            getPreparedStatement().setString(2, user.getContrasena());
 
             // Ejecuto la consulta
             getPreparedStatement().executeUpdate();

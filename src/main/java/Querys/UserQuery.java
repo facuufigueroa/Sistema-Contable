@@ -2,7 +2,7 @@ package Querys;
 
 public class UserQuery {
 
-    public static String insertarUsuario() { return "INSERT INTO usuarios (nombre, apellido, email, contrasena) VALUES (?, ?, ?, ?);"; }
+    public static String insertarUsuario() { return "INSERT INTO usuarios (nombre, apellido, email, contraseña) VALUES (?, ?, ?, ?);"; }
     public static String insertarRol(){ return "INSERT INTO roles (nombre) VALUES (?)"; }
     public static String obtenerRol(){ return "SELECT nombre FROM roles"; }
     public static String obtenerUsuarioRol(){

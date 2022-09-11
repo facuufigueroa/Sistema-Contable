@@ -24,7 +24,7 @@ public class ServiceRegister extends Service {
         } catch (SQLException exception) { System.out.println(exception.getMessage()); }
         return false;
     }
-    public boolean insertarUsuario(User usuario) throws SQLException{ // 1|nombre  2|apellido  3|email  4|constrasena
+    public boolean insertarUsuario(User usuario) { // 1|nombre  2|apellido  3|email  4|constrasena
         try{
             setConexion(ConexionBD.conexion());
             setPs(getConexion().prepareStatement(UserQuery.insertarUsuario()));
