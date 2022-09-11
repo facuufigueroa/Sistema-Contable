@@ -1,7 +1,5 @@
 package Model;
 
-import Test.testController;
-
 public class UserRol extends Roles{
     public UserRol(){
         super();
@@ -28,15 +26,4 @@ public class UserRol extends Roles{
 
     }
 
-    @Override
-    public void restricciones(testController testController) {
-        sacarPermisosUser(testController);
-    }
-
-    public void sacarPermisosUser(testController test){
-        test.deshabilitarBoton(test.btn3);
-        test.deshabilitarPanel(test.panelRojo);
-        test.deshabilitarFecha(test.fecha);
-        test.habilitarPanel(test.panelAzul);
-    }
 }

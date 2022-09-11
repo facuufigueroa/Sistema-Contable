@@ -1,7 +1,4 @@
 package Model;
-
-import Test.testController;
-
 public abstract class Roles {
     private User user;
     private String rol;
@@ -21,5 +18,4 @@ public abstract class Roles {
     public abstract void addRol();
     public abstract void removeRol();
     public abstract void permisos();
-    public abstract void restricciones(testController test);
 }

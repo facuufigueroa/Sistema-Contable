@@ -12,6 +12,15 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
+    public static boolean alertaDatosInvalidos() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡Por favor!\nIngrese los datos correctamente");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
     public static boolean alertaEmailInexistente() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
@@ -40,7 +49,7 @@ public class Alerta {
         return false;
     }
     public static boolean alertaLogueadoCorrectamente() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle(null);
         alert.setContentText("¡Usuario logueado correctamente!");
@@ -49,7 +58,7 @@ public class Alerta {
         return true;
     }
     public static boolean alertaRegistradoCorrectamente() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         alert.setTitle(null);
         alert.setContentText("¡Usuario registrado correctamente!");
