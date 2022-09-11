@@ -69,7 +69,7 @@
                   <Image url="@../Images/lock.png" />
                </image>
             </ImageView>
-            <TextField fx:id="campoUsuario" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
+            <TextField fx:id="campoNombre" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>

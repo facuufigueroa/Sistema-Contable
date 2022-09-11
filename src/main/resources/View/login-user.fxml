@@ -56,7 +56,7 @@
                   <Font name="Arial" size="13.0" />
                </font>
             </PasswordField>
-            <TextField fx:id="campoUsuario" layoutX="98.0" layoutY="130.0" prefHeight="35.0" prefWidth="228.0" promptText="Usuario">
+            <TextField fx:id="campoUsuario" layoutX="98.0" layoutY="130.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
