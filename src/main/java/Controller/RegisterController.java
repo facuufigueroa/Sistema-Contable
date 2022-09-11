@@ -77,6 +77,7 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     }
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
+
     private boolean noEstanCamposVaciosYExisteEmail(){
         return !estanCamposVacios() && !getServiceRegister().existeUser(Utilidades.obtenerValor(getCampoEmail()));
     }
@@ -108,4 +109,5 @@ public class RegisterController extends ViewFuntionality implements Initializabl
             return false;
         }
     }
+
 }
