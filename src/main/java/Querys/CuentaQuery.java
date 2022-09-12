@@ -1,6 +1,5 @@
 package Querys;
 
-import Model.Cuenta;
 
 public class CuentaQuery {
 

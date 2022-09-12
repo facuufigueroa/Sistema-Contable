@@ -2,15 +2,13 @@ package Services;
 import DataBase.ConexionBD;
 import Model.Alerta;
 import Model.User;
-import Querys.UserQuery;
-import javafx.fxml.Initializable;
+import Model.Usuario_Rol;
+import Querys.UserQuery;;
 import javafx.scene.control.Alert;
 import javafx.stage.StageStyle;
-
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+
 
 public class ServiceRegister extends Service {
 
@@ -52,4 +50,19 @@ public class ServiceRegister extends Service {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+
+    public void asginarRol(Usuario_Rol usuario_rol){
+        try{
+            setConexion(ConexionBD.conexion());
+            setPs(getConexion().prepareStatement(UserQuery.asignarRol()));
+            agregarAtributosUsuario_Rol(getPs(), usuario_rol);
+            getPs().executeUpdate();
+        }catch (SQLException exception){ System.out.println(exception.getMessage()); }
+    }
+
+    public void agregarAtributosUsuario_Rol(PreparedStatement ps, Usuario_Rol usuario_rol) throws SQLException {
+        ps.setInt(1,usuario_rol.getUsuario());
+        ps.setInt(2,usuario_rol.getRol());
+    }
+
 }

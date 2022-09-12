@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.StageStyle;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;

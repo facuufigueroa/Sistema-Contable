@@ -1,5 +1,6 @@
 package Controller;
 
+
 import Model.Roles;
 import Model.ViewFuntionality;
 import javafx.event.ActionEvent;
@@ -12,10 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,7 +63,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         stage.setTitle("Registrar Usuario");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.showAndWait();
+        stage.show();
     }
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/

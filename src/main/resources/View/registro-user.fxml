@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.RegisterController">
    <children>
       <Pane prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #44878f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -44,56 +45,71 @@
       </Pane>
       <Pane layoutX="310.0" layoutY="40.0" prefHeight="360.0" prefWidth="440.0" style="-fx-background-color: #14648f;" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label layoutX="112.0" layoutY="14.0" text="Crear Cuenta" textAlignment="CENTER" textFill="WHITE">
+            <Label layoutX="162.0" layoutY="14.0" text="Crear Usuario" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Lucida Sans Unicode" size="38.0" />
+                  <Font name="Lucida Sans Unicode" size="24.0" />
                </font>
             </Label>
-            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/user.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/user2.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/email.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/lock.png" />
                </image>
             </ImageView>
-            <TextField fx:id="campoNombre" layoutX="127.0" layoutY="85.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
+            <TextField fx:id="campoNombre" layoutX="127.0" layoutY="60.0" prefHeight="35.0" prefWidth="228.0" promptText="Nombre">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="campoApellido" layoutX="127.0" layoutY="136.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
+            <TextField fx:id="campoApellido" layoutX="127.0" layoutY="111.0" prefHeight="35.0" prefWidth="228.0" promptText="Apellido">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="campoEmail" layoutX="127.0" layoutY="186.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
+            <TextField fx:id="campoEmail" layoutX="127.0" layoutY="161.0" prefHeight="35.0" prefWidth="228.0" promptText="Email">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="campoContrasena" layoutX="127.0" layoutY="236.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
+            <PasswordField fx:id="campoContrasena" layoutX="127.0" layoutY="211.0" prefHeight="35.0" prefWidth="228.0" promptText="Contraseña">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </PasswordField>
-            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="296.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="311.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrarse" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
             </Button>
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="86.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/rol.png" />
+               </image>
+            </ImageView>
+            <CheckBox fx:id="checkRolAdmin" layoutX="136.0" layoutY="267.0" mnemonicParsing="false" onMouseClicked="#accionCheckRolAdmin" prefHeight="23.0" prefWidth="100.0" text="ROL ADMIN">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="13.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="checkRolUser" layoutX="241.0" layoutY="267.0" mnemonicParsing="false" onMouseClicked="#accionCheckRolUser" prefHeight="23.0" prefWidth="111.0" text="ROL USUARIO">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="13.0" />
+               </font>
+            </CheckBox>
          </children>
       </Pane>
    </children>
