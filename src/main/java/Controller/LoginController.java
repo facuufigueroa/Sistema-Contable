@@ -1,31 +1,26 @@
 package Controller;
 import Model.User;
 import Model.ViewFuntionality;
-import Services.Service;
-
 import Services.ServiceLogin;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import Model.Alerta;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-public class LoginController extends ViewFuntionality implements Alerta{
+public class LoginController extends ViewFuntionality{
     //Atributos
     @FXML private Button botonIniciarSesion;
     @FXML private PasswordField campoContrasena;
@@ -35,6 +30,7 @@ public class LoginController extends ViewFuntionality implements Alerta{
     @FXML private AnchorPane frameLogin;
     @FXML private Text botonRegistrarse;
 
+    private MainController mainController;
 
     public LoginController(){}
 
@@ -43,7 +39,97 @@ public class LoginController extends ViewFuntionality implements Alerta{
     private static ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
 
+
+    //Metodos
+
+    private String obtenerEmail(){ return getCampoUsuario().getText(); }
+    private String obtenerContrasena(){ return getCampoContrasena().getText(); }
+
+    public boolean existeUserEmail(String email){
+        if(serviceLogin.existeUser(email)){
+            return true;
+        }
+        return false;
+    }
+    public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
+
+    @FXML
+    public void accionBotonIniciarSesion(ActionEvent event) throws IOException {
+        if (estanCamposVacios()){ Alerta.alertaCamposIncompletos();
+        }
+        else { alertaEmailContrasena(event); }
+
+    }
+
+
+    private void loadMenuPrincipal(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
+        Parent parent = fxmlLoader.load();
+        setMainController(loadRegister(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getMainController().setVentana(loginStage);
+        getMainController().hideStage();
+        stage.setScene(scene);
+        stage.setTitle("Menu Principal");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.showAndWait();
+    }
+
+    private MainController loadRegister(MainController mainController){ return mainController; }
+
+
+    /**
+     *  Método que comprueba la existencia del email ingresado, en caso contrario genera un mensaje de error.
+     *  Luego, verifica la contraseña ingresada con la de la base de datos.
+     *  De no ser asi, tambien genera un mensaje de error.
+     */
+
+
+    private boolean estaCampoVacio(TextField campo) {
+        return campo.getText().isEmpty();
+    }
+
+    private void alertaEmailContrasena(ActionEvent event) throws IOException {
+        if (!alertaEmail()){ Alerta.alertaEmailInexistente(); }
+        else{
+            if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida();
+            }
+            else{ setUser(new User(obtenerEmail(), obtenerContrasena()));
+                loadMenuPrincipal(event);
+            }
+        }
+    }
+
+    private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
+
+
+    private boolean alertaContrasena(){ return compararContrasenas(); }
+
+    private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
+
+
+
     //Getters y Setters
+
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public static ServiceLogin getServiceLogin() {
+        return serviceLogin;
+    }
+
+    public static void setServiceLogin(ServiceLogin serviceLogin) {
+        LoginController.serviceLogin = serviceLogin;
+    }
+
     public Stage getStage() {
         return stage;
     }
@@ -81,98 +167,5 @@ public class LoginController extends ViewFuntionality implements Alerta{
     public RegisterController getRegisterController() { return registerController; }
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
 
-    //Metodos
 
-    private String obtenerEmail(){ return getCampoUsuario().getText(); }
-    private String obtenerContrasena(){ return getCampoContrasena().getText(); }
-
-    public boolean existeUserEmail(String email){
-        if(serviceLogin.existeUser(email)){
-            return true;
-        }
-        return false;
-    }
-    public boolean compararContrasenas(){ return serviceLogin.coincidenContrasenas(obtenerEmail(), obtenerContrasena()); }
-
-    @FXML
-    public void accionBotonIniciarSesion(){
-        if (estanCamposVacios()){ alertaCamposIncompletos(); }
-        else { alertaEmailContrasena(); }
-
-    }
-    @FXML
-    public void accionRegistrarUsuario(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registro-user.fxml"));
-        Parent parent = fxmlLoader.load();
-        setRegisterController(loadRegister(fxmlLoader.getController()));
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getRegisterController().setVentana(loginStage);
-        getRegisterController().hideStage();
-        stage.setScene(scene);
-        stage.setTitle("Registrarse");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.showAndWait();
-    }
-
-    /**
-     *  Método que comprueba la existencia del email ingresado, en caso contrario genera un mensaje de error.
-     *  Luego, verifica la contraseña ingresada con la de la base de datos.
-     *  De no ser asi, tambien genera un mensaje de error.
-     */
-
-
-    private boolean estaCampoVacio(TextField campo) {
-        return campo.getText().isEmpty();
-    }
-
-    private void alertaEmailContrasena(){
-        if (!alertaEmail()){ alertaEmailInexistente(); }
-        else{
-            if (!alertaContrasena()){ alertaContrasenaInvalida(); }
-            else{ setUser(new User(obtenerEmail(), obtenerContrasena())); }
-        }
-    }
-
-    private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
-
-
-    private boolean alertaContrasena(){ return compararContrasenas(); }
-
-    private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
-
-
-    @Override
-    public boolean alertaCamposIncompletos() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText(null);
-        alert.setTitle(null);
-        alert.setContentText("¡Por favor, rellene los campos!");
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert.showAndWait();
-        return false;
-    }
-    @Override
-    public void alertaEmailInexistente() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText(null);
-        alert.setTitle(null);
-        alert.setContentText("¡El email no existe!\nPor favor, ingrese un email correcto.");
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert.showAndWait();
-    }
-    @Override
-    public void alertaContrasenaInvalida() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText(null);
-        alert.setTitle(null);
-        alert.setContentText("¡La contraseña es incorrecta!");
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert.showAndWait();
-    }
-
-    /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
-    private RegisterController loadRegister(RegisterController controller){ return controller; }
 }
