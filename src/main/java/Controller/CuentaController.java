@@ -43,8 +43,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     private ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
 
-    private ObservableList<Cuenta> getObCuentas = FXCollections.observableArrayList(servicePDC.actualizarTablaCuentas());
-
     public void listarCuentasHabilitadas(){
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
