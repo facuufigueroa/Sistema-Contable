@@ -5,7 +5,7 @@ import Model.*;
 
 import java.sql.*;
 
-public class ServiceLogin {
+public class ServiceLogin extends Service{
     //Atributos
     private ConexionBD conexionBD;
     private Connection connection;

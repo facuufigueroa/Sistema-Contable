@@ -1,6 +1,6 @@
 package Controller;
-import Model.User;
-import Model.ViewFuntionality;
+import Model.*;
+import Model.Alerta;
 import Services.ServiceLogin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import Model.Alerta;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
@@ -71,6 +70,8 @@ public class LoginController extends ViewFuntionality{
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getMainController().setVentana(loginStage);
         getMainController().hideStage();
+        getMainController().setRoles(new AdminRol());
+        getMainController().cargarDatos(getUser());
         stage.setScene(scene);
         stage.setTitle("Menu Principal");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -97,7 +98,7 @@ public class LoginController extends ViewFuntionality{
         else{
             if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida();
             }
-            else{ setUser(new User(obtenerEmail(), obtenerContrasena()));
+            else{ setUser(serviceLogin.obtenerUsuarioPorEmail(obtenerEmail()));
                 loadMenuPrincipal(event);
             }
         }
@@ -161,7 +162,7 @@ public class LoginController extends ViewFuntionality{
     public TextField getCampoUsuario() { return campoUsuario; }
     public void setCampoUsuario(TextField campoUsuario) { this.campoUsuario = campoUsuario; }
     public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    private void setUser(User user) { this.user = user; }
     public Text getBotonRegistrarse() { return botonRegistrarse; }
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }

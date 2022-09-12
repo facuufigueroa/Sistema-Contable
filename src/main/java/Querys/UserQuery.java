@@ -5,6 +5,8 @@ public class UserQuery {
     public static String insertarUsuario() { return "INSERT INTO usuarios (nombre, apellido, email, contraseña) VALUES (?, ?, ?, ?);"; }
     public static String asignarRol(){ return "INSERT INTO usuario_rol (usuario,rol) VALUES (?,?)"; }
     public static String obtenerRol(){ return "SELECT nombre FROM roles"; }
+
+
     public static String obtenerUsuarioRol(){
         return   " SELECT usuarios.nombre, usuarios.apellido, usuarios.email, roles.nombre as rol "
                + " FROM usuario_rol"

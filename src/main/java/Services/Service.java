@@ -2,6 +2,7 @@ package Services;
 import DataBase.ConexionBD;
 import Model.Alerta;
 import Model.User;
+import Querys.RolesQuery;
 import Querys.UserQuery;
 import javafx.scene.control.Alert;
 import javafx.stage.StageStyle;
@@ -23,7 +24,16 @@ public class Service {
     public ResultSet getTupla() { return tupla; }
     public void setTupla(ResultSet tupla) { this.tupla = tupla; }
 
-
+    public int obtenerIdUser(String email){
+        try{
+            setConexion(ConexionBD.conexion());
+            setPs(getConexion().prepareStatement(RolesQuery.obtenerIdUser()));
+            getPs().setString(1, email);
+            setTupla(getPs().executeQuery());
+            if (getTupla().next()){ return getTupla().getInt(1); }
+        }catch (SQLException e){ System.out.println("Id usuario: " + e.getMessage()); }
+        return -1;
+    }
     public boolean existeObjeto(String tabla, String atributo, Object objeto){
         try{
             setConexion(ConexionBD.conexion());
@@ -45,7 +55,7 @@ public class Service {
                         getTupla().getString("nombre"),
                         getTupla().getString("apellido"),
                         getTupla().getString("email"),
-                        getTupla().getString("contrasena")
+                        getTupla().getString("contraseña")
                 );
             }
             return null;

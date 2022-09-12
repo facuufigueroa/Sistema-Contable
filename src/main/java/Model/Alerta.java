@@ -12,6 +12,15 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
+    public static boolean alertaSeleccioneRol() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡Por favor! Seleccione un rol para el nuevo usuario");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
     public static boolean alertaDatosInvalidos() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);

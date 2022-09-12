@@ -1,4 +1,7 @@
 package Model;
+
+import Controller.MainController;
+
 public class AdminRol extends Roles{
     public AdminRol(){
         super();
@@ -22,7 +25,15 @@ public class AdminRol extends Roles{
     }
 
     @Override
-    public void permisos() {
-
+    public void permisos(MainController controller) {
+        Utilidades.mostrarBoton(controller.getBtnCrearUsuario());
+        Utilidades.habilitarBoton(controller.getBtnCrearUsuario());
+    }
+    @Override
+    public AdminRol tipoRol(User usuario, String rol) {
+        if (rol.equals("admin")){
+            return new AdminRol(usuario);
+        }
+        return null;
     }
 }

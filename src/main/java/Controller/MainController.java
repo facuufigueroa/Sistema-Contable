@@ -1,8 +1,7 @@
 package Controller;
 
 
-import Model.Roles;
-import Model.ViewFuntionality;
+import Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,14 +38,13 @@ public class MainController extends ViewFuntionality implements Initializable {
     @FXML
     private TextField  txtUsuarioEnSesion;
 
-    private Roles roles;
+    private Roles roles = null;
+    private User usuario;
 
     private RegisterController registerController;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     @FXML
@@ -71,6 +69,21 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
+
+    public void permisos(){ getRoles().permisos(this); }
+    public void nombreCompletoUsuario(){
+        getTxtUsuarioEnSesion().setText(getRoles().nombre()
+                + " "
+                + getRoles().apellido()
+        );
+    }
+    public void cargarDatos(User user){
+        setUsuario(new User(user.getNombre(), user.getApellido(), user.getEmail(), user.getContrasena()));
+        getRoles().setUser(getUsuario());
+        //setRoles(getRoles().tipoRol(user,"usuario"));
+        permisos();
+        nombreCompletoUsuario();
+    }
 
     public Button getBtnPlanDeCuenta() {
         return btnPlanDeCuenta;
@@ -120,9 +133,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         this.txtUsuarioEnSesion = txtUsuarioEnSesion;
     }
 
-    public Roles getRoles() {
-        return roles;
-    }
+    public Roles getRoles() { return roles; }
 
     public void setRoles(Roles roles) {
         this.roles = roles;
@@ -135,4 +146,6 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void setRegisterController(RegisterController registerController) {
         this.registerController = registerController;
     }
+    public User getUsuario() { return usuario; }
+    public void setUsuario(User usuario) { this.usuario = usuario; }
 }

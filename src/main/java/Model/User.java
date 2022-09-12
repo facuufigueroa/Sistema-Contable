@@ -12,11 +12,11 @@ public class User {
         setContrasena(password);
     }
 
-    public User(String email, String contrasena, String nombre, String apellido) {
-        this.email = email;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public User(String nombre, String apellido, String email, String contrasena) {
+       setNombre(nombre);
+       setApellido(apellido);
+       setEmail(email);
+       setContrasena(contrasena);
     }
 
     public String getEmail() {

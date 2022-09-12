@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.MainController;
+
 public class UserRol extends Roles{
     public UserRol(){
         super();
@@ -22,8 +24,16 @@ public class UserRol extends Roles{
     }
 
     @Override
-    public void permisos() {
-
+    public void permisos(MainController controller) {
+        Utilidades.deshabilitarBoton(controller.getBtnCrearUsuario());
+        Utilidades.ocultarBoton(controller.getBtnCrearUsuario());
     }
 
+    @Override
+    public UserRol tipoRol(User user,String rol) {
+        if (rol.equals("usuario")){
+            return new UserRol(user);
+        }
+        return null;
+    }
 }

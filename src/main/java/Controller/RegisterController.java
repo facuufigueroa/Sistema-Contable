@@ -6,11 +6,13 @@ import Services.ServiceRegister;
 
 import Model.ViewFuntionality;
 
+import Services.ServiceRoles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -30,11 +32,17 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     @FXML
     private CheckBox checkRolUser;
 
+    @FXML private ComboBox<Roles> comboBox;
+
+    private Roles roles;
+
     private RegisterController controller;
     private ServiceRegister serviceRegister = new ServiceRegister();
+    private ServiceRoles serviceRoles = new ServiceRoles();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getBotonRegistrarse().setDisable(false);
+        getComboBox().getItems().addAll(new UserRol(), new AdminRol());
     }
 
     public Button getButtonMin() { return buttonMin; }
@@ -47,11 +55,23 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     public RegisterController getController() { return controller; }
     public void setController(RegisterController controller) { this.controller = controller; }
     public ServiceRegister getServiceRegister() { return serviceRegister; }
+    public ServiceRoles getServiceRoles() { return serviceRoles; }
+    public Roles getRoles() { return roles; }
+    public void setRoles(Roles roles) { this.roles = roles; }
+
+    public ComboBox<Roles> getComboBox() { return comboBox; }
+    public void setComboBox(ComboBox<Roles> comboBox) { this.comboBox = comboBox; }
+
+    private boolean rolSeleccionado(){ return !getComboBox().getSelectionModel().isEmpty(); }
+
+    private void obtenerRolSeleccionadoEnComboBox(){ setRoles(getComboBox().getValue()); }
 
     @FXML
     public void actionRegister(ActionEvent event) throws SQLException {
-        if (noEstanCamposVaciosYExisteEmail()){
+        if (noEstanCamposVaciosYExisteEmail() && seleccionoRol()){
             getServiceRegister().insertarUsuario(obtenerFormulario());
+            obtenerRolSeleccionadoEnComboBox();
+            getServiceRoles().insertarUsuarioRol(obtenerFormulario().getEmail(), getRoles().getRol());
             super.actionCloseStage(event);
             showStage();
         }else{ comprobarCampoVacionOEmailExistente(); }
@@ -82,6 +102,8 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     }
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
+
+    private boolean seleccionoRol(){ return (rolSeleccionado()) ? true : Alerta.alertaSeleccioneRol(); }
 
     private boolean noEstanCamposVaciosYExisteEmail(){
         return !estanCamposVacios() && !getServiceRegister().existeUser(Utilidades.obtenerValor(getCampoEmail()));
