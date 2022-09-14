@@ -31,9 +31,9 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
     private ServicePDC servicePDC = new ServicePDC();
 
-    private ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
 
     public void listarCuentasDeshabilitadas(){
+        ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
@@ -58,6 +58,7 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     servicePDC.habilitarCuenta(accionTablaCuentasD());
+                    listarCuentasDeshabilitadas();
                 }
             });
         }

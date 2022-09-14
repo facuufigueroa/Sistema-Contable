@@ -40,9 +40,9 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     private ServicePDC servicePDC = new ServicePDC();
 
-    private ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
 
     public void listarCuentasHabilitadas(){
+        ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
@@ -112,7 +112,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     servicePDC.deshabilitarCuenta(accionTablaCuentasH());
-                    servicePDC.actualizarTablaCuentas();
                     listarCuentasHabilitadas();
                 }
             });
