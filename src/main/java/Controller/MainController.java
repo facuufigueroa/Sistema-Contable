@@ -43,6 +43,7 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     private RegisterController registerController;
 
+    private CuentaController cuentaController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +72,32 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
+
+   private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
+
+    @FXML
+    public void accionPlanDeCuenta(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/plan-de-cuenta.fxml"));
+        Parent parent = fxmlLoader.load();
+        setCuentaController(loadPlanDeCuenta(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getCuentaController().setVentana(loginStage);
+        getCuentaController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    public CuentaController getCuentaController() {
+        return cuentaController;
+    }
+
+    public void setCuentaController(CuentaController cuentaController) {
+        this.cuentaController = cuentaController;
+    }
 
     public Button getBtnPlanDeCuenta() {
         return btnPlanDeCuenta;
@@ -135,4 +162,5 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void setRegisterController(RegisterController registerController) {
         this.registerController = registerController;
     }
+
 }

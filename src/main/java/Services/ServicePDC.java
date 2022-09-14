@@ -124,15 +124,22 @@ public class ServicePDC {
         return codigo_existe;
     }
 
-    public void actualizarTablaCuentas(){
-       try{
-           setConnection(ConexionBD.conexion());
-           setPreparedStatement(getConnection().prepareStatement(cuentaQuery.updateCuentas()));
-           setResultSet(preparedStatement.executeQuery());
-       }catch (Exception e){
-           System.out.println(e);
-       }
+    public boolean recibeSaldo(String codigo){
+        boolean recibe_saldo = false;
+        try {
+            setConnection(ConexionBD.conexion());
+            String recibeSaldo = cuentaQuery.recibeSaldo(codigo);
+            setPreparedStatement(getConnection().prepareStatement(recibeSaldo));
+            setResultSet(preparedStatement.executeQuery());
+            if (resultSet.next()) {
+                recibe_saldo = true;
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return recibe_saldo;
     }
+
 
     public ConexionBD getConexionBD() {
         return conexionBD;
