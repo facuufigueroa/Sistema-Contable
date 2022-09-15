@@ -50,7 +50,7 @@
       <Line endX="144.0" fill="WHITE" layoutX="224.0" layoutY="115.0" startX="-100.0" stroke="WHITE" />
       <Pane layoutX="123.0" layoutY="177.0" prefHeight="173.0" prefWidth="522.0" style="-fx-background-color: #14648f;">
          <children>
-            <Button fx:id="btnPlanDeCuenta" layoutX="27.0" layoutY="22.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="181.0" text="   Plan de Cuentas">
+            <Button fx:id="btnPlanDeCuenta" layoutX="27.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionPlanDeCuenta" prefHeight="44.0" prefWidth="181.0" text="   Plan de Cuentas">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>

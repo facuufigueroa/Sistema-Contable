@@ -1,15 +1,24 @@
 package Controller;
 
+import Model.Alerta;
 import Model.Cuenta;
 import Model.ViewFuntionality;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
@@ -40,9 +49,12 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     private ServicePDC servicePDC = new ServicePDC();
 
-    private ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
+    private CuentaDeshabilitadaController cuentaDeshabilitadaController;
+
+    private MainController mainController;
 
     public void listarCuentasHabilitadas(){
+        ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
@@ -57,10 +69,7 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         iniciarCbbTipo();
     }
 
-    @FXML
-    public void accionVolver(){
 
-    }
 
     @FXML
     public void accionAgregarCuenta() {
@@ -91,6 +100,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
                 }
                 else{
                     servicePDC.insertarCuenta(cuenta);
+                    Alerta.alertaCuentaRegistradaCorretamente();
+                    listarCuentasHabilitadas();
                 }
             }
         } catch (Exception e) {
@@ -100,7 +111,7 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     @FXML
     public void accionDeshabilitarCuenta(){
-        String codigoDeshabilitado = txtCodigo.getText();
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Esta ?");
         alert.setHeaderText("Confirmación de deshabilitación de cuenta");
         alert.setTitle("No seleccion de cuenta");
@@ -108,14 +119,20 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         alert.initStyle(StageStyle.TRANSPARENT);
 
         List<Cuenta> filaSeleccionada = tableCuentas.getSelectionModel().getSelectedItems();
-        if(filaSeleccionada.size() == 1 ){
-            alert.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                    servicePDC.deshabilitarCuenta(accionTablaCuentasH());
-                    servicePDC.actualizarTablaCuentas();
-                    listarCuentasHabilitadas();
-                }
-            });
+
+        if(filaSeleccionada.size() == 1 ) {
+            if (filaSeleccionada.get(0).recibe_saldo.equals("Si")) {
+                alert.setContentText("¿Está seguro de deshabilitar la cuenta: " + filaSeleccionada.get(0).nombre + "?");
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        servicePDC.deshabilitarCuenta(accionTablaCuentasH());
+                        listarCuentasHabilitadas();
+                    }
+                });
+            }
+            else{
+                Alerta.recibeSaldo(filaSeleccionada.get(0).recibe_saldo);
+            }
         }
         else{
             alertaFilaNoSeleccionada();
@@ -129,11 +146,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         alert.setContentText("¡No selecciono ninguna fila de la tabla cuentas, para deshabilitar seleccione una fila!");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
-    }
-
-    @FXML
-    public void accionVerCuentasDeshabilitadas(){
-
     }
 
     /*Metodo para traer el codigo de cuenta seleccionado en la fila*/
@@ -175,8 +187,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     public boolean evaluarCamposVacios(){
         return Objects.equals(txtCodigo.getText(), "")
                 || Objects.equals(txtNombre.getText(), "")
-                || cbbTipo.getSelectionModel().getSelectedItem() == ""
-                || cbbRecibeSaldo.getSelectionModel().getSelectedItem() == "";
+                || cbbTipo.getValue() == null
+                || cbbRecibeSaldo.getValue() == null;
     }
 
     /*Método para traer codigo de cuenta*/
@@ -184,6 +196,47 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         String codigo= txtCodigo.getText();
         return codigo;
     }
+
+    @FXML
+    public void accionVerCuentasDeshabilitadas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/cuentas-deshabilitadas.fxml"));
+        Parent parent = fxmlLoader.load();
+        setCuentaDeshabilitadaController(loadCuentasD(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getCuentaDeshabilitadaController().setVentana(loginStage);
+        getCuentaDeshabilitadaController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    @FXML
+    public void accionVolver(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
+        Parent parent = fxmlLoader.load();
+        setMainController(loadMainPrincipal(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getMainController().setVentana(loginStage);
+        getMainController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    public boolean recibeSaldo(String codigo){
+        if(servicePDC.recibeSaldo(codigo)){
+            return true;
+        }
+        return false;
+    }
+
+    public void hideStage(){ getVentana().hide(); }
 
     public Button getBtnMinimize() {
         return btnMinimize;
@@ -249,5 +302,23 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         this.columTipo = columTipo;
     }
 
+    public CuentaDeshabilitadaController getCuentaDeshabilitadaController() {
+        return cuentaDeshabilitadaController;
+    }
 
+    public void setCuentaDeshabilitadaController(CuentaDeshabilitadaController cuentaDeshabilitadaController) {
+        this.cuentaDeshabilitadaController = cuentaDeshabilitadaController;
+    }
+
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    private CuentaDeshabilitadaController loadCuentasD(CuentaDeshabilitadaController controllerCuentaD){ return controllerCuentaD; }
+
+    private MainController loadMainPrincipal(MainController controllerMain){ return controllerMain; }
 }
