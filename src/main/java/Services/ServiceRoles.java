@@ -7,6 +7,7 @@ import Model.UserRol;
 import Querys.RolesQuery;
 import Querys.UserQuery;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ServiceRoles extends Service{
@@ -20,12 +21,10 @@ public class ServiceRoles extends Service{
     public void insertarUsuarioRol(String email, String nombreRol) throws SQLException{
         try{
             setConexion(ConexionBD.conexion());
-            setPs(getConexion().prepareStatement(RolesQuery.asignarRol()));
-            int idUser = obtenerIdUser(email);
-            int idRol = obtenerIdRol(nombreRol);
-            getPs().setInt(1, idUser);
-            getPs().setInt(2, idRol);
-            getPs().executeUpdate();
+            PreparedStatement ps = getConexion().prepareStatement( RolesQuery.asignarRol());
+            ps.setInt(1, obtenerIdUser(email));
+            ps.setInt(2, obtenerIdRol(nombreRol));
+            ps.execute();
         }catch (SQLException excepcion){ System.out.println(excepcion.getMessage()); }
     }
     public int obtenerIdRol(String nombreRol){
