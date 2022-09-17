@@ -1,11 +1,8 @@
 package Controller;
-
 import Model.*;
 import Model.Alerta;
 import Services.ServiceRegister;
-
 import Model.ViewFuntionality;
-
 import Services.ServiceRoles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;

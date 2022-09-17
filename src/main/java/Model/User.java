@@ -18,6 +18,12 @@ public class User {
        setEmail(email);
        setContrasena(contrasena);
     }
+    public User(User usuario){
+        setNombre(usuario.getNombre());
+        setApellido(usuario.getApellido());
+        setEmail(usuario.getEmail());
+        setContrasena(usuario.getContrasena());
+    }
 
     public String getEmail() {
         return email;
