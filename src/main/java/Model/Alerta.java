@@ -87,5 +87,15 @@ public class Alerta {
         return true;
     }
 
+    public static boolean alertaNoSeleccionoCuenta() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡No seleccionó ninguna cuenta a deshabilitar !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
 
 }
