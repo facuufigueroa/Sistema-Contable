@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Alerta;
 import Model.Cuenta;
 import Model.ViewFuntionality;
 import Services.ServicePDC;
@@ -57,7 +58,6 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         alert.setTitle("No seleccion de cuenta");
 
         alert.initStyle(StageStyle.TRANSPARENT);
-
         List<Cuenta> filaSeleccionada = tableCuentasD.getSelectionModel().getSelectedItems();
         if(filaSeleccionada.size() == 1 ){
             alert.setContentText("¿Está seguro de habilitar la cuenta: " + filaSeleccionada.get(0).nombre + " ?");
@@ -71,11 +71,16 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         else{
             alertaFilaNoSeleccionada();
         }
+
     }
 
     @FXML
     public String accionTablaCuentasD(){
-        String codigo_cuenta = String.valueOf(tableCuentasD.getSelectionModel().getSelectedItem().codigo);
+        String codigo_cuenta = "";
+        try{
+            codigo_cuenta = String.valueOf(tableCuentasD.getSelectionModel().getSelectedItem().codigo);
+        }catch (NullPointerException e){
+        }
         return codigo_cuenta;
     }
 
