@@ -7,7 +7,7 @@ public abstract class Roles {
     private String rol;
 
     public Roles(){}
-    public Roles(User user){ setUser(user); }
+    public Roles(User user){ setUser(user);}
     public Roles(User user, String rol) {
         setUser(user);
         setRol(rol);

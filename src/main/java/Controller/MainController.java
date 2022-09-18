@@ -1,7 +1,6 @@
 package Controller;
-
-
 import Model.*;
+import Services.ServiceRoles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController extends ViewFuntionality implements Initializable {
-
     @FXML
     private Button btnPlanDeCuenta;
 
@@ -37,11 +36,14 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     @FXML
     private TextField  txtUsuarioEnSesion;
+    @FXML
+    private Label campoTexto;
 
     private Roles roles = null;
     private User usuario;
 
     private RegisterController registerController;
+    private static ServiceRoles serviceRoles = new ServiceRoles();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,16 +75,33 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void permisos(){ getRoles().permisos(this); }
     public void nombreCompletoUsuario(){
         getTxtUsuarioEnSesion().setText(getRoles().nombre()
-                + " "
-                + getRoles().apellido()
+                                        + " "
+                                        + getRoles().apellido()
+                                        + " "
+                                        + getRoles().getRol()
+        );
+    }
+    private void cambiarTexto(Label campoTexto, String texto){ campoTexto.setText(texto); }
+    private void rellenarCampos(){
+        cambiarTexto(getCampoTexto(), getRoles().nombre()
+                                            + " "
+                                            + getRoles().apellido()
+                                            + " - "
+                                            + getRoles().getRol()
         );
     }
     public void cargarDatos(User user){
         setUsuario(new User(user.getNombre(), user.getApellido(), user.getEmail(), user.getContrasena()));
-        getRoles().setUser(getUsuario());
-        //setRoles(getRoles().tipoRol(user,"usuario"));
+        obtenerRolUsuario(getUsuario());
         permisos();
+        rellenarCampos();
         nombreCompletoUsuario();
+    }
+
+    private void obtenerRolUsuario(User user) {
+        String rol = getServiceRoles().obtenerRolUsuarioPorEmail(user.getEmail());
+        setRoles(getServiceRoles().roles(rol));
+        getRoles().setUser(user);
     }
 
     public Button getBtnPlanDeCuenta() {
@@ -143,9 +162,11 @@ public class MainController extends ViewFuntionality implements Initializable {
         return registerController;
     }
 
-    public void setRegisterController(RegisterController registerController) {
-        this.registerController = registerController;
-    }
+    public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
     public User getUsuario() { return usuario; }
     public void setUsuario(User usuario) { this.usuario = usuario; }
+    public static ServiceRoles getServiceRoles() { return serviceRoles; }
+    public Label getCampoTexto() { return campoTexto; }
+    public void setCampoTexto(Label campoTexto) { this.campoTexto = campoTexto; }
+    public static void setServiceRoles(ServiceRoles serviceRoles) { MainController.serviceRoles = serviceRoles; }
 }

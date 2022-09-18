@@ -7,6 +7,8 @@ public class User {
 
     private String apellido;
 
+    public User(){}
+
     public User(String email, String password) {
         setEmail(email);
         setContrasena(password);

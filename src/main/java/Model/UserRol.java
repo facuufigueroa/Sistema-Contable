@@ -1,5 +1,4 @@
 package Model;
-
 import Controller.MainController;
 
 public class UserRol extends Roles{

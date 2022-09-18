@@ -132,26 +132,4 @@ public class RegisterController extends ViewFuntionality implements Initializabl
             return false;
         }
     }
-
-    /*Metodo que trae 1 si el rol seleccionado en el checkbox es admin*/
-    @FXML
-    private int accionCheckRolAdmin(){
-        int rolAdmin =0;
-        if(checkRolAdmin.isSelected()){
-            rolAdmin=1;
-        }
-        return rolAdmin;
-    }
-    /*Metodo que trae 2 si el rol seleccionado en el checkbox es usuario*/
-    @FXML
-    private int accionCheckRolUser() {
-        int rolUser = 0;
-        if (checkRolAdmin.isSelected()) {
-            rolUser=2;
-        }
-        return rolUser;
-    }
-
-
-
 }

@@ -69,9 +69,9 @@ public class ServiceRoles extends Service{
         return null;
     }
     public Roles roles(String rol){
-        if (rol.equals("usuario")){ return (UserRol)  rolUsuario(rol); }
-        if (rol.equals("admin")){ return (AdminRol) rolAdministrador(rol); }
-        return rolUsuario(rol);
+        if (rol.equals("usuario")){ return  rolUsuario(rol); }
+        if (rol.equals("admin")){ return rolAdministrador(rol); }
+        return null;
     }
     public String obtenerRolUsuarioPorEmail(String email){
         try{
@@ -79,7 +79,7 @@ public class ServiceRoles extends Service{
             setPs(getConexion().prepareStatement(RolesQuery.obtenerRolUsuarioPorEmail()));
             getPs().setString(1, email);
             setTupla(getPs().executeQuery());
-            if (getTupla().next()){ return getTupla().getString(1); }
+            if (getTupla().next()){ return getTupla().getString(2); }
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
     }
