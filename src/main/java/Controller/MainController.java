@@ -1,8 +1,6 @@
 package Controller;
-
-
-import Model.Roles;
-import Model.ViewFuntionality;
+import Model.*;
+import Services.ServiceRoles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -20,7 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController extends ViewFuntionality implements Initializable {
-
     @FXML
     private Button btnPlanDeCuenta;
 
@@ -38,16 +36,22 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     @FXML
     private TextField  txtUsuarioEnSesion;
+    @FXML
+    private Label campoTexto;
 
-    private Roles roles;
+    private Roles roles = null;
+    private User usuario;
 
     private RegisterController registerController;
 
+    private static ServiceRoles serviceRoles = new ServiceRoles();
+
+
     private CuentaController cuentaController;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     @FXML
@@ -73,6 +77,38 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
 
+
+    public void permisos(){ getRoles().permisos(this); }
+    public void nombreCompletoUsuario(){
+        getTxtUsuarioEnSesion().setText(getRoles().nombre()
+                                        + " "
+                                        + getRoles().apellido()
+                                        + " "
+                                        + getRoles().getRol()
+        );
+    }
+    private void cambiarTexto(Label campoTexto, String texto){ campoTexto.setText(texto); }
+    private void rellenarCampos(){
+        cambiarTexto(getCampoTexto(), getRoles().nombre()
+                                            + " "
+                                            + getRoles().apellido()
+                                            + " - "
+                                            + getRoles().getRol()
+        );
+    }
+    public void cargarDatos(User user){
+        setUsuario(new User(user.getNombre(), user.getApellido(), user.getEmail(), user.getContrasena()));
+        obtenerRolUsuario(getUsuario());
+        permisos();
+        rellenarCampos();
+        nombreCompletoUsuario();
+    }
+
+    private void obtenerRolUsuario(User user) {
+        String rol = getServiceRoles().obtenerRolUsuarioPorEmail(user.getEmail());
+        setRoles(getServiceRoles().roles(rol));
+        getRoles().setUser(user);
+
    private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
 
     @FXML
@@ -97,6 +133,7 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void setCuentaController(CuentaController cuentaController) {
         this.cuentaController = cuentaController;
+
     }
 
     public Button getBtnPlanDeCuenta() {
@@ -147,9 +184,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         this.txtUsuarioEnSesion = txtUsuarioEnSesion;
     }
 
-    public Roles getRoles() {
-        return roles;
-    }
+    public Roles getRoles() { return roles; }
 
     public void setRoles(Roles roles) {
         this.roles = roles;
@@ -159,8 +194,13 @@ public class MainController extends ViewFuntionality implements Initializable {
         return registerController;
     }
 
-    public void setRegisterController(RegisterController registerController) {
-        this.registerController = registerController;
-    }
+
+    public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
+    public User getUsuario() { return usuario; }
+    public void setUsuario(User usuario) { this.usuario = usuario; }
+    public static ServiceRoles getServiceRoles() { return serviceRoles; }
+    public Label getCampoTexto() { return campoTexto; }
+    public void setCampoTexto(Label campoTexto) { this.campoTexto = campoTexto; }
+    public static void setServiceRoles(ServiceRoles serviceRoles) { MainController.serviceRoles = serviceRoles; }
 
 }

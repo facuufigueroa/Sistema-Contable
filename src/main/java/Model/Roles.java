@@ -1,10 +1,13 @@
 package Model;
+
+import Controller.MainController;
+
 public abstract class Roles {
     private User user;
     private String rol;
 
     public Roles(){}
-    public Roles(User user){ setUser(user); }
+    public Roles(User user){ setUser(user);}
     public Roles(User user, String rol) {
         setUser(user);
         setRol(rol);
@@ -13,9 +16,17 @@ public abstract class Roles {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
     public String getRol() { return rol; }
-    public void setRol(String rol) { this.rol = rol; }
+    protected void setRol(String rol) { this.rol = rol; }
+
+    public String nombre(){ return getUser().getNombre(); }
+    public String apellido(){ return getUser().getApellido(); }
+    public String email(){ return getUser().getEmail(); }
 
     public abstract void addRol();
     public abstract void removeRol();
-    public abstract void permisos();
+    public abstract void permisos(MainController controller);
+    public abstract Roles tipoRol(User usuario, String rol);
+
+    @Override
+    public String toString() { return getRol(); }
 }

@@ -7,16 +7,24 @@ public class User {
 
     private String apellido;
 
+    public User(){}
+
     public User(String email, String password) {
         setEmail(email);
         setContrasena(password);
     }
 
-    public User(String email, String contrasena, String nombre, String apellido) {
-        this.email = email;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public User(String nombre, String apellido, String email, String contrasena) {
+       setNombre(nombre);
+       setApellido(apellido);
+       setEmail(email);
+       setContrasena(contrasena);
+    }
+    public User(User usuario){
+        setNombre(usuario.getNombre());
+        setApellido(usuario.getApellido());
+        setEmail(usuario.getEmail());
+        setContrasena(usuario.getContrasena());
     }
 
     public String getEmail() {

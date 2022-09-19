@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <Pane layoutY="-1.0" prefHeight="36.0" prefWidth="777.0" style="-fx-background-color: #44878f;">
          <children>
@@ -139,5 +139,17 @@
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </Button>
+      <Label fx:id="campoTexto" layoutX="31.0" layoutY="373.0" prefHeight="26.0" prefWidth="300.0" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/user2.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
    </children>
 </AnchorPane>
