@@ -1,15 +1,24 @@
 package Controller;
 
+import Model.Alerta;
 import Model.Cuenta;
 import Model.ViewFuntionality;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,9 +40,10 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
     private ServicePDC servicePDC = new ServicePDC();
 
-    private ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
+    private CuentaController cuentaController;
 
     public void listarCuentasDeshabilitadas(){
+        ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
         columName.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("nombre"));
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
@@ -42,33 +52,35 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
     }
 
     @FXML
-    public void accionVolver(){
-
-    }
-    @FXML
     public void accionHabilitarCuenta(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Esta ?");
         alert.setHeaderText("Confirmación de habilitacion de cuenta");
         alert.setTitle("No seleccion de cuenta");
-        alert.setContentText("¿Está seguro de habilitar la cuenta con codigo: " );
-        alert.initStyle(StageStyle.TRANSPARENT);
 
+        alert.initStyle(StageStyle.TRANSPARENT);
         List<Cuenta> filaSeleccionada = tableCuentasD.getSelectionModel().getSelectedItems();
         if(filaSeleccionada.size() == 1 ){
+            alert.setContentText("¿Está seguro de habilitar la cuenta: " + filaSeleccionada.get(0).nombre + " ?");
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     servicePDC.habilitarCuenta(accionTablaCuentasD());
+                    listarCuentasDeshabilitadas();
                 }
             });
         }
         else{
             alertaFilaNoSeleccionada();
         }
+
     }
 
     @FXML
     public String accionTablaCuentasD(){
-        String codigo_cuenta = String.valueOf(tableCuentasD.getSelectionModel().getSelectedItem().codigo);
+        String codigo_cuenta = "";
+        try{
+            codigo_cuenta = String.valueOf(tableCuentasD.getSelectionModel().getSelectedItem().codigo);
+        }catch (NullPointerException e){
+        }
         return codigo_cuenta;
     }
 
@@ -79,6 +91,24 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+
+    @FXML
+    public void accionVolver(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/plan-de-cuenta.fxml"));
+        Parent parent = fxmlLoader.load();
+        setCuentaController(loadRegister(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getCuentaController().setVentana(loginStage);
+        getCuentaController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    public void hideStage(){ getVentana().hide(); }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -165,7 +195,13 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         this.cuentaDeshabilitadaController = cuentaDeshabilitadaController;
     }
 
+    public CuentaController getCuentaController() {
+        return cuentaController;
+    }
 
+    public void setCuentaController(CuentaController cuentaController) {
+        this.cuentaController = cuentaController;
+    }
 
-
+    private CuentaController loadRegister(CuentaController controllerCuentaH){ return controllerCuentaH; }
 }

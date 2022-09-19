@@ -43,7 +43,12 @@ public class MainController extends ViewFuntionality implements Initializable {
     private User usuario;
 
     private RegisterController registerController;
+
     private static ServiceRoles serviceRoles = new ServiceRoles();
+
+
+    private CuentaController cuentaController;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +76,7 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
+
 
     public void permisos(){ getRoles().permisos(this); }
     public void nombreCompletoUsuario(){
@@ -102,6 +108,32 @@ public class MainController extends ViewFuntionality implements Initializable {
         String rol = getServiceRoles().obtenerRolUsuarioPorEmail(user.getEmail());
         setRoles(getServiceRoles().roles(rol));
         getRoles().setUser(user);
+
+   private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
+
+    @FXML
+    public void accionPlanDeCuenta(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/plan-de-cuenta.fxml"));
+        Parent parent = fxmlLoader.load();
+        setCuentaController(loadPlanDeCuenta(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getCuentaController().setVentana(loginStage);
+        getCuentaController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    public CuentaController getCuentaController() {
+        return cuentaController;
+    }
+
+    public void setCuentaController(CuentaController cuentaController) {
+        this.cuentaController = cuentaController;
+
     }
 
     public Button getBtnPlanDeCuenta() {
@@ -162,6 +194,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         return registerController;
     }
 
+
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
     public User getUsuario() { return usuario; }
     public void setUsuario(User usuario) { this.usuario = usuario; }
@@ -169,4 +202,5 @@ public class MainController extends ViewFuntionality implements Initializable {
     public Label getCampoTexto() { return campoTexto; }
     public void setCampoTexto(Label campoTexto) { this.campoTexto = campoTexto; }
     public static void setServiceRoles(ServiceRoles serviceRoles) { MainController.serviceRoles = serviceRoles; }
+
 }
