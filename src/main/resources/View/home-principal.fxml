@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<AnchorPane prefHeight="453.0" prefWidth="777.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <Pane layoutY="-1.0" prefHeight="36.0" prefWidth="777.0" style="-fx-background-color: #44878f;">
          <children>
@@ -62,7 +62,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnNuevoAsiento" layoutX="325.0" layoutY="23.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="160.0" text="Nuevo Asiento">
+            <Button fx:id="btnNuevoAsiento" layoutX="325.0" layoutY="23.0" mnemonicParsing="false" onAction="#accionNuevoAsiento" prefHeight="38.0" prefWidth="160.0" text="Nuevo Asiento">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
