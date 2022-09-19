@@ -80,4 +80,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         cbbCuenta.setItems(items);
     }
 
+    public void hideStage(){ getVentana().hide(); }
+
 }

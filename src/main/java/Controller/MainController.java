@@ -49,6 +49,8 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     private CuentaController cuentaController;
 
+    private AsientoController asientoController;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -128,6 +130,32 @@ public class MainController extends ViewFuntionality implements Initializable {
         stage.show();
     }
 
+    private AsientoController loadCrearAsiento(AsientoController asientoController){ return asientoController; }
+
+    @FXML
+    public void accionNuevoAsiento(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registro-asientos.fxml"));
+        Parent parent = fxmlLoader.load();
+        setAsientoController(loadCrearAsiento(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getAsientoController().setVentana(loginStage);
+        getAsientoController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
+    public User getUsuario() { return usuario; }
+    public void setUsuario(User usuario) { this.usuario = usuario; }
+    public static ServiceRoles getServiceRoles() { return serviceRoles; }
+    public Label getCampoTexto() { return campoTexto; }
+    public void setCampoTexto(Label campoTexto) { this.campoTexto = campoTexto; }
+    public static void setServiceRoles(ServiceRoles serviceRoles) { MainController.serviceRoles = serviceRoles; }
+
     public CuentaController getCuentaController() {
         return cuentaController;
     }
@@ -195,13 +223,11 @@ public class MainController extends ViewFuntionality implements Initializable {
         return registerController;
     }
 
+    public AsientoController getAsientoController() {
+        return asientoController;
+    }
 
-    public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
-    public User getUsuario() { return usuario; }
-    public void setUsuario(User usuario) { this.usuario = usuario; }
-    public static ServiceRoles getServiceRoles() { return serviceRoles; }
-    public Label getCampoTexto() { return campoTexto; }
-    public void setCampoTexto(Label campoTexto) { this.campoTexto = campoTexto; }
-    public static void setServiceRoles(ServiceRoles serviceRoles) { MainController.serviceRoles = serviceRoles; }
-
+    public void setAsientoController(AsientoController asientoController) {
+        this.asientoController = asientoController;
+    }
 }
