@@ -1,8 +1,7 @@
 package Controller;
 
+import Model.*;
 import Model.Alerta;
-import Model.Cuenta;
-import Model.ViewFuntionality;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,6 +51,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     private CuentaDeshabilitadaController cuentaDeshabilitadaController;
 
     private MainController mainController;
+
+    private Roles roles;
 
     public void listarCuentasHabilitadas(){
         ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
@@ -221,6 +222,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getMainController().setRoles(getRoles());
+        getMainController().actualizarVistaUsuario();
         getMainController().setVentana(loginStage);
         getMainController().hideStage();
         stage.setScene(scene);
@@ -321,4 +324,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     private CuentaDeshabilitadaController loadCuentasD(CuentaDeshabilitadaController controllerCuentaD){ return controllerCuentaD; }
 
     private MainController loadMainPrincipal(MainController controllerMain){ return controllerMain; }
+    public Roles getRoles() { return roles; }
+    public void setRoles(Roles roles) { this.roles = roles; }
 }

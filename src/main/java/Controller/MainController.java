@@ -98,7 +98,11 @@ public class MainController extends ViewFuntionality implements Initializable {
     }
     public void cargarDatos(User user){
         setUsuario(new User(user.getNombre(), user.getApellido(), user.getEmail(), user.getContrasena()));
+        setUsuario(user);
         obtenerRolUsuario(getUsuario());
+        actualizarVistaUsuario();
+    }
+    public void actualizarVistaUsuario(){
         permisos();
         rellenarCampos();
         nombreCompletoUsuario();
@@ -121,6 +125,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaController().setVentana(loginStage);
+        getCuentaController().setRoles(getRoles());
         getCuentaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
