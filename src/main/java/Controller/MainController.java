@@ -108,6 +108,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         String rol = getServiceRoles().obtenerRolUsuarioPorEmail(user.getEmail());
         setRoles(getServiceRoles().roles(rol));
         getRoles().setUser(user);
+    }
 
    private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
 
