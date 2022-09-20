@@ -12,56 +12,69 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="frameLogin" prefHeight="572.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AsientoController">
+<AnchorPane fx:id="frameLogin" prefHeight="594.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AsientoController">
    <children>
-   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="572.0" prefWidth="701.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="700.0" style="-fx-background-color: #0D3E59;">
       <children>
-         <AnchorPane layoutX="26.0" layoutY="44.0" prefHeight="136.0" prefWidth="625.0" style="-fx-background-color: #0D3E59;">
+         <AnchorPane layoutX="14.0" layoutY="88.0" prefHeight="136.0" prefWidth="673.0" style="-fx-background-color: #0D3E59;">
             <children>
-               <Label layoutX="21.0" layoutY="14.0" prefHeight="25.0" prefWidth="48.0" text="Fecha:" textFill="WHITE">
+               <Label layoutX="6.0" layoutY="18.0" prefHeight="26.0" prefWidth="57.0" text="Fecha:" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </Label>
-               <Label layoutX="333.0" layoutY="17.0" text="Descripción:" textFill="WHITE">
+               <Label layoutX="316.0" layoutY="18.0" text="Descripción:" textFill="WHITE">
                   <font>
-                     <Font size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </Label>
-               <TextArea fx:id="txtDescripcion" layoutX="428.0" layoutY="14.0" prefHeight="94.0" prefWidth="204.0" />
-               <TextField fx:id="txtNumeroAsiento" layoutX="112.0" layoutY="71.0" prefHeight="30.0" prefWidth="175.0" />
-               <Label layoutX="21.0" layoutY="75.0" text="Nro Asiento: " textFill="WHITE">
+               <TextArea fx:id="txtDescripcion" focusTraversable="false" layoutX="428.0" layoutY="14.0" prefHeight="77.0" prefWidth="238.0">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="14.0" />
+                     </font></TextArea>
+               <TextField fx:id="txtNumeroAsiento" layoutX="108.0" layoutY="67.0" prefHeight="25.0" prefWidth="136.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font></TextField>
+               <Label layoutX="6.0" layoutY="64.0" text="Nro Asiento: " textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </Label>
-               <TextField fx:id="txtFecha" editable="false" layoutX="75.0" layoutY="14.0" />
+               <TextField fx:id="txtFecha" editable="false" focusTraversable="false" layoutX="70.0" layoutY="22.0" prefHeight="25.0" prefWidth="97.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font></TextField>
             </children>
          </AnchorPane>
-         <AnchorPane layoutX="30.0" layoutY="180.0" prefHeight="158.0" prefWidth="625.0" style="-fx-background-color: #0D3E59;">
+         <AnchorPane layoutX="14.0" layoutY="196.0" prefHeight="159.0" prefWidth="625.0" style="-fx-background-color: #0D3E59;">
             <children>
-               <Label layoutX="20.0" layoutY="23.0" text="Cuenta:" textFill="WHITE">
+               <Label layoutX="8.0" layoutY="23.0" text="Cuenta:" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </Label>
-               <Label layoutX="22.0" layoutY="67.0" text="Monto:" textFill="WHITE">
+               <Label layoutX="10.0" layoutY="67.0" text="Monto:" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </Label>
-               <ComboBox fx:id="cbbCuenta" editable="true" layoutX="97.0" layoutY="19.0" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
-               <TextField fx:id="txtMonto" layoutX="97.0" layoutY="63.0" prefHeight="30.0" prefWidth="111.0" />
+               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="85.0" layoutY="19.0" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
+               <TextField fx:id="txtMonto" focusTraversable="false" layoutX="85.0" layoutY="63.0" prefHeight="30.0" prefWidth="111.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font></TextField>
                <RadioButton fx:id="checkDebe" layoutX="231.0" layoutY="68.0" mnemonicParsing="false" text="Debe" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </RadioButton>
-               <RadioButton fx:id="checkHaber" layoutX="306.0" layoutY="68.0" mnemonicParsing="false" text="Haber" textFill="WHITE">
+               <RadioButton fx:id="checkHaber" layoutX="313.0" layoutY="70.0" mnemonicParsing="false" text="Haber" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
                </RadioButton>
                <Button layoutX="323.0" layoutY="19.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Plan de cuentas">
@@ -69,21 +82,16 @@
                      <Font name="Lucida Sans Unicode" size="13.0" />
                   </font>
                </Button>
-               <Button layoutX="467.0" layoutY="19.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Agregar cuenta">
-                  <font>
-                     <Font name="Lucida Sans Unicode" size="13.0" />
-                  </font>
-               </Button>
-               <Button fx:id="btnAgregarAsiento" layoutX="97.0" layoutY="111.0" mnemonicParsing="false" onAction="#accionAgregarAsiento" prefHeight="25.0" prefWidth="129.0" text="Agregar">
+               <Button fx:id="btnAgregarAsiento" layoutX="322.0" layoutY="109.0" mnemonicParsing="false" onAction="#accionAgregarAsiento" prefHeight="24.0" prefWidth="129.0" text="Agregar">
                   <font>
                      <Font name="Lucida Sans Unicode" size="13.0" />
                   </font>
                </Button>
             </children>
          </AnchorPane>
-         <AnchorPane layoutX="-7.0" layoutY="334.0" prefHeight="238.0" prefWidth="625.0" style="-fx-background-color: #0D3E59;">
+         <AnchorPane layoutY="341.0" prefHeight="228.0" prefWidth="693.0" style="-fx-background-color: #0D3E59;">
             <children>
-               <Button fx:id="btnRegistrarAsiento" layoutX="536.0" layoutY="194.0" mnemonicParsing="false" onAction="#accionRegistrarAsiento" prefHeight="30.0" prefWidth="154.0" text="Registrar asiento">
+               <Button fx:id="btnRegistrarAsiento" layoutX="532.0" layoutY="199.0" mnemonicParsing="false" onAction="#accionRegistrarAsiento" prefHeight="30.0" prefWidth="154.0" text="Registrar asiento">
                   <font>
                      <Font name="Lucida Sans Unicode" size="13.0" />
                   </font>
@@ -95,12 +103,12 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button layoutX="383.0" layoutY="194.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Cancelar">
+               <Button layoutX="379.0" layoutY="199.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Cancelar">
                   <font>
                      <Font name="Lucida Sans Unicode" size="13.0" />
                   </font>
                </Button>
-               <TableView fx:id="tablaAsientos" editable="true" layoutX="19.0" layoutY="22.0" prefHeight="149.0" prefWidth="679.0">
+               <TableView fx:id="tablaAsientos" editable="true" layoutX="13.0" layoutY="30.0" prefHeight="149.0" prefWidth="673.0">
                   <columns>
                      <TableColumn fx:id="columFecha" prefWidth="101.0" resizable="false" text="Fecha" />
                      <TableColumn fx:id="columDescripcion" prefWidth="281.0" resizable="false" text="Descripcion" />
@@ -138,7 +146,23 @@
                </Button>
             </children>
          </AnchorPane>
+            <Button fx:id="btnVolver" layoutX="14.0" layoutY="51.0" mnemonicParsing="false" onAction="#accionBtnVolver" prefHeight="30.0" prefWidth="97.0" text="Volver">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/volver.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Line endX="528.0" layoutX="163.0" layoutY="585.0" startX="-157.3333282470703" stroke="#b2b2b2" />
+            <Line endX="-100.5" endY="529.5" layoutX="792.0" layoutY="55.0" startX="-99.5" startY="-10.0" stroke="#b2b2b2" />
       </children>
    </Pane>
+      <Line endX="-796.8333129882812" endY="519.5" layoutX="802.0" layoutY="65.0" startX="-793.626220703125" startY="-19.16668701171875" stroke="#b2b2b2" />
+      <Line endX="518.0" endY="-544.6666870117188" layoutX="174.0" layoutY="590.0" startX="-165.126220703125" startY="-544.6666870117188" stroke="#b2b2b2" />
    </children>
 </AnchorPane>

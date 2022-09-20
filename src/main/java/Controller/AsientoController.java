@@ -4,9 +4,19 @@ import Model.Asiento;
 import Model.ViewFuntionality;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,6 +68,10 @@ public class AsientoController extends ViewFuntionality implements Initializable
     @FXML
     private TableColumn columHaber;
 
+    @FXML Button btnVolver;
+
+    private MainController mainController;
+
     private ObservableList<Asiento> obsAsientos;
 
     @Override
@@ -81,5 +95,41 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
 
     public void hideStage(){ getVentana().hide(); }
+
+
+    @FXML
+    public void accionBtnVolver(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
+        Parent parent = fxmlLoader.load();
+        setMainController(loadVolver(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getMainController().setVentana(mainStage);
+        getMainController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    private MainController loadVolver(MainController mainController){ return mainController; }
+
+    public Button getBtnVolver() {
+        return btnVolver;
+    }
+
+    public void setBtnVolver(Button btnVolver) {
+        this.btnVolver = btnVolver;
+    }
+
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
 
 }
