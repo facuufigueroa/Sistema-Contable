@@ -61,12 +61,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnHabilitarCuetna" layoutX="469.0" layoutY="87.0" mnemonicParsing="false" onAction="#accionHabilitarCuenta" prefHeight="37.0" prefWidth="153.0" text="Habilitar Cuenta">
+            <Button fx:id="btnHabilitarCuenta" layoutX="469.0" layoutY="87.0" mnemonicParsing="false" onAction="#accionHabilitarCuenta" prefHeight="37.0" prefWidth="153.0" text="Habilitar Cuenta">
                <font>
                   <Font name="Lucida Sans Unicode" size="12.0" />
                </font>
                <graphic>
-                  <ImageView fx:id="btnHabilitarCuenta" fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/habilitar-cuenta.png" />
                      </image>

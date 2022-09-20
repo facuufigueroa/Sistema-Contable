@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.CuentaController;
+import Controller.CuentaDeshabilitadaController;
 import Controller.MainController;
 
 public abstract class Roles {
@@ -22,9 +24,10 @@ public abstract class Roles {
     public String apellido(){ return getUser().getApellido(); }
     public String email(){ return getUser().getEmail(); }
 
-    public abstract void addRol();
-    public abstract void removeRol();
+
     public abstract void permisos(MainController controller);
+    public abstract void permisosAsiento(CuentaController controller);
+    public abstract void permisosCuentasDeshabilitadas(CuentaDeshabilitadaController controller);
     public abstract Roles tipoRol(User usuario, String rol);
 
     @Override

@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 
 public class CuentaController extends ViewFuntionality implements Initializable {
+    @FXML private Button btnDeshabilitarCuenta;
 
     @FXML private Button btnMinimize;
     @FXML private Button btnClose;
@@ -207,6 +208,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaDeshabilitadaController().setVentana(loginStage);
+        getCuentaDeshabilitadaController().setRoles(getRoles());
+        getCuentaDeshabilitadaController().permisosCuentasDeshabilitadas();
         getCuentaDeshabilitadaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -238,6 +241,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         }
         return false;
     }
+
+    public void permisosAsiento(){ getRoles().permisosAsiento(this); }
 
     public void hideStage(){ getVentana().hide(); }
 
@@ -326,4 +331,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     private MainController loadMainPrincipal(MainController controllerMain){ return controllerMain; }
     public Roles getRoles() { return roles; }
     public void setRoles(Roles roles) { this.roles = roles; }
+
+    public Button getBtnDeshabilitarCuenta() { return this.btnDeshabilitarCuenta; }
 }

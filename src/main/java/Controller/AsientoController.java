@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Asiento;
+import Model.Roles;
 import Model.ViewFuntionality;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -74,6 +75,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     private ObservableList<Asiento> obsAsientos;
 
+    private Roles roles;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBoxCuentas();
@@ -106,11 +109,18 @@ public class AsientoController extends ViewFuntionality implements Initializable
         Stage stage = new Stage();
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getMainController().setVentana(mainStage);
+        obtenerPermisosMainController(getMainController(), getRoles());
         getMainController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+    }
+
+    private void obtenerPermisosMainController(MainController controller, Roles roles){
+        controller.setRoles(roles);
+        controller.permisos();
+        controller.actualizarVistaUsuario();
     }
 
     private MainController loadVolver(MainController mainController){ return mainController; }
@@ -131,5 +141,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         this.mainController = mainController;
     }
 
-
+    public Roles getRoles() { return this.roles; }
+    public void setRoles(Roles roles) { this.roles = roles; }
 }

@@ -1,4 +1,7 @@
 package Model;
+import Controller.AsientoController;
+import Controller.CuentaController;
+import Controller.CuentaDeshabilitadaController;
 import Controller.MainController;
 
 public class UserRol extends Roles{
@@ -12,15 +15,6 @@ public class UserRol extends Roles{
     }
     public UserRol(User user, String rol) { super(user, rol); }
 
-    @Override
-    public void addRol() {
-
-    }
-
-    @Override
-    public void removeRol() {
-
-    }
 
     @Override
     public void permisos(MainController controller) {
@@ -34,5 +28,11 @@ public class UserRol extends Roles{
             return new UserRol(user);
         }
         return null;
+    }
+    public void permisosAsiento(CuentaController controller){
+        Utilidades.deshabilitarBoton(controller.getBtnDeshabilitarCuenta());
+    }
+    public void permisosCuentasDeshabilitadas(CuentaDeshabilitadaController controller) {
+        Utilidades.deshabilitarBoton(controller.getBtnHabilitarCuenta());
     }
 }

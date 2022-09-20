@@ -1,8 +1,7 @@
 package Controller;
 
+import Model.*;
 import Model.Alerta;
-import Model.Cuenta;
-import Model.ViewFuntionality;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class CuentaDeshabilitadaController extends ViewFuntionality implements Initializable {
 
+    @FXML private Button btnHabilitarCuenta;
     @FXML private Button btnMinimize;
     @FXML private Button btnClose;
     @FXML private Button btnVolver;
@@ -41,6 +41,8 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
     private ServicePDC servicePDC = new ServicePDC();
 
     private CuentaController cuentaController;
+
+    private Roles roles;
 
     public void listarCuentasDeshabilitadas(){
         ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
@@ -101,6 +103,7 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaController().setVentana(loginStage);
+        obtenerPermisosCuentaController(getCuentaController(), getRoles());
         getCuentaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -108,7 +111,15 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         stage.show();
     }
 
+    private void obtenerPermisosCuentaController(CuentaController cuentaController, Roles roles) {
+        cuentaController.setRoles(roles);
+        cuentaController.permisosAsiento();
+    }
+
     public void hideStage(){ getVentana().hide(); }
+    public void permisosCuentasDeshabilitadas() {
+       getRoles().permisosCuentasDeshabilitadas(this);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -204,4 +215,9 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
     }
 
     private CuentaController loadRegister(CuentaController controllerCuentaH){ return controllerCuentaH; }
+
+    public Button getBtnHabilitarCuenta() { return this.btnHabilitarCuenta; }
+
+    public Roles getRoles() { return this.roles; }
+    public void setRoles(Roles roles) { this.roles = roles; }
 }
