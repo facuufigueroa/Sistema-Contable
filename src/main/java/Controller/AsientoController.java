@@ -1,8 +1,10 @@
 package Controller;
 
 import Model.Asiento;
+import Model.Cuenta;
 import Model.Roles;
 import Model.ViewFuntionality;
+import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
@@ -39,11 +42,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private TextField txtMonto;
 
     @FXML
-    private RadioButton checkDebe;
-
-    @FXML
-    private RadioButton checkHaber;
-
+    private ComboBox cbbDebeHaber;
     @FXML
     private TableView tablaAsientos;
 
@@ -70,6 +69,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     @FXML Button btnVolver;
 
+    private ServicePDC serviceCuentas= new ServicePDC();
+
     private MainController mainController;
 
     private ObservableList<Asiento> obsAsientos;
@@ -79,6 +80,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBoxCuentas();
+        traerNombresDeCuentas();
     }
     @FXML
     public void accionAgregarAsiento(){
@@ -90,10 +92,21 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     }
 
+    @FXML
+    public void accionDebeHaber(){
+
+    }
+
     public void iniciarComboBoxCuentas(){
-        ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Si", "No");
+        ObservableList<Cuenta> items = FXCollections.observableArrayList();
+        items.addAll(serviceCuentas.listCuentasHabilitadas());
         cbbCuenta.setItems(items);
+    }
+
+    public void traerNombresDeCuentas(){
+        ObservableList<String> cuentas= FXCollections.observableArrayList();
+        cuentas.addAll(serviceCuentas.traerNombreCuentas());
+        cbbCuenta.setItems(cuentas);
     }
 
     public void hideStage(){ getVentana().hide(); }

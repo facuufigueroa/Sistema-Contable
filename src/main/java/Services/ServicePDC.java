@@ -140,6 +140,23 @@ public class ServicePDC {
         return recibe_saldo;
     }
 
+    public ArrayList<String> traerNombreCuentas(){
+        ArrayList<String> nombreCuentas = new ArrayList<>();
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(cuentaQuery.traerNombresCuentas()));
+            setResultSet(preparedStatement.executeQuery());
+            while(resultSet.next()){
+                String nombreCuenta = getResultSet().getString(1);
+                nombreCuentas.add(nombreCuenta);
+            }
+
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return nombreCuentas;
+    }
+
 
     public ConexionBD getConexionBD() {
         return conexionBD;
