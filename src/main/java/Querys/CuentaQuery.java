@@ -32,6 +32,6 @@ public class CuentaQuery {
     }
 
     public static String traerNombresCuentas(){
-        return "SELECT c.nombre FROM cuentas as c ";
+        return "SELECT c.nombre FROM cuentas as c ORDER BY c.nombre ASC";
     }
 }

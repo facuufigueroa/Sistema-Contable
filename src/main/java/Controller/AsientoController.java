@@ -20,9 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 
 public class AsientoController extends ViewFuntionality implements Initializable {
 
@@ -82,6 +80,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
         iniciarComboBoxCuentas();
         traerNombresDeCuentas();
     }
+
     @FXML
     public void accionAgregarAsiento(){
 
