@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -35,9 +34,10 @@ public class MainController extends ViewFuntionality implements Initializable {
     private Button btnCrearUsuario;
 
     @FXML
-    private TextField  txtUsuarioEnSesion;
-    @FXML
     private Label campoTexto;
+
+    @FXML
+    private Button btnCerrarSesion;
 
     private Roles roles = null;
     private User usuario;
@@ -51,6 +51,7 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     private AsientoController asientoController;
 
+    private LoginController loginController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,21 +82,14 @@ public class MainController extends ViewFuntionality implements Initializable {
 
 
     public void permisos(){ getRoles().permisos(this); }
-    public void nombreCompletoUsuario(){
-        getTxtUsuarioEnSesion().setText(getRoles().nombre()
-                                        + " "
-                                        + getRoles().apellido()
-                                        + " "
-                                        + getRoles().getRol()
-        );
-    }
+
     private void cambiarTexto(Label campoTexto, String texto){ campoTexto.setText(texto); }
     private void rellenarCampos(){
-        cambiarTexto(getCampoTexto(), getRoles().nombre()
+        cambiarTexto(getCampoTexto(), getRoles().nombre().toUpperCase()
                                             + " "
-                                            + getRoles().apellido()
+                                            + getRoles().apellido().toUpperCase()
                                             + " - "
-                                            + getRoles().getRol()
+                                            + getRoles().getRol().toUpperCase()
         );
     }
     public void cargarDatos(User user){
@@ -107,7 +101,6 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void actualizarVistaUsuario(){
         permisos();
         rellenarCampos();
-        nombreCompletoUsuario();
     }
 
     private void obtenerRolUsuario(User user) {
@@ -154,6 +147,26 @@ public class MainController extends ViewFuntionality implements Initializable {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
     }
+    @FXML
+    public void accionBtnCerrarSesion(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/login-user.fxml"));
+        Parent parent = fxmlLoader.load();
+        setLoginController(loadLogin(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getLoginController().setVentana(loginStage);
+        getLoginController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    public LoginController loadLogin (LoginController controller){
+        return controller;
+    }
+
 
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
     public User getUsuario() { return usuario; }
@@ -212,14 +225,6 @@ public class MainController extends ViewFuntionality implements Initializable {
         this.btnCrearUsuario = btnCrearUsuario;
     }
 
-    public TextField getTxtUsuarioEnSesion() {
-        return txtUsuarioEnSesion;
-    }
-
-    public void setTxtUsuarioEnSesion(TextField txtUsuarioEnSesion) {
-        this.txtUsuarioEnSesion = txtUsuarioEnSesion;
-    }
-
     public Roles getRoles() { return roles; }
 
     public void setRoles(Roles roles) {
@@ -236,5 +241,21 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void setAsientoController(AsientoController asientoController) {
         this.asientoController = asientoController;
+    }
+
+    public Button getBtnCerrarSesion() {
+        return btnCerrarSesion;
+    }
+
+    public void setBtnCerrarSesion(Button btnCerrarSesion) {
+        this.btnCerrarSesion = btnCerrarSesion;
+    }
+
+    public LoginController getLoginController() {
+        return loginController;
+    }
+
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
     }
 }

@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.*;
-import Model.Alerta;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

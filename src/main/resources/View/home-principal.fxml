@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -110,24 +109,7 @@
       <Line endX="132.0" layoutX="626.0" layoutY="439.0" opacity="0.35" startX="-605.0" stroke="WHITE" />
       <Line endX="-100.0" endY="50.0" layoutX="858.0" layoutY="387.0" opacity="0.46" startX="-100.0" startY="-225.0" />
       <Line endX="-100.0" endY="-79.0" layoutX="120.0" layoutY="438.0" startX="-100.0" />
-      <Label layoutX="31.0" layoutY="405.0" prefHeight="26.0" prefWidth="181.0" text=" Usuario en sesión :" textFill="WHITE">
-         <font>
-            <Font name="Lucida Sans Unicode" size="16.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/user2.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Label>
-      <TextField fx:id="txtUsuarioEnSesion" editable="false" layoutX="220.0" layoutY="406.0" prefHeight="26.0" prefWidth="160.0">
-         <font>
-            <Font name="Lucida Sans Unicode" size="11.0" />
-         </font>
-      </TextField>
-      <Button fx:id="btnCrearUsuario" layoutX="590.0" layoutY="401.0" mnemonicParsing="false" onAction="#accionRegistrarUsuario" prefHeight="33.0" prefWidth="140.0" text="Crear Usuario">
+      <Button fx:id="btnCrearUsuario" layoutX="450.0" layoutY="402.0" mnemonicParsing="false" onAction="#accionRegistrarUsuario" prefHeight="33.0" prefWidth="140.0" text="Crear Usuario">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -139,7 +121,7 @@
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="campoTexto" layoutX="31.0" layoutY="373.0" prefHeight="26.0" prefWidth="300.0" textFill="WHITE">
+      <Label fx:id="campoTexto" layoutX="31.0" layoutY="405.0" prefHeight="26.0" prefWidth="300.0" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="16.0" />
          </font>
@@ -151,5 +133,17 @@
             </ImageView>
          </graphic>
       </Label>
+      <Button fx:id="btnCerrrarSesion" layoutX="602.0" layoutY="402.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="32.0" prefWidth="140.0" text="Cerrar Sesión">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/cerrar-sesion.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

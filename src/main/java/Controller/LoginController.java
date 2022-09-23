@@ -110,6 +110,7 @@ public class LoginController extends ViewFuntionality{
 
     private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
 
+    public void hideStage(){ getVentana().hide(); }
 
     //Getters y Setters
     public MainController getMainController() {
