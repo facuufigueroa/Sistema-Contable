@@ -153,7 +153,11 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     /*Metodo para traer el codigo de cuenta seleccionado en la fila*/
     @FXML
     public String accionTablaCuentasH(){
-        String codigo_cuenta = String.valueOf(tableCuentas.getSelectionModel().getSelectedItem().codigo);
+        String codigo_cuenta = null;
+        try{
+            codigo_cuenta = String.valueOf(tableCuentas.getSelectionModel().getSelectedItem().codigo);
+            return codigo_cuenta;
+        }catch (NullPointerException e){ }
         return codigo_cuenta;
     }
 
