@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class Asiento {
 
-    private Date fecha;
+    private String fecha;
 
     private String detalle;
 
     private int usuario;
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

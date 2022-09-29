@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import Services.ServicePDC;
+import Services.ServiceRoles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,7 +42,18 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
     private CuentaController cuentaController;
 
+    private static ServiceRoles serviceRoles = new ServiceRoles();
+    private User u = User.getInstance();
+
     private Roles roles;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        verificarRolUser();
+        listarCuentasDeshabilitadas();
+    }
 
     public void listarCuentasDeshabilitadas(){
         ObservableList<Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasDeshabilitadas());
@@ -102,7 +114,6 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaController().setVentana(loginStage);
-        obtenerPermisosCuentaController(getCuentaController(), getRoles());
         getCuentaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -110,20 +121,14 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         stage.show();
     }
 
-    private void obtenerPermisosCuentaController(CuentaController cuentaController, Roles roles) {
-        cuentaController.setRoles(roles);
-        cuentaController.permisosAsiento();
+
+    public void verificarRolUser(){
+        if(serviceRoles.obtenerRolPorEmail(u.getEmail()).equals("usuario")){
+            getBtnHabilitarCuenta().setDisable(true);
+        }
     }
 
     public void hideStage(){ getVentana().hide(); }
-    public void permisosCuentasDeshabilitadas() {
-       getRoles().permisosCuentasDeshabilitadas(this);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        listarCuentasDeshabilitadas();
-    }
 
     public Button getBtnMinimize() {
         return btnMinimize;

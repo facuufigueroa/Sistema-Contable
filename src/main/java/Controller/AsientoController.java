@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Asiento;
-import Model.Cuenta;
-import Model.Roles;
-import Model.ViewFuntionality;
+import Model.*;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class AsientoController extends ViewFuntionality implements Initializable {
@@ -66,6 +64,11 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private TableColumn columHaber;
 
     @FXML Button btnVolver;
+    private Roles roles;
+
+    private static User user = null;
+
+    private User idUsuario;
 
     private ServicePDC serviceCuentas= new ServicePDC();
 
@@ -73,12 +76,15 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     private ObservableList<Asiento> obsAsientos;
 
-    private Roles roles;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBoxCuentas();
         traerNombresDeCuentas();
+        txtFecha.setText(traerFechaActual());
+        iniciarComboBoxDebeHaber();
+
     }
 
     @FXML
@@ -96,9 +102,25 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     }
 
+    @FXML
+    public String traerFechaActual(){
+        Calendar fecha = Calendar.getInstance();
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH);
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        String fechaString = String.valueOf(año+"/"+mes+"/"+dia);
+        return fechaString;
+    }
+
     public void iniciarComboBoxCuentas(){
         ObservableList<Cuenta> items = FXCollections.observableArrayList();
         items.addAll(serviceCuentas.listCuentasHabilitadas());
+        cbbCuenta.setItems(items);
+    }
+
+    public void iniciarComboBoxDebeHaber(){
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll("Debe","Haber");
         cbbCuenta.setItems(items);
     }
 
@@ -120,7 +142,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         Stage stage = new Stage();
         Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getMainController().setVentana(mainStage);
-        obtenerPermisosMainController(getMainController(), getRoles());
         getMainController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -128,11 +149,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         stage.show();
     }
 
-    private void obtenerPermisosMainController(MainController controller, Roles roles){
-        controller.setRoles(roles);
-        controller.permisos();
-        controller.actualizarVistaUsuario();
-    }
 
     private MainController loadVolver(MainController mainController){ return mainController; }
 
@@ -154,4 +170,16 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     public Roles getRoles() { return this.roles; }
     public void setRoles(Roles roles) { this.roles = roles; }
+
+    public static void setUser(User user) {
+        AsientoController.user = user;
+    }
+
+    public User getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(User idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 }

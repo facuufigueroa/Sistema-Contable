@@ -11,4 +11,13 @@ public class RolesQuery {
                 + "INNER JOIN roles AS roles ON roles.idrol = usuario_rol.rol "
                 + "WHERE usuarios.email = ? LIMIT 1";
     }
+
+    public static String obtenerRolPorEmail(String email){
+        return "SELECT r.nombre\n" +
+                "FROM roles as r\n" +
+                "inner join usuario_rol as ur on ur.rol=r.idrol\n" +
+                "inner join usuarios as u on u.idusuario = ur.usuario\n" +
+                "where u.email='"+email+"'";
+    }
+
 }

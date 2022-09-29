@@ -1,6 +1,7 @@
 package Controller;
 import Model.*;
 import Model.Alerta;
+import Services.Service;
 import Services.ServiceLogin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,17 +29,24 @@ public class LoginController extends ViewFuntionality{
     @FXML private AnchorPane frameLogin;
     @FXML private Text botonRegistrarse;
 
+    private Service service = new Service();
     private MainController mainController;
 
     public LoginController(){}
 
-    private static User user = null;
+    //private static User user = null;
     private Stage stage;
+
+
+
+    private User u = User.getInstance();
+
     private static ServiceLogin serviceLogin = new ServiceLogin();
     private RegisterController registerController;
 
 
     //Metodos
+
 
     private String obtenerEmail(){ return getCampoUsuario().getText(); }
     private String obtenerContrasena(){ return getCampoContrasena().getText(); }
@@ -69,7 +77,7 @@ public class LoginController extends ViewFuntionality{
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getMainController().setVentana(loginStage);
         getMainController().hideStage();
-        getMainController().cargarDatos(getUser());
+        /*getMainController().cargarDatos(getUser());*/
         stage.setScene(scene);
         stage.setTitle("Menu Principal");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -96,8 +104,14 @@ public class LoginController extends ViewFuntionality{
         else{
             if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida(); }
             else{
-                getUser();
-                setUser(serviceLogin.obtenerUsuarioPorEmail(obtenerEmail()));
+                /*getUser();
+                setUser(serviceLogin.obtenerUsuarioPorEmail(obtenerEmail()));*/
+                User userNew = service.obtenerUsuarioPorEmail(campoUsuario.getText());
+                u.setId(userNew.getId());
+                u.setNombre(userNew.getNombre());
+                u.setEmail(userNew.getEmail());
+                u.setContrasena(userNew.getContrasena());
+                u.setApellido(userNew.getApellido());
                 loadMenuPrincipal(event);
             }
         }
@@ -159,7 +173,7 @@ public class LoginController extends ViewFuntionality{
     public void setCampoContrasena(PasswordField campoContrasena) { this.campoContrasena = campoContrasena; }
     public TextField getCampoUsuario() { return campoUsuario; }
     public void setCampoUsuario(TextField campoUsuario) { this.campoUsuario = campoUsuario; }
-    public User getUser() {
+    /*public User getUser() {
         if (user == null){
             user = new User();
         }
@@ -170,7 +184,7 @@ public class LoginController extends ViewFuntionality{
         user.setApellido(usuario.getApellido());
         user.setEmail(usuario.getEmail());
         user.setContrasena(usuario.getContrasena());
-    }
+    }*/
     public Text getBotonRegistrarse() { return botonRegistrarse; }
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }

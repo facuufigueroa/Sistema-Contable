@@ -8,8 +8,12 @@ public abstract class Roles {
     private User user;
     private String rol;
 
+    private User u = User.getInstance();
+
     public Roles(){}
     public Roles(User user){ setUser(user);}
+
+
     public Roles(User user, String rol) {
         setUser(user);
         setRol(rol);

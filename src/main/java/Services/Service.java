@@ -11,11 +11,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Service {
     private Connection conexion;
     private PreparedStatement ps;
     private ResultSet tupla; //Es el conjunto de datos obtenidos desde la BD
+
+    private ConexionBD conexionBD;
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+
 
     public Connection getConexion() { return conexion; }
     public void setConexion(Connection conexion) { this.conexion = conexion; }
@@ -52,6 +59,7 @@ public class Service {
             setTupla(getPs().executeQuery());
             if (getTupla().next()){
                 return new User(
+                        getTupla().getInt("idusuario"),
                         getTupla().getString("nombre"),
                         getTupla().getString("apellido"),
                         getTupla().getString("email"),
@@ -91,4 +99,57 @@ public class Service {
         alert.showAndWait();
     }
 
+    public String obtenerRolPorEmail(String email){
+        String nombreRol="";
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(RolesQuery.obtenerRolPorEmail(email)));
+            setResultSet(preparedStatement.executeQuery());
+            if(resultSet.next()){
+               nombreRol=getResultSet().getString(1);
+            }
+
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return nombreRol;
+    }
+
+
+
+
+
+
+
+    public ConexionBD getConexionBD() {
+        return conexionBD;
+    }
+
+    public void setConexionBD(ConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public PreparedStatement getPreparedStatement() {
+        return preparedStatement;
+    }
+
+    public void setPreparedStatement(PreparedStatement preparedStatement) {
+        this.preparedStatement = preparedStatement;
+    }
+
+    public ResultSet getResultSet() {
+        return resultSet;
+    }
+
+    public void setResultSet(ResultSet resultSet) {
+        this.resultSet = resultSet;
+    }
 }
