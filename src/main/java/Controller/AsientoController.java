@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Services.ServiceAsiento;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,13 +13,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+
+import static java.lang.Double.parseDouble;
 
 public class AsientoController extends ViewFuntionality implements Initializable {
 
@@ -38,9 +43,12 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private TextField txtMonto;
 
     @FXML
+    private Label labelCodigoAsiento;
+
+    @FXML
     private ComboBox cbbDebeHaber;
     @FXML
-    private TableView tablaAsientos;
+    private TableView<TablaVistaAsiento> tablaAsientos = new TableView<>();
 
     @FXML
     private Button btnAgregarAsiento;
@@ -49,20 +57,15 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private Button btnRegistrarAsiento;
 
     @FXML
-    private TableColumn columFecha;
-
-    @FXML
-    private TableColumn columDescripcion;
-
-    @FXML
     private TableColumn columCuenta;
 
     @FXML
-    private TableColumn columnDebe;
+    private TableColumn columDebe;
 
     @FXML
     private TableColumn columHaber;
 
+    private User u = User.getInstance();
     @FXML Button btnVolver;
     private Roles roles;
 
@@ -76,8 +79,9 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     private ObservableList<Asiento> obsAsientos;
 
+    private ServiceAsiento serviceAsiento = new ServiceAsiento();
 
-
+    ArrayList<TablaVistaAsiento> asientoCuentas = new ArrayList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBoxCuentas();
@@ -89,13 +93,61 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     @FXML
     public void accionAgregarAsiento(){
+        if(verificarSiEsDebeHaber() == "Debe"){
+            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())), Double.valueOf(txtMonto.getText()), 0);
+            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()),asientoCuenta.getDebe(),asientoCuenta.getHaber() );
+            agregarATabla(tablaVistaAsiento);
+        }
+        else{
+            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())), 0, Double.valueOf(txtMonto.getText()));
+            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()),asientoCuenta.getDebe(),asientoCuenta.getHaber() );
+            agregarATabla(tablaVistaAsiento);
+        }
+
 
     }
 
     @FXML
     public void accionRegistrarAsiento(){
 
+        Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
+        serviceAsiento.insertarAsiento(asiento);
+
+
+        //AsientoCuenta asientoCuenta= new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(cbbCuenta.getSelectionModel().toString()), cbbDebeHaber.getSelectionModel().toString(),parseDouble(columHaber.getText()),calcularSaldo());
+
+        //serviceAsiento.insertarAsientoCuenta(asientoCuenta);
+
     }
+
+    public void agregarATabla(TablaVistaAsiento asientoCuenta){
+
+        asientoCuentas.add(asientoCuenta);
+        ObservableList <TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
+
+
+        columCuenta.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("nombreCuenta"));
+        columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
+        columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
+
+
+        tablaAsientos.setItems(asientoCuentaObservableList);
+    }
+
+    public boolean verificarCamposVacios(){
+        return cbbCuenta.getSelectionModel().isEmpty() &&
+                cbbDebeHaber.getSelectionModel().isEmpty() &&
+                txtMonto.getText().isEmpty();
+    }
+    public String verificarSiEsDebeHaber(){
+        if(cbbDebeHaber.getValue().equals("Debe")){
+            return "Debe";
+        }
+        return "Haber";
+    }
+
+
+
 
     @FXML
     public void accionDebeHaber(){
@@ -106,9 +158,10 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public String traerFechaActual(){
         Calendar fecha = Calendar.getInstance();
         int año = fecha.get(Calendar.YEAR);
-        int mes = fecha.get(Calendar.MONTH);
+        int mes = fecha.get(Calendar.MONTH)+1;
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        String fechaString = String.valueOf(año+"/"+mes+"/"+dia);
+        String fechaString = String.valueOf(dia+"/"+mes+"/"+año);
+
         return fechaString;
     }
 
@@ -121,7 +174,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void iniciarComboBoxDebeHaber(){
         ObservableList<String> items = FXCollections.observableArrayList();
         items.addAll("Debe","Haber");
-        cbbCuenta.setItems(items);
+        cbbDebeHaber.setItems(items);
     }
 
     public void traerNombresDeCuentas(){

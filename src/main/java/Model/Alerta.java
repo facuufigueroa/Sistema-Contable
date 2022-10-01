@@ -106,5 +106,15 @@ public class Alerta {
         return true;
     }
 
+    public static boolean alertarAsientoRegistrado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("<html><p style=\"font:14px\"> ¡ Asiento registrado con éxito !</p></html>");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
 
 }

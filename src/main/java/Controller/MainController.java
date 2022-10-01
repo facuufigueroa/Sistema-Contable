@@ -55,8 +55,6 @@ public class MainController extends ViewFuntionality implements Initializable {
     private LoginController loginController;
 
     public MainController() {
-
-        System.out.println(u.getNombre());
     }
 
     @Override

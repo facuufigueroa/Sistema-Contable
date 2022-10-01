@@ -10,6 +10,13 @@ public class Asiento {
 
     private int usuario;
 
+    private int codigoAsiento;
+
+    public Asiento(String detalle, int usuario) {
+        this.detalle = detalle;
+        this.usuario = usuario;
+    }
+
     public String getFecha() {
         return fecha;
     }
@@ -32,5 +39,13 @@ public class Asiento {
 
     public void setUsuario(int usuario) {
         this.usuario = usuario;
+    }
+
+    public int getCodigoAsiento() {
+        return codigoAsiento;
+    }
+
+    public void setCodigoAsiento(int codigoAsiento) {
+        this.codigoAsiento = codigoAsiento;
     }
 }
