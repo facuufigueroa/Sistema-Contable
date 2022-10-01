@@ -110,11 +110,30 @@ public class Alerta {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText("<html><p style=\"font:14px\"> ¡ Asiento registrado con éxito !</p></html>");
+        alert.setContentText("¡ Asiento registrado con éxito !");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
         return true;
     }
 
+    public static boolean alertarAsientoNoRegistrado() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error al registrar asiento, los balances no cierran");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertarCampoDebeHaberVacio() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error, seleccione Debe o Haber");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
 
 }

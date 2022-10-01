@@ -20,7 +20,7 @@ public class CuentaQuery {
     }
 
     public static String insertarCuenta(){
-        return "INSERT INTO cuentas (codigo,nombre,recibe_saldo,tipo,estado) VALUES (?,?,?,?,?)";
+        return "INSERT INTO cuentas (codigo,nombre,recibe_saldo,tipo,estado,saldo_actual) VALUES (?,?,?,?,?,?)";
     }
 
     public static String existeCodigoCuenta(String codigo){
@@ -32,6 +32,6 @@ public class CuentaQuery {
     }
 
     public static String traerNombresCuentas(){
-        return "SELECT c.nombre FROM cuentas as c WHERE c.estado=true ORDER BY c.nombre ASC";
+        return "SELECT c.nombre FROM cuentas as c WHERE c.estado=true AND c.recibe_saldo='1' ORDER BY c.nombre ASC";
     }
 }

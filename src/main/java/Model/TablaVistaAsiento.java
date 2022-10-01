@@ -6,10 +6,13 @@ public class TablaVistaAsiento {
     private double debe;
     private double haber;
 
-    public TablaVistaAsiento(String nombreCuenta, double debe, double haber) {
+    private double saldo;
+
+    public TablaVistaAsiento(String nombreCuenta, double debe, double haber, double saldo) {
         this.nombreCuenta = nombreCuenta;
         this.debe = debe;
         this.haber = haber;
+        this.saldo = saldo;
     }
 
     public String getNombreCuenta() {
@@ -34,5 +37,13 @@ public class TablaVistaAsiento {
 
     public void setHaber(double haber) {
         this.haber = haber;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 }

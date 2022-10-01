@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.Alerta;
 import Services.ServiceAsiento;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
@@ -82,6 +83,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private ServiceAsiento serviceAsiento = new ServiceAsiento();
 
     ArrayList<TablaVistaAsiento> asientoCuentas = new ArrayList<>();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBoxCuentas();
@@ -93,30 +95,52 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     @FXML
     public void accionAgregarAsiento(){
-        if(verificarSiEsDebeHaber() == "Debe"){
-            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())), Double.valueOf(txtMonto.getText()), 0);
-            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()),asientoCuenta.getDebe(),asientoCuenta.getHaber() );
-            agregarATabla(tablaVistaAsiento);
+        AsientoCuenta asientoCuenta = new AsientoCuenta();
+        if(!verificarCamposVacios()) {
+            if (verificarSiEsDebeHaber() == "Debe") {
+
+                asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
+                asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
+                asientoCuenta.setDebe(Double.valueOf(txtMonto.getText()));
+                asientoCuenta.setHaber(0);
+                asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
+                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
+                agregarATabla(tablaVistaAsiento);
+
+            } else {
+                asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
+                asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
+                asientoCuenta.setDebe(0);
+                asientoCuenta.setHaber(Double.valueOf(txtMonto.getText()));
+                asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
+
+                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
+                agregarATabla(tablaVistaAsiento);
+
+            }
         }
         else{
-            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())), 0, Double.valueOf(txtMonto.getText()));
-            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()),asientoCuenta.getDebe(),asientoCuenta.getHaber() );
-            agregarATabla(tablaVistaAsiento);
+            Alerta.alertaCamposIncompletos();
         }
 
 
     }
 
+
     @FXML
     public void accionRegistrarAsiento(){
-
-        Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
-        serviceAsiento.insertarAsiento(asiento);
-
-
-        //AsientoCuenta asientoCuenta= new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(cbbCuenta.getSelectionModel().toString()), cbbDebeHaber.getSelectionModel().toString(),parseDouble(columHaber.getText()),calcularSaldo());
-
-        //serviceAsiento.insertarAsientoCuenta(asientoCuenta);
+            if (verificarBalance()) {
+                Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
+                serviceAsiento.insertarAsiento(asiento);
+                for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
+                    AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(cbbCuenta.getValue().toString()), tablaAsientos.getDebe(), tablaAsientos.getHaber(), tablaAsientos.getSaldo());
+                    serviceAsiento.insertarAsientoCuenta(asientoCuenta);
+                }
+                Alerta.alertarAsientoRegistrado();
+            }
+            else{
+                Alerta.alertarAsientoNoRegistrado();
+            }
 
     }
 
@@ -125,11 +149,9 @@ public class AsientoController extends ViewFuntionality implements Initializable
         asientoCuentas.add(asientoCuenta);
         ObservableList <TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
 
-
         columCuenta.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("nombreCuenta"));
         columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
         columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
-
 
         tablaAsientos.setItems(asientoCuentaObservableList);
     }
@@ -140,10 +162,16 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 txtMonto.getText().isEmpty();
     }
     public String verificarSiEsDebeHaber(){
-        if(cbbDebeHaber.getValue().equals("Debe")){
-            return "Debe";
+        if(!verificarCamposVacios()){
+            if(cbbDebeHaber.getValue().equals("Debe")){
+                return "Debe";
+            }
+            return "Haber";
         }
-        return "Haber";
+        else{
+            Alerta.alertarCampoDebeHaberVacio();
+        }
+        return null; /*Resolver este problema*/
     }
 
 
@@ -153,6 +181,32 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void accionDebeHaber(){
 
     }
+
+
+    public double obtenerSaldoTotal(){
+        double debe=0;
+        double haber =0;
+        double saldo;
+        for(TablaVistaAsiento asientos: asientoCuentas){
+            if(asientos.getHaber()==0){
+                debe+=asientos.getDebe();
+            }
+            haber+=asientos.getHaber();
+        }
+        saldo=debe-haber;
+        return saldo;
+    }
+
+    public boolean verificarBalance(){
+        if(obtenerSaldoTotal() == 0){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /*---------------------Metodos para inicializar*---------------------------------*/
 
     @FXML
     public String traerFechaActual(){
@@ -182,6 +236,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
         cuentas.addAll(serviceCuentas.traerNombreCuentas());
         cbbCuenta.setItems(cuentas);
     }
+
+    /*----------------------------------------------------------------------*/
 
     public void hideStage(){ getVentana().hide(); }
 

@@ -102,6 +102,7 @@ public class ServicePDC {
             getPreparedStatement().setString(3,cuenta.recibe_saldo);
             getPreparedStatement().setString(4,cuenta.tipo);
             getPreparedStatement().setBoolean(5, cuenta.estado);
+            getPreparedStatement().setDouble(6,cuenta.saldo_actual);
 
             // Ejecuto la consulta
             getPreparedStatement().executeUpdate();

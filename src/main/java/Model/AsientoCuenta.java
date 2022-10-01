@@ -8,6 +8,9 @@ public class AsientoCuenta {
     private double haber;
     private double saldo;
 
+    public AsientoCuenta() {
+
+    }
 
     public AsientoCuenta(int asiento, int cuenta, double debe, double haber, double saldo) {
         this.asiento = asiento;
