@@ -148,11 +148,9 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
         asientoCuentas.add(asientoCuenta);
         ObservableList <TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
-
         columCuenta.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("nombreCuenta"));
         columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
         columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
-
         tablaAsientos.setItems(asientoCuentaObservableList);
     }
 
