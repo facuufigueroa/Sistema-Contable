@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static java.lang.Double.parseDouble;
@@ -98,7 +99,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         AsientoCuenta asientoCuenta = new AsientoCuenta();
         if(!verificarCamposVacios()) {
             if (verificarSiEsDebeHaber() == "Debe") {
-
                 asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
                 asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
                 asientoCuenta.setDebe(Double.valueOf(txtMonto.getText()));
@@ -106,7 +106,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
                 TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
-
             } else {
                 asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
                 asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
@@ -116,7 +115,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
                 TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
-
             }
         }
         else{
@@ -128,7 +126,9 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
 
     @FXML
-    public void accionRegistrarAsiento(){
+    public void accionRegistrarAsiento(ActionEvent event) throws IOException {
+
+        if(!txtDescripcion.getText().isEmpty()) {
             if (verificarBalance()) {
                 Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
                 serviceAsiento.insertarAsiento(asiento);
@@ -137,28 +137,40 @@ public class AsientoController extends ViewFuntionality implements Initializable
                     serviceAsiento.insertarAsientoCuenta(asientoCuenta);
                 }
                 Alerta.alertarAsientoRegistrado();
-            }
-            else{
+                if(Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK){
+                    setearCamposEnVacio();
+                }
+                else{
+                    accionBtnVolver(event);
+                }
+
+            } else {
                 Alerta.alertarAsientoNoRegistrado();
             }
-
+        }
+        else{
+            Alerta.alertaCamposIncompletos();
+        }
     }
 
     public void agregarATabla(TablaVistaAsiento asientoCuenta){
 
-        asientoCuentas.add(asientoCuenta);
-        ObservableList <TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
-        columCuenta.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("nombreCuenta"));
-        columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
-        columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
-        tablaAsientos.setItems(asientoCuentaObservableList);
+            asientoCuentas.add(asientoCuenta);
+            ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
+            columCuenta.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("nombreCuenta"));
+            columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
+            columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
+            tablaAsientos.setItems(asientoCuentaObservableList);
+
+
     }
 
     public boolean verificarCamposVacios(){
-        return cbbCuenta.getSelectionModel().isEmpty() &&
-                cbbDebeHaber.getSelectionModel().isEmpty() &&
+        return cbbCuenta.getSelectionModel().isEmpty() ||
+                cbbDebeHaber.getSelectionModel().isEmpty() ||
                 txtMonto.getText().isEmpty();
     }
+
     public String verificarSiEsDebeHaber(){
         if(!verificarCamposVacios()){
             if(cbbDebeHaber.getValue().equals("Debe")){
@@ -201,6 +213,19 @@ public class AsientoController extends ViewFuntionality implements Initializable
         }
         return false;
     }
+
+    public void setearCamposEnVacio(){
+        txtDescripcion.setText("");
+        txtMonto.setText("");
+        cbbCuenta.setItems(null);
+        cbbDebeHaber.setItems(null);
+        traerNombresDeCuentas();
+        iniciarComboBoxDebeHaber();
+        tablaAsientos.setItems(null);
+        this.asientoCuentas= new ArrayList<>();
+    }
+
+
 
 
 

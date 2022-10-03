@@ -15,6 +15,10 @@ public class TablaVistaAsiento {
         this.saldo = saldo;
     }
 
+    public TablaVistaAsiento() {
+
+    }
+
     public String getNombreCuenta() {
         return nombreCuenta;
     }

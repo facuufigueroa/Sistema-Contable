@@ -136,4 +136,18 @@ public class Alerta {
         return true;
     }
 
+
+    public static Alert alertaNuevoAsiento() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¿Desea registrar otro asiento?");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return alert;
+    }
+
+
+
+
 }
