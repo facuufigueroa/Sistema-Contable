@@ -21,9 +21,9 @@
                   <Image url="@../Images/banner.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="273.0" fitWidth="250.0" layoutX="118.0" layoutY="143.0" opacity="0.71" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="523.0" fitWidth="472.0" layoutX="29.0" layoutY="52.0" opacity="0.71" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/Icono.png" />
+                  <Image url="@../Images/Logo%20sin%20fondo%20-%20Original.png" />
                </image>
                <effect>
                   <DropShadow height="62.03" radius="31.9825" width="67.9" />

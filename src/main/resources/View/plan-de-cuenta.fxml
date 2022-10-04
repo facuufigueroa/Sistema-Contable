@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,13 +14,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="564.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CuentaController">
+<AnchorPane prefHeight="621.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CuentaController">
    <children>
-      <Pane layoutX="-1.0" prefHeight="564.0" prefWidth="635.0" style="-fx-background-color: #0D3E59;">
+      <Pane layoutX="-1.0" prefHeight="621.0" prefWidth="711.0" style="-fx-background-color: #0D3E59;">
          <children>
-            <Pane layoutX="-3.0" prefHeight="37.0" prefWidth="638.0" style="-fx-background-color: #44878f;">
+            <Pane layoutX="-3.0" prefHeight="37.0" prefWidth="714.0" style="-fx-background-color: #44878f;">
                <children>
-                  <Button fx:id="btnMinimize" layoutX="557.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="btnMinimize" layoutX="627.0" layoutY="-2.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -28,7 +29,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnClose" layoutX="596.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="btnClose" layoutX="666.0" layoutY="-2.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -44,39 +45,43 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="tableCuentas" layoutX="15.0" layoutY="326.0" onMouseClicked="#accionTablaCuentasH" prefHeight="224.0" prefWidth="605.0">
+            <TableView fx:id="tableCuentas" layoutX="14.0" layoutY="342.0" onMouseClicked="#accionTablaCuentasH" prefHeight="267.0" prefWidth="687.0">
               <columns>
-                <TableColumn fx:id="columName" editable="false" prefWidth="154.3333282470703" text="Nombre" />
-                <TableColumn fx:id="columCodigo" editable="false" prefWidth="189.6666717529297" text="Codigo" />
-                  <TableColumn fx:id="columRecibeSaldo" editable="false" prefWidth="164.00003051757812" text="Recibe saldo" />
-                  <TableColumn fx:id="columTipo" editable="false" prefWidth="96.99996948242188" text="Tipo" />
+                <TableColumn fx:id="columName" editable="false" prefWidth="245.0" text="Nombre" />
+                <TableColumn fx:id="columCodigo" editable="false" prefWidth="211.0" text="Codigo" />
+                  <TableColumn fx:id="columRecibeSaldo" editable="false" prefWidth="116.33331298828125" text="Recibe saldo" />
+                  <TableColumn fx:id="columTipo" editable="false" prefWidth="113.6666259765625" text="Tipo" />
               </columns>
             </TableView>
-            <Line endX="-231.4998779296875" endY="154.0" layoutX="852.0" layoutY="155.0" startX="-231.49981689453125" startY="-56.333335876464844" stroke="#0c1b40" />
-            <Line endX="-110.5" endY="149.0" layoutX="124.0" layoutY="160.0" startX="-110.5" startY="-61.0" stroke="#0c1b40" />
-            <Line endX="497.50018310546875" endY="-0.04044342041015625" layoutX="123.0" layoutY="98.0" startX="-109.0" startY="0.5" stroke="#0c1b40" />
-            <Button fx:id="btnVolver" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="33.0" prefWidth="103.0" text="  Volver">
+            <Line endX="-231.5" endY="174.0" layoutX="933.0" layoutY="153.0" startX="-231.49981689453125" startY="-56.333335876464844" stroke="#0c1b40">
+               <effect>
+                  <DropShadow />
+               </effect></Line>
+            <Line endX="-110.5" endY="167.0" layoutX="124.0" layoutY="160.0" startX="-110.5" startY="-61.0" stroke="#0c1b40">
+               <effect>
+                  <DropShadow />
+               </effect></Line>
+            <Line endX="577.7930297851562" endY="-2.0404434204101562" layoutX="123.0" layoutY="98.0" startX="-109.0" startY="0.5" stroke="#0c1b40">
+               <effect>
+                  <DropShadow />
+               </effect></Line>
+            <Button fx:id="btnVolver" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="39.0" prefWidth="110.0" text="  Volver">
                <font>
-                  <Font name="Lucida Sans Unicode" size="12.0" />
+                  <Font name="Lucida Sans Unicode" size="15.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/volver.png" />
+                        <Image url="@../Images/flecha-hacia-atras.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Label layoutX="160.0" layoutY="110.0" prefHeight="33.0" prefWidth="139.0" text="Agregar cuenta" textFill="WHITE" underline="true">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtNombre" layoutX="30.0" layoutY="150.0" promptText="Nombre" />
-            <TextField fx:id="txtCodigo" layoutX="231.0" layoutY="150.0" promptText="Codigo" />
-            <ComboBox fx:id="cbbRecibeSaldo" layoutX="29.0" layoutY="209.0" onAction="#itemRecibeSaldo" prefWidth="150.0" promptText="Recibe Saldo" />
-            <ComboBox fx:id="cbbTipo" layoutX="229.0" layoutY="209.0" onAction="#itemTipo" prefWidth="150.0" promptText="Tipo" />
-            <Button fx:id="btnAgregarCuenta" layoutX="229.0" layoutY="254.0" mnemonicParsing="false" onAction="#accionAgregarCuenta" prefHeight="38.0" prefWidth="149.0" text="Agregar cuenta">
+            <TextField fx:id="txtNombre" layoutX="30.0" layoutY="150.0" prefHeight="37.0" prefWidth="149.0" promptText="Nombre" />
+            <TextField fx:id="txtCodigo" layoutX="231.0" layoutY="150.0" prefHeight="37.0" prefWidth="149.0" promptText="Codigo" />
+            <ComboBox fx:id="cbbRecibeSaldo" layoutX="29.0" layoutY="209.0" onAction="#itemRecibeSaldo" prefHeight="29.0" prefWidth="150.0" promptText="Recibe Saldo" />
+            <ComboBox fx:id="cbbTipo" layoutX="229.0" layoutY="209.0" onAction="#itemTipo" prefHeight="29.0" prefWidth="150.0" promptText="Tipo" />
+            <Button fx:id="btnAgregarCuenta" layoutX="229.0" layoutY="262.0" mnemonicParsing="false" onAction="#accionAgregarCuenta" prefHeight="49.0" prefWidth="176.0" style="-fx-background-color: #166576;" text="Agregar Cuenta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -84,9 +89,15 @@
                      </image>
                   </ImageView>
                </graphic>
+               <font>
+                  <Font name="Lucida Sans Unicode" size="14.0" />
+               </font>
             </Button>
-            <Line endX="457.79302978515625" endY="0.707122802734375" layoutX="162.0" layoutY="309.0" startX="-148.0" startY="0.5" stroke="#0c1b40" />
-            <Button fx:id="btnDeshabilitarCuenta" layoutX="443.0" layoutY="164.0" mnemonicParsing="false" onAction="#accionDeshabilitarCuenta" prefHeight="38.0" prefWidth="149.0" text="Deshabilitar cuenta">
+            <Line endX="539.0" endY="0.5" layoutX="162.0" layoutY="327.0" startX="-148.0" startY="0.5" stroke="#0c1b40">
+               <effect>
+                  <DropShadow />
+               </effect></Line>
+            <Button fx:id="btnDeshabilitarCuenta" layoutX="462.0" layoutY="173.0" mnemonicParsing="false" onAction="#accionDeshabilitarCuenta" prefHeight="49.0" prefWidth="200.0" style="-fx-background-color: #166576;" text="Deshabilitar cuenta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -94,14 +105,15 @@
                      </image>
                   </ImageView>
                </graphic>
-            </Button>
-            <Line endX="-231.49984741210938" endY="156.79287719726562" layoutX="645.0" layoutY="152.0" startX="-231.49984741210938" startY="-54.74755859375" stroke="#0c1b40" />
-            <Label layoutX="430.0" layoutY="111.0" prefHeight="33.0" prefWidth="179.0" text="Deshabilitar cuenta" textFill="WHITE" underline="true">
                <font>
-                  <Font name="Lucida Sans Unicode" size="18.0" />
+                  <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
-            </Label>
-            <Button fx:id="btnVerCuentasDeshabilitadas" layoutX="429.0" layoutY="226.0" mnemonicParsing="false" onAction="#accionVerCuentasDeshabilitadas" prefHeight="38.0" prefWidth="184.0" text="Ver cuentas dehabilitadas">
+            </Button>
+            <Line endX="-231.4998779296875" endY="165.0" layoutX="645.0" layoutY="162.0" startX="-231.4998779296875" startY="-62.79290771484375" stroke="#0c1b40">
+               <effect>
+                  <DropShadow />
+               </effect></Line>
+            <Button fx:id="btnVerCuentasDeshabilitadas" layoutX="452.0" layoutY="262.0" mnemonicParsing="false" onAction="#accionVerCuentasDeshabilitadas" prefHeight="49.0" prefWidth="227.0" style="-fx-background-color: #166576;" text="Ver cuentas dehabilitadas" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -109,7 +121,34 @@
                      </image>
                   </ImageView>
                </graphic>
+               <font>
+                  <Font name="Lucida Sans Unicode" size="14.0" />
+               </font>
             </Button>
+            <Label layoutX="78.0" layoutY="99.0" prefHeight="33.0" prefWidth="261.0" text="Registrar Nueva Cuenta" textFill="WHITE">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/boton-agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label layoutX="442.0" layoutY="99.0" prefHeight="39.0" prefWidth="240.0" text="Deshabilitar Cuenta" textFill="WHITE">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/hora.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
          </children>
       </Pane>
    </children>
