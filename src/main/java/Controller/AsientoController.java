@@ -128,7 +128,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     @FXML
     public void accionRegistrarAsiento(ActionEvent event) throws IOException {
 
-        if(!txtDescripcion.getText().isEmpty()) {
+        if(verificarVacioAntesRegistrar()) {
             if (verificarBalance()) {
                 Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
                 serviceAsiento.insertarAsiento(asiento);
@@ -151,6 +151,10 @@ public class AsientoController extends ViewFuntionality implements Initializable
         else{
             Alerta.alertaCamposIncompletos();
         }
+    }
+
+    public boolean verificarVacioAntesRegistrar(){
+        return !txtDescripcion.getText().isEmpty() && asientoCuentas.size() > 0;
     }
 
     public void agregarATabla(TablaVistaAsiento asientoCuenta){
