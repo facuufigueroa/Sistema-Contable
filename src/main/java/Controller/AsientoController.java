@@ -18,12 +18,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.converter.DoubleStringConverter;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.Double.parseDouble;
 
@@ -91,7 +96,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
         traerNombresDeCuentas();
         txtFecha.setText(traerFechaActual());
         iniciarComboBoxDebeHaber();
-
+        integerTextField(txtMonto);
     }
 
     @FXML
@@ -106,6 +111,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
                 TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
+
             } else {
                 asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
                 asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
@@ -165,8 +171,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
             columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
             columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
             tablaAsientos.setItems(asientoCuentaObservableList);
-
-
     }
 
     public boolean verificarCamposVacios(){
@@ -230,6 +234,24 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
 
 
+    public static boolean datosNumericos(String monto){
+        Pattern patron = Pattern.compile("(\\d+)(((.)\\d+)+)?");
+        Matcher matcher = patron.matcher(monto);
+        return matcher.find();
+    }
+
+    public static void integerTextField(TextField txtMonto) {
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^\\d*\\.?\\d{0,2}$")) {
+                return change;
+            }
+            return null;
+        };
+        txtMonto.setTextFormatter(
+                new TextFormatter<Double>(
+                        new DoubleStringConverter(), null, integerFilter));
+    }
 
 
 
