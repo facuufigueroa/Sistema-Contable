@@ -22,18 +22,17 @@ import javafx.util.converter.DoubleStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.Double.parseDouble;
+import java.util.stream.Collectors;
 
 public class AsientoController extends ViewFuntionality implements Initializable {
 
+    @FXML private Button btnCancelar;
+    @FXML
+    private Button btnBorrarAsiento;
     @FXML
     private TextField txtFecha;
 
@@ -90,9 +89,10 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     ArrayList<TablaVistaAsiento> asientoCuentas = new ArrayList<>();
 
+    ArrayList<String> cuentasActualizadas = new ArrayList<>(serviceCuentas.traerNombreCuentas());
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        iniciarComboBoxCuentas();
         traerNombresDeCuentas();
         txtFecha.setText(traerFechaActual());
         iniciarComboBoxDebeHaber();
@@ -112,6 +112,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
 
+
             } else {
                 asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
                 asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
@@ -122,6 +123,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
             }
+            borrarCuentaUsada((String) cbbCuenta.getValue());
+            restaurarCampos(cuentasActualizadas);
         }
         else{
             Alerta.alertaCamposIncompletos();
@@ -129,7 +132,11 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
 
     }
+    public void borrarCuentaUsada(String nombre){ cuentasActualizadas.removeIf(cuenta -> cuenta.equals(nombre)); }
 
+    public void agregarCuentaBorrada(String nombre){
+        cuentasActualizadas.add(nombre);
+    }
 
     @FXML
     public void accionRegistrarAsiento(ActionEvent event) throws IOException {
@@ -192,12 +199,37 @@ public class AsientoController extends ViewFuntionality implements Initializable
         return null; /*Resolver este problema*/
     }
 
+    @FXML
+    public void accionBtnCancelar() {
+        //Preguntar si quiere salir
+        //si quiere, salir
+        //Alerta.alertarCancelar();
+        if(Alerta.alertarCancelar().getResult() == ButtonType.OK){
+            setearCamposEnVacio();
+        }
+        //sino no hago nada
+    }
+
 
 
 
     @FXML
     public void accionDebeHaber(){
 
+    }
+    @FXML
+    public void accionBorrarAsiento() {
+        if (asientoCuentas.size() > 0){
+
+            TablaVistaAsiento cuenta = tablaAsientos.getItems().get(asientoCuentas.size()-1);
+            agregarCuentaBorrada(cuenta.getNombreCuenta());
+            actualizarNombreCuentas(cuentasActualizadas);
+            asientoCuentas.remove(asientoCuentas.size()-1);
+
+            //Actualiza la tabla
+            ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
+            tablaAsientos.setItems(asientoCuentaObservableList);
+        }
     }
 
 
@@ -231,6 +263,14 @@ public class AsientoController extends ViewFuntionality implements Initializable
         iniciarComboBoxDebeHaber();
         tablaAsientos.setItems(null);
         this.asientoCuentas= new ArrayList<>();
+    }
+
+    public void restaurarCampos(ArrayList<String> lista){
+        txtMonto.setText("");
+        cbbCuenta.setItems(null);
+        cbbDebeHaber.setItems(null);
+        actualizarNombreCuentas(lista);
+        iniciarComboBoxDebeHaber();
     }
 
 
@@ -283,6 +323,12 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void traerNombresDeCuentas(){
         ObservableList<String> cuentas= FXCollections.observableArrayList();
         cuentas.addAll(serviceCuentas.traerNombreCuentas());
+        cbbCuenta.setItems(cuentas);
+    }
+    public void actualizarNombreCuentas(ArrayList<String> lista){
+        ObservableList<String> cuentas= FXCollections.observableArrayList();
+        cuentas.addAll(lista);
+        Collections.sort(cuentas);
         cbbCuenta.setItems(cuentas);
     }
 
@@ -340,4 +386,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void setIdUsuario(User idUsuario) {
         this.idUsuario = idUsuario;
     }
+    public Button getBtnBorrarAsiento() { return btnBorrarAsiento;}
+
 }

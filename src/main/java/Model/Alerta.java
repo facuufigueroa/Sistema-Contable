@@ -115,6 +115,15 @@ public class Alerta {
         alert.showAndWait();
         return true;
     }
+    public static Alert alertarCancelar() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¿Está seguro de cancelar el asiento?");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return alert;
+    }
 
     public static boolean alertarAsientoNoRegistrado() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
