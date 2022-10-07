@@ -3,12 +3,12 @@ package Model;
 public class TablaVistaAsiento {
 
     private String nombreCuenta;
-    private double debe;
-    private double haber;
+    private String debe;
+    private String haber;
 
     private double saldo;
 
-    public TablaVistaAsiento(String nombreCuenta, double debe, double haber, double saldo) {
+    public TablaVistaAsiento(String nombreCuenta, String debe, String haber, double saldo) {
         this.nombreCuenta = nombreCuenta;
         this.debe = debe;
         this.haber = haber;
@@ -27,19 +27,19 @@ public class TablaVistaAsiento {
         this.nombreCuenta = nombreCuenta;
     }
 
-    public double getDebe() {
+    public String getDebe() {
         return debe;
     }
 
-    public void setDebe(double debe) {
+    public void setDebe(String debe) {
         this.debe = debe;
     }
 
-    public double getHaber() {
+    public String getHaber() {
         return haber;
     }
 
-    public void setHaber(double haber) {
+    public void setHaber(String haber) {
         this.haber = haber;
     }
 

@@ -109,7 +109,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 asientoCuenta.setDebe(Double.valueOf(txtMonto.getText()));
                 asientoCuenta.setHaber(0);
                 asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
-                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
+                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), String.valueOf(asientoCuenta.getDebe()),"", asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
 
 
@@ -120,7 +120,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 asientoCuenta.setHaber(Double.valueOf(txtMonto.getText()));
                 asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
 
-                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), asientoCuenta.getDebe(), asientoCuenta.getHaber(), asientoCuenta.getSaldo());
+                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()),"", String.valueOf(asientoCuenta.getHaber()), asientoCuenta.getSaldo());
                 agregarATabla(tablaVistaAsiento);
             }
             borrarCuentaUsada((String) cbbCuenta.getValue());
@@ -146,7 +146,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
                 serviceAsiento.insertarAsiento(asiento);
                 for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
-                    AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(cbbCuenta.getValue().toString()), tablaAsientos.getDebe(), tablaAsientos.getHaber(), tablaAsientos.getSaldo());
+                    AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(tablaAsientos.getNombreCuenta()), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
                     serviceAsiento.insertarAsientoCuenta(asientoCuenta);
                 }
                 Alerta.alertarAsientoRegistrado();
@@ -166,6 +166,13 @@ public class AsientoController extends ViewFuntionality implements Initializable
         }
     }
 
+    public double conversionDebeHaber(String debeHaber){
+        if (debeHaber == "") {
+            return 0;
+        }
+        return Double.valueOf(debeHaber);
+    }
+
     public boolean verificarVacioAntesRegistrar(){
         return !txtDescripcion.getText().isEmpty() && asientoCuentas.size() > 0;
     }
@@ -175,8 +182,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
             asientoCuentas.add(asientoCuenta);
             ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
             columCuenta.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("nombreCuenta"));
-            columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("debe"));
-            columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, Double>("haber"));
+            columDebe.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("debe"));
+            columHaber.setCellValueFactory(new PropertyValueFactory<TablaVistaAsiento, String>("haber"));
             tablaAsientos.setItems(asientoCuentaObservableList);
     }
 
@@ -238,10 +245,10 @@ public class AsientoController extends ViewFuntionality implements Initializable
         double haber =0;
         double saldo;
         for(TablaVistaAsiento asientos: asientoCuentas){
-            if(asientos.getHaber()==0){
-                debe+=asientos.getDebe();
+            if(conversionDebeHaber(asientos.getHaber()) == 0){
+                debe+=conversionDebeHaber(asientos.getDebe());
             }
-            haber+=asientos.getHaber();
+            haber+= conversionDebeHaber(asientos.getHaber());
         }
         saldo=debe-haber;
         return saldo;
