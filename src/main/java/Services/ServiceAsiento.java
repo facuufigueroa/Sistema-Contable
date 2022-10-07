@@ -93,6 +93,21 @@ public class ServiceAsiento extends Service {
         return null;
     }
 
+    public String obtenerTipoDeCuenta(String nombreCuenta){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(QueryAsiento.obtenerTipoCuenta()));
+            getPreparedStatement().setString(1,nombreCuenta);
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return null;
+    }
+
 
 
 

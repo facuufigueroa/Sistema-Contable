@@ -21,4 +21,10 @@ public class QueryAsiento {
         return "SELECT c.nombre FROM cuentas as c WHERE c.idcuenta=?";
     }
 
+    public static String obtenerTipoCuenta(){
+        return "SELECT c.tipo\n" +
+                "from cuentas c\n" +
+                "where c.nombre=?";
+    }
+
 }

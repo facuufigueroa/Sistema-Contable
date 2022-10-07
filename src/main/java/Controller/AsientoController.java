@@ -224,6 +224,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void accionDebeHaber(){
 
     }
+
+
     @FXML
     public void accionBorrarAsiento() {
         if (asientoCuentas.size() > 0){
@@ -298,6 +300,31 @@ public class AsientoController extends ViewFuntionality implements Initializable
         txtMonto.setTextFormatter(
                 new TextFormatter<Double>(
                         new DoubleStringConverter(), null, integerFilter));
+    }
+
+    public void evaluarTipoResultado(String nombre){
+
+        if(nombre.equals("R+")){
+            System.out.println(nombre);
+            cbbDebeHaber.getSelectionModel().select("Haber");
+            cbbDebeHaber.setDisable(true);
+        }
+        if (nombre.equals("R-")){
+                cbbDebeHaber.getSelectionModel().select("Debe");
+                cbbDebeHaber.setDisable(true);
+        }
+        cbbDebeHaber.setDisable(true);
+
+    }
+    @FXML
+    public void accionCbbCuenta(){
+
+        if(!cbbDebeHaber.getSelectionModel().isEmpty()){
+            String seleccion = (String) cbbDebeHaber.getValue();
+            String tipoCuenta = serviceAsiento.obtenerTipoDeCuenta(seleccion);
+            evaluarTipoResultado(tipoCuenta);
+        }
+
     }
 
 
