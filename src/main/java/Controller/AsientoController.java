@@ -99,39 +99,45 @@ public class AsientoController extends ViewFuntionality implements Initializable
         integerTextField(txtMonto);
     }
 
+    /*Es necesario el if para evaluar las cuentas en caso que sean del tipo resultado y analizar si pertencen al debe o haber
+    ,si todo este correcto, agregará la cuenta a la tabla*/
     @FXML
     public void accionAgregarAsiento(){
-        AsientoCuenta asientoCuenta = new AsientoCuenta();
+
         if(!verificarCamposVacios()) {
-            if (verificarSiEsDebeHaber() == "Debe") {
-                asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
-                asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
-                asientoCuenta.setDebe(Double.valueOf(txtMonto.getText()));
-                asientoCuenta.setHaber(0);
-                asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
-                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), String.valueOf(asientoCuenta.getDebe()),"", asientoCuenta.getSaldo());
-                agregarATabla(tablaVistaAsiento);
-
-
-            } else {
-                asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
-                asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
-                asientoCuenta.setDebe(0);
-                asientoCuenta.setHaber(Double.valueOf(txtMonto.getText()));
-                asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
-
-                TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()),"", String.valueOf(asientoCuenta.getHaber()), asientoCuenta.getSaldo());
-                agregarATabla(tablaVistaAsiento);
-            }
-            borrarCuentaUsada((String) cbbCuenta.getValue());
-            restaurarCampos(cuentasActualizadas);
+            String tipoCuenta = serviceAsiento.obtenerTipoDeCuenta((String) cbbCuenta.getValue());
+            if (evaluarCuentasResultado(tipoCuenta)) { /* En este caso no realiza nada porque el metodo lo realiza*/}
+            else {
+                    agregarAsiento();
+                    borrarCuentaUsada((String) cbbCuenta.getValue());
+                    restaurarCampos(cuentasActualizadas);
+                }
         }
         else{
             Alerta.alertaCamposIncompletos();
+            }
         }
-
-
+    public void agregarAsiento(){
+        AsientoCuenta asientoCuenta = new AsientoCuenta();
+        if (verificarSiEsDebeHaber() == "Debe") {
+            asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
+            asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
+            asientoCuenta.setDebe(Double.valueOf(txtMonto.getText()));
+            asientoCuenta.setHaber(0);
+            asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
+            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), String.valueOf(asientoCuenta.getDebe()), "", asientoCuenta.getSaldo());
+            agregarATabla(tablaVistaAsiento);
+        } else {
+            asientoCuenta.setAsiento(serviceAsiento.obtenerIdAsiento());
+            asientoCuenta.setCuenta(serviceAsiento.obtenerIdCuenta(String.valueOf(cbbCuenta.getValue())));
+            asientoCuenta.setDebe(0);
+            asientoCuenta.setHaber(Double.valueOf(txtMonto.getText()));
+            asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
+            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), "", String.valueOf(asientoCuenta.getHaber()), asientoCuenta.getSaldo());
+            agregarATabla(tablaVistaAsiento);
+        }
     }
+
     public void borrarCuentaUsada(String nombre){ cuentasActualizadas.removeIf(cuenta -> cuenta.equals(nombre)); }
 
     public void agregarCuentaBorrada(String nombre){
@@ -203,22 +209,15 @@ public class AsientoController extends ViewFuntionality implements Initializable
         else{
             Alerta.alertarCampoDebeHaberVacio();
         }
-        return null; /*Resolver este problema*/
+        return null; 
     }
 
     @FXML
     public void accionBtnCancelar() {
-        //Preguntar si quiere salir
-        //si quiere, salir
-        //Alerta.alertarCancelar();
         if(Alerta.alertarCancelar().getResult() == ButtonType.OK){
             setearCamposEnVacio();
         }
-        //sino no hago nada
     }
-
-
-
 
     @FXML
     public void accionDebeHaber(){
@@ -302,28 +301,21 @@ public class AsientoController extends ViewFuntionality implements Initializable
                         new DoubleStringConverter(), null, integerFilter));
     }
 
-    public void evaluarTipoResultado(String nombre){
-
-        if(nombre.equals("R+")){
-            System.out.println(nombre);
-            cbbDebeHaber.getSelectionModel().select("Haber");
-            cbbDebeHaber.setDisable(true);
+    public boolean evaluarCuentasResultado(String tipo) {
+        if (tipo.equals("R+") && cbbDebeHaber.getValue() == "Debe" ||
+                tipo.equals("R-") && cbbDebeHaber.getValue() == "Haber")
+        {
+            Alerta.alertaResultados();
+            cbbDebeHaber.setItems(null);
+            iniciarComboBoxDebeHaber();
+            return true;
         }
-        if (nombre.equals("R-")){
-                cbbDebeHaber.getSelectionModel().select("Debe");
-                cbbDebeHaber.setDisable(true);
-        }
-        cbbDebeHaber.setDisable(true);
-
+        return false;
     }
+
+
     @FXML
     public void accionCbbCuenta(){
-
-        if(!cbbDebeHaber.getSelectionModel().isEmpty()){
-            String seleccion = (String) cbbDebeHaber.getValue();
-            String tipoCuenta = serviceAsiento.obtenerTipoDeCuenta(seleccion);
-            evaluarTipoResultado(tipoCuenta);
-        }
 
     }
 

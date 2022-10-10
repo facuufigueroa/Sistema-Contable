@@ -156,7 +156,14 @@ public class Alerta {
         return alert;
     }
 
-
+    public static void alertaResultados() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡ La cuenta seleccionada no corresponde a la selección de la parte de cuenta, verifique que si la cuenta es del tipo R+, haya seleccionado Haber, en caso contrario, seleccione Debe !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 
 
 }
