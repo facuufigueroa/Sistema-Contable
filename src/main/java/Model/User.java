@@ -1,38 +1,20 @@
 package Model;
 public class User {
-
-    private int id;
     private String email;
     private String contrasena;
 
-    private static User user;
     private String nombre;
 
     private String apellido;
 
-
     public User(){}
 
-    public static User getInstance(){
-        if(user == null){
-            user = new User();
-        }
-        return user;
-    }
     public User(String email, String password) {
         setEmail(email);
         setContrasena(password);
     }
 
-    public User(String email, String contrasena, String nombre, String apellido) {
-        this.email = email;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
-    public User(int id, String nombre, String apellido, String email, String contrasena) {
-        setId(id);
+    public User(String nombre, String apellido, String email, String contrasena) {
        setNombre(nombre);
        setApellido(apellido);
        setEmail(email);
@@ -76,13 +58,4 @@ public class User {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }
-

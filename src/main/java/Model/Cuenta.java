@@ -9,19 +9,8 @@ public class Cuenta {
 
     public Boolean estado;
 
-    public double saldo_actual;
-
     public Cuenta() {
         this.estado = true;
-        this.saldo_actual=0;
-    }
-
-    public double getSaldo_actual() {
-        return saldo_actual;
-    }
-
-    public void setSaldo_actual(double saldo_actual) {
-        this.saldo_actual = saldo_actual;
     }
 
     public Boolean getEstado() {

@@ -46,7 +46,6 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     private static ServiceRoles serviceRoles = new ServiceRoles();
 
-    private User u = User.getInstance();
 
     private CuentaController cuentaController;
 
@@ -54,13 +53,8 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     private LoginController loginController;
 
-    public MainController() {
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        verificarRolUser();
-        cambiarTexto();
     }
 
     @FXML
@@ -87,8 +81,33 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void showStage(){ getVentana().show(); }
 
 
-    private void cambiarTexto(){ getCampoTexto().setText(u.getNombre().toUpperCase()+" "+u.getApellido().toUpperCase()+" "+"| "+serviceRoles.obtenerRolPorEmail(u.getEmail()).toUpperCase()); }
+    public void permisos(){ getRoles().permisos(this); }
 
+    private void cambiarTexto(Label campoTexto, String texto){ campoTexto.setText(texto); }
+    private void rellenarCampos(){
+        cambiarTexto(getCampoTexto(), getRoles().nombre().toUpperCase()
+                                            + " "
+                                            + getRoles().apellido().toUpperCase()
+                                            + " - "
+                                            + getRoles().getRol().toUpperCase()
+        );
+    }
+    public void cargarDatos(User user){
+        setUsuario(new User(user.getNombre(), user.getApellido(), user.getEmail(), user.getContrasena()));
+        setUsuario(user);
+        obtenerRolUsuario(getUsuario());
+        actualizarVistaUsuario();
+    }
+    public void actualizarVistaUsuario(){
+        permisos();
+        rellenarCampos();
+    }
+
+    private void obtenerRolUsuario(User user) {
+        String rol = getServiceRoles().obtenerRolUsuarioPorEmail(user.getEmail());
+        setRoles(getServiceRoles().roles(rol));
+        getRoles().setUser(user);
+    }
 
    private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
 
@@ -101,6 +120,8 @@ public class MainController extends ViewFuntionality implements Initializable {
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaController().setVentana(loginStage);
+        getCuentaController().setRoles(getRoles());
+        getCuentaController().permisosAsiento();
         getCuentaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -119,6 +140,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getAsientoController().setVentana(loginStage);
+        getAsientoController().setRoles(getRoles());
         getAsientoController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -144,24 +166,6 @@ public class MainController extends ViewFuntionality implements Initializable {
     public LoginController loadLogin (LoginController controller){
         return controller;
     }
-
-    /*Metodo para roles*/
-
-    public void verificarRolUser(){
-        if(serviceRoles.obtenerRolPorEmail(u.getEmail()).equals("usuario")){
-            getBtnCrearUsuario().setDisable(true);
-        }
-
-    }
-
-
-
-
-
-
-
-
-
 
 
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }

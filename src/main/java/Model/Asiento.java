@@ -4,24 +4,17 @@ import java.util.Date;
 
 public class Asiento {
 
-    private String fecha;
+    private Date fecha;
 
     private String detalle;
 
     private int usuario;
 
-    private int codigoAsiento;
-
-    public Asiento(String detalle, int usuario) {
-        this.detalle = detalle;
-        this.usuario = usuario;
-    }
-
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -39,13 +32,5 @@ public class Asiento {
 
     public void setUsuario(int usuario) {
         this.usuario = usuario;
-    }
-
-    public int getCodigoAsiento() {
-        return codigoAsiento;
-    }
-
-    public void setCodigoAsiento(int codigoAsiento) {
-        this.codigoAsiento = codigoAsiento;
     }
 }

@@ -3,192 +3,130 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="frameLogin" prefHeight="647.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AsientoController">
+<AnchorPane fx:id="frameLogin" prefHeight="594.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AsientoController">
    <children>
-   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="850.0" style="-fx-background-color: #0D3E59;">
+   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="700.0" style="-fx-background-color: #0D3E59;">
       <children>
-         <AnchorPane layoutY="88.0" prefHeight="136.0" prefWidth="850.0" style="-fx-background-color: #0D3E59;">
+         <AnchorPane layoutX="14.0" layoutY="88.0" prefHeight="136.0" prefWidth="673.0" style="-fx-background-color: #0D3E59;">
             <children>
-               <Label layoutX="24.0" layoutY="32.0" prefHeight="27.0" prefWidth="91.0" text="Fecha:" textFill="WHITE">
+               <Label layoutX="6.0" layoutY="18.0" prefHeight="26.0" prefWidth="57.0" text="Fecha:" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="18.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
-                     <graphic>
-                        <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/calendario.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                </Label>
-               <Label layoutX="360.0" layoutY="31.0" text="Descripción:" textFill="WHITE">
+               <Label layoutX="316.0" layoutY="18.0" text="Descripción:" textFill="WHITE">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="18.0" />
+                     <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/Descripcion.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                </Label>
-               <TextArea fx:id="txtDescripcion" focusTraversable="false" layoutX="512.0" layoutY="25.0" prefHeight="75.0" prefWidth="320.0" AnchorPane.rightAnchor="24.0">
+               <TextArea fx:id="txtDescripcion" focusTraversable="false" layoutX="428.0" layoutY="14.0" prefHeight="77.0" prefWidth="238.0">
                      <font>
                         <Font name="Lucida Sans Unicode" size="14.0" />
                      </font></TextArea>
-               <TextField fx:id="txtFecha" editable="false" focusTraversable="false" layoutX="148.0" layoutY="32.0" prefHeight="25.0" prefWidth="97.0">
+               <TextField fx:id="txtNumeroAsiento" layoutX="108.0" layoutY="67.0" prefHeight="25.0" prefWidth="136.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font></TextField>
+               <Label layoutX="6.0" layoutY="64.0" text="Nro Asiento: " textFill="WHITE">
+                  <font>
+                     <Font name="Lucida Sans Unicode" size="16.0" />
+                  </font>
+               </Label>
+               <TextField fx:id="txtFecha" editable="false" focusTraversable="false" layoutX="70.0" layoutY="22.0" prefHeight="25.0" prefWidth="97.0">
                      <font>
                         <Font size="13.0" />
                      </font></TextField>
             </children>
          </AnchorPane>
-         <AnchorPane layoutY="196.0" prefHeight="111.0" prefWidth="850.0" style="-fx-background-color: #0D3E59;">
+         <AnchorPane layoutX="14.0" layoutY="196.0" prefHeight="159.0" prefWidth="625.0" style="-fx-background-color: #0D3E59;">
             <children>
-               <Label layoutX="24.0" layoutY="14.0" prefHeight="37.0" prefWidth="109.0" text="Cuenta:" textFill="WHITE">
-                  <font>
-                     <Font name="Lucida Sans Unicode" size="18.0" />
-                  </font>
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/seleccione.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-               </Label>
-               <Label layoutX="24.0" layoutY="59.0" prefHeight="37.0" prefWidth="111.0" text="Monto:" textFill="WHITE">
+               <Label layoutX="8.0" layoutY="23.0" text="Cuenta:" textFill="WHITE">
                   <font>
                      <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
-                     <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/dinero.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                </Label>
-               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="148.0" layoutY="19.0" onAction="#accionCbbCuenta" onMouseDragEntered="#accionCbbCuenta" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
-               <TextField fx:id="txtMonto" focusTraversable="false" layoutX="149.0" layoutY="63.0" prefHeight="30.0" prefWidth="111.0">
+               <Label layoutX="10.0" layoutY="67.0" text="Monto:" textFill="WHITE">
+                  <font>
+                     <Font name="Lucida Sans Unicode" size="16.0" />
+                  </font>
+               </Label>
+               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="85.0" layoutY="19.0" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
+               <TextField fx:id="txtMonto" focusTraversable="false" layoutX="85.0" layoutY="63.0" prefHeight="30.0" prefWidth="111.0">
                      <font>
                         <Font size="13.0" />
                      </font></TextField>
-               <Button fx:id="btnAgregarAsiento" layoutX="547.0" layoutY="59.0" mnemonicParsing="false" onAction="#accionAgregarAsiento" prefHeight="37.0" prefWidth="123.0" style="-fx-background-color: #166576; -fx-border-color: transparent; -fx-border-color: transparent;" text="Agregar" textFill="WHITE" AnchorPane.rightAnchor="180.0">
+               <RadioButton fx:id="checkDebe" layoutX="231.0" layoutY="68.0" mnemonicParsing="false" text="Debe" textFill="WHITE">
                   <font>
                      <Font name="Lucida Sans Unicode" size="16.0" />
                   </font>
-                     <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/agregar-archivo.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <effect>
-                        <DropShadow height="22.47" radius="11.1" width="23.93">
-                           <color>
-                              <Color red="0.10196078568696976" green="0.20000000298023224" blue="0.250980406999588" />
-                           </color>
-                        </DropShadow>
-                     </effect>
+               </RadioButton>
+               <RadioButton fx:id="checkHaber" layoutX="313.0" layoutY="70.0" mnemonicParsing="false" text="Haber" textFill="WHITE">
+                  <font>
+                     <Font name="Lucida Sans Unicode" size="16.0" />
+                  </font>
+               </RadioButton>
+               <Button layoutX="323.0" layoutY="19.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Plan de cuentas">
+                  <font>
+                     <Font name="Lucida Sans Unicode" size="13.0" />
+                  </font>
                </Button>
-                  <ComboBox fx:id="cbbDebeHaber" editable="true" focusTraversable="false" layoutX="335.0" layoutY="63.0" onAction="#accionDebeHaber" prefHeight="30.0" prefWidth="145.0" promptText="Debe/Haber" />
-                  <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="280.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/seleccione.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="btnBorrarAsiento" layoutX="680.0" layoutY="59.0" mnemonicParsing="false" onAction="#accionBorrarAsiento" prefHeight="38.0" prefWidth="145.0" style="-fx-background-color: #166576; -fx-border-color: transparent; -fx-border-color: transparent;" text="Eliminar Fila" textFill="WHITE" AnchorPane.rightAnchor="24.0">
-                     <font>
-                        <Font name="Lucida Sans Unicode" size="16.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/agregar-archivo.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <effect>
-                        <DropShadow height="22.47" radius="11.1" width="23.93">
-                           <color>
-                              <Color red="0.10196078568696976" green="0.20000000298023224" blue="0.250980406999588" />
-                           </color>
-                        </DropShadow>
-                     </effect>
-                  </Button>
+               <Button fx:id="btnAgregarAsiento" layoutX="322.0" layoutY="109.0" mnemonicParsing="false" onAction="#accionAgregarAsiento" prefHeight="24.0" prefWidth="129.0" text="Agregar">
+                  <font>
+                     <Font name="Lucida Sans Unicode" size="13.0" />
+                  </font>
+               </Button>
             </children>
          </AnchorPane>
-         <AnchorPane layoutY="307.0" prefHeight="334.0" prefWidth="850.0" style="-fx-background-color: #0D3E59;">
+         <AnchorPane layoutY="341.0" prefHeight="228.0" prefWidth="693.0" style="-fx-background-color: #0D3E59;">
             <children>
-               <Button fx:id="btnRegistrarAsiento" layoutX="635.0" layoutY="276.0" mnemonicParsing="false" onAction="#accionRegistrarAsiento" prefHeight="43.0" prefWidth="191.0" style="-fx-background-color: #166576; -fx-border-color: transparent;" text="Registrar asiento" textFill="WHITE" textOverrun="LEADING_ELLIPSIS" AnchorPane.rightAnchor="24.0">
+               <Button fx:id="btnRegistrarAsiento" layoutX="532.0" layoutY="199.0" mnemonicParsing="false" onAction="#accionRegistrarAsiento" prefHeight="30.0" prefWidth="154.0" text="Registrar asiento">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="16.0" />
+                     <Font name="Lucida Sans Unicode" size="13.0" />
                   </font>
                   <graphic>
-                     <ImageView fitHeight="29.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="19.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../Images/anadir.png" />
+                           <Image url="@../Images/add-icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
-                     <effect>
-                        <DropShadow height="25.4" radius="13.2975" width="29.79">
-                           <color>
-                              <Color red="0.09803921729326248" green="0.1725490242242813" blue="0.21176470816135406" />
-                           </color>
-                        </DropShadow>
-                     </effect>
                </Button>
-               <Button fx:id="btnCancelar" graphicTextGap="9.0" layoutX="481.0" layoutY="275.0" mnemonicParsing="false" onAction="#accionBtnCancelar" prefHeight="45.0" prefWidth="144.0" style="-fx-background-color: #166576; -fx-border-color: transparent;" text="Cancelar" textFill="WHITE">
+               <Button layoutX="379.0" layoutY="199.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Cancelar">
                   <font>
-                     <Font name="Lucida Sans Unicode" size="16.0" />
+                     <Font name="Lucida Sans Unicode" size="13.0" />
                   </font>
-                     <graphic>
-                        <ImageView fitHeight="27.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/cancelar.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <effect>
-                        <DropShadow height="64.97" radius="36.379999999999995" width="82.55">
-                           <color>
-                              <Color red="0.1535087674856186" green="0.23742690682411194" blue="0.2763157784938812" />
-                           </color>
-                        </DropShadow>
-                     </effect>
                </Button>
-               <TableView fx:id="tablaAsientos" editable="true" layoutX="47.0" prefHeight="265.0" prefWidth="756.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
+               <TableView fx:id="tablaAsientos" editable="true" layoutX="13.0" layoutY="30.0" prefHeight="149.0" prefWidth="673.0">
                   <columns>
-                     <TableColumn fx:id="columCuenta" prefWidth="539.0" resizable="false" text="Cuenta" />
-                     <TableColumn fx:id="columDebe" prefWidth="141.0" text="Debe" />
-                     <TableColumn fx:id="columHaber" prefWidth="121.0" text="Haber" />
+                     <TableColumn fx:id="columFecha" prefWidth="101.0" resizable="false" text="Fecha" />
+                     <TableColumn fx:id="columDescripcion" prefWidth="281.0" resizable="false" text="Descripcion" />
+                     <TableColumn fx:id="columCuenta" prefWidth="116.0" resizable="false" text="Cuenta" />
+                     <TableColumn fx:id="columDebe" prefWidth="98.0" text="Debe" />
+                     <TableColumn fx:id="columHaber" prefWidth="82.0" text="Haber" />
                   </columns>
                </TableView>
             </children>
          </AnchorPane>
-         <AnchorPane prefHeight="38.0" prefWidth="850.0" style="-fx-background-color: #44878f;">
+         <AnchorPane layoutX="-4.0" prefHeight="35.0" prefWidth="704.0" style="-fx-background-color: #44878f;">
             <children>
-               <Label layoutX="14.0" layoutY="7.0" text="Registrar Asiento " textFill="WHITE">
+               <Label layoutX="14.0" layoutY="7.0" text="Registrar asiento " textFill="WHITE">
                   <font>
                      <Font name="Lucida Sans Unicode" size="18.0" />
                   </font>
                </Label>
-               <Button fx:id="btnMinimize" layoutX="766.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+               <Button fx:id="btnMinimize" layoutX="612.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                   <graphic>
                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -197,7 +135,7 @@
                      </ImageView>
                   </graphic>
                </Button>
-               <Button fx:id="btnClose" layoutX="804.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: transparent;">
+               <Button fx:id="btnClose" layoutX="658.0" mnemonicParsing="false" onAction="#btnClose" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
                   <graphic>
                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -207,37 +145,24 @@
                   </graphic>
                </Button>
             </children>
-               <effect>
-                  <DropShadow />
-               </effect>
          </AnchorPane>
-            <Button fx:id="btnVolver" layoutX="24.0" layoutY="56.0" mnemonicParsing="false" onAction="#accionBtnVolver" prefHeight="29.0" prefWidth="111.0" style="-fx-background-color: #166576; -fx-border-color: transparent;" text="Volver" textFill="WHITE">
+            <Button fx:id="btnVolver" layoutX="14.0" layoutY="51.0" mnemonicParsing="false" onAction="#accionBtnVolver" prefHeight="30.0" prefWidth="97.0" text="Volver">
                <font>
-                  <Font name="Lucida Sans Unicode" size="16.0" />
+                  <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/flecha-hacia-atras.png" />
+                        <Image url="@../Images/volver.png" />
                      </image>
                   </ImageView>
                </graphic>
-               <effect>
-                  <DropShadow height="27.6" radius="13.8475" width="29.79">
-                     <color>
-                        <Color red="0.159478560090065" green="0.2461419701576233" blue="0.28947368264198303" />
-                     </color>
-                  </DropShadow>
-               </effect>
             </Button>
-            <Label fx:id="labelCodigoAsiento" layoutX="220.0" layoutY="61.0" visible="false" />
+            <Line endX="528.0" layoutX="163.0" layoutY="585.0" startX="-157.3333282470703" stroke="#b2b2b2" />
+            <Line endX="-100.5" endY="529.5" layoutX="792.0" layoutY="55.0" startX="-99.5" startY="-10.0" stroke="#b2b2b2" />
       </children>
-         <effect>
-            <DropShadow />
-         </effect>
    </Pane>
+      <Line endX="-796.8333129882812" endY="519.5" layoutX="802.0" layoutY="65.0" startX="-793.626220703125" startY="-19.16668701171875" stroke="#b2b2b2" />
+      <Line endX="518.0" endY="-544.6666870117188" layoutX="174.0" layoutY="590.0" startX="-165.126220703125" startY="-544.6666870117188" stroke="#b2b2b2" />
    </children>
-   <effect>
-      <DropShadow />
-   </effect>
 </AnchorPane>
