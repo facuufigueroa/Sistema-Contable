@@ -81,7 +81,7 @@
                         </ImageView>
                      </graphic>
                </Label>
-               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="148.0" layoutY="19.0" onAction="#accionCbbCuenta" onMouseDragEntered="#accionCbbCuenta" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
+               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="148.0" layoutY="19.0" onAction="#accionCbbCuenta" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
                <TextField fx:id="txtMonto" focusTraversable="false" layoutX="149.0" layoutY="63.0" prefHeight="30.0" prefWidth="111.0">
                      <font>
                         <Font size="13.0" />
@@ -118,7 +118,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/agregar-archivo.png" />
+                              <Image url="@../Images/eliminar.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -188,7 +188,7 @@
                      <Font name="Lucida Sans Unicode" size="18.0" />
                   </font>
                </Label>
-               <Button fx:id="btnMinimize" layoutX="766.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+               <Button fx:id="btnMinimize" layoutX="766.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                   <graphic>
                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>

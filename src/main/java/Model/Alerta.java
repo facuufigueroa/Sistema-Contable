@@ -21,15 +21,7 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
-    public static boolean alertaDatosInvalidos() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText(null);
-        alert.setTitle(null);
-        alert.setContentText("¡Por favor!\nIngrese los datos correctamente");
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert.showAndWait();
-        return false;
-    }
+
     public static boolean alertaEmailInexistente() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
@@ -57,15 +49,7 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
-    public static boolean alertaLogueadoCorrectamente() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(null);
-        alert.setTitle(null);
-        alert.setContentText("¡Usuario logueado correctamente!");
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert.showAndWait();
-        return true;
-    }
+
     public static boolean alertaRegistradoCorrectamente() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -80,7 +64,7 @@ public class Alerta {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText("La cuenta "+"'"+ nombreCuenta +"'" +" no recibe saldo, no se puede deshabilitar. Solo es posible deshabiltiar cuentas que reciben saldo");
+        alert.setContentText("La cuenta "+"'"+ nombreCuenta +"'" +" no recibe saldo, no se puede deshabilitar.\nSolo es posible deshabiltiar cuentas que reciben saldo.");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
         return true;
@@ -125,11 +109,12 @@ public class Alerta {
         return alert;
     }
 
-    public static boolean alertarAsientoNoRegistrado() {
+    public static boolean alertarAsientoNoBalanceado() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText("Error al registrar asiento, los balances no cierran");
+        alert.setContentText("Error al registrar asiento. \n" +
+                "La resta del total debe y total haber no coinciden, los balances no son correctos. ¡Verifique nuevamente!");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
         return true;
@@ -156,14 +141,27 @@ public class Alerta {
         return alert;
     }
 
-    public static void alertaResultados() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+    public static boolean alertaCamposIncompletosOperacion() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText("¡ La cuenta seleccionada no corresponde a la selección de la parte de cuenta, verifique que si la cuenta es del tipo R+, haya seleccionado Haber, en caso contrario, seleccione Debe !");
+        alert.setContentText("¡Por favor, rellene los campos, verifique que: \n 1) Haya seleccionado la Cuenta " +
+                "\n 2) Haya escrito un monto" +
+                "\n 3) Haya seleccionado Debe o Haber!");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
+        return false;
     }
-
+    public static boolean alertaCamposIncompletosRegistrarAsiento() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡Por favor, rellene los campos, verifique que: \n 1) Haya escrito una descripcion " +
+                "\n 2) Haya registrado un asiento");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
 
 }
