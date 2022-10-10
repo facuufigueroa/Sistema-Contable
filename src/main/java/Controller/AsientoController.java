@@ -24,9 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.function.UnaryOperator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class AsientoController extends ViewFuntionality implements Initializable {
 
@@ -93,7 +90,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        traerNombresDeCuentas();
+        iniciarComboBoxCuentas();
         txtFecha.setText(traerFechaActual());
         iniciarComboBoxDebeHaber();
         integerTextField(txtMonto);
@@ -106,17 +103,36 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
         if(!verificarCamposVacios()) {
             String tipoCuenta = serviceAsiento.obtenerTipoDeCuenta((String) cbbCuenta.getValue());
-            if (evaluarCuentasResultado(tipoCuenta)) { /* En este caso no realiza nada porque el metodo lo realiza*/}
-            else {
-                    agregarAsiento();
-                    borrarCuentaUsada((String) cbbCuenta.getValue());
-                    restaurarCampos(cuentasActualizadas);
-                }
+
+            agregarAsiento();
+            borrarCuentaUsada((String) cbbCuenta.getValue());
+            restaurarCampos(cuentasActualizadas);
         }
         else{
-            Alerta.alertaCamposIncompletos();
+            Alerta.alertaCamposIncompletosOperacion();
             }
+    }
+
+    public void evaluarTipoResultado(String nombre){
+        if(nombre.equals("R+")){
+            cbbDebeHaber.getSelectionModel().select("Haber");
+            cbbDebeHaber.setDisable(true);
+        } else if (nombre.equals("R-")) {
+            cbbDebeHaber.getSelectionModel().select("Debe");
+            cbbDebeHaber.setDisable(true);
+        }else{ cbbDebeHaber.setDisable(false); }
+
+    }
+    @FXML
+    public void accionCbbCuenta(){
+        if(!cbbCuenta.getSelectionModel().isEmpty()){
+            String seleccion = (String) cbbCuenta.getValue();
+            String tipoCuenta = serviceAsiento.obtenerTipoDeCuenta(seleccion);
+            evaluarTipoResultado(tipoCuenta);
         }
+    }
+
+
     public void agregarAsiento(){
         AsientoCuenta asientoCuenta = new AsientoCuenta();
         if (verificarSiEsDebeHaber() == "Debe") {
@@ -146,15 +162,11 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     @FXML
     public void accionRegistrarAsiento(ActionEvent event) throws IOException {
-
         if(verificarVacioAntesRegistrar()) {
             if (verificarBalance()) {
                 Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
                 serviceAsiento.insertarAsiento(asiento);
-                for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
-                    AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(tablaAsientos.getNombreCuenta()), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
-                    serviceAsiento.insertarAsientoCuenta(asientoCuenta);
-                }
+                insertarAsientoCuenta();
                 Alerta.alertarAsientoRegistrado();
                 if(Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK){
                     setearCamposEnVacio();
@@ -162,13 +174,19 @@ public class AsientoController extends ViewFuntionality implements Initializable
                 else{
                     accionBtnVolver(event);
                 }
-
             } else {
-                Alerta.alertarAsientoNoRegistrado();
+                Alerta.alertarAsientoNoBalanceado();
             }
         }
         else{
-            Alerta.alertaCamposIncompletos();
+            Alerta.alertaCamposIncompletosRegistrarAsiento();
+        }
+    }
+
+    public void insertarAsientoCuenta(){
+        for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
+            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(tablaAsientos.getNombreCuenta()), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
+            serviceAsiento.insertarAsientoCuenta(asientoCuenta);
         }
     }
 
@@ -209,7 +227,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
         else{
             Alerta.alertarCampoDebeHaberVacio();
         }
-        return null; 
+        return null;
     }
 
     @FXML
@@ -224,17 +242,13 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     }
 
-
     @FXML
     public void accionBorrarAsiento() {
         if (asientoCuentas.size() > 0){
-
             TablaVistaAsiento cuenta = tablaAsientos.getItems().get(asientoCuentas.size()-1);
             agregarCuentaBorrada(cuenta.getNombreCuenta());
             actualizarNombreCuentas(cuentasActualizadas);
             asientoCuentas.remove(asientoCuentas.size()-1);
-
-            //Actualiza la tabla
             ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
             tablaAsientos.setItems(asientoCuentaObservableList);
         }
@@ -267,7 +281,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
         txtMonto.setText("");
         cbbCuenta.setItems(null);
         cbbDebeHaber.setItems(null);
-        traerNombresDeCuentas();
+        iniciarComboBoxCuentas();
         iniciarComboBoxDebeHaber();
         tablaAsientos.setItems(null);
         this.asientoCuentas= new ArrayList<>();
@@ -279,13 +293,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         cbbDebeHaber.setItems(null);
         actualizarNombreCuentas(lista);
         iniciarComboBoxDebeHaber();
-    }
-
-
-    public static boolean datosNumericos(String monto){
-        Pattern patron = Pattern.compile("(\\d+)(((.)\\d+)+)?");
-        Matcher matcher = patron.matcher(monto);
-        return matcher.find();
     }
 
     public static void integerTextField(TextField txtMonto) {
@@ -301,26 +308,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
                         new DoubleStringConverter(), null, integerFilter));
     }
 
-    public boolean evaluarCuentasResultado(String tipo) {
-        if (tipo.equals("R+") && cbbDebeHaber.getValue() == "Debe" ||
-                tipo.equals("R-") && cbbDebeHaber.getValue() == "Haber")
-        {
-            Alerta.alertaResultados();
-            cbbDebeHaber.setItems(null);
-            iniciarComboBoxDebeHaber();
-            return true;
-        }
-        return false;
-    }
-
-
-    @FXML
-    public void accionCbbCuenta(){
-
-    }
-
-
-
     /*---------------------Metodos para inicializar*---------------------------------*/
 
     @FXML
@@ -334,19 +321,13 @@ public class AsientoController extends ViewFuntionality implements Initializable
         return fechaString;
     }
 
-    public void iniciarComboBoxCuentas(){
-        ObservableList<Cuenta> items = FXCollections.observableArrayList();
-        items.addAll(serviceCuentas.listCuentasHabilitadas());
-        cbbCuenta.setItems(items);
-    }
-
     public void iniciarComboBoxDebeHaber(){
         ObservableList<String> items = FXCollections.observableArrayList();
         items.addAll("Debe","Haber");
         cbbDebeHaber.setItems(items);
     }
 
-    public void traerNombresDeCuentas(){
+    public void iniciarComboBoxCuentas(){
         ObservableList<String> cuentas= FXCollections.observableArrayList();
         cuentas.addAll(serviceCuentas.traerNombreCuentas());
         cbbCuenta.setItems(cuentas);
