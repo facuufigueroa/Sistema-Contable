@@ -30,37 +30,21 @@ public class RegisterController extends ViewFuntionality implements Initializabl
 
     @FXML private ComboBox<Roles> comboBox;
 
+    private User u = User.getInstance();
     private Roles roles;
 
     private RegisterController controller;
     private ServiceRegister serviceRegister = new ServiceRegister();
     private ServiceRoles serviceRoles = new ServiceRoles();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getBotonRegistrarse().setDisable(false);
         getComboBox().getItems().addAll(new UserRol(), new AdminRol());
     }
 
-    public Button getButtonMin() { return buttonMin; }
-    public Button getButtonClose() { return buttonClose ;}
-    public Button getBotonRegistrarse() { return botonRegistrarse; }
-    public TextField getCampoNombre() { return campoNombre; }
-    public TextField getCampoApellido() { return campoApellido; }
-    public TextField getCampoEmail() { return campoEmail; }
-    public TextField getCampoContrasena() { return campoContrasena; }
-    public RegisterController getController() { return controller; }
-    public void setController(RegisterController controller) { this.controller = controller; }
-    public ServiceRegister getServiceRegister() { return serviceRegister; }
-    public ServiceRoles getServiceRoles() { return serviceRoles; }
-    public Roles getRoles() { return roles; }
-    public void setRoles(Roles roles) { this.roles = roles; }
 
-    public ComboBox<Roles> getComboBox() { return comboBox; }
-    public void setComboBox(ComboBox<Roles> comboBox) { this.comboBox = comboBox; }
-
-    private boolean rolSeleccionado(){ return !getComboBox().getSelectionModel().isEmpty(); }
-
-    private void obtenerRolSeleccionadoEnComboBox(){ setRoles(getComboBox().getValue()); }
 
     @FXML
     public void actionRegister(ActionEvent event) throws SQLException {
@@ -112,16 +96,20 @@ public class RegisterController extends ViewFuntionality implements Initializabl
         return  Utilidades.estaCampoVacio(getCampoNombre()) || Utilidades.estaCampoVacio(getCampoApellido())
                 || Utilidades.estaCampoVacio(getCampoEmail()) || Utilidades.estaCampoVacio(getCampoContrasena());
     }
+
     private User obtenerFormulario(){
         String nombre = Utilidades.obtenerValor(getCampoNombre());
         String apellido = Utilidades.obtenerValor(getCampoApellido());
         String email = Utilidades.obtenerValor(getCampoEmail());
         String contrasena = Utilidades.obtenerValor(getCampoContrasena());
+
         return new User(  Utilidades.capitalizarTexto(nombre)
                 , Utilidades.capitalizarTexto(apellido)
                 , email
                 , contrasena);
     }
+
+
 
     private boolean validarDatos(String nombre, String apellido, String email){
         if (Validacion.esTexto(nombre) && Validacion.esNumero(apellido) && Validacion.validarEmail(email)){
@@ -132,4 +120,25 @@ public class RegisterController extends ViewFuntionality implements Initializabl
             return false;
         }
     }
+
+    public Button getButtonMin() { return buttonMin; }
+    public Button getButtonClose() { return buttonClose ;}
+    public Button getBotonRegistrarse() { return botonRegistrarse; }
+    public TextField getCampoNombre() { return campoNombre; }
+    public TextField getCampoApellido() { return campoApellido; }
+    public TextField getCampoEmail() { return campoEmail; }
+    public TextField getCampoContrasena() { return campoContrasena; }
+    public RegisterController getController() { return controller; }
+    public void setController(RegisterController controller) { this.controller = controller; }
+    public ServiceRegister getServiceRegister() { return serviceRegister; }
+    public ServiceRoles getServiceRoles() { return serviceRoles; }
+    public Roles getRoles() { return roles; }
+    public void setRoles(Roles roles) { this.roles = roles; }
+
+    public ComboBox<Roles> getComboBox() { return comboBox; }
+    public void setComboBox(ComboBox<Roles> comboBox) { this.comboBox = comboBox; }
+
+    private boolean rolSeleccionado(){ return !getComboBox().getSelectionModel().isEmpty(); }
+
+    private void obtenerRolSeleccionadoEnComboBox(){ setRoles(getComboBox().getValue()); }
 }

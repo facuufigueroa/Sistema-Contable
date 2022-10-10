@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 import Model.Alerta;
 import Services.ServicePDC;
+import Services.ServiceRoles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,6 +54,9 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     private MainController mainController;
 
+    private User u = User.getInstance();
+
+    private static ServiceRoles serviceRoles = new ServiceRoles();
     private Roles roles;
 
     public void listarCuentasHabilitadas(){
@@ -66,9 +70,11 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        verificarRolUser();
         listarCuentasHabilitadas();
         iniciarCbbRS();
         iniciarCbbTipo();
+
     }
 
 
@@ -153,7 +159,11 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     /*Metodo para traer el codigo de cuenta seleccionado en la fila*/
     @FXML
     public String accionTablaCuentasH(){
-        String codigo_cuenta = String.valueOf(tableCuentas.getSelectionModel().getSelectedItem().codigo);
+        String codigo_cuenta = null;
+        try{
+            codigo_cuenta = String.valueOf(tableCuentas.getSelectionModel().getSelectedItem().codigo);
+            return codigo_cuenta;
+        }catch (NullPointerException e){ }
         return codigo_cuenta;
     }
 
@@ -208,8 +218,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaDeshabilitadaController().setVentana(loginStage);
-        getCuentaDeshabilitadaController().setRoles(getRoles());
-        getCuentaDeshabilitadaController().permisosCuentasDeshabilitadas();
+        /*getCuentaDeshabilitadaController().setRoles(getRoles());*/
+        /*getCuentaDeshabilitadaController().permisosCuentasDeshabilitadas();*/
         getCuentaDeshabilitadaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -226,13 +236,19 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getMainController().setRoles(getRoles());
-        getMainController().actualizarVistaUsuario();
         getMainController().setVentana(loginStage);
         getMainController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+    }
+
+    public void verificarRolUser(){
+        if(serviceRoles.obtenerRolPorEmail(u.getEmail()).equals("usuario")){
+            getBtnDeshabilitarCuenta().setDisable(true);
+            getBtnAgregarCuenta().setDisable(true);
+        }
     }
 
     public boolean recibeSaldo(String codigo){
@@ -333,4 +349,12 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     public void setRoles(Roles roles) { this.roles = roles; }
 
     public Button getBtnDeshabilitarCuenta() { return this.btnDeshabilitarCuenta; }
+
+    public Button getBtnAgregarCuenta() {
+        return btnAgregarCuenta;
+    }
+
+    public void setBtnAgregarCuenta(Button btnAgregarCuenta) {
+        this.btnAgregarCuenta = btnAgregarCuenta;
+    }
 }

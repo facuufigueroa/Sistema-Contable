@@ -49,3 +49,6 @@ Documento.
 
    Opens se usa para permitir que una clase utilice a otra.
 
+/*Importante
+La clase TablaVistaAsiento en el modelo fue creada para poder mostrar el nombre de la cuenta en la tabla de asientos.
+*/

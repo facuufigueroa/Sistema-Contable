@@ -5,7 +5,6 @@ public class Usuario_Rol {
 
     private int usuario;
     private int rol;
-
     public int getUsuario() {
         return usuario;
     }

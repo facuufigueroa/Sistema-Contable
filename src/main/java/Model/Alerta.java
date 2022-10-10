@@ -106,5 +106,64 @@ public class Alerta {
         return true;
     }
 
+    public static boolean alertarAsientoRegistrado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡ Asiento registrado con éxito !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+    public static Alert alertarCancelar() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¿Está seguro de cancelar el asiento?");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return alert;
+    }
+
+    public static boolean alertarAsientoNoRegistrado() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error al registrar asiento, los balances no cierran");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertarCampoDebeHaberVacio() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error, seleccione Debe o Haber");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+
+    public static Alert alertaNuevoAsiento() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¿Desea registrar otro asiento?");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return alert;
+    }
+
+    public static void alertaResultados() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡ La cuenta seleccionada no corresponde a la selección de la parte de cuenta, verifique que si la cuenta es del tipo R+, haya seleccionado Haber, en caso contrario, seleccione Debe !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
+
 
 }
