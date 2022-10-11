@@ -88,7 +88,7 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void showStage(){ getVentana().show(); }
 
 
-    private void cambiarTexto(){ getCampoTexto().setText(u.getNombre().toUpperCase()+" "+u.getApellido().toUpperCase()+" "+"| "); }
+    private void cambiarTexto(){ getCampoTexto().setText(u.getNombre().toUpperCase()+" "+u.getApellido().toUpperCase()+" "+"| "+service.obtenerRolPorEmail(u.getEmail()).toUpperCase()); }
 
 
    private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
