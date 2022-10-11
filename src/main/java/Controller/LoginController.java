@@ -6,6 +6,7 @@ import Services.ServiceLogin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,11 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class LoginController extends ViewFuntionality{
     //Atributos
@@ -33,6 +37,7 @@ public class LoginController extends ViewFuntionality{
     private MainController mainController;
 
     public LoginController(){}
+
     private Stage stage;
 
     private User u = User.getInstance();
@@ -112,16 +117,6 @@ public class LoginController extends ViewFuntionality{
     }
 
     private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
-
-    @FXML
-    private void comprobarEmail() {
-            if (!Validacion.validarEmail(getCampoUsuario().getText())) {
-                botonIniciarSesion.setDisable(true);
-                Alerta.alertaEmailInvalido();
-            } else {
-                botonIniciarSesion.setDisable(false);
-            }
-    }
 
 
     private boolean alertaContrasena(){ return compararContrasenas(); }
