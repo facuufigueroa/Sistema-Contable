@@ -3,6 +3,7 @@ package Services;
 import DataBase.ConexionBD;
 import Model.Asiento;
 import Model.AsientoCuenta;
+import Model.CambiarFecha;
 import Querys.QueryAsiento;
 import Querys.RolesQuery;
 
@@ -13,7 +14,7 @@ public class ServiceAsiento extends Service {
 
 
 
-    public int insertarAsiento(Asiento asiento) {
+    public int insertarAsiento(Asiento asiento) { //1|fecha 2|detalle 3|usuario
         int codigoAsiento=0;
         setConexion(null);
         setPs(null);
@@ -21,8 +22,9 @@ public class ServiceAsiento extends Service {
         try {
             setConexion(ConexionBD.conexion());
             setPs(getConexion().prepareStatement(QueryAsiento.insertarAsiento()));
-            getPs().setString(1, asiento.getDetalle());
-            getPs().setInt(2, asiento.getUsuario());
+            getPs().setDate(1, CambiarFecha.localDateToDate(asiento.getFecha()));
+            getPs().setString(2, asiento.getDetalle());
+            getPs().setInt(3, asiento.getUsuario());
             getPs().executeUpdate();
 
             return codigoAsiento;

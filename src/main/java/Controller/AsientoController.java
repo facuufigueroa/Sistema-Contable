@@ -22,6 +22,7 @@ import javafx.util.converter.DoubleStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
@@ -87,10 +88,12 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     ArrayList<String> cuentasActualizadas = new ArrayList<>(serviceCuentas.traerNombreCuentas());
 
+    private final LocalDate fechaActual = LocalDate.now();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBoxCuentas();
-        txtFecha.setText(traerFechaActual());
+        txtFecha.setText(CambiarFecha.mostrarFecha(fechaActual));
         iniciarComboBoxDebeHaber();
         integerTextField(txtMonto);
     }
@@ -174,7 +177,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
     private void comprobarAsientos(ActionEvent event) throws IOException {
         if (verificarBalance()) {
-            Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
+            Asiento asiento = new Asiento(fechaActual, txtDescripcion.getText(), u.getId());
             serviceAsiento.insertarAsiento(asiento);
             insertarAsientoCuenta();
             Alerta.alertarAsientoRegistrado();
@@ -327,6 +330,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
         return fechaString;
     }
+
 
     public void iniciarComboBoxDebeHaber(){
         ObservableList<String> items = FXCollections.observableArrayList();
