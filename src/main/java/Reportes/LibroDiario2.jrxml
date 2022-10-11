@@ -89,14 +89,6 @@ FROM asientos]]>
 	</columnHeader>
 	<detail>
 		<band height="24" splitType="Stretch">
-			<subreport>
-				<reportElement x="20" y="0" width="407" height="23" uuid="95245488-8403-4d58-8357-6bd75f4a4394"/>
-				<subreportParameter name="parametro_id_asiento">
-					<subreportParameterExpression><![CDATA[$F{idasiento}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:\\Users\\Facundo\\Desktop\\Facultad 2022\\Segundo Cuatrimestre\\Sistemas Administrativos II\\Sistema Contable\\src\\main\\java\\Reportes\\subreporte-cuentas.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
 				<reportElement x="50" y="1" width="80" height="22" uuid="92683573-ce25-4395-9252-3b1d21c3a06a"/>
 				<textElement>

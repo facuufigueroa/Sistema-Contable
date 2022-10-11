@@ -99,7 +99,7 @@ public class FiltrarLibroDiarioController extends ViewFuntionality implements In
     public void obtenerFecha(DatePicker fecha){ fecha.getValue(); }
 
     @FXML
-    public void accionFiltrarFecha(){
+    public void accionFiltrarBusqueda(){
         /*if (getFechaDesde().getValue().isAfter(getFechaHasta().getValue())){
             System.out.println("Error, la fecha desde no puede ser mayor a la fecha hasta");
 
