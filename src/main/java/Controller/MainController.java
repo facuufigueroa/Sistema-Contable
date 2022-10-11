@@ -1,6 +1,6 @@
 package Controller;
 import Model.*;
-import Services.ServiceRoles;
+import Services.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,12 +39,13 @@ public class MainController extends ViewFuntionality implements Initializable {
     @FXML
     private Button btnCerrarSesion;
 
-    private Roles roles = null;
+    private Service service = new Service();
+
+
     private User usuario;
 
     private RegisterController registerController;
 
-    private static ServiceRoles serviceRoles = new ServiceRoles();
 
     private User u = User.getInstance();
 
@@ -87,7 +88,7 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void showStage(){ getVentana().show(); }
 
 
-    private void cambiarTexto(){ getCampoTexto().setText(u.getNombre().toUpperCase()+" "+u.getApellido().toUpperCase()+" "+"| "+serviceRoles.obtenerRolPorEmail(u.getEmail()).toUpperCase()); }
+    private void cambiarTexto(){ getCampoTexto().setText(u.getNombre().toUpperCase()+" "+u.getApellido().toUpperCase()+" "+"| "); }
 
 
    private CuentaController loadPlanDeCuenta(CuentaController controller){ return controller; }
@@ -148,38 +149,22 @@ public class MainController extends ViewFuntionality implements Initializable {
     /*Metodo para roles*/
 
     public void verificarRolUser(){
-        if(serviceRoles.obtenerRolPorEmail(u.getEmail()).equals("usuario")){
+        if((service.obtenerRolPorEmail(u.getEmail()).equals("usuario"))){
             getBtnCrearUsuario().setDisable(true);
         }
-
     }
-
-
-
-
-
-
-
-
-
-
 
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
     public User getUsuario() { return usuario; }
     public void setUsuario(User usuario) { this.usuario = usuario; }
-    public static ServiceRoles getServiceRoles() { return serviceRoles; }
     public Label getCampoTexto() { return campoTexto; }
     public void setCampoTexto(Label campoTexto) { this.campoTexto = campoTexto; }
-    public static void setServiceRoles(ServiceRoles serviceRoles) { MainController.serviceRoles = serviceRoles; }
 
     public CuentaController getCuentaController() {
         return cuentaController;
     }
 
-    public void setCuentaController(CuentaController cuentaController) {
-        this.cuentaController = cuentaController;
-
-    }
+    public void setCuentaController(CuentaController cuentaController) { this.cuentaController = cuentaController; }
 
     public Button getBtnPlanDeCuenta() {
         return btnPlanDeCuenta;
@@ -221,11 +206,6 @@ public class MainController extends ViewFuntionality implements Initializable {
         this.btnCrearUsuario = btnCrearUsuario;
     }
 
-    public Roles getRoles() { return roles; }
-
-    public void setRoles(Roles roles) {
-        this.roles = roles;
-    }
 
     public RegisterController getRegisterController() {
         return registerController;
@@ -235,9 +215,7 @@ public class MainController extends ViewFuntionality implements Initializable {
         return asientoController;
     }
 
-    public void setAsientoController(AsientoController asientoController) {
-        this.asientoController = asientoController;
-    }
+    public void setAsientoController(AsientoController asientoController) { this.asientoController = asientoController; }
 
     public Button getBtnCerrarSesion() {
         return btnCerrarSesion;

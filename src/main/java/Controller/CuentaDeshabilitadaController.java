@@ -1,8 +1,8 @@
 package Controller;
 
 import Model.*;
+import Services.Service;
 import Services.ServicePDC;
-import Services.ServiceRoles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,13 +39,12 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
     private CuentaDeshabilitadaController cuentaDeshabilitadaController;
 
     private ServicePDC servicePDC = new ServicePDC();
-
+    private Service service = new Service();
     private CuentaController cuentaController;
 
-    private static ServiceRoles serviceRoles = new ServiceRoles();
     private User u = User.getInstance();
 
-    private Roles roles;
+
 
 
     @Override
@@ -123,7 +122,7 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
 
     public void verificarRolUser(){
-        if(serviceRoles.obtenerRolPorEmail(u.getEmail()).equals("usuario")){
+        if((service.obtenerRolPorEmail(u.getEmail()).equals("usuario"))){
             getBtnHabilitarCuenta().setDisable(true);
         }
     }
@@ -222,6 +221,4 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
 
     public Button getBtnHabilitarCuenta() { return this.btnHabilitarCuenta; }
 
-    public Roles getRoles() { return this.roles; }
-    public void setRoles(Roles roles) { this.roles = roles; }
 }

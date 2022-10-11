@@ -2,8 +2,8 @@ package Controller;
 
 import Model.*;
 import Model.Alerta;
+import Services.Service;
 import Services.ServicePDC;
-import Services.ServiceRoles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,14 +50,15 @@ public class CuentaController extends ViewFuntionality implements Initializable 
 
     private ServicePDC servicePDC = new ServicePDC();
 
+    private Service service = new Service();
+
     private CuentaDeshabilitadaController cuentaDeshabilitadaController;
 
     private MainController mainController;
 
     private User u = User.getInstance();
 
-    private static ServiceRoles serviceRoles = new ServiceRoles();
-    private Roles roles;
+
 
     public void listarCuentasHabilitadas(){
         ObservableList <Cuenta> obCuentas = FXCollections.observableArrayList(servicePDC.listCuentasHabilitadas());
@@ -235,7 +236,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getMainController().setRoles(getRoles());
         getMainController().setVentana(loginStage);
         getMainController().hideStage();
         stage.setScene(scene);
@@ -245,7 +245,7 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     }
 
     public void verificarRolUser(){
-        if(serviceRoles.obtenerRolPorEmail(u.getEmail()).equals("usuario")){
+        if((service.obtenerRolPorEmail(u.getEmail()).equals("usuario"))){
             getBtnDeshabilitarCuenta().setDisable(true);
             getBtnAgregarCuenta().setDisable(true);
         }
@@ -257,8 +257,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         }
         return false;
     }
-
-    public void permisosAsiento(){ getRoles().permisosAsiento(this); }
 
     public void hideStage(){ getVentana().hide(); }
 
@@ -345,8 +343,7 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     private CuentaDeshabilitadaController loadCuentasD(CuentaDeshabilitadaController controllerCuentaD){ return controllerCuentaD; }
 
     private MainController loadMainPrincipal(MainController controllerMain){ return controllerMain; }
-    public Roles getRoles() { return roles; }
-    public void setRoles(Roles roles) { this.roles = roles; }
+
 
     public Button getBtnDeshabilitarCuenta() { return this.btnDeshabilitarCuenta; }
 

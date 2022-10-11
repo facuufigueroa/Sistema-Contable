@@ -23,6 +23,8 @@ public class Service {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
+    public Service(){}
+
 
     public Connection getConexion() { return conexion; }
     public void setConexion(Connection conexion) { this.conexion = conexion; }
@@ -39,6 +41,7 @@ public class Service {
             setTupla(getPs().executeQuery());
             if (getTupla().next()){ return getTupla().getInt(1); }
         }catch (SQLException e){ System.out.println("Id usuario: " + e.getMessage()); }
+        finally { vaciarConexion(); }
         return -1;
     }
     public boolean existeObjeto(String tabla, String atributo, Object objeto){
@@ -112,12 +115,45 @@ public class Service {
         }catch (Exception exception){
             System.out.println(exception);
         }
+        finally { vaciarConexion(); }
         return nombreRol;
     }
+    public int obtenerIdRolNombreRol(String nombre){
+        try{
+            setConexion(ConexionBD.conexion());
+            setPs(getConexion().prepareStatement(UserQuery.obtenerIdRolNombreRol()));
+            getPs().setString(1, nombre);
+            setTupla(getPs().executeQuery());
+            if (getTupla().next()){ return getTupla().getInt(1); }
+        }catch (SQLException e){ System.out.println("Id usuario: " + e.getMessage()); }
+        finally { vaciarConexion(); }
+        return -1;
+    }
 
+    public void insertarUsuarioRol(String email, String rol){
+        int obtenerIdUser = obtenerIdUser(email);
+        int obtenerIdRol = obtenerIdRolNombreRol(rol);
 
+        try{
+            setConexion(ConexionBD.conexion());
+            setPs(getConexion().prepareStatement(UserQuery.asignarRol()));
+            getPs().setInt(1, obtenerIdUser);
+            getPs().setInt(2, obtenerIdRol);
+            getPs().executeUpdate();
+            Alerta.alertaRegistradoCorrectamente();
+        }catch (SQLException excepcion){
+            System.out.println(excepcion.getMessage());
+            notificarError();
+        }
+        finally { vaciarConexion(); }
+    }
 
-
+    public void vaciarConexion(){
+        setPs(null);
+        setConnection(null);
+        setTupla(null);
+        setConexionBD(null);
+    }
 
 
 

@@ -1,14 +1,13 @@
 package Controller;
 import Model.*;
 import Model.Alerta;
+import Services.Service;
 import Services.ServiceRegister;
 import Model.ViewFuntionality;
-import Services.ServiceRoles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import java.net.URL;
@@ -23,25 +22,21 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     @FXML private Button botonRegistrarse;
     @FXML private Button buttonMin;
     @FXML private Button buttonClose;
-    @FXML
-    private CheckBox checkRolAdmin;
-    @FXML
-    private CheckBox checkRolUser;
 
-    @FXML private ComboBox<Roles> comboBox;
+    @FXML private ComboBox<String> comboBox;
 
     private User u = User.getInstance();
-    private Roles roles;
 
     private RegisterController controller;
     private ServiceRegister serviceRegister = new ServiceRegister();
-    private ServiceRoles serviceRoles = new ServiceRoles();
+
+    private Service service = new Service();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getBotonRegistrarse().setDisable(false);
-        getComboBox().getItems().addAll(new UserRol(), new AdminRol());
+        getComboBox().getItems().addAll("admin", "usuario");
     }
 
 
@@ -50,8 +45,7 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     public void actionRegister(ActionEvent event) throws SQLException {
         if (noEstanCamposVaciosYExisteEmail() && seleccionoRol()){
             getServiceRegister().insertarUsuario(obtenerFormulario());
-            obtenerRolSeleccionadoEnComboBox();
-            getServiceRoles().insertarUsuarioRol(obtenerFormulario().getEmail(), getRoles().getRol());
+            service.insertarUsuarioRol(obtenerFormulario().getEmail(), obtenerRolSeleccionadoEnComboBox());
             super.actionCloseStage(event);
             showStage();
         }else{ comprobarCampoVacionOEmailExistente(); }
@@ -61,24 +55,6 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     public void actionCloseStage(ActionEvent event) {
         super.actionCloseStage(event);
         showStage();
-    }
-    @FXML
-    private boolean datoEsTexto(){
-        if(Validacion.esTexto(getCampoNombre().getText()) && Validacion.esTexto(getCampoApellido().getText())){
-            getBotonRegistrarse().setDisable(false);
-            return true;
-        }
-        getBotonRegistrarse().setDisable(true);
-        return false;
-    }
-    @FXML
-    private boolean datoEsEmail(){
-        if (Validacion.validarEmail(getCampoEmail().getText())){
-            getBotonRegistrarse().setDisable(false);
-            return true;
-        }
-        getBotonRegistrarse().setDisable(true);
-        return false;
     }
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
@@ -103,22 +79,7 @@ public class RegisterController extends ViewFuntionality implements Initializabl
         String email = Utilidades.obtenerValor(getCampoEmail());
         String contrasena = Utilidades.obtenerValor(getCampoContrasena());
 
-        return new User(  Utilidades.capitalizarTexto(nombre)
-                , Utilidades.capitalizarTexto(apellido)
-                , email
-                , contrasena);
-    }
-
-
-
-    private boolean validarDatos(String nombre, String apellido, String email){
-        if (Validacion.esTexto(nombre) && Validacion.esNumero(apellido) && Validacion.validarEmail(email)){
-            getBotonRegistrarse().setDisable(false);
-            return true;
-        }else{
-            getBotonRegistrarse().setDisable(true);
-            return false;
-        }
+        return new User(email, contrasena, nombre, apellido);
     }
 
     public Button getButtonMin() { return buttonMin; }
@@ -131,14 +92,12 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     public RegisterController getController() { return controller; }
     public void setController(RegisterController controller) { this.controller = controller; }
     public ServiceRegister getServiceRegister() { return serviceRegister; }
-    public ServiceRoles getServiceRoles() { return serviceRoles; }
-    public Roles getRoles() { return roles; }
-    public void setRoles(Roles roles) { this.roles = roles; }
 
-    public ComboBox<Roles> getComboBox() { return comboBox; }
-    public void setComboBox(ComboBox<Roles> comboBox) { this.comboBox = comboBox; }
+
+    public ComboBox<String> getComboBox() { return comboBox; }
+    public void setComboBox(ComboBox<String> comboBox) { this.comboBox = comboBox; }
 
     private boolean rolSeleccionado(){ return !getComboBox().getSelectionModel().isEmpty(); }
 
-    private void obtenerRolSeleccionadoEnComboBox(){ setRoles(getComboBox().getValue()); }
+    private String obtenerRolSeleccionadoEnComboBox(){ return getComboBox().getValue(); }
 }

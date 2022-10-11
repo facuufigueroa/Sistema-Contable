@@ -70,7 +70,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     private User u = User.getInstance();
     @FXML Button btnVolver;
-    private Roles roles;
 
     private static User user = null;
 
@@ -102,8 +101,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void accionAgregarAsiento(){
 
         if(!verificarCamposVacios()) {
-            String tipoCuenta = serviceAsiento.obtenerTipoDeCuenta((String) cbbCuenta.getValue());
-
+            String tipoCuenta =  serviceAsiento.obtenerTipoDeCuenta((String) cbbCuenta.getValue());
             agregarAsiento();
             borrarCuentaUsada((String) cbbCuenta.getValue());
             restaurarCampos(cuentasActualizadas);
@@ -149,7 +147,12 @@ public class AsientoController extends ViewFuntionality implements Initializable
             asientoCuenta.setDebe(0);
             asientoCuenta.setHaber(Double.valueOf(txtMonto.getText()));
             asientoCuenta.setSaldo(Double.valueOf(txtMonto.getText()));
-            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta()), "", String.valueOf(asientoCuenta.getHaber()), asientoCuenta.getSaldo());
+            TablaVistaAsiento tablaVistaAsiento = new TablaVistaAsiento(
+                     "                                                  " + serviceAsiento.obtenerNombreCuenta(asientoCuenta.getCuenta())
+                    , ""
+                    , String.valueOf(asientoCuenta.getHaber())
+                    , asientoCuenta.getSaldo()
+            );
             agregarATabla(tablaVistaAsiento);
         }
     }
@@ -163,29 +166,33 @@ public class AsientoController extends ViewFuntionality implements Initializable
     @FXML
     public void accionRegistrarAsiento(ActionEvent event) throws IOException {
         if(verificarVacioAntesRegistrar()) {
-            if (verificarBalance()) {
-                Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
-                serviceAsiento.insertarAsiento(asiento);
-                insertarAsientoCuenta();
-                Alerta.alertarAsientoRegistrado();
-                if(Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK){
-                    setearCamposEnVacio();
-                }
-                else{
-                    accionBtnVolver(event);
-                }
-            } else {
-                Alerta.alertarAsientoNoBalanceado();
-            }
+            comprobarAsientos(event);
         }
         else{
             Alerta.alertaCamposIncompletosRegistrarAsiento();
         }
     }
+    private void comprobarAsientos(ActionEvent event) throws IOException {
+        if (verificarBalance()) {
+            Asiento asiento = new Asiento(txtDescripcion.getText(), u.getId());
+            serviceAsiento.insertarAsiento(asiento);
+            insertarAsientoCuenta();
+            Alerta.alertarAsientoRegistrado();
+            if(Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK){
+                setearCamposEnVacio();
+            }
+            else{
+                accionBtnVolver(event);
+            }
+        } else {
+            Alerta.alertarAsientoNoBalanceado();
+        }
+    }
 
     public void insertarAsientoCuenta(){
         for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
-            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(tablaAsientos.getNombreCuenta()), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
+            String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
+            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(nombreCuenta), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
             serviceAsiento.insertarAsientoCuenta(asientoCuenta);
         }
     }
@@ -379,12 +386,12 @@ public class AsientoController extends ViewFuntionality implements Initializable
         this.mainController = mainController;
     }
 
-    public Roles getRoles() { return this.roles; }
-    public void setRoles(Roles roles) { this.roles = roles; }
-
+    /*
     public static void setUser(User user) {
         AsientoController.user = user;
     }
+
+     */
 
     public User getIdUsuario() {
         return idUsuario;

@@ -6,7 +6,6 @@ import Services.ServiceLogin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,10 +33,7 @@ public class LoginController extends ViewFuntionality{
     private MainController mainController;
 
     public LoginController(){}
-    //private static User user = null;
     private Stage stage;
-
-
 
     private User u = User.getInstance();
 
@@ -104,8 +100,6 @@ public class LoginController extends ViewFuntionality{
         else{
             if (!alertaContrasena()){ Alerta.alertaContrasenaInvalida(); }
             else{
-                /*getUser();
-                setUser(serviceLogin.obtenerUsuarioPorEmail(obtenerEmail()));*/
                 User userNew = service.obtenerUsuarioPorEmail(campoUsuario.getText());
                 u.setId(userNew.getId());
                 u.setNombre(userNew.getNombre());
@@ -118,6 +112,16 @@ public class LoginController extends ViewFuntionality{
     }
 
     private boolean estanCamposVacios(){ return obtenerEmail().isEmpty() || obtenerContrasena().isEmpty(); }
+
+    @FXML
+    private void comprobarEmail() {
+            if (!Validacion.validarEmail(getCampoUsuario().getText())) {
+                botonIniciarSesion.setDisable(true);
+                Alerta.alertaEmailInvalido();
+            } else {
+                botonIniciarSesion.setDisable(false);
+            }
+    }
 
 
     private boolean alertaContrasena(){ return compararContrasenas(); }
@@ -173,18 +177,7 @@ public class LoginController extends ViewFuntionality{
     public void setCampoContrasena(PasswordField campoContrasena) { this.campoContrasena = campoContrasena; }
     public TextField getCampoUsuario() { return campoUsuario; }
     public void setCampoUsuario(TextField campoUsuario) { this.campoUsuario = campoUsuario; }
-    /*public User getUser() {
-        if (user == null){
-            user = new User();
-        }
-        return user;
-    }
-    private void setUser(User usuario) {
-        user.setNombre(usuario.getNombre());
-        user.setApellido(usuario.getApellido());
-        user.setEmail(usuario.getEmail());
-        user.setContrasena(usuario.getContrasena());
-    }*/
+
     public Text getBotonRegistrarse() { return botonRegistrarse; }
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }

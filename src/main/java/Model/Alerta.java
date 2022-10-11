@@ -31,6 +31,15 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
+    public static boolean alertaEmailInvalido() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡El email es invalido!\nPor favor, ingrese un email correcto.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
     public static boolean alertaCamposIncompletos() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);

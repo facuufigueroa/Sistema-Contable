@@ -28,7 +28,6 @@ public class ServiceRegister extends Service {
             setPs(getConexion().prepareStatement(UserQuery.insertarUsuario()));
             agregarAtributosUsuario(getPs(), usuario);
             getPs().executeUpdate();
-            Alerta.alertaRegistradoCorrectamente();
             return true;
         }catch (SQLException excepcion){
             System.out.println(excepcion.getMessage());

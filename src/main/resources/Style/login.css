@@ -1,7 +1,10 @@
-
-FontAwesomeIcon:hover{
-    -fx-cursor: hand;
+.button:hover, button:active {
+  -fx-background-color: #25abf4;
 }
+.button{
+  -fx-background-color: #0b89cb;
+}
+
 
 .content-login{
     -fx-font-family: 'Open Sans';

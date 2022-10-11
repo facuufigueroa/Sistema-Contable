@@ -49,7 +49,7 @@
                   <DropShadow />
                </effect>
             </ImageView>
-            <Button fx:id="botonIniciarSesion" graphicTextGap="40.0" layoutX="98.0" layoutY="407.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="63.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="      Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="botonIniciarSesion" graphicTextGap="40.0" layoutX="98.0" layoutY="407.0" mnemonicParsing="false" onAction="#accionBotonIniciarSesion" prefHeight="63.0" prefWidth="228.0" stylesheets="@../Style/login.css" text="      Iniciar Sesión" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="18.0" />
                </font>
@@ -92,7 +92,7 @@
                   </DropShadow>
                </effect>
             </PasswordField>
-            <TextField fx:id="campoUsuario" layoutX="95.0" layoutY="189.0" prefHeight="41.0" prefWidth="228.0" promptText="Email">
+            <TextField fx:id="campoUsuario"  layoutX="95.0" layoutY="189.0" prefHeight="41.0" prefWidth="228.0" promptText="Email">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
