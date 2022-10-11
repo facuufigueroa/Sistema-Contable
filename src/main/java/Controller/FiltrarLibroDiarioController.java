@@ -1,4 +1,5 @@
 package Controller;
+import Model.CambiarFecha;
 import Model.ViewFuntionality;
 import Reportes.LibroDiario;
 import javafx.event.ActionEvent;
@@ -107,7 +108,7 @@ public class FiltrarLibroDiarioController extends ViewFuntionality implements In
 
          */
         LibroDiario libroDiario = new LibroDiario();
-        libroDiario.conexionReporte();
+        libroDiario.conexionReporte(CambiarFecha.localDateToDate(getFechaDesde().getValue()),CambiarFecha.localDateToDate(getFechaHasta().getValue()));
     }
 
     public void hideStage(){ getVentana().hide(); }

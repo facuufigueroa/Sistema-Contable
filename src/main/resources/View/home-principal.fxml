@@ -92,7 +92,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnVerAsientos" onAction="#accionVerLibroDiario" layoutX="347.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text=" Ver Asientos " textFill="WHITE">
+            <Button fx:id="btnVerAsientos" layoutX="347.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionVerLibroDiario" prefHeight="52.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Libro Diario" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>

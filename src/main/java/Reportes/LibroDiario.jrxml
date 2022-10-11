@@ -5,10 +5,13 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaContable"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="468"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="522"/>
+	<parameter name="fecha_desde" class="java.sql.Date"/>
+	<parameter name="fecha_hasta" class="java.sql.Date"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT fecha,
 	idasiento
-FROM asientos]]>
+FROM asientos
+where fecha BETWEEN  $P{fecha_desde} AND  $P{fecha_hasta} ]]>
 	</queryString>
 	<field name="fecha" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="fecha"/>

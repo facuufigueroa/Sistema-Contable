@@ -1,16 +1,12 @@
 package Reportes;
 import DataBase.ConexionBD;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.util.JRLoader;
+
 import net.sf.jasperreports.view.JasperViewer;
 
-import java.io.File;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -20,8 +16,9 @@ import net.sf.jasperreports.engine.JasperReport;
 public class LibroDiario {
 
     public LibroDiario(){}
-    public void conexionReporte(){
+    public void conexionReporte(Date fecha_desde, Date fecha_hasta){
         try {
+
             ConexionBD con = new ConexionBD();
             Connection conn = con.conexion();
 
@@ -46,11 +43,13 @@ public class LibroDiario {
             //JasperViewer.viewReport(jprint, false);
             HashMap<String, Object> parameters = new HashMap<>();
             JasperReport archivo = JasperCompileManager.compileReport("C:\\Users\\Facundo\\Desktop\\Facultad 2022\\Segundo Cuatrimestre\\Sistemas Administrativos II\\Sistema Contable\\src\\main\\java\\Reportes\\LibroDiario.jrxml");
-            JasperReport subReport = JasperCompileManager.compileReport("C:\\Users\\Facundo\\Desktop\\Facultad 2022\\Segundo Cuatrimestre\\Sistemas Administrativos II\\Sistema Contable\\src\\main\\java\\Reportes\\subreporte-cuentas.jrxml");
+            //JasperReport subReport = JasperCompileManager.compileReport("C:\\Users\\Facundo\\Desktop\\Facultad 2022\\Segundo Cuatrimestre\\Sistemas Administrativos II\\Sistema Contable\\src\\main\\java\\Reportes\\subreporte-cuentas.jrxml");
 
             //JasperReport subReport = JasperCompileManager.compileReport("Reportes/subreporte-cuentas.jrxml");
-            parameters.put("subReport",subReport);
-            JasperPrint prin = JasperFillManager.fillReport(archivo, null,conn);
+            //parameters.put("subReport",subReport);
+            parameters.put("fecha_desde",fecha_desde);
+            parameters.put("fecha_hasta",fecha_hasta);
+            JasperPrint prin = JasperFillManager.fillReport(archivo, parameters,conn);
             JasperViewer ver = new JasperViewer(prin, false);
             ver.setVisible(true);
 
