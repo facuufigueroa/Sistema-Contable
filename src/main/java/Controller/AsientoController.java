@@ -256,7 +256,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void accionBorrarAsiento() {
         if (asientoCuentas.size() > 0){
             TablaVistaAsiento cuenta = tablaAsientos.getItems().get(asientoCuentas.size()-1);
-            agregarCuentaBorrada(cuenta.getNombreCuenta());
+            agregarCuentaBorrada(cuenta.getNombreCuenta().trim());
             actualizarNombreCuentas(cuentasActualizadas);
             asientoCuentas.remove(asientoCuentas.size()-1);
             ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
