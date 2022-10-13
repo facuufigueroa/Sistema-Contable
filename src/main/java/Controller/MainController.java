@@ -98,6 +98,21 @@ public class MainController extends ViewFuntionality implements Initializable {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
     }
+    public void accionVerLibroMayor(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/libroMayor.fxml"));
+        Parent parent = fxmlLoader.load();
+        LibroMayorController controller = fxmlLoader.getController();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        controller.setVentana(loginStage);
+        controller.hideStage();
+        stage.setScene(scene);
+        stage.setTitle("Libro Mayor");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
     private RegisterController loadRegister(RegisterController controller){ return controller; }

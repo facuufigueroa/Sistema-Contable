@@ -111,7 +111,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnLibroMayor" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="    Libro Mayor" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnLibroMayor" onAction="#accionVerLibroMayor" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="    Libro Mayor" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
