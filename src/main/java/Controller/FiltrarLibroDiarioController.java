@@ -102,7 +102,7 @@ public class FiltrarLibroDiarioController extends ViewFuntionality implements In
     @FXML
     public void accionFiltrarBusqueda(){
 
-        if(getFechaDesde().getValue() == null && getFechaHasta().getValue() == null){
+        if(getFechaDesde().getValue() == null || getFechaHasta().getValue() == null){
             Alerta.alertaFechaIncompleta();
         }
         else{
