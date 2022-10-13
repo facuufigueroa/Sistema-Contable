@@ -19,7 +19,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.converter.DoubleStringConverter;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -390,12 +389,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         this.mainController = mainController;
     }
 
-    /*
-    public static void setUser(User user) {
-        AsientoController.user = user;
-    }
-
-     */
 
     public User getIdUsuario() {
         return idUsuario;

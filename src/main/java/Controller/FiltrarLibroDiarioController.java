@@ -1,4 +1,5 @@
 package Controller;
+import Model.Alerta;
 import Model.CambiarFecha;
 import Model.ViewFuntionality;
 import Reportes.LibroDiario;
@@ -13,14 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -40,6 +38,8 @@ public class FiltrarLibroDiarioController extends ViewFuntionality implements In
     public void initialize(URL url, ResourceBundle resourceBundle) {
         restringirFechaHasta();
         restringirFechaDesde();
+        getFechaHasta().setEditable(false);
+        getFechaDesde().setEditable(false);
     }
 
     private void restringirFechaHasta(){
@@ -101,14 +101,14 @@ public class FiltrarLibroDiarioController extends ViewFuntionality implements In
 
     @FXML
     public void accionFiltrarBusqueda(){
-        /*if (getFechaDesde().getValue().isAfter(getFechaHasta().getValue())){
-            System.out.println("Error, la fecha desde no puede ser mayor a la fecha hasta");
 
+        if(getFechaDesde().getValue() == null && getFechaHasta().getValue() == null){
+            Alerta.alertaFechaIncompleta();
         }
-
-         */
-        LibroDiario libroDiario = new LibroDiario();
-        libroDiario.conexionReporte(CambiarFecha.localDateToDate(getFechaDesde().getValue()),CambiarFecha.localDateToDate(getFechaHasta().getValue()));
+        else{
+            LibroDiario libroDiario = new LibroDiario();
+            libroDiario.conexionReporte(CambiarFecha.localDateToDate(getFechaDesde().getValue()),CambiarFecha.localDateToDate(getFechaHasta().getValue()));
+        }
     }
 
     public void hideStage(){ getVentana().hide(); }
