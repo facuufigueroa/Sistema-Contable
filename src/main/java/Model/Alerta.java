@@ -173,4 +173,14 @@ public class Alerta {
         return false;
     }
 
+    public static boolean alertaFechaIncompleta() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡Por favor, elija una fecha desde y una fecha hasta");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
+
 }

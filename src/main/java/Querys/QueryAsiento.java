@@ -3,7 +3,7 @@ package Querys;
 public class QueryAsiento {
 
     public static String insertarAsiento(){ return  "INSERT INTO asientos (fecha, detalle, usuario) "
-            + "VALUES (CURRENT_DATE, ?, ?)"; }
+            + "VALUES (?, ?, ?)"; }
 
     public static String insertarCuentaAsiento(){
         return "INSERT INTO asientos_cuentas (debe,haber,saldo,asiento,cuenta) VALUES (?,?,?,?,?)";

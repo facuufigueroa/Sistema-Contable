@@ -1,10 +1,11 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Asiento {
 
-    private String fecha;
+    private LocalDate fecha;
 
     private String detalle;
 
@@ -12,16 +13,17 @@ public class Asiento {
 
     private int codigoAsiento;
 
-    public Asiento(String detalle, int usuario) {
+    public Asiento(LocalDate fecha,String detalle, int usuario) {
         this.detalle = detalle;
         this.usuario = usuario;
+        this.fecha = fecha;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

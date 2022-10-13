@@ -45,6 +45,7 @@ public class MainController extends ViewFuntionality implements Initializable {
     private User usuario;
 
     private RegisterController registerController;
+    private FiltrarLibroDiarioController filtradoController;
 
 
     private User u = User.getInstance();
@@ -62,6 +63,23 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         verificarRolUser();
         cambiarTexto();
+    }
+
+    @FXML
+    public void accionVerLibroDiario(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/filtrarLibroDiario.fxml"));
+        Parent parent = fxmlLoader.load();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage ventana = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        setFiltradoController(loadFiltrarLibro(fxmlLoader.getController()));
+        getFiltradoController().setVentana(ventana);
+        //controller.hideStage();
+        stage.setScene(scene);
+        stage.setTitle("Ver Libro Diario");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
     }
 
     @FXML
@@ -83,6 +101,8 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     /**Metodo en el cual se obtiene el controlador de la vista registro-user**/
     private RegisterController loadRegister(RegisterController controller){ return controller; }
+
+    private FiltrarLibroDiarioController loadFiltrarLibro(FiltrarLibroDiarioController controller){return controller;  }
 
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
@@ -231,5 +251,13 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
+    }
+
+    public FiltrarLibroDiarioController getFiltradoController() {
+        return filtradoController;
+    }
+
+    public void setFiltradoController(FiltrarLibroDiarioController filtradoController) {
+        this.filtradoController = filtradoController;
     }
 }
