@@ -1,5 +1,4 @@
 package Controller;
-
 import Model.*;
 import Model.Alerta;
 import Services.ServiceAsiento;
@@ -198,6 +197,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
         }
     }
 
+
+
     private boolean cumpleSaldo() {
         for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
             String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
@@ -276,11 +277,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
         if(Alerta.alertarCancelar().getResult() == ButtonType.OK){
             setearCamposEnVacio();
         }
-    }
-
-    @FXML
-    public void accionDebeHaber(){
-
     }
 
     @FXML

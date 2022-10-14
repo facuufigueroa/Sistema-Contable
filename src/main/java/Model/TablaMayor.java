@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDate;
+
 public class TablaMayor {
     private int idAsiento;
     private String detalle;
@@ -13,6 +15,10 @@ public class TablaMayor {
         setDebe(debe);
         setHaber(haber);
         setSaldo(saldo);
+    }
+    public TablaMayor(int idAsiento, String detalle){
+        setIdAsiento(idAsiento);
+        setDetalle(detalle);
     }
 
     public int getIdAsiento() {
@@ -54,4 +60,9 @@ public class TablaMayor {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    @Override
+    public String toString() {
+        return getIdAsiento() + " " + getDetalle() + " " + getDebe() + " " + getHaber() + getSaldo() + "\n";
+     }
 }

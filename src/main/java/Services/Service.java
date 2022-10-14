@@ -2,6 +2,7 @@ package Services;
 import DataBase.ConexionBD;
 import Model.Alerta;
 import Model.User;
+import Querys.QueryAsiento;
 import Querys.RolesQuery;
 import Querys.UserQuery;
 import javafx.scene.control.Alert;
@@ -32,6 +33,35 @@ public class Service {
     public void setPs(PreparedStatement ps) { this.ps = ps; }
     public ResultSet getTupla() { return tupla; }
     public void setTupla(ResultSet tupla) { this.tupla = tupla; }
+
+    public String obtenerTipoDeCuenta(String nombreCuenta){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(QueryAsiento.obtenerTipoCuenta()));
+            getPreparedStatement().setString(1,nombreCuenta);
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return null;
+    }
+    public String obtenerNombreCuenta(int idCuenta){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(QueryAsiento.obtenerNombreCuenta()));
+            getPreparedStatement().setInt(1,idCuenta);
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return null;
+    }
 
     public int obtenerIdUser(String email){
         try{

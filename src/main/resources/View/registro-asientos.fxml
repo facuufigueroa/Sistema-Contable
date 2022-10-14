@@ -105,7 +105,7 @@
                         </DropShadow>
                      </effect>
                </Button>
-                  <ComboBox fx:id="cbbDebeHaber" editable="true" focusTraversable="false" layoutX="335.0" layoutY="63.0" onAction="#accionDebeHaber" prefHeight="30.0" prefWidth="145.0" promptText="Debe/Haber" />
+                  <ComboBox fx:id="cbbDebeHaber" editable="true" focusTraversable="false" layoutX="335.0" layoutY="63.0" prefHeight="30.0" prefWidth="145.0" promptText="Debe/Haber" />
                   <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="280.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/seleccione.png" />
