@@ -5,11 +5,11 @@ import java.time.LocalDate;
 public class TablaMayor {
     private int idAsiento;
     private String detalle;
-    private double debe;
-    private double haber;
+    private String debe;
+    private String haber;
     private double saldo;
 
-    public TablaMayor(int idAsiento, String detalle, double debe, double haber, double saldo){
+    public TablaMayor(int idAsiento, String detalle, String debe, String haber, double saldo){
         setIdAsiento(idAsiento);
         setDetalle(detalle);
         setDebe(debe);
@@ -37,19 +37,19 @@ public class TablaMayor {
         this.detalle = detalle;
     }
 
-    public double getDebe() {
+    public String getDebe() {
         return debe;
     }
 
-    public void setDebe(double debe) {
+    public void setDebe(String debe) {
         this.debe = debe;
     }
 
-    public double getHaber() {
+    public String getHaber() {
         return haber;
     }
 
-    public void setHaber(double haber) {
+    public void setHaber(String haber) {
         this.haber = haber;
     }
 

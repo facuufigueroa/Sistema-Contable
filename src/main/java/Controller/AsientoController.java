@@ -216,15 +216,14 @@ public class AsientoController extends ViewFuntionality implements Initializable
     public void insertarAsientoCuenta(){
         for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
             String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
-            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(nombreCuenta), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
-            serviceAsiento.insertarAsientoCuenta(asientoCuenta);
-
             Cuenta cuenta = new Cuenta(nombreCuenta);
             int idCuenta = serviceAsiento.obtenerIdCuenta(nombreCuenta);
             cuenta.setSaldo_actual(serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
             cuenta.setTipo(serviceAsiento.obtenerTipoDeCuenta(nombreCuenta));
             cuenta.verificarTipoCuenta(obtenerSiEsDebeHaber((tablaAsientos.getDebe())), tablaAsientos.getSaldo());
             serviceCalcularSaldo.actualizarSaldoCuenta(serviceAsiento.obtenerIdCuenta(cuenta.getNombre()), cuenta.getSaldo_actual());
+            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(nombreCuenta), conversionDebeHaber(tablaAsientos.getDebe()),conversionDebeHaber(tablaAsientos.getHaber()),serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
+            serviceAsiento.insertarAsientoCuenta(asientoCuenta);
         }
 
     }

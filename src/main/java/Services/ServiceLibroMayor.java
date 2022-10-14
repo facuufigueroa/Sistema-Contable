@@ -125,6 +125,12 @@ public class ServiceLibroMayor extends Service{
         }
         return 0;
     }
+    public String conversionDebeHaber(Double debeHaber){
+        if (debeHaber == 0.0) {
+            return "";
+        }
+        return String.valueOf(debeHaber);
+    }
     public double obtenerHaber(int idAsiento){
         try{
             Connection connection = null;
@@ -155,7 +161,7 @@ public class ServiceLibroMayor extends Service{
         }
         return 0;
     }
-    public ArrayList<TablaMayor> obtenerAsientosPorFecha(int idAsiento, LocalDate desde, LocalDate hasta){
+    /*public ArrayList<TablaMayor> obtenerAsientosPorFecha(int idAsiento, LocalDate desde, LocalDate hasta){
         ArrayList<TablaMayor> lista = new ArrayList<>();
         try {
             setConexion(ConexionBD.conexion());
@@ -173,34 +179,33 @@ public class ServiceLibroMayor extends Service{
         }
         return lista;
     }
-
+*/
     public ArrayList<TablaMayor> obtenerTablaMayor(int idCuenta, LocalDate desde, LocalDate hasta){
-        int idAsiento = 0;
-        double saldoAux = 0;
+       // int idAsiento = 0;
+        //double saldoAux = 0;
         ArrayList<TablaMayor> lista = new ArrayList<>();
         //HashMap<Integer, String> map = obtenerDescripcionAsiento(idCuenta);
         for (Integer valor : obtenerIdAsiento(idCuenta, desde, hasta)){
             String detalle = obtenerDetallePorId(valor);
-            double debe = obtenerDebe(valor);
-            double haber = obtenerHaber(valor);
+            String debe = conversionDebeHaber(obtenerDebe(valor));
+            String haber = conversionDebeHaber(obtenerHaber(valor));
 
-
-            String nombreCuenta = obtenerNombreCuenta(idCuenta);
-            String tipoCuenta = obtenerTipoDeCuenta(nombreCuenta);
-            String debeHaber = obtenerSiEsDebeHaber(String.valueOf(debe));
-            double saldo = verificarTipoCuenta(tipoCuenta, debeHaber, saldoAux, obtenerSaldo(valor));
-            saldoAux = saldo;
+            //String nombreCuenta = obtenerNombreCuenta(idCuenta);
+            //String tipoCuenta = obtenerTipoDeCuenta(nombreCuenta);
+            //String debeHaber = obtenerSiEsDebeHaber(String.valueOf(debe));
+            double saldo = obtenerSaldo(valor);
+            //saldoAux = saldo;
             TablaMayor tablaMayor = new TablaMayor(valor, detalle, debe, haber, saldo);
             lista.add(tablaMayor);
         }
         lista.forEach(cuenta -> System.out.println(cuenta));
         return lista;
     }
-    public String obtenerSiEsDebeHaber(String debe){
-        return (debe.equals("0.0")) ? "Haber" : "Debe";
+  /*public String obtenerSiEsDebeHaber(String debe){
+        return (debe.equals("")) ? "Haber" : "Debe";
     }
 
-    public double verificarTipoCuenta(String tipo, String debeHaber, double saldoActual, double saldoFinal){
+      public double verificarTipoCuenta(String tipo, String debeHaber, double saldoActual, double saldoFinal){
         if (tipo.equals("Ac") &&  debeHaber.equals("Debe")){
             return saldoActual+saldoFinal;
 
@@ -218,5 +223,5 @@ public class ServiceLibroMayor extends Service{
         }
         return 0;
     }
-
+*/
 }

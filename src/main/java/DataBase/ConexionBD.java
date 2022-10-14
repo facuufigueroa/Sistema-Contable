@@ -5,7 +5,7 @@ import javafx.stage.StageStyle;
 import java.sql.*;
 public class ConexionBD {
     final static String user = "postgres";
-    final static String password = "unnoba";
+    final static String password = "1234";
     private static Connection connection;
 
     public ConexionBD(){}

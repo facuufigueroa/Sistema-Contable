@@ -57,8 +57,8 @@ public class LibroMayorController extends ViewFuntionality implements Initializa
         ObservableList <TablaMayor> obCuentas = FXCollections.observableArrayList(service.obtenerTablaMayor(idCuenta, getFechaDesde().getValue(), getFechaHasta().getValue()));
         columnNumero.setCellValueFactory(new PropertyValueFactory<TablaMayor, Integer>("idAsiento"));
         columnDetalle.setCellValueFactory(new PropertyValueFactory<TablaMayor, String>("detalle"));
-        columnDebe.setCellValueFactory(new PropertyValueFactory<TablaMayor, Double>("debe"));
-        columnHaber.setCellValueFactory(new PropertyValueFactory<TablaMayor, Double>("haber"));
+        columnDebe.setCellValueFactory(new PropertyValueFactory<TablaMayor, String>("debe"));
+        columnHaber.setCellValueFactory(new PropertyValueFactory<TablaMayor, String>("haber"));
         columnSaldo.setCellValueFactory(new PropertyValueFactory<TablaMayor, Double>("saldo"));
         tablaMayor.setItems(obCuentas);
     }
@@ -152,8 +152,6 @@ public class LibroMayorController extends ViewFuntionality implements Initializa
             iniciarTablaMayor();
         }
     }
-
-
 
     public ComboBox getCbbCuentas() {
         return cbbCuentas;
