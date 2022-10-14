@@ -5,7 +5,6 @@ import Model.TablaMayor;
 import Querys.CuentaQuery;
 import Querys.LibroMayorQuery;
 import Querys.QueryAsiento;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,18 +14,16 @@ public class ServiceLibroMayor extends Service{
 
     public ArrayList<String> traerNombreCuentas(){
         ArrayList<String> nombreCuentas = new ArrayList<>();
+        vaciarConexion();
         try{
             setConnection(ConexionBD.conexion());
-            setPreparedStatement(getConnection().prepareStatement(CuentaQuery.traerNombresCuentas()));
-            setResultSet(getPs().executeQuery());
+            setPs(getConnection().prepareStatement(CuentaQuery.traerNombresCuentas()));
+            setTupla(getPs().executeQuery());
             while(getTupla().next()){
-                String nombreCuenta = getResultSet().getString(1);
+                String nombreCuenta = getTupla().getString(1);
                 nombreCuentas.add(nombreCuenta);
             }
-
-        }catch (Exception exception){
-            System.out.println(exception);
-        }
+        }catch (Exception exception){ System.out.println(exception); }
         return nombreCuentas;
     }
 

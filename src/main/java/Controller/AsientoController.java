@@ -3,6 +3,7 @@ package Controller;
 import Model.*;
 import Model.Alerta;
 import Services.ServiceAsiento;
+import Services.ServiceCalcularSaldoCuenta;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,6 +77,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private User idUsuario;
 
     private ServicePDC serviceCuentas= new ServicePDC();
+
+    private ServiceCalcularSaldoCuenta serviceCalcularSaldo = new ServiceCalcularSaldoCuenta();
 
     private MainController mainController;
 
@@ -176,19 +179,37 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
     private void comprobarAsientos(ActionEvent event) throws IOException {
         if (verificarBalance()) {
-            Asiento asiento = new Asiento(fechaActual, txtDescripcion.getText(), u.getId());
-            serviceAsiento.insertarAsiento(asiento);
-            insertarAsientoCuenta();
-            Alerta.alertarAsientoRegistrado();
-            if(Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK){
-                setearCamposEnVacio();
-            }
-            else{
-                accionBtnVolver(event);
+            if (cumpleSaldo()) {
+                Asiento asiento = new Asiento(fechaActual, txtDescripcion.getText(), u.getId());
+                serviceAsiento.insertarAsiento(asiento);
+                insertarAsientoCuenta();
+                Alerta.alertarAsientoRegistrado();
+                if (Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK) {
+                    setearCamposEnVacio();
+                } else {
+                    accionBtnVolver(event);
+                }
+            }else{
+                Alerta.alertaSaldo();
             }
         } else {
             Alerta.alertarAsientoNoBalanceado();
+            System.out.println("Alerta saldo");
         }
+    }
+
+    private boolean cumpleSaldo() {
+        for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
+            String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
+            Cuenta cuenta = new Cuenta(nombreCuenta);
+            int idCuenta = serviceAsiento.obtenerIdCuenta(nombreCuenta);
+            cuenta.setSaldo_actual(serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
+            cuenta.setTipo(serviceAsiento.obtenerTipoDeCuenta(nombreCuenta));
+            if (!cuenta.seCumpleSaldo(obtenerSiEsDebeHaber((tablaAsientos.getDebe())), tablaAsientos.getSaldo())){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void insertarAsientoCuenta(){
@@ -196,7 +217,18 @@ public class AsientoController extends ViewFuntionality implements Initializable
             String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
             AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(nombreCuenta), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
             serviceAsiento.insertarAsientoCuenta(asientoCuenta);
+
+            Cuenta cuenta = new Cuenta(nombreCuenta);
+            int idCuenta = serviceAsiento.obtenerIdCuenta(nombreCuenta);
+            cuenta.setSaldo_actual(serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
+            cuenta.setTipo(serviceAsiento.obtenerTipoDeCuenta(nombreCuenta));
+            cuenta.verificarTipoCuenta(obtenerSiEsDebeHaber((tablaAsientos.getDebe())), tablaAsientos.getSaldo());
+            serviceCalcularSaldo.actualizarSaldoCuenta(serviceAsiento.obtenerIdCuenta(cuenta.getNombre()), cuenta.getSaldo_actual());
         }
+
+    }
+    public String obtenerSiEsDebeHaber(String debe){
+        return (debe.equals("")) ? "Haber" : "Debe";
     }
 
     public double conversionDebeHaber(String debeHaber){

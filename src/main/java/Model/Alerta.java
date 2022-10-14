@@ -12,6 +12,15 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
+    public static boolean alertaSaldo() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡La operación no puede realizarse, debido a que una cuenta puede quedar en negativo!\nPor favor, compruebe el saldo en el plan de cuentas.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
     public static boolean alertaSeleccioneRol() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
