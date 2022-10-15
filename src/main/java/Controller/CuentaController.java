@@ -18,11 +18,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 
 public class CuentaController extends ViewFuntionality implements Initializable {
@@ -39,6 +43,8 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     @FXML private TableView<Cuenta> tableCuentas;
 
     @FXML private TableColumn<Cuenta,String> columName;
+
+    @FXML private TableColumn<Cuenta,String> columSaldo;
 
     @FXML private TableColumn<Cuenta,String> columCodigo;
 
@@ -66,8 +72,13 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         columCodigo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("codigo"));
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
         columTipo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("tipo"));
+        columSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("saldo_actual"));
         tableCuentas.setItems(obCuentas);
     }
+
+    /*Poner el campo vacio en la columna de las cuentas que no reciben saldo*/
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,7 +86,7 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         listarCuentasHabilitadas();
         iniciarCbbRS();
         iniciarCbbTipo();
-
+        integerTextField(txtCodigo);
     }
 
 
@@ -208,6 +219,19 @@ public class CuentaController extends ViewFuntionality implements Initializable 
     public String obtenerCodigoCuenta(){
         String codigo= txtCodigo.getText();
         return codigo;
+    }
+
+    public static void integerTextField(TextField txtMonto) {
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^\\d*$")) {
+                return change;
+            }
+            return null;
+        };
+        txtMonto.setTextFormatter(
+                new TextFormatter<Integer>(
+                        new IntegerStringConverter(), null, integerFilter));
     }
 
     @FXML

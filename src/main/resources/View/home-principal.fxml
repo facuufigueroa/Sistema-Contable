@@ -54,7 +54,7 @@
       <Line endX="191.0" fill="WHITE" layoutX="224.0" layoutY="115.0" startX="-100.0" stroke="WHITE" />
       <Pane layoutX="123.0" layoutY="177.0" opacity="0.82" prefHeight="246.0" prefWidth="569.0" style="-fx-background-color: #14648f;">
          <children>
-            <Button fx:id="btnPlanDeCuenta" layoutX="27.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionPlanDeCuenta" prefHeight="58.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Plan de Cuentas" textFill="WHITE">
+            <Button fx:id="btnPlanDeCuenta" stylesheets="@../Style/home-principal.css" layoutX="27.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionPlanDeCuenta" prefHeight="58.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Plan de Cuentas" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -73,7 +73,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnNuevoAsiento" layoutX="347.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionNuevoAsiento" prefHeight="58.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="Nuevo Asiento" textFill="WHITE">
+            <Button fx:id="btnNuevoAsiento" stylesheets="@../Style/home-principal.css" layoutX="347.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionNuevoAsiento" prefHeight="58.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="Nuevo Asiento" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -92,7 +92,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnVerAsientos" layoutX="347.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionVerLibroDiario" prefHeight="52.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Libro Diario" textFill="WHITE">
+            <Button fx:id="btnVerAsientos" stylesheets="@../Style/home-principal.css" layoutX="347.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionVerLibroDiario" prefHeight="52.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Libro Diario" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -111,7 +111,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnLibroMayor" onAction="#accionVerLibroMayor" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="    Libro Mayor" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnLibroMayor" stylesheets="@../Style/home-principal.css" onAction="#accionVerLibroMayor" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="    Libro Mayor" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>

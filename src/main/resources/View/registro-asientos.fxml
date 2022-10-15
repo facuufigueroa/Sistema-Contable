@@ -81,7 +81,7 @@
                         </ImageView>
                      </graphic>
                </Label>
-               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="148.0" layoutY="19.0" onAction="#accionCbbCuenta" prefHeight="30.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
+               <ComboBox fx:id="cbbCuenta" editable="true" focusTraversable="false" layoutX="148.0" layoutY="18.0" onAction="#accionCbbCuenta" prefHeight="31.0" prefWidth="191.0" promptText="Seleccione la cuenta" />
                <TextField fx:id="txtMonto" focusTraversable="false" layoutX="149.0" layoutY="63.0" prefHeight="30.0" prefWidth="111.0">
                      <font>
                         <Font size="13.0" />
@@ -119,6 +119,25 @@
                         <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Images/eliminar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <effect>
+                        <DropShadow height="22.47" radius="11.1" width="23.93">
+                           <color>
+                              <Color red="0.10196078568696976" green="0.20000000298023224" blue="0.250980406999588" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="btnVerCuentas" layoutX="645.0" layoutY="11.0" mnemonicParsing="false" onAction="#accionVerPlanDeCuentas" prefHeight="17.0" prefWidth="181.0" style="-fx-background-color: #166576; -fx-border-color: transparent; -fx-border-color: transparent;" text="Ver Plan Cuentas" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/ver-asientos.png" />
                            </image>
                         </ImageView>
                      </graphic>

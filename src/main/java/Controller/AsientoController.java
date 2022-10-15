@@ -60,6 +60,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private Button btnRegistrarAsiento;
 
     @FXML
+    private Button btnVerCuentas;
+    @FXML
     private TableColumn columCuenta;
 
     @FXML
@@ -90,6 +92,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
     ArrayList<String> cuentasActualizadas = new ArrayList<>(serviceCuentas.traerNombreCuentas());
 
     private final LocalDate fechaActual = LocalDate.now();
+
+    private VerCuentasController verCuentasController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -193,7 +197,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
             }
         } else {
             Alerta.alertarAsientoNoBalanceado();
-            System.out.println("Alerta saldo");
         }
     }
 
@@ -397,6 +400,21 @@ public class AsientoController extends ViewFuntionality implements Initializable
         stage.show();
     }
 
+    @FXML
+    public void accionVerPlanDeCuentas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/ver-cuentas.fxml"));
+        Parent parent = fxmlLoader.load();
+        setVerCuentasController(loadPlanDeCuenta(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getVerCuentasController().setVentana(loginStage);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
 
     private MainController loadVolver(MainController mainController){ return mainController; }
 
@@ -426,4 +444,13 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
     public Button getBtnBorrarAsiento() { return btnBorrarAsiento;}
 
+    public VerCuentasController getVerCuentasController() {
+        return verCuentasController;
+    }
+
+    public void setVerCuentasController(VerCuentasController verCuentasController) {
+        this.verCuentasController = verCuentasController;
+    }
+
+    private VerCuentasController loadPlanDeCuenta(VerCuentasController controller){ return controller; }
 }

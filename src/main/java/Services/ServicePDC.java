@@ -31,6 +31,7 @@ public class ServicePDC {
                 cuenta.nombre=getResultSet().getString(3);
                 cuenta.recibe_saldo=cuentasRecibeSaldoSiNo(getResultSet().getString(4));
                 cuenta.tipo=getResultSet().getString(5);
+                cuenta.saldo_actual=getResultSet().getDouble(7);
                 cuentas.add(cuenta);
             }
 
