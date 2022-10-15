@@ -1,8 +1,6 @@
 package Controller;
 import Model.*;
-import Reportes.LibroDiario;
 import Services.ServiceLibroMayor;
-import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

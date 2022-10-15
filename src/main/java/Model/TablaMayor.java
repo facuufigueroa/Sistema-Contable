@@ -1,6 +1,5 @@
 package Model;
 
-import java.time.LocalDate;
 
 public class TablaMayor {
     private int idAsiento;

@@ -2,19 +2,16 @@ package Services;
 
 import DataBase.ConexionBD;
 import Model.CambiarFecha;
-import Model.Cuenta;
 import Model.TablaMayor;
 import Querys.CuentaQuery;
 import Querys.LibroMayorQuery;
 import Querys.QueryAsiento;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ServiceLibroMayor extends Service{
     public ServiceLibroMayor(){}
@@ -35,8 +32,6 @@ public class ServiceLibroMayor extends Service{
         }catch (Exception exception){ System.out.println(exception); }
         return nombreCuentas;
     }
-
-    //id cuenta, detalles, debe, haber saldo
 
     public int obtenerIdCuenta(String nombreCuenta){
         Connection connection = null;
@@ -93,23 +88,6 @@ public class ServiceLibroMayor extends Service{
         return "";
     }
 
-    //ArrayList asientos
-    // por cada id agregarlo a un map
-    /*
-    public HashMap<Integer, String> obtenerDescripcionAsiento(int idCuenta){
-        HashMap<Integer, String> map = new HashMap<>();
-        ArrayList<Integer> lista = obtenerIdAsiento(idCuenta);
-        for (Integer valor : lista) {
-            String detalle = obtenerDetallePorId(valor);
-            map.put(valor, detalle);
-        }
-        return map;
-    }
-
-
-     */
-
-
     public double obtenerDebe(int idAsiento){
         Connection connection = null;
         PreparedStatement ps = null;
@@ -161,67 +139,18 @@ public class ServiceLibroMayor extends Service{
         }
         return 0;
     }
-    /*public ArrayList<TablaMayor> obtenerAsientosPorFecha(int idAsiento, LocalDate desde, LocalDate hasta){
-        ArrayList<TablaMayor> lista = new ArrayList<>();
-        try {
-            setConexion(ConexionBD.conexion());
-            setPs(getConexion().prepareStatement(LibroMayorQuery.obtenerAsientosPorFecha()));
-            getPs().setInt(1, idAsiento);
-            getPs().setDate(2, CambiarFecha.localDateToDate(desde));
-            getPs().setDate(3, CambiarFecha.localDateToDate(hasta));
-            setResultSet(getPs().executeQuery());
-            while (getResultSet().next()){ // idasiento , detalle, fecha
-                TablaMayor asiento = new TablaMayor(getResultSet().getInt(1), getResultSet().getString(2));
-                lista.add(asiento);
-            }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return lista;
-    }
-*/
+
     public ArrayList<TablaMayor> obtenerTablaMayor(int idCuenta, LocalDate desde, LocalDate hasta){
-       // int idAsiento = 0;
-        //double saldoAux = 0;
         ArrayList<TablaMayor> lista = new ArrayList<>();
-        //HashMap<Integer, String> map = obtenerDescripcionAsiento(idCuenta);
         for (Integer valor : obtenerIdAsiento(idCuenta, desde, hasta)){
             String detalle = obtenerDetallePorId(valor);
             String debe = conversionDebeHaber(obtenerDebe(valor));
             String haber = conversionDebeHaber(obtenerHaber(valor));
 
-            //String nombreCuenta = obtenerNombreCuenta(idCuenta);
-            //String tipoCuenta = obtenerTipoDeCuenta(nombreCuenta);
-            //String debeHaber = obtenerSiEsDebeHaber(String.valueOf(debe));
             double saldo = obtenerSaldo(valor);
-            //saldoAux = saldo;
             TablaMayor tablaMayor = new TablaMayor(valor, detalle, debe, haber, saldo);
             lista.add(tablaMayor);
         }
-        lista.forEach(cuenta -> System.out.println(cuenta));
         return lista;
     }
-  /*public String obtenerSiEsDebeHaber(String debe){
-        return (debe.equals("")) ? "Haber" : "Debe";
-    }
-
-      public double verificarTipoCuenta(String tipo, String debeHaber, double saldoActual, double saldoFinal){
-        if (tipo.equals("Ac") &&  debeHaber.equals("Debe")){
-            return saldoActual+saldoFinal;
-
-        } else if (tipo.equals("Ac") && debeHaber.equals("Haber")) {
-            return saldoActual-saldoFinal;
-        }
-        else if ((tipo.equals("Pa") || tipo.equals("Pm")) &&  debeHaber.equals("Debe")){
-            return saldoActual-saldoFinal;
-        }
-        else if ((tipo.equals("Pa") || tipo.equals("Pm")) &&  debeHaber.equals("Haber")){
-            return saldoActual+saldoFinal;
-        }
-        else if ((tipo.equals("R+") || tipo.equals("R-")) &&  debeHaber.equals("Debe")){
-            return saldoActual+saldoFinal;
-        }
-        return 0;
-    }
-*/
 }
