@@ -44,7 +44,7 @@ public class ServicePDC {
     /*Metodo que convierte los valores 0 y 1 del campo recibe_saldo en Si y No*/
    public String cuentasRecibeSaldoSiNo(String recibe_saldo){
         String recibe;
-        if(Objects.equals(recibe_saldo, "1")){
+        if(Objects.equals(recibe_saldo, "Si")){
             recibe="Si";
         }
         else{
