@@ -90,7 +90,7 @@
                   <Font name="Arial" size="13.0" />
                </font>
             </PasswordField>
-            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="311.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" style="-fx-background-color: #0B89CB;" text="Registrar" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="botonRegistrarse" layoutX="127.0" layoutY="311.0" mnemonicParsing="false" onAction="#actionRegister" prefHeight="35.0" prefWidth="228.0" stylesheets="@../Style/login.css" text="Registrar" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>

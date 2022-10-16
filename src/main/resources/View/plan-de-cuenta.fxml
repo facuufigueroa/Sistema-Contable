@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="621.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CuentaController">
+<AnchorPane prefHeight="621.0" prefWidth="677.0" stylesheets="@../Style/botones.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CuentaController">
    <children>
       <Pane layoutX="-1.0" prefHeight="624.0" prefWidth="780.0" style="-fx-background-color: #0D3E59;">
          <children>
@@ -45,12 +45,12 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="tableCuentas" layoutX="14.0" layoutY="342.0" onMouseClicked="#accionTablaCuentasH" prefHeight="267.0" prefWidth="753.0">
+            <TableView fx:id="tableCuentas" layoutX="14.0" layoutY="342.0" onMouseClicked="#accionTablaCuentasH" prefHeight="267.0" prefWidth="753.0" stylesheets="@../Style/tablas.css">
               <columns>
                 <TableColumn fx:id="columName" editable="false" prefWidth="245.0" text="Nombre" />
                 <TableColumn fx:id="columCodigo" editable="false" prefWidth="153.0" text="Codigo" />
-                  <TableColumn fx:id="columRecibeSaldo" editable="false" prefWidth="122.0" text="Recibe saldo" />
-                  <TableColumn fx:id="columTipo" editable="false" prefWidth="96.0" text="Tipo" />
+                  <TableColumn fx:id="columRecibeSaldo" editable="false" prefWidth="140.0" text="Recibe saldo" />
+                  <TableColumn fx:id="columTipo" editable="false" minWidth="0.0" prefWidth="78.0" text="Tipo" />
                   <TableColumn fx:id="columSaldo" prefWidth="146.0" text="Saldo" />
               </columns>
             </TableView>
@@ -66,7 +66,7 @@
                <effect>
                   <DropShadow />
                </effect></Line>
-            <Button fx:id="btnVolver" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="39.0" prefWidth="110.0" style="-fx-background-color: #166576;" text="  Volver" textFill="WHITE">
+            <Button fx:id="btnVolver" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="39.0" prefWidth="110.0" text="  Volver" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="15.0" />
                </font>
@@ -82,7 +82,7 @@
             <TextField fx:id="txtCodigo" layoutX="231.0" layoutY="150.0" prefHeight="37.0" prefWidth="149.0" promptText="Codigo" />
             <ComboBox fx:id="cbbRecibeSaldo" layoutX="29.0" layoutY="209.0" onAction="#itemRecibeSaldo" prefHeight="29.0" prefWidth="150.0" promptText="Recibe Saldo" />
             <ComboBox fx:id="cbbTipo" layoutX="229.0" layoutY="209.0" onAction="#itemTipo" prefHeight="29.0" prefWidth="150.0" promptText="Tipo" />
-            <Button fx:id="btnAgregarCuenta" layoutX="229.0" layoutY="262.0" mnemonicParsing="false" onAction="#accionAgregarCuenta" prefHeight="49.0" prefWidth="176.0" style="-fx-background-color: #166576;" text="Agregar Cuenta" textFill="WHITE">
+            <Button fx:id="btnAgregarCuenta" layoutX="229.0" layoutY="262.0" mnemonicParsing="false" onAction="#accionAgregarCuenta" prefHeight="49.0" prefWidth="176.0" stylesheets="@../Style/botones.css" text="Agregar Cuenta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -98,7 +98,7 @@
                <effect>
                   <DropShadow />
                </effect></Line>
-            <Button fx:id="btnDeshabilitarCuenta" layoutX="500.0" layoutY="169.0" mnemonicParsing="false" onAction="#accionDeshabilitarCuenta" prefHeight="49.0" prefWidth="200.0" style="-fx-background-color: #166576;" text="Deshabilitar cuenta" textFill="WHITE">
+            <Button fx:id="btnDeshabilitarCuenta" layoutX="487.0" layoutY="169.0" mnemonicParsing="false" onAction="#accionDeshabilitarCuenta" prefHeight="50.0" prefWidth="230.0" text="Deshabilitar cuenta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -114,7 +114,7 @@
                <effect>
                   <DropShadow />
                </effect></Line>
-            <Button fx:id="btnVerCuentasDeshabilitadas" layoutX="486.0" layoutY="262.0" mnemonicParsing="false" onAction="#accionVerCuentasDeshabilitadas" prefHeight="49.0" prefWidth="227.0" style="-fx-background-color: #166576;" text="Ver cuentas dehabilitadas" textFill="WHITE">
+            <Button fx:id="btnVerCuentasDeshabilitadas" layoutX="486.0" layoutY="262.0" mnemonicParsing="false" onAction="#accionVerCuentasDeshabilitadas" prefHeight="50.0" prefWidth="230.0" text="Ver cuentas dehabilitadas" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="536.0" prefWidth="851.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<AnchorPane prefHeight="536.0" prefWidth="851.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <Pane layoutY="-1.0" prefHeight="36.0" prefWidth="851.0" style="-fx-background-color: #44878f;">
          <children>
@@ -54,7 +54,7 @@
       <Line endX="191.0" fill="WHITE" layoutX="224.0" layoutY="115.0" startX="-100.0" stroke="WHITE" />
       <Pane layoutX="123.0" layoutY="177.0" opacity="0.82" prefHeight="246.0" prefWidth="569.0" style="-fx-background-color: #14648f;">
          <children>
-            <Button fx:id="btnPlanDeCuenta" stylesheets="@../Style/home-principal.css" layoutX="27.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionPlanDeCuenta" prefHeight="58.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Plan de Cuentas" textFill="WHITE">
+            <Button fx:id="btnPlanDeCuenta" layoutX="27.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionPlanDeCuenta" prefHeight="58.0" prefWidth="206.0" styleClass="botonesCentralesMenu" stylesheets="@../Style/botones.css" text="   Plan de Cuentas" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -73,7 +73,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnNuevoAsiento" stylesheets="@../Style/home-principal.css" layoutX="347.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionNuevoAsiento" prefHeight="58.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="Nuevo Asiento" textFill="WHITE">
+            <Button fx:id="btnNuevoAsiento" layoutX="347.0" layoutY="22.0" mnemonicParsing="false" onAction="#accionNuevoAsiento" prefHeight="58.0" prefWidth="180.0" styleClass="botonesCentralesMenu" stylesheets="@../Style/botones.css" text="Nuevo Asiento" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -92,7 +92,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnVerAsientos" stylesheets="@../Style/home-principal.css" layoutX="347.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionVerLibroDiario" prefHeight="52.0" prefWidth="180.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="   Libro Diario" textFill="WHITE">
+            <Button fx:id="btnVerAsientos" layoutX="347.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionVerLibroDiario" prefHeight="52.0" prefWidth="180.0" styleClass="botonesCentralesMenu" stylesheets="@../Style/botones.css" text="   Libro Diario" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -111,7 +111,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="btnLibroMayor" stylesheets="@../Style/home-principal.css" onAction="#accionVerLibroMayor" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="206.0" style="-fx-background-color: #0D3E59; -fx-border-color: black;" text="    Libro Mayor" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnLibroMayor" layoutX="27.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionVerLibroMayor" prefHeight="52.0" prefWidth="206.0" styleClass="botonesCentralesMenu" stylesheets="@../Style/botones.css" text="    Libro Mayor" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -155,7 +155,7 @@
       <Line endX="215.0" layoutX="622.0" layoutY="520.0" opacity="0.35" startX="-605.0" stroke="WHITE" />
       <Line endX="-100.0" endY="50.0" layoutX="937.0" layoutY="466.0" opacity="0.46" startX="-100.0" startY="-225.0" />
       <Line endX="-100.0" endY="-79.0" layoutX="116.0" layoutY="519.0" startX="-100.0" />
-      <Button fx:id="btnCrearUsuario" layoutX="509.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionRegistrarUsuario" prefHeight="45.0" prefWidth="160.0" style="-fx-background-color: #166576;" text="Crear Usuario" textFill="WHITE">
+      <Button fx:id="btnCrearUsuario" layoutX="509.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionRegistrarUsuario" prefHeight="45.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Crear Usuario" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -186,7 +186,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <Button fx:id="btnCerrrarSesion" layoutX="678.0" layoutY="462.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="46.0" prefWidth="150.0" style="-fx-background-color: #166576;" text="Cerrar Sesión" textFill="WHITE">
+      <Button fx:id="btnCerrrarSesion" layoutX="678.0" layoutY="462.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="46.0" prefWidth="150.0" stylesheets="@../Style/botones.css" text="Cerrar Sesión" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="16.0" />
          </font>
