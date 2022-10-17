@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="353.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VerCuentasController">
+<AnchorPane prefHeight="353.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VerCuentasController">
    <children>
       <Pane layoutY="-1.0" prefHeight="359.0" prefWidth="781.0" style="-fx-background-color: #146382;">
          <children>
@@ -39,7 +39,7 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="tableCuentas" layoutX="10.0" layoutY="62.0" prefHeight="283.0" prefWidth="758.0">
+            <TableView fx:id="tableCuentas" layoutX="10.0" layoutY="62.0" prefHeight="283.0" prefWidth="758.0" stylesheets="@../Style/tablas.css">
                <columns>
                   <TableColumn fx:id="columName" editable="false" prefWidth="262.0" text="Nombre" />
                   <TableColumn fx:id="columCodigo" editable="false" prefWidth="136.0" text="Codigo" />

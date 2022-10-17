@@ -17,8 +17,8 @@
 <AnchorPane prefHeight="627.0" prefWidth="932.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LibroMayorController">
    <children>
       <ComboBox fx:id="cbbCuentas" layoutX="22.0" layoutY="192.0" prefHeight="33.0" prefWidth="150.0" promptText="Cuentas" />
-      <DatePicker fx:id="fechaDesde" layoutX="222.0" layoutY="194.0" prefHeight="33.0" prefWidth="150.0" />
-      <DatePicker fx:id="fechaHasta" layoutX="401.0" layoutY="194.0" prefHeight="33.0" prefWidth="150.0" />
+      <DatePicker fx:id="fechaDesde" layoutX="222.0" layoutY="194.0" prefHeight="33.0" prefWidth="150.0" stylesheets="@../Style/calendario.css"/>
+      <DatePicker fx:id="fechaHasta" layoutX="401.0" layoutY="194.0" prefHeight="33.0" prefWidth="150.0" stylesheets="@../Style/calendario.css"/>
       <TableView fx:id="tablaMayor" layoutX="22.0" layoutY="256.0" prefHeight="336.0" prefWidth="893.0" stylesheets="@../Style/tablasLibros.css" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="17.0">
         <columns>
           <TableColumn fx:id="columnNumero" prefWidth="65.0" text="Numero" />

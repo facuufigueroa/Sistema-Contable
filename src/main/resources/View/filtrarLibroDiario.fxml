@@ -33,8 +33,8 @@
             <DropShadow />
          </effect>
       </Pane>
-      <DatePicker fx:id="fechaDesde" layoutX="158.0" layoutY="69.0" prefHeight="31.0" prefWidth="128.0" />
-      <DatePicker fx:id="fechaHasta" layoutX="158.0" layoutY="119.0" prefHeight="31.0" prefWidth="128.0" />
+      <DatePicker fx:id="fechaDesde" layoutX="158.0" layoutY="69.0" prefHeight="31.0" prefWidth="128.0" stylesheets="@../Style/calendario.css" />
+      <DatePicker fx:id="fechaHasta" layoutX="158.0" layoutY="119.0" prefHeight="31.0" prefWidth="128.0" stylesheets="@../Style/calendario.css" />
       <Button fx:id="btnBuscar" layoutX="116.0" layoutY="181.0" mnemonicParsing="false" onAction="#accionFiltrarBusqueda" prefHeight="36.0" prefWidth="128.0" stylesheets="@../Style/botones.css" text="Buscar" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="16.0" />

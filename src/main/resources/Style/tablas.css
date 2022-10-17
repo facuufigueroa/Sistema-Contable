@@ -2,7 +2,7 @@
     -fx-background-color: #36a6e2;
 }
 .table-row-cell:even{
-    -fx-background-color: #79c4ec;
+    -fx-background-color: #4db0e6;
 }
 
 /*formato para las celdas del tableview*/
