@@ -342,9 +342,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
             }
             return null;
         };
-        txtMonto.setTextFormatter(
-                new TextFormatter<Double>(
-                        new DoubleStringConverter(), null, integerFilter));
+        txtMonto.setTextFormatter(new TextFormatter<Double>(new DoubleStringConverter(), null, integerFilter));
     }
 
     /*---------------------Metodos para inicializar*---------------------------------*/

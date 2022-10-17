@@ -192,4 +192,12 @@ public class Alerta {
         return false;
     }
 
+    public static void nombreApellidoIncorrecto() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error al ingresar los datos\nEl nombre o el apellido son incorrectos.\n!Por favor, ingrese los datos correctamente¡");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 }

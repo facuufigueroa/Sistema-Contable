@@ -13,6 +13,7 @@
     -fx-text-fill : #ffffff;
     -fx-alignment: CENTER;
     -fx-border-insets: 0;
+    -fx-font-weight : bold;
 }
 
 /* aplicar el mismo color cuando el raton este sobre una celda de una fila vacia */
