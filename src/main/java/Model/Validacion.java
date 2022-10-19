@@ -41,12 +41,21 @@ public class Validacion {
     public static void validarCampoEmail(TextField campo) {
         UnaryOperator<TextFormatter.Change> filtroEmail = change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+            if (newText.matches("[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})+")) {
                 return change;
             }
             return null;
         };
-        campo.setTextFormatter(
-                new TextFormatter<String>(filtroEmail));
+        campo.setTextFormatter(new TextFormatter<String>(filtroEmail));
+    }
+    public static void validarSoloLetras(TextField textField) {
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^[a-zA-Z]+")) {
+                return change;
+            }
+            return null;
+        };
+        textField.setTextFormatter(new TextFormatter<String>(integerFilter));
     }
 }

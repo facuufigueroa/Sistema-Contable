@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RegisterController extends ViewFuntionality implements Initializable {
-    @FXML private TextField campoNombre;
+    @FXML private TextField campoNombre = new TextField();
     @FXML private TextField campoApellido;
     @FXML private TextField campoEmail;
     @FXML private TextField campoContrasena;
@@ -44,13 +44,18 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     @FXML
     public void actionRegister(ActionEvent event) throws SQLException {
         if (noEstanCamposVaciosYExisteEmail() && seleccionoRol()){
-            getServiceRegister().insertarUsuario(obtenerFormulario());
-            service.insertarUsuarioRol(obtenerFormulario().getEmail(), obtenerRolSeleccionadoEnComboBox());
-            super.actionCloseStage(event);
-            showStage();
+            if (camposNombreApellidoSonCorrectos()){
+                getServiceRegister().insertarUsuario(obtenerFormulario());
+                service.insertarUsuarioRol(obtenerFormulario().getEmail(), obtenerRolSeleccionadoEnComboBox());
+                super.actionCloseStage(event);
+                showStage();
+            }else{ Alerta.nombreApellidoIncorrecto(); }
         }else{ comprobarCampoVacionOEmailExistente(); }
     }
 
+    private boolean camposNombreApellidoSonCorrectos(){
+        return Validacion.esTexto(getCampoNombre().getText()) && Validacion.esTexto(getCampoApellido().getText());
+    }
     @Override
     public void actionCloseStage(ActionEvent event) {
         super.actionCloseStage(event);
@@ -74,12 +79,12 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     }
 
     private User obtenerFormulario(){
-        String nombre = Utilidades.obtenerValor(getCampoNombre());
-        String apellido = Utilidades.obtenerValor(getCampoApellido());
-        String email = Utilidades.obtenerValor(getCampoEmail());
-        String contrasena = Utilidades.obtenerValor(getCampoContrasena());
+        String nombre = Utilidades.obtenerValor(getCampoNombre()).trim();
+        String apellido = Utilidades.obtenerValor(getCampoApellido()).trim();
+        String email = Utilidades.obtenerValor(getCampoEmail()).trim();
+        String contrasena = Utilidades.obtenerValor(getCampoContrasena()).trim();
 
-        return new User(email, contrasena, nombre, apellido);
+        return new User(email, contrasena, Utilidades.capitalizarTexto(nombre), Utilidades.capitalizarTexto(apellido));
     }
 
     public Button getButtonMin() { return buttonMin; }

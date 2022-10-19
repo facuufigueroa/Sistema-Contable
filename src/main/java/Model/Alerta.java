@@ -12,6 +12,15 @@ public class Alerta {
         alert.showAndWait();
         return false;
     }
+    public static boolean alertaSaldo() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡La operación no puede realizarse, debido a que una cuenta puede quedar en negativo!\nPor favor, compruebe el saldo en el plan de cuentas.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return false;
+    }
     public static boolean alertaSeleccioneRol() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
@@ -183,4 +192,12 @@ public class Alerta {
         return false;
     }
 
+    public static void nombreApellidoIncorrecto() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error al ingresar los datos\nEl nombre o el apellido son incorrectos.\n!Por favor, ingrese los datos correctamente¡");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 }

@@ -1,8 +1,8 @@
 package Controller;
-
 import Model.*;
 import Model.Alerta;
 import Services.ServiceAsiento;
+import Services.ServiceCalcularSaldoCuenta;
 import Services.ServicePDC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,6 +60,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
     private Button btnRegistrarAsiento;
 
     @FXML
+    private Button btnVerCuentas;
+    @FXML
     private TableColumn columCuenta;
 
     @FXML
@@ -77,6 +79,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     private ServicePDC serviceCuentas= new ServicePDC();
 
+    private ServiceCalcularSaldoCuenta serviceCalcularSaldo = new ServiceCalcularSaldoCuenta();
+
     private MainController mainController;
 
     private ObservableList<Asiento> obsAsientos;
@@ -88,6 +92,8 @@ public class AsientoController extends ViewFuntionality implements Initializable
     ArrayList<String> cuentasActualizadas = new ArrayList<>(serviceCuentas.traerNombreCuentas());
 
     private final LocalDate fechaActual = LocalDate.now();
+
+    private VerCuentasController verCuentasController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -163,6 +169,9 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     public void agregarCuentaBorrada(String nombre){
         cuentasActualizadas.add(nombre);
+        ObservableList<String> cbbActDespuesDeBorrado = FXCollections.observableArrayList(cuentasActualizadas);
+        Collections.sort(cbbActDespuesDeBorrado);
+        cbbCuenta.setItems(cbbActDespuesDeBorrado);
     }
 
     @FXML
@@ -176,27 +185,57 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
     private void comprobarAsientos(ActionEvent event) throws IOException {
         if (verificarBalance()) {
-            Asiento asiento = new Asiento(fechaActual, txtDescripcion.getText(), u.getId());
-            serviceAsiento.insertarAsiento(asiento);
-            insertarAsientoCuenta();
-            Alerta.alertarAsientoRegistrado();
-            if(Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK){
-                setearCamposEnVacio();
+            if (cumpleSaldo()) {
+                Asiento asiento = new Asiento(fechaActual, txtDescripcion.getText(), u.getId());
+                serviceAsiento.insertarAsiento(asiento);
+                insertarAsientoCuenta();
+                Alerta.alertarAsientoRegistrado();
+                if (Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK) {
+                    setearCamposEnVacio();
+                } else {
+                    accionBtnVolver(event);
+                }
+            }else{
+                Alerta.alertaSaldo();
             }
-            else{
-                accionBtnVolver(event);
-            }
+            this.cuentasActualizadas=serviceCuentas.traerNombreCuentas();
         } else {
             Alerta.alertarAsientoNoBalanceado();
         }
     }
 
+
+
+    private boolean cumpleSaldo() {
+        for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
+            String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
+            Cuenta cuenta = new Cuenta(nombreCuenta);
+            int idCuenta = serviceAsiento.obtenerIdCuenta(nombreCuenta);
+            cuenta.setSaldo_actual(serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
+            cuenta.setTipo(serviceAsiento.obtenerTipoDeCuenta(nombreCuenta));
+            if (!cuenta.seCumpleSaldo(obtenerSiEsDebeHaber((tablaAsientos.getDebe())), tablaAsientos.getSaldo())){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void insertarAsientoCuenta(){
         for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
             String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
-            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(nombreCuenta), conversionDebeHaber(tablaAsientos.getDebe()), conversionDebeHaber(tablaAsientos.getHaber()), tablaAsientos.getSaldo());
+            Cuenta cuenta = new Cuenta(nombreCuenta);
+            int idCuenta = serviceAsiento.obtenerIdCuenta(nombreCuenta);
+            cuenta.setSaldo_actual(serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
+            cuenta.setTipo(serviceAsiento.obtenerTipoDeCuenta(nombreCuenta));
+            cuenta.verificarTipoCuenta(obtenerSiEsDebeHaber((tablaAsientos.getDebe())), tablaAsientos.getSaldo());
+            serviceCalcularSaldo.actualizarSaldoCuenta(serviceAsiento.obtenerIdCuenta(cuenta.getNombre()), cuenta.getSaldo_actual());
+            AsientoCuenta asientoCuenta = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta(nombreCuenta), conversionDebeHaber(tablaAsientos.getDebe()),conversionDebeHaber(tablaAsientos.getHaber()),serviceCalcularSaldo.obtenerSaldoCuenta(idCuenta));
             serviceAsiento.insertarAsientoCuenta(asientoCuenta);
         }
+
+    }
+    public String obtenerSiEsDebeHaber(String debe){
+        return (debe.equals("")) ? "Haber" : "Debe";
     }
 
     public double conversionDebeHaber(String debeHaber){
@@ -247,16 +286,11 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
 
     @FXML
-    public void accionDebeHaber(){
-
-    }
-
-    @FXML
     public void accionBorrarAsiento() {
         if (asientoCuentas.size() > 0){
             TablaVistaAsiento cuenta = tablaAsientos.getItems().get(asientoCuentas.size()-1);
             agregarCuentaBorrada(cuenta.getNombreCuenta().trim());
-            actualizarNombreCuentas(cuentasActualizadas);
+            //actualizarNombreCuentas(cuentasActualizadas);
             asientoCuentas.remove(asientoCuentas.size()-1);
             ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
             tablaAsientos.setItems(asientoCuentaObservableList);
@@ -312,9 +346,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
             }
             return null;
         };
-        txtMonto.setTextFormatter(
-                new TextFormatter<Double>(
-                        new DoubleStringConverter(), null, integerFilter));
+        txtMonto.setTextFormatter(new TextFormatter<Double>(new DoubleStringConverter(), null, integerFilter));
     }
 
     /*---------------------Metodos para inicializar*---------------------------------*/
@@ -370,6 +402,21 @@ public class AsientoController extends ViewFuntionality implements Initializable
         stage.show();
     }
 
+    @FXML
+    public void accionVerPlanDeCuentas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/ver-cuentas.fxml"));
+        Parent parent = fxmlLoader.load();
+        setVerCuentasController(loadPlanDeCuenta(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getVerCuentasController().setVentana(loginStage);
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
 
     private MainController loadVolver(MainController mainController){ return mainController; }
 
@@ -399,4 +446,13 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
     public Button getBtnBorrarAsiento() { return btnBorrarAsiento;}
 
+    public VerCuentasController getVerCuentasController() {
+        return verCuentasController;
+    }
+
+    public void setVerCuentasController(VerCuentasController verCuentasController) {
+        this.verCuentasController = verCuentasController;
+    }
+
+    private VerCuentasController loadPlanDeCuenta(VerCuentasController controller){ return controller; }
 }

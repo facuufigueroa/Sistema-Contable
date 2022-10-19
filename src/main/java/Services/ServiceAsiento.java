@@ -51,7 +51,6 @@ public class ServiceAsiento extends Service {
             System.out.println(exception.getMessage());
         }
     }
-
     public int obtenerIdCuenta(String nombreCuenta){
         try{
             setConnection(ConexionBD.conexion());

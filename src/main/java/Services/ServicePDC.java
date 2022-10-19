@@ -31,6 +31,7 @@ public class ServicePDC {
                 cuenta.nombre=getResultSet().getString(3);
                 cuenta.recibe_saldo=cuentasRecibeSaldoSiNo(getResultSet().getString(4));
                 cuenta.tipo=getResultSet().getString(5);
+                cuenta.saldo_actual=getResultSet().getDouble(7);
                 cuentas.add(cuenta);
             }
 
@@ -43,7 +44,7 @@ public class ServicePDC {
     /*Metodo que convierte los valores 0 y 1 del campo recibe_saldo en Si y No*/
    public String cuentasRecibeSaldoSiNo(String recibe_saldo){
         String recibe;
-        if(Objects.equals(recibe_saldo, "1")){
+        if(Objects.equals(recibe_saldo, "Si")){
             recibe="Si";
         }
         else{

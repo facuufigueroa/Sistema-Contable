@@ -61,6 +61,7 @@ public class CuentaDeshabilitadaController extends ViewFuntionality implements I
         columRecibeSaldo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("recibe_saldo"));
         columTipo.setCellValueFactory(new PropertyValueFactory<Cuenta, String>("tipo"));
         tableCuentasD.setItems(obCuentas);
+        tableCuentasD.setPlaceholder(null);
     }
 
     @FXML

@@ -1,10 +1,7 @@
 package Model;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Asiento {
-
     private LocalDate fecha;
 
     private String detalle;

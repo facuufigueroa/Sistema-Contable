@@ -1,6 +1,5 @@
 package Reportes;
 import DataBase.ConexionBD;
-
 import net.sf.jasperreports.view.JasperViewer;
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,7 +18,7 @@ public class LibroDiario {
             ConexionBD con = new ConexionBD();
             Connection conn = con.conexion();
             HashMap<String, Object> parameters = new HashMap<>();
-            JasperReport archivo = JasperCompileManager.compileReport("C:\\Users\\Facundo\\Desktop\\Facultad 2022\\Segundo Cuatrimestre\\Sistemas Administrativos II\\Sistema Contable\\src\\main\\java\\Reportes\\LibroDiario.jrxml");
+            JasperReport archivo = JasperCompileManager.compileReport("C:\\Users\\User\\Desktop\\Sistemas Administrativos II\\Sistema-Contable\\src\\main\\java\\Reportes\\LibroDiario.jrxml");
             parameters.put("fecha_desde",fecha_desde);
             parameters.put("fecha_hasta",fecha_hasta);
             JasperPrint prin = JasperFillManager.fillReport(archivo, parameters,conn);
