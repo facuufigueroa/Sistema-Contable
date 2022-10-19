@@ -14,9 +14,9 @@ public class LibroMayorQuery {
 
     public static String obtenerDetallePorId(){ return "SELECT detalle FROM asientos WHERE idasiento = ?"; }
 
-    public static String obtenerDebePorId() { return "SELECT debe FROM asientos_cuentas WHERE asiento = ?"; }
-    public static String obtenerHaberPorId() { return "SELECT haber FROM asientos_cuentas WHERE asiento = ?"; }
-    public static String obtenerSaldoPorId() { return "SELECT saldo FROM asientos_cuentas WHERE asiento = ?"; }
+    public static String obtenerDebePorId() { return "SELECT debe FROM asientos_cuentas WHERE asiento = ? AND cuenta = ?"; }
+    public static String obtenerHaberPorId() { return "SELECT haber FROM asientos_cuentas WHERE asiento = ? AND cuenta = ?"; }
+    public static String obtenerSaldoPorId() { return "SELECT saldo FROM asientos_cuentas WHERE asiento = ? AND cuenta = ?"; }
     public static String obtenerAsientosPorFecha(){ return "SELECT idasiento, detalle FROM asientos WHERE idasiento = ? "
             +"AND fecha BETWEEN ? AND ? ";
     }

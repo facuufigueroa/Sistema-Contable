@@ -169,6 +169,9 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     public void agregarCuentaBorrada(String nombre){
         cuentasActualizadas.add(nombre);
+        ObservableList<String> cbbActDespuesDeBorrado = FXCollections.observableArrayList(cuentasActualizadas);
+        Collections.sort(cbbActDespuesDeBorrado);
+        cbbCuenta.setItems(cbbActDespuesDeBorrado);
     }
 
     @FXML
@@ -195,6 +198,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
             }else{
                 Alerta.alertaSaldo();
             }
+            this.cuentasActualizadas=serviceCuentas.traerNombreCuentas();
         } else {
             Alerta.alertarAsientoNoBalanceado();
         }
@@ -286,7 +290,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
         if (asientoCuentas.size() > 0){
             TablaVistaAsiento cuenta = tablaAsientos.getItems().get(asientoCuentas.size()-1);
             agregarCuentaBorrada(cuenta.getNombreCuenta().trim());
-            actualizarNombreCuentas(cuentasActualizadas);
+            //actualizarNombreCuentas(cuentasActualizadas);
             asientoCuentas.remove(asientoCuentas.size()-1);
             ObservableList<TablaVistaAsiento> asientoCuentaObservableList = FXCollections.observableArrayList(asientoCuentas);
             tablaAsientos.setItems(asientoCuentaObservableList);

@@ -88,7 +88,7 @@ public class ServiceLibroMayor extends Service{
         return "";
     }
 
-    public double obtenerDebe(int idAsiento){
+    public double obtenerDebe(int idAsiento, int idCuenta){
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -96,6 +96,7 @@ public class ServiceLibroMayor extends Service{
             connection = ConexionBD.conexion();
             ps = connection.prepareStatement(LibroMayorQuery.obtenerDebePorId());
             ps.setInt(1, idAsiento);
+            ps.setInt(2,idCuenta);
             rs = ps.executeQuery();
             if (rs.next()){ return rs.getDouble(1); }
         }catch (SQLException exception){
@@ -109,7 +110,7 @@ public class ServiceLibroMayor extends Service{
         }
         return String.valueOf(debeHaber);
     }
-    public double obtenerHaber(int idAsiento){
+    public double obtenerHaber(int idAsiento, int idCuenta){
         try{
             Connection connection = null;
             PreparedStatement ps = null;
@@ -117,6 +118,7 @@ public class ServiceLibroMayor extends Service{
             connection = ConexionBD.conexion();
             ps = connection.prepareStatement(LibroMayorQuery.obtenerHaberPorId());
             ps.setInt(1, idAsiento);
+            ps.setInt(2,idCuenta);
             rs = ps.executeQuery();
             if (rs.next()){ return rs.getDouble(1); }
         }catch (SQLException exception){
@@ -124,7 +126,7 @@ public class ServiceLibroMayor extends Service{
         }
         return 0;
     }
-    public double obtenerSaldo(int idAsiento){
+    public double obtenerSaldo(int idAsiento, int idCuenta){
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -132,6 +134,7 @@ public class ServiceLibroMayor extends Service{
             connection = ConexionBD.conexion();
             ps = connection.prepareStatement(LibroMayorQuery.obtenerSaldoPorId());
             ps.setInt(1, idAsiento);
+            ps.setInt(2,idCuenta);
             rs = ps.executeQuery();
             if (rs.next()){ return rs.getDouble(1); }
         }catch (SQLException exception){
@@ -144,10 +147,10 @@ public class ServiceLibroMayor extends Service{
         ArrayList<TablaMayor> lista = new ArrayList<>();
         for (Integer valor : obtenerIdAsiento(idCuenta, desde, hasta)){
             String detalle = obtenerDetallePorId(valor);
-            String debe = conversionDebeHaber(obtenerDebe(valor));
-            String haber = conversionDebeHaber(obtenerHaber(valor));
+            String debe = conversionDebeHaber(obtenerDebe(valor, idCuenta));
+            String haber = conversionDebeHaber(obtenerHaber(valor, idCuenta));
 
-            double saldo = obtenerSaldo(valor);
+            double saldo = obtenerSaldo(valor, idCuenta);
             TablaMayor tablaMayor = new TablaMayor(valor, detalle, debe, haber, saldo);
             lista.add(tablaMayor);
         }
