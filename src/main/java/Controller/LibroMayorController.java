@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;

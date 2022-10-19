@@ -1,18 +1,12 @@
 package Services;
-
 import DataBase.ConexionBD;
 import Model.Asiento;
 import Model.AsientoCuenta;
 import Model.CambiarFecha;
 import Querys.QueryAsiento;
-import Querys.RolesQuery;
-
-
 import java.sql.SQLException;
 
 public class ServiceAsiento extends Service {
-
-
 
     public int insertarAsiento(Asiento asiento) { //1|fecha 2|detalle 3|usuario
         int codigoAsiento=0;
