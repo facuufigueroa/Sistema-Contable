@@ -7,6 +7,7 @@ module sistemacontable.sistemacontable {
     requires jasperreports;
 
 
+
     opens sistemacontable.sistemacontable to javafx.fxml;
     opens Model to javafx.fxml ,javafx.base;
     exports sistemacontable.sistemacontable;

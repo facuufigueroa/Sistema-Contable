@@ -18,9 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -114,19 +112,35 @@ public class CuentaController extends ViewFuntionality implements Initializable 
             if(evaluarCamposVacios()){
                 alert.showAndWait();
             }
-            else{
-                if(servicePDC.existeCuenta(obtenerCodigoCuenta())){
+            else if(servicePDC.existeCuenta(obtenerCodigoCuenta())) {
                     alertCodigo.showAndWait();
-                }
-                else{
-                    servicePDC.insertarCuenta(cuenta);
-                    Alerta.alertaCuentaRegistradaCorretamente();
-                    listarCuentasHabilitadas();
-                }
             }
-        } catch (Exception e) {
+            else if (!validarCodigo(Integer.parseInt(obtenerCodigoCuenta()),obtenerTipoCuenta())) {
+                    System.out.print(Integer.parseInt(obtenerCodigoCuenta()) + obtenerTipoCuenta());
+                    Alerta.codigoInvalido();
+            }
+            else {
+                servicePDC.insertarCuenta(cuenta);
+                Alerta.alertaCuentaRegistradaCorretamente();
+                listarCuentasHabilitadas();
+            }
+        }
+        catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public boolean validarCodigo(int codigo, String tipoCuenta){
+        if(tipoCuenta == "Ac"){
+            return codigo > 100 && codigo < 200;
+        } else if(tipoCuenta == "Pa"){
+            return codigo > 200 && codigo < 300;
+        } else if(tipoCuenta == "Pm") {
+            return codigo > 300 && codigo < 400;
+        } else if (tipoCuenta == "R+"){
+            return codigo > 400 && codigo < 500;
+        }
+        return codigo > 500 && codigo < 600;
     }
 
     @FXML
@@ -221,6 +235,9 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         return codigo;
     }
 
+    public String obtenerTipoCuenta(){
+        return cbbTipo.getValue().toString();
+    }
     public static void integerTextField(TextField txtMonto) {
         UnaryOperator<TextFormatter.Change> integerFilter = change -> {
             String newText = change.getControlNewText();
@@ -243,8 +260,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         Stage stage = new Stage();
         Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         getCuentaDeshabilitadaController().setVentana(loginStage);
-        /*getCuentaDeshabilitadaController().setRoles(getRoles());*/
-        /*getCuentaDeshabilitadaController().permisosCuentasDeshabilitadas();*/
         getCuentaDeshabilitadaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
@@ -275,12 +290,6 @@ public class CuentaController extends ViewFuntionality implements Initializable 
         }
     }
 
-    public boolean recibeSaldo(String codigo){
-        if(servicePDC.recibeSaldo(codigo)){
-            return true;
-        }
-        return false;
-    }
 
     public void hideStage(){ getVentana().hide(); }
 

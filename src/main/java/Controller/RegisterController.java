@@ -43,13 +43,17 @@ public class RegisterController extends ViewFuntionality implements Initializabl
 
     @FXML
     public void actionRegister(ActionEvent event) throws SQLException {
-        if (noEstanCamposVaciosYExisteEmail() && seleccionoRol()){
-            if (camposNombreApellidoSonCorrectos()){
-                getServiceRegister().insertarUsuario(obtenerFormulario());
-                service.insertarUsuarioRol(obtenerFormulario().getEmail(), obtenerRolSeleccionadoEnComboBox());
-                super.actionCloseStage(event);
-                showStage();
-            }else{ Alerta.nombreApellidoIncorrecto(); }
+        if (noEstanCamposVaciosYExisteEmail()){
+            if (seleccionoRol()) {
+                if (camposNombreApellidoSonCorrectos()) {
+                    getServiceRegister().insertarUsuario(obtenerFormulario());
+                    service.insertarUsuarioRol(obtenerFormulario().getEmail(), obtenerRolSeleccionadoEnComboBox());
+                    super.actionCloseStage(event);
+                    showStage();
+                } else {
+                    Alerta.nombreApellidoIncorrecto();
+                }
+            }
         }else{ comprobarCampoVacionOEmailExistente(); }
     }
 

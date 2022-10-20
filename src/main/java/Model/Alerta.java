@@ -200,4 +200,26 @@ public class Alerta {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+
+    public static void codigoInvalido(){
+        Alert alert= new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Error en el código ingresado");
+        alert.setTitle(null);
+        alert.setContentText("Por favor, corrobore lo siguiente:\n" +
+                "- Si la cuenta seleccionada es de Activo el código debe ser mayor a 100 y menor que 200\n" +
+                "\n" + "- Si la cuenta seleccionada es de Pasivo el código debe ser mayor a 200 y menor que 300\n" +
+                "\n" + "- Si la cuenta seleccionada es de PN el código debe ser mayor a 300 y menor que 400\n" +
+                "\n" + "- Si la cuenta seleccionada es de R+ el código debe ser mayor a 400 y menor que 500\n" +
+                "\n" + "- Si la cuenta seleccionada es de R- el código debe ser mayor a 500 y menor que 600" );
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
+    public static void imprimirLibroMayor() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Esta es una versión beta, por lo que esta funcionalidad no esta disponible en este momento");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 }

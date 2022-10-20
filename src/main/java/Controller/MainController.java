@@ -19,6 +19,8 @@ import java.util.ResourceBundle;
 
 public class MainController extends ViewFuntionality implements Initializable {
     @FXML
+    private Button btnVerUsuarios;
+    @FXML
     private Button btnPlanDeCuenta;
 
     @FXML
@@ -143,6 +145,21 @@ public class MainController extends ViewFuntionality implements Initializable {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
     }
+    @FXML
+    public void accionVerUsuarios(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/listaUsuarios.fxml"));
+        Parent parent = fxmlLoader.load();
+        ListaUsuariosController controller = (ListaUsuariosController) fxmlLoader.getController();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        controller.setVentana(mainStage);
+        controller.hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
 
     private AsientoController loadCrearAsiento(AsientoController asientoController){ return asientoController; }
 
@@ -186,6 +203,7 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void verificarRolUser(){
         if((service.obtenerRolPorEmail(u.getEmail()).equals("usuario"))){
             getBtnCrearUsuario().setDisable(true);
+            btnVerUsuarios.setDisable(true);
         }
     }
 

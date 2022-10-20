@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -35,7 +34,7 @@ public class LibroMayorController extends ViewFuntionality implements Initializa
     @FXML private DatePicker fechaHasta;
     @FXML private TableView tablaMayor;
 
-    private final LocalDate calendarioDesde = LocalDate.of(2022, 9, 5);
+    private final LocalDate calendarioDesde = LocalDate.of(2022, 1, 1);
 
     private final LocalDate calendarioHasta = LocalDate.now();
 
@@ -149,6 +148,10 @@ public class LibroMayorController extends ViewFuntionality implements Initializa
         else{
             iniciarTablaMayor();
         }
+    }
+    @FXML
+    private void accionImprimir(){
+        Alerta.imprimirLibroMayor();
     }
 
     public ComboBox getCbbCuentas() {

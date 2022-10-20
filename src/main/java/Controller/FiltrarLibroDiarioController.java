@@ -27,7 +27,7 @@ public class FiltrarLibroDiarioController extends ViewFuntionality implements In
     @FXML private DatePicker fechaDesde;
     @FXML private DatePicker fechaHasta;
 
-    private final LocalDate calendarioDesde = LocalDate.of(2022, 9, 05);
+    private final LocalDate calendarioDesde = LocalDate.of(2022, 1, 1);
     private final LocalDate calendarioHasta = LocalDate.now();
 
 

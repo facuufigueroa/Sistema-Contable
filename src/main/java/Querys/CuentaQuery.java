@@ -28,10 +28,10 @@ public class CuentaQuery {
     }
 
     public static String recibeSaldo(String codigo){
-        return "SELECT * FROM cuentas as c WHERE c.codigo='"+codigo+"' AND c.recibe_saldo=1";
+        return "SELECT * FROM cuentas as c WHERE c.codigo='"+codigo+"' AND c.recibe_saldo='Si'";
     }
 
     public static String traerNombresCuentas(){
-        return "SELECT c.nombre FROM cuentas as c WHERE c.estado=true AND c.recibe_saldo='1' ORDER BY c.nombre ASC";
+        return "SELECT c.nombre FROM cuentas as c WHERE c.estado=true AND c.recibe_saldo='Si' ORDER BY c.nombre ASC";
     }
 }

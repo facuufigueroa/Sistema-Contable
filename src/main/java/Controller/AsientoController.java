@@ -83,8 +83,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
 
     private MainController mainController;
 
-    private ObservableList<Asiento> obsAsientos;
-
     private ServiceAsiento serviceAsiento = new ServiceAsiento();
 
     ArrayList<TablaVistaAsiento> asientoCuentas = new ArrayList<>();
@@ -350,17 +348,6 @@ public class AsientoController extends ViewFuntionality implements Initializable
     }
 
     /*---------------------Metodos para inicializar*---------------------------------*/
-
-    @FXML
-    public String traerFechaActual(){
-        Calendar fecha = Calendar.getInstance();
-        int año = fecha.get(Calendar.YEAR);
-        int mes = fecha.get(Calendar.MONTH)+1;
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        String fechaString = String.valueOf(dia+"/"+mes+"/"+año);
-
-        return fechaString;
-    }
 
 
     public void iniciarComboBoxDebeHaber(){
