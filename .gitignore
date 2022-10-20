@@ -12,6 +12,13 @@ target/
 *.iml
 *.ipr
 src/main/java/DataBase/ConexionBD.java
+src/main/java/Reportes/LibroDiario.jasper
+src/main/java/Reportes/LibroDiario.java
+src/main/java/Reportes/LibroDiario.jrxml
+src/main/java/Reportes/LibroDiario2.jrxml
+src/main/java/Reportes/subreporte-cuentas.jasper
+src/main/java/Reportes/subreporte-cuentas.jrxml
+
 
 ### Eclipse ###
 .apt_generated

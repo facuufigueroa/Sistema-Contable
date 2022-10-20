@@ -34,7 +34,7 @@ public class LibroMayorController extends ViewFuntionality implements Initializa
     @FXML private DatePicker fechaHasta;
     @FXML private TableView tablaMayor;
 
-    private final LocalDate calendarioDesde = LocalDate.of(2022, 9, 5);
+    private final LocalDate calendarioDesde = LocalDate.of(2022, 1, 1);
 
     private final LocalDate calendarioHasta = LocalDate.now();
 
