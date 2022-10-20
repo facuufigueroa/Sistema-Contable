@@ -160,6 +160,26 @@ public class Service {
         return -1;
     }
 
+    public ArrayList<User> obtenerUsuarios(){
+        ArrayList<User> users = new ArrayList<>();
+        try{
+            setConexion(ConexionBD.conexion());
+            setPs(getConexion().prepareStatement(UserQuery.obtenerUsuarios()));
+            setTupla(getPs().executeQuery());
+            while (getTupla().next()){
+                User user = new User(
+                                    getTupla().getString("nombre"),
+                                    getTupla().getString("apellido"),
+                                    getTupla().getString("email"),
+                                    getTupla().getString("rol"),
+                                    getTupla().getString("contraseña")
+                );
+                users.add(user);
+            }
+        }catch (SQLException e){ System.out.println(e.getMessage()); }
+        return users;
+    }
+
     public void insertarUsuarioRol(String email, String rol){
         int obtenerIdUser = obtenerIdUser(email);
         int obtenerIdRol = obtenerIdRolNombreRol(rol);

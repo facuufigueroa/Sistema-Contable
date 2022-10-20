@@ -149,6 +149,10 @@ public class LibroMayorController extends ViewFuntionality implements Initializa
             iniciarTablaMayor();
         }
     }
+    @FXML
+    private void accionImprimir(){
+        Alerta.imprimirLibroMayor();
+    }
 
     public ComboBox getCbbCuentas() {
         return cbbCuentas;

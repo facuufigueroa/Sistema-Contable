@@ -186,7 +186,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <Button fx:id="btnCerrrarSesion" layoutX="678.0" layoutY="462.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="46.0" prefWidth="150.0" stylesheets="@../Style/botones.css" text="Cerrar Sesión" textFill="WHITE">
+      <Button fx:id="btnCerrrarSesion" layoutX="678.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="46.0" prefWidth="150.0" stylesheets="@../Style/botones.css" text="Cerrar Sesión" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="16.0" />
          </font>
@@ -197,6 +197,25 @@
                </image>
             </ImageView>
          </graphic>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.16995614767074585" green="0.22680920362472534" blue="0.2368421107530594" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Button>
+      <Button fx:id="btnVerUsuarios" layoutX="340.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionVerUsuarios" prefHeight="45.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Ver Usuarios" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Usuarios.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="Lucida Sans Unicode" size="16.0" />
+         </font>
          <effect>
             <DropShadow>
                <color>

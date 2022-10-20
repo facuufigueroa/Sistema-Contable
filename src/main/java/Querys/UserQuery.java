@@ -13,17 +13,16 @@ public class UserQuery {
                + " INNER JOIN usuarios ON usuarios.idusuario = usuario "
                + " INNER JOIN roles ON roles.idrol = rol";
     }
-    public static String obtenerUsuarioRolPorEmail(){
-        return    " SELECT usuarios.nombre, usuarios.apellido, usuarios.email, roles.nombre as rol"
+    public static String obtenerUsuarios(){
+        return    " SELECT usuarios.nombre, usuarios.apellido, usuarios.email, roles.nombre as rol, usuarios.contraseña"
                 + " FROM usuario_rol"
                 + " INNER JOIN usuarios ON usuarios.idusuario = usuario"
-                + " INNER JOIN roles ON roles.idrol = rol"
-                + " WHERE usuarios.email = ?";
+                + " INNER JOIN roles ON roles.idrol = rol";
+                //+ " WHERE usuarios.email = ?";
     }
 
     public static String existeObjeto(String tabla, String atributo) {
         return "SELECT * FROM " + tabla + " WHERE " + atributo + " =  " + "?";}
-
 
         public static String existeUser (String email){
             return "SELECT *\n" +
@@ -35,23 +34,5 @@ public class UserQuery {
         }
 
     public static String obtenerUsuarioPorEmail(){ return "SELECT * FROM usuarios WHERE email = ?"; }
-
-    /*Consultas armada para mostrar el usuario en sesion en menu principal, falta implementar instancia del usuario
-
-    public static String traerUsuarioConRol(String email){
-        return "SELECT u.email\n" +
-                "FROM usuarios AS u\n" +
-                "WHERE u.email = '" + email + "'";
-    }
-
-    public static String traerRolesUsuario(String email){
-        return "SELECT r.nombre\n" +
-                "FROM roles r \n" +
-                "INNER JOIN usuario_rol ur ON ur.rol = r.idrol\n" +
-                "INNER JOIN usuarios u ON ur.usuario = u.idusuario\n" +
-                "WHERE u.email = '"+email +"'";
-    }
-    */
-
 
 }

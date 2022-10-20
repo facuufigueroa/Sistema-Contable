@@ -214,4 +214,12 @@ public class Alerta {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+    public static void imprimirLibroMayor() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Esta es una versión beta, por lo que esta funcionalidad no esta disponible en este momento");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 }

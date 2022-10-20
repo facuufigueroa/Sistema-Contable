@@ -9,6 +9,7 @@ public class User {
     private String nombre;
 
     private String apellido;
+    private String rol;
 
 
     public User(){}
@@ -29,6 +30,12 @@ public class User {
         this.contrasena = contrasena;
         this.nombre = nombre;
         this.apellido = apellido;
+    }
+    public User(String nombre, String apellido, String email, String rol, String contrasena) {
+        this.email = email;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.rol = rol;
     }
 
     public User(int id, String nombre, String apellido, String email, String contrasena) {
@@ -84,5 +91,8 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getRol() {return rol;}
+    public void setRol(String rol) {this.rol = rol;}
 }
 

@@ -134,7 +134,7 @@
             <Image url="@../Images/Icono.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnImprimirMayor" layoutX="720.0" layoutY="189.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="119.0" stylesheets="@../Style/botones.css" text="Imprimir" textFill="WHITE">
+      <Button fx:id="btnImprimirMayor" onAction="#accionImprimir" layoutX="720.0" layoutY="189.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="119.0" stylesheets="@../Style/botones.css" text="Imprimir" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
