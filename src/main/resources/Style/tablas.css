@@ -6,10 +6,10 @@
 }
 
 /*formato para las celdas del tableview*/
-.table-cell {
+.table-row {
     -fx-padding: 0.5em 0.5em 0.1em 0.3em;
     -fx-border-color: -fx-box-border -fx-box-border transparent transparent;
-    -fx-font: 12px "Segoe UI";
+    -fx-font: 20px "Segoe UI";
     -fx-text-fill : #ffffff;
     -fx-alignment: CENTER;
     -fx-border-insets: 0;
@@ -74,3 +74,4 @@
 .table-view, .table-view:focused {
     -fx-background-color:  #0D3E59;
 }
+

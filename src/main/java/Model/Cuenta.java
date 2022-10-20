@@ -35,10 +35,10 @@ public class Cuenta {
     }
     public boolean seCumpleSaldo(String debeHaber, double saldo){
         if (getTipo().equals("Ac") && debeHaber.equals("Haber")) {
-            return (getSaldo_actual() > saldo);
+            return (getSaldo_actual() >= saldo);
         }
         else if ((getTipo().equals("Pa") || getTipo().equals("Pm")) &&  debeHaber.equals("Debe")){
-            return getSaldo_actual() > saldo;
+            return getSaldo_actual() >= saldo;
         }
         return true;
     }
