@@ -1,0 +1,12 @@
+.button:hover, button:active {
+  -fx-background-color: #25abf4;
+}
+.button{
+  -fx-background-color: #0b89cb;
+  -fx-font-color: white;
+}
+
+
+.content-login{
+    -fx-font-family: 'Open Sans';
+}

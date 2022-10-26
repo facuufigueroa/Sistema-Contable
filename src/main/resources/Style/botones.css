@@ -1,0 +1,15 @@
+.button{
+    -fx-background-color: #166576;
+}
+.button:hover, button:active{
+    -fx-background-color: #2093ac;
+}
+
+.botonesCentralesMenu{
+    -fx-background-color: #0D3E59;
+    -fx-border-color: black;
+}
+.botonesCentralesMenu: hover, botonesCentralesMenu: active{
+    -fx-background-color: #197db3;
+    -fx-border-color: transparent;
+}

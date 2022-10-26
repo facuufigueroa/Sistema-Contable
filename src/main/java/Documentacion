@@ -1,0 +1,54 @@
+Documento.
+1) Declaración de atributos o métodos con javaFX.
+2) Agregar una acción a un componente.
+3) Método Initialize.
+4) Module-info.java
+
+1) Los atributos y métodos usados en la vista (archivo .fxml) deben estar con el decorador @FXML.
+
+   Atributos:
+                        @FXML private Button boton1;   ó  @FXML
+                                                          private Button boton2;
+
+   Métodos:
+                        @FXML
+                        public void metodo1(){...}        @FXML private void metodo2(){...}
+
+2) Para asignarle una acción a un botón (ó componente) se puede hacer de 2 maneras.
+
+   Desde el archivo FXML
+                        <Button fx:id="botonIniciarSesion" onAction="#accionBotonIniciarSesion">
+
+   Desde SceneBuilder
+                        - Seleccionar el componente (Boton, panel, etc).
+                        - Seleccionar del lado derecho la parte de Code.
+                        - En On Action ingresar el nombre del metodo sin el #.
+
+
+3) El metodo initialize de la implementacion Initializable se usa para configurar los elementos de la
+   vista antes de que cargue en la ventana.
+
+
+4) El module-info.java se usa para dejar determinado que dependencias utilizamos en el proyecto.
+
+   Por ejemplo usando la dependencia de postgresql.
+
+                            <dependency>
+                                        <groupId>org.postgresql</groupId>
+                                        <artifactId>postgresql</artifactId>
+                                        <version>42.2.8</version>
+                            </dependency>
+
+   <groupId> es el nombre de la dependencia.
+
+   En el modulo lo especificamos asi:
+
+                                 requires org.postgresql.jdbc
+
+                (Nota: Si se usa solamente org.postgresql llama a todas las clases de la dependencia)
+
+   Opens se usa para permitir que una clase utilice a otra.
+
+/*Importante
+La clase TablaVistaAsiento en el modelo fue creada para poder mostrar el nombre de la cuenta en la tabla de asientos.
+*/
