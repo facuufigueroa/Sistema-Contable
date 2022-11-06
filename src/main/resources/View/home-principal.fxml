@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="536.0" prefWidth="851.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<AnchorPane prefHeight="536.0" prefWidth="851.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <Pane layoutY="-1.0" prefHeight="36.0" prefWidth="851.0" style="-fx-background-color: #44878f;">
          <children>
@@ -31,7 +31,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label layoutX="14.0" layoutY="2.0" prefHeight="33.0" prefWidth="160.0" text="Menu Principal" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="2.0" prefHeight="33.0" prefWidth="273.0" text="Administración Contable" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="21.0" />
                </font>
