@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="569.0" prefWidth="1092.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Ventas-View.NuevaVenta">
+<AnchorPane prefHeight="569.0" prefWidth="1092.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.VentasController">
    <children>
       <Pane prefHeight="684.0" prefWidth="1335.0" style="-fx-background-color: #0D3E59;">
          <children>

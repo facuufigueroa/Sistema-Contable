@@ -58,6 +58,8 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     private LoginController loginController;
 
+    private HomeController homeController;
+
     public MainController() {
     }
 
@@ -180,18 +182,7 @@ public class MainController extends ViewFuntionality implements Initializable {
     }
     @FXML
     public void accionBtnCerrarSesion(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/login-user.fxml"));
-        Parent parent = fxmlLoader.load();
-        setLoginController(loadLogin(fxmlLoader.getController()));
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getLoginController().setVentana(loginStage);
-        getLoginController().hideStage();
-        stage.setScene(scene);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
+        loadHomePrincipal(event);
     }
 
     public LoginController loadLogin (LoginController controller){
@@ -206,6 +197,23 @@ public class MainController extends ViewFuntionality implements Initializable {
             btnVerUsuarios.setDisable(true);
         }
     }
+
+    private void loadHomePrincipal(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/menu-ventas-asientos.fxml"));
+        Parent parent = fxmlLoader.load();
+        setHomeController(loadHome(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getHomeController().setVentana(homeStage);
+        getHomeController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.showAndWait();
+    }
+
+    private HomeController loadHome(HomeController homeController){ return homeController; }
 
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
     public User getUsuario() { return usuario; }
@@ -292,5 +300,13 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void setFiltradoController(FiltrarLibroDiarioController filtradoController) {
         this.filtradoController = filtradoController;
+    }
+
+    public HomeController getHomeController() {
+        return homeController;
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
     }
 }

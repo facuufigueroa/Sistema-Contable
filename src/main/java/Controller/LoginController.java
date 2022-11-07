@@ -34,7 +34,9 @@ public class LoginController extends ViewFuntionality{
     @FXML private Text botonRegistrarse;
 
     private Service service = new Service();
-    private MainController mainController;
+
+
+    private HomeController homeController;
 
     public LoginController(){}
 
@@ -69,24 +71,22 @@ public class LoginController extends ViewFuntionality{
     }
 
 
-    private void loadMenuPrincipal(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
+    private void loadHomePrincipal(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/menu-ventas-asientos.fxml"));
         Parent parent = fxmlLoader.load();
-        setMainController(loadRegister(fxmlLoader.getController()));
+        setHomeController(loadHome(fxmlLoader.getController()));
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
-        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getMainController().setVentana(loginStage);
-        getMainController().hideStage();
-        /*getMainController().cargarDatos(getUser());*/
+        Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getHomeController().setVentana(homeStage);
+        getHomeController().hideStage();
         stage.setScene(scene);
-        stage.setTitle("Menu Principal");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.showAndWait();
     }
 
-    private MainController loadRegister(MainController mainController){ return mainController; }
+    private HomeController loadHome(HomeController homeController){ return homeController; }
 
 
     /**
@@ -111,7 +111,7 @@ public class LoginController extends ViewFuntionality{
                 u.setEmail(userNew.getEmail());
                 u.setContrasena(userNew.getContrasena());
                 u.setApellido(userNew.getApellido());
-                loadMenuPrincipal(event);
+                loadHomePrincipal(event);
             }
         }
     }
@@ -124,15 +124,6 @@ public class LoginController extends ViewFuntionality{
     private boolean alertaEmail(){ return !existeUserEmail(obtenerEmail()) ? false : true; }
 
     public void hideStage(){ getVentana().hide(); }
-
-    //Getters y Setters
-    public MainController getMainController() {
-        return mainController;
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
 
     public static ServiceLogin getServiceLogin() {
         return serviceLogin;
@@ -177,4 +168,14 @@ public class LoginController extends ViewFuntionality{
     public void setBotonRegistrarse(Text botonRegistrarse) { this.botonRegistrarse = botonRegistrarse; }
     public RegisterController getRegisterController() { return registerController; }
     public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
+
+    /* Metodos get y set agregados para ventas*/
+
+    public HomeController getHomeController() {
+        return homeController;
+    }
+
+    public void setHomeController(HomeController homeController) {
+        this.homeController = homeController;
+    }
 }

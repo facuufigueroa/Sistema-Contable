@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="543.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MenuVentas">
+<AnchorPane prefHeight="543.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeVentasController">
    <children>
       <Pane prefHeight="543.0" prefWidth="949.0" style="-fx-background-color: #0D3E59;">
          <children>
@@ -45,7 +44,7 @@
                   <Image url="@../Images/ventas.jpg" />
                </image>
             </ImageView>
-            <Button layoutX="45.0" layoutY="57.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="184.0" text="   Registrar Venta">
+            <Button fx:id="btnRegistrarVenta" layoutX="40.0" layoutY="58.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" text="   Registrar Venta" onAction="#loadNewVenta">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -57,7 +56,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="43.0" layoutY="129.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="184.0" text="   Gestionar Clientes">
+            <Button fx:id="btnClientes" layoutX="38.0" layoutY="130.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" onAction="#loadNewCliente" text="   Gestionar Clientes">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -69,7 +68,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="43.0" layoutY="199.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="184.0" text="Gestionar Productos">
+            <Button fx:id="btnProductos" layoutX="38.0" layoutY="200.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" onAction="#loadNewProducto" text="Gestionar Productos">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -81,7 +80,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="43.0" layoutY="272.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="184.0" text="Gestionar Facturas">
+            <Button fx:id="btnFacturas" layoutX="38.0" layoutY="273.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" text="Gestionar Facturas">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -93,7 +92,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="campoTexto" layoutX="7.0" layoutY="493.0" prefHeight="36.0" prefWidth="272.0" textFill="WHITE">
+            <Label fx:id="txtUsuarioLogueado" layoutX="7.0" layoutY="493.0" prefHeight="36.0" prefWidth="272.0" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="16.0" />
                </font>
@@ -105,7 +104,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button layoutX="31.0" layoutY="407.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" text="Regresar Menú Principal">
+            <Button fx:id="btnVolverMenu" layoutX="25.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionBtnVolver" prefHeight="45.0" prefWidth="219.0" text="Regresar Menú Principal">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
