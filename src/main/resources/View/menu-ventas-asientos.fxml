@@ -52,7 +52,7 @@
             <Image url="@../Images/Logo%20sin%20fondo%20-%20Original.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVentas" layoutX="14.0" layoutY="163.0" mnemonicParsing="false" onAction="#accionBtnMainVentas" prefHeight="64.0" prefWidth="211.0" styleClass="..\Style\botones.css" text="   Ventas" textAlignment="CENTER">
+      <Button fx:id="btnVentas" layoutX="14.0" layoutY="163.0" mnemonicParsing="false" onAction="#accionBtnMainVentas" prefHeight="64.0" prefWidth="211.0" stylesheets="@../Style/botones.css" text="   Ventas" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -102,7 +102,7 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="btnAdminContable" layoutX="14.0" layoutY="283.0" mnemonicParsing="false" onAction="#accionBtnMainContabilidad" prefHeight="76.0" prefWidth="211.0" styleClass="..\Style\botones.css" text="Administración Contable" textAlignment="CENTER">
+      <Button fx:id="btnAdminContable" layoutX="14.0" layoutY="283.0" mnemonicParsing="false" onAction="#accionBtnMainContabilidad" prefHeight="76.0" prefWidth="211.0" stylesheets="@../Style/botones.css" text="Administración Contable" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="13.0" />
          </font>
@@ -114,29 +114,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="280.0" layoutY="163.0" text="Al final de cada CIERRE">
-         <font>
-            <Font name="Britannic Bold" size="46.0" />
-         </font>
-      </Label>
-      <Label layoutX="413.0" layoutY="223.0" text="habrá una nueva">
-         <font>
-            <Font name="Britannic Bold" size="46.0" />
-         </font>
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color red="0.6973684430122375" green="0.6392543911933899" blue="0.6392543911933899" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Label>
-      <Label layoutX="531.0" layoutY="298.0" text="APERTURA.">
-         <font>
-            <Font name="Britannic Bold" size="46.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnQuienesSomos" layoutX="538.0" layoutY="379.0" mnemonicParsing="false" opacity="0.64" prefHeight="53.0" prefWidth="211.0" style="-fx-background-color: black;" text="¿ Quiénes somos ?" textFill="WHITE">
+      <Button fx:id="btnQuienesSomos" layoutX="733.0" layoutY="55.0" mnemonicParsing="false" opacity="0.64" prefHeight="53.0" prefWidth="211.0" style="-fx-background-color: black;" text="¿ Quiénes somos ?" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="37.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
