@@ -101,7 +101,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnGuardar" layoutX="982.0" layoutY="267.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" text="Guardar">
+            <Button fx:id="btnGuardar" layoutX="982.0" layoutY="267.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -113,7 +113,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnModificar" layoutX="1112.0" layoutY="267.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" text="Modificar">
+            <Button fx:id="btnModificar" layoutX="1112.0" layoutY="267.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -147,7 +147,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnDeshabilitar" layoutX="876.0" layoutY="612.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="181.0" text="Deshabilitar Cliente">
+            <Button fx:id="btnDeshabilitar" layoutX="876.0" layoutY="612.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="181.0" stylesheets="@../../Style/botones.css" text="Deshabilitar Cliente" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -159,7 +159,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnGuardar" layoutX="1074.0" layoutY="612.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" text="Habilitar Cliente">
+            <Button fx:id="btnGuardar" layoutX="1074.0" layoutY="612.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" stylesheets="@../../Style/botones.css" text="Habilitar Cliente" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -171,7 +171,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnEditar" layoutX="526.0" layoutY="303.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="147.0" text="Editar Cliente">
+            <Button fx:id="btnEditar" layoutX="526.0" layoutY="303.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="147.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

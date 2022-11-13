@@ -101,7 +101,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnGuardar" layoutX="560.0" layoutY="259.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" text="Guardar">
+            <Button fx:id="btnGuardar" layoutX="570.0" layoutY="261.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -113,7 +113,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnModificar" layoutX="697.0" layoutY="259.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" text="Modificar">
+            <Button fx:id="btnModificar" layoutX="707.0" layoutY="261.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -147,7 +147,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnDeshabilitar" layoutX="879.0" layoutY="156.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" text="Deshabilitar Producto">
+            <Button fx:id="btnDeshabilitar" layoutX="889.0" layoutY="158.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Deshabilitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -159,7 +159,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnGuardar" layoutX="879.0" layoutY="224.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" text="Habilitar Producto">
+            <Button fx:id="btnGuardar" layoutX="889.0" layoutY="226.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Habilitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -171,7 +171,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnEditar" layoutX="921.0" layoutY="317.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="147.0" text="Editar Producto">
+            <Button fx:id="btnEditar" layoutX="931.0" layoutY="319.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="147.0" stylesheets="@../../Style/botones.css" text="Editar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -195,13 +195,13 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <TableView fx:id="tablaProductos" layoutX="23.0" layoutY="379.0" prefHeight="233.0" prefWidth="1045.0">
+            <TableView fx:id="tablaProductos" layoutX="23.0" layoutY="379.0" prefHeight="233.0" prefWidth="1055.0" stylesheets="@../../Style/tablas.css">
               <columns>
                 <TableColumn prefWidth="161.0" text="Codigo" />
-                <TableColumn minWidth="7.0" prefWidth="518.0" text="Nombre" />
-                  <TableColumn prefWidth="145.0" text="Precio" />
-                  <TableColumn prefWidth="116.0" text="Stock Actual" />
-                  <TableColumn prefWidth="109.0" text="Estado" />
+                <TableColumn minWidth="7.0" prefWidth="525.0" text="Nombre" />
+                  <TableColumn prefWidth="148.0" text="Precio" />
+                  <TableColumn prefWidth="106.0" text="Stock Actual" />
+                  <TableColumn prefWidth="114.0" text="Estado" />
               </columns>
             </TableView>
             <Label layoutX="468.0" layoutY="208.0" text="Alicuota" textFill="WHITE">
@@ -229,7 +229,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnVolver" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" text="  Volver" textFill="WHITE">
+            <Button fx:id="btnVolver" layoutX="23.0" layoutY="51.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" stylesheets="@../../Style/botones.css" text="  Volver" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
