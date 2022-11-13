@@ -136,11 +136,6 @@
             <Font name="Britannic Bold" size="46.0" />
          </font>
       </Label>
-      <ImageView fitHeight="130.0" fitWidth="218.0" layoutX="756.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/frase%20motivacion.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btnQuienesSomos" layoutX="538.0" layoutY="379.0" mnemonicParsing="false" opacity="0.64" prefHeight="53.0" prefWidth="211.0" style="-fx-background-color: black;" text="¿ Quiénes somos ?" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="37.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">

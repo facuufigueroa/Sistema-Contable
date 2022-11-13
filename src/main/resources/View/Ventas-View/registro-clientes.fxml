@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="672.0" prefWidth="1237.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
    <children>
       <Pane prefHeight="672.0" prefWidth="1237.0" style="-fx-background-color: #0D3E59;">
@@ -196,7 +195,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <TableView fx:id="tablaProductos" layoutX="10.0" layoutY="373.0" prefHeight="233.0" prefWidth="1218.0">
+            <TableView fx:id="tablaProductos" layoutX="10.0" layoutY="373.0" prefHeight="233.0" prefWidth="1218.0" stylesheets="@../../Style/tablas.css">
                <columns>
                   <TableColumn prefWidth="115.0" text="DNI" />
                   <TableColumn minWidth="7.0" prefWidth="142.0" text="Nombre" />
@@ -235,7 +234,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnVolver" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" text="  Volver" textFill="WHITE">
+            <Button fx:id="btnVolver" layoutX="23.0" layoutY="50.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" stylesheets="@../../Style/botones.css" text="  Volver" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>

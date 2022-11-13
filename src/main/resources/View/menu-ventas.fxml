@@ -44,7 +44,7 @@
                   <Image url="@../Images/ventas.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="btnRegistrarVenta" layoutX="40.0" layoutY="58.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" text="   Registrar Venta" onAction="#loadNewVenta">
+            <Button fx:id="btnRegistrarVenta" layoutX="40.0" layoutY="58.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="193.0" text="   Registrar Venta" onAction="#seleccionCliente">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>

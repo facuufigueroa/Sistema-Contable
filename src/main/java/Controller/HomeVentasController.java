@@ -42,7 +42,7 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     @FXML
     private Button btnVolverMenu;
 
-    private VentasController ventasController;
+    private SeleccionClienteController seleccionClienteController;
 
     private ClientesController clientesController;
 
@@ -81,34 +81,34 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     private HomeController loadHome(HomeController homeController){ return homeController; }
 
 
-    /* Acción de btn para registrar nuevas ventas */
+    /* Método para ir a la ventana de seleccionar el cliente de la venta */
     @FXML
-    public void loadNewVenta(ActionEvent event) throws IOException {
-        loadVentasRegister(event);
+    public void seleccionCliente(ActionEvent event) throws IOException {
+        loadSeleccionCliente(event);
     }
 
-    private void loadVentasRegister(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/nueva-venta.fxml"));
+    private void loadSeleccionCliente(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/seleccionar-clientes.fxml"));
         Parent parent = fxmlLoader.load();
-        setVentasController(loadVentaNew(fxmlLoader.getController()));
+        setSeleccionClienteController(loadSelectClient(fxmlLoader.getController()));
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
-        Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getVentasController().setVentana(homeStage);
-        getVentasController().hideStage();
+        Stage seleccionClienteStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getSeleccionClienteController().setVentana(seleccionClienteStage);
+        getSeleccionClienteController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.showAndWait();
     }
 
-    private VentasController loadVentaNew(VentasController ventasController){ return ventasController; }
+    private SeleccionClienteController loadSelectClient(SeleccionClienteController selectionClient){ return selectionClient; }
 
     /* Fin */
 
 
-    /* Acción de btn para registrar nuevos clientes */
 
+    /* Método para registrar nuevos clientes */
     @FXML
     public void loadNewCliente(ActionEvent event) throws IOException {
         loadClientesRegister(event);
@@ -133,7 +133,8 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
 
     /* -------- Fin ----------------*/
 
-    /* Acción de btn para registrar nuevos productos */
+
+    /* Método para registrar nuevos productos */
     @FXML
     public void loadNewProducto(ActionEvent event) throws IOException {
         loadProductoRegister(event);
@@ -168,12 +169,12 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
         this.homeController = homeController;
     }
 
-    public VentasController getVentasController() {
-        return ventasController;
+    public SeleccionClienteController getSeleccionClienteController() {
+        return seleccionClienteController;
     }
 
-    public void setVentasController(VentasController ventasController) {
-        this.ventasController = ventasController;
+    public void setSeleccionClienteController(SeleccionClienteController seleccionClienteController) {
+        this.seleccionClienteController = seleccionClienteController;
     }
 
     public ClientesController getClientesController() {
