@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane minHeight="200.0" minWidth="700.0" prefHeight="200.0" prefWidth="700.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+   <children>
+      <Label layoutX="24.0" layoutY="26.0" text="CUIT" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/dni.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextField fx:id="txtCuit" layoutX="141.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="CUIT">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="24.0" layoutY="94.0" text="Email" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/correo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="141.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Correo electronico">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="24.0" layoutY="159.0" text="Teléfono" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/telefono.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextField fx:id="txtTelefono" layoutX="141.0" layoutY="157.0" prefHeight="27.0" prefWidth="180.0" promptText="Teléfono">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="370.0" layoutY="24.0" text="Dirección" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/localidad.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextField fx:id="txtDireccion" layoutX="493.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="Dirección">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="370.0" layoutY="95.0" text="Razón Social" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/razon%20social.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextField fx:id="txtRazonSocial" layoutX="493.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Razón Social">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>
