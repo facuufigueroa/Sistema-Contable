@@ -22,7 +22,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtCuit" layoutX="141.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="CUIT">
+      <TextField fx:id="txtCuitJ" layoutX="141.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="CUIT">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -39,7 +39,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtEmail" layoutX="141.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Correo electronico">
+      <TextField fx:id="txtEmailJ" layoutX="141.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Correo electronico">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -56,7 +56,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtTelefono" layoutX="141.0" layoutY="157.0" prefHeight="27.0" prefWidth="180.0" promptText="Teléfono">
+      <TextField fx:id="txtTelefonoJ" layoutX="141.0" layoutY="157.0" prefHeight="27.0" prefWidth="180.0" promptText="Teléfono">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -73,7 +73,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtDireccion" layoutX="493.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="Dirección">
+      <TextField fx:id="txtDireccionJ" layoutX="493.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="Dirección">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -90,7 +90,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtRazonSocial" layoutX="493.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Razón Social">
+      <TextField fx:id="txtRazonSocialJ" layoutX="493.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Razón Social">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
