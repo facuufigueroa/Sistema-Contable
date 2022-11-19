@@ -222,4 +222,25 @@ public class Alerta {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+
+    /*Alerta de productos*/
+    public static boolean alertaCamposVaciosProducto() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" Hay campos vacios , verifique e intente nuevamente ");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+    public static boolean alertaProductoRegistrado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡ Producto registrado con éxito !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
 }

@@ -36,7 +36,7 @@
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtStockMaximo" layoutX="606.0" layoutY="160.0" prefHeight="27.0" prefWidth="202.0" promptText="Stock maximo">
+            <TextField fx:id="txtStock" layoutX="606.0" layoutY="160.0" prefHeight="27.0" prefWidth="202.0" promptText="Stock ">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -89,7 +89,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label layoutX="468.0" layoutY="165.0" text="Stock Maximo" textFill="WHITE">
+            <Label layoutX="468.0" layoutY="165.0" text="Stock" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -101,7 +101,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnGuardar" layoutX="570.0" layoutY="261.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
+            <Button fx:id="btnGuardar" layoutX="570.0" layoutY="261.0" mnemonicParsing="false" onAction="#accionGuardarProducto" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -125,12 +125,12 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <TextField fx:id="txtBuscarPorCodigo" layoutX="29.0" layoutY="327.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por código">
+            <TextField fx:id="txtBuscarPorCodigo" layoutX="29.0" layoutY="327.0" onKeyReleased="#buscarPorCodigo" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por código">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtBuscarPorNombre" layoutX="272.0" layoutY="327.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre">
+            <TextField fx:id="txtBuscarPorNombre" layoutX="272.0" layoutY="327.0" onKeyReleased="#buscarPorNombre" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -159,7 +159,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnGuardar" layoutX="889.0" layoutY="226.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Habilitar Producto" textFill="WHITE">
+            <Button fx:id="btnHabilitar" layoutX="889.0" layoutY="226.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Habilitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -183,7 +183,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnGuardar1" layoutX="489.0" layoutY="320.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnLimpiar" layoutX="489.0" layoutY="320.0" mnemonicParsing="false" onAction="#accionLimpiarBusqueda" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -197,11 +197,11 @@
             </Button>
             <TableView fx:id="tablaProductos" layoutX="23.0" layoutY="379.0" prefHeight="233.0" prefWidth="1055.0" stylesheets="@../../Style/tablas.css">
               <columns>
-                <TableColumn prefWidth="161.0" text="Codigo" />
-                <TableColumn minWidth="7.0" prefWidth="525.0" text="Nombre" />
-                  <TableColumn prefWidth="148.0" text="Precio" />
-                  <TableColumn prefWidth="106.0" text="Stock Actual" />
-                  <TableColumn prefWidth="114.0" text="Estado" />
+                <TableColumn fx:id="columCodigo" prefWidth="161.0" text="Codigo" />
+                <TableColumn fx:id="columNombre" minWidth="7.0" prefWidth="525.0" text="Nombre" />
+                  <TableColumn fx:id="columPrecio" prefWidth="148.0" text="Precio" />
+                  <TableColumn fx:id="columStock" prefWidth="106.0" text="Stock" />
+                  <TableColumn fx:id="columEstado" prefWidth="114.0" text="Estado" />
               </columns>
             </TableView>
             <Label layoutX="468.0" layoutY="208.0" text="Alicuota" textFill="WHITE">
@@ -216,7 +216,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <ComboBox layoutX="606.0" layoutY="210.0" prefHeight="25.0" prefWidth="202.0" />
+            <ComboBox fx:id="comboBoxAlicuota" layoutX="606.0" layoutY="210.0" prefHeight="32.0" prefWidth="202.0" />
             <Label layoutX="930.0" layoutY="113.0" text="Acciones" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
