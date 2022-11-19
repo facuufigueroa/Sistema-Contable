@@ -41,11 +41,13 @@ public class ServiceCliente {
 
     public ArrayList<TablaPersona> listadoPersona(){
         ArrayList<TablaPersona> lista = new ArrayList<>();
-        try{ //Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono
+        try{
             setConnection(ConexionBD.conexion());
             setPs(getConnection().prepareStatement(PersonaQuery.getListadoPersonas()));
             setResultSet(getPs().executeQuery());
             while (getResultSet().next()) {
+                //Long dni, String cuit, String nombre, String apellido, String email, String direccion
+                // String telefono, String razonSocial, String tipoPersona , boolean estado
                 Persona persona = new Persona(
                                           getResultSet().getLong("dni")
                                         , getResultSet().getString("cuit")
@@ -54,7 +56,8 @@ public class ServiceCliente {
                                         , getResultSet().getString("email")
                                         , getResultSet().getString("direccion")
                                         , getResultSet().getString("telefono")
-                                        , getResultSet().getString("razonSocial")
+                                        , getResultSet().getString("razon_social")
+                                        , getResultSet().getString("tipo")
                                         , getResultSet().getBoolean("estado")
                 );
                 TablaPersona tablaPersona = new TablaPersona(persona);

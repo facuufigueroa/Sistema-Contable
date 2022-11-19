@@ -9,6 +9,7 @@ public class Persona {
     private String telefono;
     private String email;
     private String razonSocial;
+    private String tipoPersona;
     private boolean estado;
 
     public Persona(){}
@@ -64,6 +65,19 @@ public class Persona {
         setDireccion(direccion);
         setTelefono(telefono);
         setEstado(true);
+    }
+    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, String tipoPersona , boolean estado){
+        setDni(dni);
+        setCuit(cuit);
+        setNombre(nombre);
+        setApellido(apellido);
+        setEmail(email);
+        setDireccion(direccion);
+        setTelefono(telefono);
+        setTipoPersona(tipoPersona);
+        //Persona Juridica
+        setRazonSocial(razonSocial);
+        setEstado(estado);
     }
 
 
@@ -133,6 +147,14 @@ public class Persona {
 
     public boolean isEstado() {
         return estado;
+    }
+
+    public String getTipoPersona() {
+        return tipoPersona;
+    }
+
+    public void setTipoPersona(String tipoPersona) {
+        this.tipoPersona = tipoPersona;
     }
 
     public void setEstado(boolean estado) {

@@ -30,7 +30,6 @@ public class TablaPersona {
             setDni(0L);
             setNombre("");
             setApellido("");
-            setTipoPersona("JURIDICA");
         }else{
             setDni(persona.getDni());
             setNombre(persona.getNombre());
@@ -40,8 +39,8 @@ public class TablaPersona {
             setTelefono(persona.getTelefono());
             setEmail(persona.getEmail());
             setRazonSocial(persona.getRazonSocial());
-            setTipoPersona("FISICA");
         }
+        setTipoPersona(persona.getTipoPersona());
         if (persona.isEstado()){ setEstado("Habilitado");
         }else { setEstado("Deshabilitado"); }
     }

@@ -37,17 +37,17 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private AnchorPane panelRegistro = new AnchorPane();
 
     //Tabla
-    @FXML private TableView<TablaPersona> tablaPersonas;
-    @FXML private TableColumn<TablaPersona, Long> colDni;
-    @FXML private TableColumn<TablaPersona, String> colNombre;
-    @FXML private TableColumn<TablaPersona, String> colApellido;
-    @FXML private TableColumn<TablaPersona, String> colCuit;
-    @FXML private TableColumn<TablaPersona, String> colDireccion;
-    @FXML private TableColumn<TablaPersona, String> colTelefono;
-    @FXML private TableColumn<TablaPersona, String> colEmail;
-    @FXML private TableColumn<TablaPersona, String> colRazonSocial;
-    @FXML private TableColumn<TablaPersona, String> colTipoPersona;
-    @FXML private TableColumn<TablaPersona, String> colEstado;
+    @FXML private TableView<TablaPersona> tablaPersonas = new TableView<>();
+    @FXML private TableColumn<TablaPersona, Long> colDni = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colNombre = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colApellido = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colCuit = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colDireccion = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colTelefono = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colEmail = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colRazonSocial = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colTipoPersona = new TableColumn<>();
+    @FXML private TableColumn<TablaPersona, String> colEstado = new TableColumn<>();
 
     //Persona Fisica
     @FXML private TextField txtDni;
@@ -72,8 +72,9 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        iniciarComboBox();
         iniciarTabla();
+        iniciarComboBox();
+
     }
 
     private void iniciarComboBox() {
