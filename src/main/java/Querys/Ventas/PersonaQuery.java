@@ -7,4 +7,8 @@ public class PersonaQuery {
                "FROM clientes\n" +
                "INNER JOIN tipo_persona AS t ON t.idtipopersona = clientes.id_tipo_persona;";
     }
+    public static String insertarPersona(){
+        return "INSERT INTO clientes (dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    }
 }

@@ -126,16 +126,14 @@ public class ClientesController extends ViewFuntionality implements Initializabl
             getPanelRegistro().getChildren().setAll(personaJuridica());
         }
     }
-    private void accionElegirPersona(){ //Si selecciona una persona se carga el panel con los datos de dicha persona
+    private void accionElegirPersona() throws NullPointerException{ //Si selecciona una persona se carga el panel con los datos de dicha persona
        try {
            String tipoPersona = getComboBoxCliente().getValue();
-           if (tipoPersona.isEmpty()){
-               AlertaVenta.seleccioneTipoPersona();
-           }
            if (tipoPersona.equals("Persona Fisica")) {
                if (!comprobarPersonaFisicaNoNula()) {
                    //setear panel persona fisica
                    setPersona(getPersonaFisica());
+                   getServicio().insertarPersona(getPersona());
                } else {
                    //Alerta datos persona fisica incompletos
                    AlertaVenta.datosPersonaIncompleta();
@@ -145,35 +143,35 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                //seter panel persona juridica
                if (!comprobarPersonaJuridicaNoNula()) {
                    setPersona(getPersonaJuridica());
+                   getServicio().insertarPersona(getPersona());
                } else {
                    //Alerta datos persona juridica incompletos
                    AlertaVenta.datosPersonaIncompleta();
                }
            }
-           System.out.println(getPersona().toString());
-       }catch (NullPointerException e){ System.out.println("Campos vacios"); }
+       }catch (NullPointerException e){ System.out.println("Campos nulos"); }
     }
 
     private boolean comprobarPersonaJuridicaNoNula() {
         //cuit, razonSocial, email, direccion, telefono
-        boolean cuit = !getTxtCuitJ().getText().isEmpty();
-        boolean razonSocial = !getTxtRazonSocialJ().getText().isEmpty();
-        boolean email = !getTxtEmailJ().getText().isEmpty();
-        boolean direccion = !getTxtDireccionJ().getText().isEmpty();
-        boolean telefono = !getTxtTelefonoJ().getText().isEmpty();
-        return cuit && razonSocial && email && direccion && telefono;
+        boolean cuit = getTxtCuitJ().getText() == null;
+        boolean razonSocial = getTxtRazonSocialJ().getText() == null;
+        boolean email = getTxtEmailJ().getText() == null;
+        boolean direccion = getTxtDireccionJ().getText() == null;
+        boolean telefono = getTxtTelefonoJ().getText() == null;
+        return cuit || razonSocial || email || direccion || telefono;
     }
 
     private boolean comprobarPersonaFisicaNoNula() {
         //cuit, dni, nombre, apellido, email, direccion, telefono
-        boolean cuit = !getTxtCuit().getText().isEmpty();
-        boolean dni = !getTxtDni().getText().isEmpty();
-        boolean nombre = !getTxtNombre().getText().isEmpty();
-        boolean apellido = !getTxtApellido().getText().isEmpty();
-        boolean email = !getTxtEmail().getText().isEmpty();
-        boolean direccion = !getTxtDireccion().getText().isEmpty();
-        boolean telefono = !getTxtTelefono().getText().isEmpty();
-        return cuit && dni && nombre && apellido && email && direccion && telefono;
+        boolean cuit = getTxtCuit().getText() == null;
+        boolean dni = getTxtDni().getText() == null;
+        boolean nombre = getTxtNombre().getText() == null;
+        boolean apellido = getTxtApellido().getText() == null;
+        boolean email = getTxtEmail().getText() == null;
+        boolean direccion = getTxtDireccion().getText() == null;
+        boolean telefono = getTxtTelefono().getText() == null;
+        return cuit || dni || nombre || apellido || email || direccion || telefono;
     }
 
     private Persona getPersonaFisica(){
@@ -196,11 +194,14 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
 
     @FXML
-    private void accionGuardarPersona(){
+    private void accionGuardarPersona() {
         //Si dni == null => obtenerPersonaJuridica
         //Si Razon social == null obtenerPersonaFisica
         //Sino error
-        accionElegirPersona();
+        boolean isComboBoxVacio = getComboBoxCliente().getValue() == null;
+        if (!isComboBoxVacio){
+            accionElegirPersona();
+        }else{ AlertaVenta.seleccioneTipoPersona(); }
     }
 
     @FXML

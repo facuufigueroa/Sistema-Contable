@@ -38,7 +38,25 @@ public class ServiceCliente {
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
     }
-
+    public boolean insertarPersona(Persona persona){
+        //dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona
+        try {
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(PersonaQuery.insertarPersona()));
+            getPs().setLong(1, persona.getDni());
+            getPs().setString(2, persona.getCuit());
+            getPs().setString(3, persona.getNombre());
+            getPs().setString(4, persona.getApellido());
+            getPs().setString(5, persona.getEmail());
+            getPs().setString(6, persona.getDireccion());
+            getPs().setString(7, persona.getTelefono());
+            getPs().setString(8, persona.getRazonSocial());
+            getPs().setBoolean(9, persona.isEstado());
+            getPs().setInt(10, persona.tipoPersona());
+            return getPs().executeUpdate() != 0;
+        }catch (SQLException e){ System.out.println(e.getMessage());}
+        return false;
+    }
     public ArrayList<TablaPersona> listadoPersona(){
         ArrayList<TablaPersona> lista = new ArrayList<>();
         try{

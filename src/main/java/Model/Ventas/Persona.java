@@ -80,6 +80,9 @@ public class Persona {
         setEstado(estado);
     }
 
+    public int tipoPersona(){
+        return (getDni() == null) ? 2 : 1;
+    }
 
     public Long getDni() {
         return dni;
