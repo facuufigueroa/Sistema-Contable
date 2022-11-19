@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class ClientesController extends ViewFuntionality implements Initializable {
     private HomeVentasController homeVentasController;
 
-    @FXML private ComboBox<String> comboBoxCliente;
+    @FXML private ComboBox<String> comboBoxCliente = new ComboBox<>();
     @FXML private AnchorPane panelRegistro = new AnchorPane();
     @FXML private TableView tablaPersonas;
 
@@ -57,42 +57,35 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private void iniciarComboBox() {
         ObservableList<String> cuentas= FXCollections.observableArrayList();
         cuentas.addAll("Persona Fisica", "Persona Juridica");
-        comboBoxCliente.setItems(cuentas);
+        getComboBoxCliente().setItems(cuentas);
     }
 
     /**
      *   Paneles de registros de personas
      */
-    public AnchorPane personaFisica(){
-        AnchorPane fisica = new AnchorPane();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-fisica.fxml"));
-            Parent parent = loader.load();
-            fisica = (AnchorPane) parent;
-            return fisica;
-        }catch (IOException excepcion){ System.out.println(excepcion.getMessage()); }
-        return fisica;
+    public AnchorPane personaFisica()throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-fisica.fxml"));
+        Parent parent = loader.load();
+        return  (AnchorPane) parent;
     }
     public AnchorPane personaJuridica(){
-        AnchorPane juridica = new AnchorPane();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-juridica.fxml"));
             Parent parent = loader.load();
-            juridica = (AnchorPane) parent;
-            return juridica;
-        }catch (IOException excepcion){ System.out.println(excepcion.getMessage()); }
-        return juridica;
+            return  (AnchorPane) parent;
+        }catch (IOException excepcion){ System.out.println(excepcion.getLocalizedMessage()); }
+        return null;
     }
 
 
     @FXML
-    public void accionCambiarPersona(){
-        String tipoPersona = comboBoxCliente.getValue();
+    public void accionCambiarPersona() throws IOException {
+        String tipoPersona = getComboBoxCliente().getValue();
         if (tipoPersona.equals("Persona Fisica")){
-            //setPanelRegistro(personaFisica());
+            getPanelRegistro().getChildren().clear();
             getPanelRegistro().getChildren().setAll(personaFisica());
         }else if (tipoPersona.equals("Persona Juridica")){
-            //setPanelRegistro(personaJuridica());
+            getPanelRegistro().getChildren().clear();
             getPanelRegistro().getChildren().setAll(personaJuridica());
         }
     }
