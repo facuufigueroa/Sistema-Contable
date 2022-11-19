@@ -1,7 +1,11 @@
 package Controller;
 
+import Model.TablaVistaAsiento;
+import Model.Ventas.AlertaVenta;
 import Model.Ventas.Persona;
+import Model.Ventas.TablaPersona;
 import Model.ViewFuntionality;
+import Services.Ventas.ServiceCliente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,8 +16,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -29,7 +35,19 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     @FXML private ComboBox<String> comboBoxCliente = new ComboBox<>();
     @FXML private AnchorPane panelRegistro = new AnchorPane();
-    @FXML private TableView tablaPersonas;
+
+    //Tabla
+    @FXML private TableView<TablaPersona> tablaPersonas;
+    @FXML private TableColumn<TablaPersona, Long> colDni;
+    @FXML private TableColumn<TablaPersona, String> colNombre;
+    @FXML private TableColumn<TablaPersona, String> colApellido;
+    @FXML private TableColumn<TablaPersona, String> colCuit;
+    @FXML private TableColumn<TablaPersona, String> colDireccion;
+    @FXML private TableColumn<TablaPersona, String> colTelefono;
+    @FXML private TableColumn<TablaPersona, String> colEmail;
+    @FXML private TableColumn<TablaPersona, String> colRazonSocial;
+    @FXML private TableColumn<TablaPersona, String> colTipoPersona;
+    @FXML private TableColumn<TablaPersona, String> colEstado;
 
     //Persona Fisica
     @FXML private TextField txtDni;
@@ -47,17 +65,38 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtDireccionJ;
     @FXML private TextField txtRazonSocialJ;
 
+    private Persona persona;
 
+    //Servicio
+    private ServiceCliente servicio = new ServiceCliente();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarComboBox();
+        iniciarTabla();
     }
 
     private void iniciarComboBox() {
         ObservableList<String> cuentas= FXCollections.observableArrayList();
         cuentas.addAll("Persona Fisica", "Persona Juridica");
         getComboBoxCliente().setItems(cuentas);
+    }
+    //Long dni, String nombre, String apellido, String cuit, String direccion, String telefono
+    //            , String email, String razonSocial, String  tipoPersona, String estado
+    private void iniciarTabla(){
+        ObservableList<TablaPersona> tablaVistaAsientos = FXCollections.observableArrayList(getServicio().listadoPersona());
+        getColDni().setCellValueFactory(new PropertyValueFactory<>("dni"));
+        getColNombre().setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        getColApellido().setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        getColCuit().setCellValueFactory(new PropertyValueFactory<>("cuit"));
+        getColDireccion().setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        getColTelefono().setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        getColEmail().setCellValueFactory(new PropertyValueFactory<>("email"));
+        getColRazonSocial().setCellValueFactory(new PropertyValueFactory<>("razonSocial"));
+        getColTipoPersona().setCellValueFactory(new PropertyValueFactory<>("tipoPersona"));
+        getColEstado().setCellValueFactory(new PropertyValueFactory<>("estado"));
+
+        getTablaPersonas().setItems(tablaVistaAsientos);
     }
 
     /**
@@ -68,13 +107,10 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         Parent parent = loader.load();
         return  (AnchorPane) parent;
     }
-    public AnchorPane personaJuridica(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-juridica.fxml"));
-            Parent parent = loader.load();
-            return  (AnchorPane) parent;
-        }catch (IOException excepcion){ System.out.println(excepcion.getLocalizedMessage()); }
-        return null;
+    public AnchorPane personaJuridica() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-juridica.fxml"));
+        Parent parent = loader.load();
+        return  (AnchorPane) parent;
     }
 
 
@@ -90,23 +126,53 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         }
     }
     private void accionElegirPersona(){ //Si selecciona una persona se carga el panel con los datos de dicha persona
-        String tipoPersona = comboBoxCliente.getValue();
-        if (tipoPersona.equals("Persona Fisica") && comprobarPersonaFisicaNoNula()){
-            //setear panel persona fisica
-            Persona fisica = getPersonaFisica();
-
-        }else if (tipoPersona.equals("Persona Juridica") && comprobarPersonaJuridicaNoNula()){
-            //seter panel persona juridica
-            Persona juridica = getPersonaJuridica();
-        }
+       try {
+           String tipoPersona = getComboBoxCliente().getValue();
+           if (tipoPersona.isEmpty()){
+               AlertaVenta.seleccioneTipoPersona();
+           }
+           if (tipoPersona.equals("Persona Fisica")) {
+               if (!comprobarPersonaFisicaNoNula()) {
+                   //setear panel persona fisica
+                   setPersona(getPersonaFisica());
+               } else {
+                   //Alerta datos persona fisica incompletos
+                   AlertaVenta.datosPersonaIncompleta();
+               }
+           }
+           if (tipoPersona.equals("Persona Juridica")) {
+               //seter panel persona juridica
+               if (!comprobarPersonaJuridicaNoNula()) {
+                   setPersona(getPersonaJuridica());
+               } else {
+                   //Alerta datos persona juridica incompletos
+                   AlertaVenta.datosPersonaIncompleta();
+               }
+           }
+           System.out.println(getPersona().toString());
+       }catch (NullPointerException e){ System.out.println("Campos vacios"); }
     }
 
-    private boolean comprobarPersonaJuridicaNoNula() { //TODO cambiar metodo
-        return true;
+    private boolean comprobarPersonaJuridicaNoNula() {
+        //cuit, razonSocial, email, direccion, telefono
+        boolean cuit = !getTxtCuitJ().getText().isEmpty();
+        boolean razonSocial = !getTxtRazonSocialJ().getText().isEmpty();
+        boolean email = !getTxtEmailJ().getText().isEmpty();
+        boolean direccion = !getTxtDireccionJ().getText().isEmpty();
+        boolean telefono = !getTxtTelefonoJ().getText().isEmpty();
+        return cuit && razonSocial && email && direccion && telefono;
     }
 
-    private boolean comprobarPersonaFisicaNoNula() {  //TODO cambiar metodo
-        return true;
+    private boolean comprobarPersonaFisicaNoNula() {
+        //cuit, dni, nombre, apellido, email, direccion, telefono
+        boolean cuit = !getTxtCuit().getText().isEmpty();
+        boolean dni = !getTxtDni().getText().isEmpty();
+        boolean nombre = !getTxtNombre().getText().isEmpty();
+        boolean apellido = !getTxtApellido().getText().isEmpty();
+        boolean email = !getTxtEmail().getText().isEmpty();
+        boolean direccion = !getTxtDireccion().getText().isEmpty();
+        boolean telefono = !getTxtTelefono().getText().isEmpty();
+        return cuit && dni && nombre && apellido && email && direccion && telefono;
     }
 
     private Persona getPersonaFisica(){
@@ -133,13 +199,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         //Si dni == null => obtenerPersonaJuridica
         //Si Razon social == null obtenerPersonaFisica
         //Sino error
-    }
-
-    private void obtenerPersonaFisica(){ //TODO accion guardar persona
-
-    }
-    private void obtenerPersonaJuridica(){ //TODO accion guardar persona
-
+        accionElegirPersona();
     }
 
     @FXML
@@ -177,6 +237,10 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     public AnchorPane getPanelRegistro() {
         return panelRegistro;
+    }
+
+    public ServiceCliente getServicio() {
+        return servicio;
     }
 
     public TableView getTablaPersonas() {
@@ -232,5 +296,53 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     public TextField getTxtRazonSocialJ() {
         return txtRazonSocialJ;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public TableColumn<TablaPersona, Long> getColDni() {
+        return colDni;
+    }
+
+    public TableColumn<TablaPersona, String> getColNombre() {
+        return colNombre;
+    }
+
+    public TableColumn<TablaPersona, String> getColApellido() {
+        return colApellido;
+    }
+
+    public TableColumn<TablaPersona, String> getColCuit() {
+        return colCuit;
+    }
+
+    public TableColumn<TablaPersona, String> getColDireccion() {
+        return colDireccion;
+    }
+
+    public TableColumn<TablaPersona, String> getColTelefono() {
+        return colTelefono;
+    }
+
+    public TableColumn<TablaPersona, String> getColEmail() {
+        return colEmail;
+    }
+
+    public TableColumn<TablaPersona, String> getColRazonSocial() {
+        return colRazonSocial;
+    }
+
+    public TableColumn<TablaPersona, String> getColTipoPersona() {
+        return colTipoPersona;
+    }
+
+    public TableColumn<TablaPersona, String> getColEstado() {
+        return colEstado;
     }
 }

@@ -55,7 +55,7 @@
          </graphic>
       </Button>
       <ComboBox fx:id="comboBoxCliente" layoutX="10.0" layoutY="95.0" onAction="#accionCambiarPersona" prefHeight="35.0" prefWidth="150.0" promptText="Seleccione Cliente" stylesheets="@../../Style/comboBox.css" AnchorPane.leftAnchor="10.0" />
-      <Button fx:id="btnGuardar" layoutX="890.0" layoutY="48.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
+      <Button fx:id="btnGuardar" layoutX="890.0" layoutY="48.0" mnemonicParsing="false" onAction="#accionGuardarPersona" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -81,16 +81,16 @@
       </Button>
       <TableView fx:id="tablaPersonas" layoutX="14.0" layoutY="250.0" prefHeight="233.0" prefWidth="1218.0" stylesheets="@../../Style/tablas.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
          <columns>
-            <TableColumn prefWidth="115.0" text="DNI" />
-            <TableColumn minWidth="7.0" prefWidth="142.0" text="Nombre" />
-            <TableColumn prefWidth="130.0" text="Apellido" />
-            <TableColumn prefWidth="149.0" text="CUIT" />
-            <TableColumn prefWidth="143.0" text="Direccion" />
-            <TableColumn prefWidth="121.0" text="Teléfono" />
-            <TableColumn prefWidth="97.0" text="Email" />
-            <TableColumn prefWidth="109.0" text="Razón Social" />
-            <TableColumn prefWidth="103.0" text="Tipo Persona" />
-            <TableColumn prefWidth="108.0" text="Estado" />
+            <TableColumn fx:id="colDni" prefWidth="115.0" text="DNI" />
+            <TableColumn fx:id="colNombre" minWidth="7.0" prefWidth="142.0" text="Nombre" />
+            <TableColumn fx:id="colApellido" prefWidth="130.0" text="Apellido" />
+            <TableColumn fx:id="colCuit" prefWidth="149.0" text="CUIT" />
+            <TableColumn fx:id="colDireccion" prefWidth="143.0" text="Direccion" />
+            <TableColumn fx:id="colTelefono" prefWidth="121.0" text="Teléfono" />
+            <TableColumn fx:id="colEmail" prefWidth="97.0" text="Email" />
+            <TableColumn fx:id="colRazonSocial" prefWidth="109.0" text="Razón Social" />
+            <TableColumn fx:id="colTipoPersona" prefWidth="103.0" text="Tipo Persona" />
+            <TableColumn fx:id="colEstado" prefWidth="108.0" text="Estado" />
          </columns>
       </TableView>
       <AnchorPane fx:id="panelRegistro" layoutX="178.0" layoutY="50.0" prefHeight="200.0" prefWidth="700.0" />

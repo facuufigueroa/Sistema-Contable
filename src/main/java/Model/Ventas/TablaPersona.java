@@ -1,6 +1,5 @@
 package Model.Ventas;
-
-public class Persona {
+public class TablaPersona {
     private Long dni;
     private String cuit;
     private String nombre;
@@ -9,63 +8,43 @@ public class Persona {
     private String telefono;
     private String email;
     private String razonSocial;
-    private boolean estado;
+    private String tipoPersona;
+    private String estado;
 
-    public Persona(){}
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono){
+    public TablaPersona(){}
+    public TablaPersona(Long dni, String nombre, String apellido, String cuit, String direccion, String telefono
+            , String email, String razonSocial, String  tipoPersona, String estado){
         setDni(dni);
-        setCuit(cuit);
         setNombre(nombre);
         setApellido(apellido);
-        setEmail(email);
+        setCuit(cuit);
         setDireccion(direccion);
         setTelefono(telefono);
-
-        //Persona Juridica
-        setRazonSocial(null);
-        setEstado(true);
-    }
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, boolean estado){
-        setDni(dni);
-        setCuit(cuit);
-        setNombre(nombre);
-        setApellido(apellido);
-        setEmail(email);
-        setDireccion(direccion);
-        setTelefono(telefono);
-
-        //Persona Juridica
-        setRazonSocial(null);
-        setEstado(estado);
-    }
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, boolean estado){
-        setDni(dni);
-        setCuit(cuit);
-        setNombre(nombre);
-        setApellido(apellido);
-        setEmail(email);
-        setDireccion(direccion);
-        setTelefono(telefono);
-
-        //Persona Juridica
-        setRazonSocial(razonSocial);
-        setEstado(estado);
-    }
-    public Persona(String cuit, String razonSocial, String email, String direccion, String telefono){
-        //Persona Fisica
-        setDni(null);
-        setNombre(null);
-        setApellido(null);
-
-        //Persona Juridica
-        setCuit(cuit);
         setEmail(email);
         setRazonSocial(razonSocial);
-        setDireccion(direccion);
-        setTelefono(telefono);
-        setEstado(true);
+        setTipoPersona(tipoPersona);
+        setEstado(estado);
     }
-
+    public TablaPersona(Persona persona){
+        if (persona.getDni() == null){
+            setDni(0L);
+            setNombre("");
+            setApellido("");
+            setTipoPersona("JURIDICA");
+        }else{
+            setDni(persona.getDni());
+            setNombre(persona.getNombre());
+            setApellido(persona.getApellido());
+            setCuit(persona.getCuit());
+            setDireccion(persona.getDireccion());
+            setTelefono(persona.getTelefono());
+            setEmail(persona.getEmail());
+            setRazonSocial(persona.getRazonSocial());
+            setTipoPersona("FISICA");
+        }
+        if (persona.isEstado()){ setEstado("Habilitado");
+        }else { setEstado("Deshabilitado"); }
+    }
 
     public Long getDni() {
         return dni;
@@ -131,11 +110,19 @@ public class Persona {
         this.razonSocial = razonSocial;
     }
 
-    public boolean isEstado() {
+    public String getTipoPersona() {
+        return tipoPersona;
+    }
+
+    public void setTipoPersona(String tipoPersona) {
+        this.tipoPersona = tipoPersona;
+    }
+
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 }
