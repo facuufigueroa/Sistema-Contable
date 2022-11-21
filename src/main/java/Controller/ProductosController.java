@@ -187,6 +187,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     public void limpiarCamposBusqueda() {
         txtBuscarPorCodigo.setText("");
         txtBuscarPorNombre.setText("");
+        listarProductos();
     }
 
     public void limparTodosLosCampos() {
@@ -209,7 +210,10 @@ public class ProductosController extends ViewFuntionality implements Initializab
         if(!verificarCamposVacios()){
             Producto producto = new Producto(txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()));
             serviceProducto.modificarProducto(txtCodigo.getText(),producto);
+
             limparTodosLosCampos();
+            txtCodigo.setDisable(false);
+            comboBoxAlicuota.setDisable(false);
             Alerta.alertaProductoModificado();
         }
         else{
