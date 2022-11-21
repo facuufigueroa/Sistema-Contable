@@ -22,7 +22,7 @@ public class ServiceCliente {
             setPs(getConnection().prepareStatement(PersonaQuery.getPersonaById()));
             getPs().setString(1, email);
             setResultSet(getPs().executeQuery());
-            if (getResultSet().first()){
+            if (getResultSet().next()){
                 return new Persona(
                          getResultSet().getLong("dni")
                         ,getResultSet().getString("cuit")

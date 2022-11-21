@@ -4,6 +4,7 @@ module sistemacontable.sistemacontable {
     requires java.sql;
     requires org.postgresql.jdbc;
     requires jasperreports;
+    requires org.testng;
 
 
     opens Model.Ventas to javafx.base ;
