@@ -100,6 +100,28 @@ public class ServiceProducto {
         }
     }
 
+    public void deshabilitarProducto(String codigo){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.deshabilitarProducto(Long.valueOf(codigo))));
+            getPreparedStatement().executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void habilitarProducto(String codigo){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.habilitarProducto(Long.valueOf(codigo))));
+            getPreparedStatement().executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+
+
     public ConexionBD getConexionBD() {
         return conexionBD;
     }

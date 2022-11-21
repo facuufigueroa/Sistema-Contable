@@ -9,7 +9,7 @@ public class ProductoQuery {
     }
 
     public static String listarProductosHabilitados(){
-        return "SELECT * FROM productos as p WHERE p.estado=true ORDER BY p.codigo ASC";
+        return "SELECT * FROM productos as p ORDER BY p.codigo ASC";
     }
 
     public static String obtenerAlicuota(Long codigo){
@@ -24,4 +24,14 @@ public class ProductoQuery {
         return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", stock= "+p.getStock()+"" +
                 " WHERE codigo ='"+codigo+"'";
     }
+
+    public static String deshabilitarProducto(Long codigo){
+        return "UPDATE productos SET estado=false WHERE productos.codigo="+codigo;
+    }
+
+    public static String habilitarProducto(Long codigo){
+        return "UPDATE productos SET estado=true WHERE productos.codigo="+codigo;
+    }
+
+
 }

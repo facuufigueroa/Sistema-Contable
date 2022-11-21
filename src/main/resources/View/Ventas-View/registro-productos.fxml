@@ -159,7 +159,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnHabilitar" layoutX="889.0" layoutY="226.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Habilitar Producto" textFill="WHITE">
+            <Button fx:id="btnHabilitar" layoutX="889.0" layoutY="226.0" mnemonicParsing="false" onAction="#accionHabilitarProducto" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Habilitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

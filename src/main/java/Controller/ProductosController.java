@@ -19,10 +19,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 public class ProductosController extends ViewFuntionality implements Initializable {
 
@@ -81,28 +86,32 @@ public class ProductosController extends ViewFuntionality implements Initializab
         productoFiltradoPorCodigo = FXCollections.observableArrayList();
         productoFiltradoPorNombre = FXCollections.observableArrayList();
         iniciarCbbAlicuota();
-        listarProductoHabilitados();
+        soloNumeros(txtCodigo);
+        soloNumeros(txtStock);
+        soloDouble(txtPrecio);
+        listarProductos();
     }
 
     @FXML
     public void accionGuardarProducto() throws SQLException {
-        if(!existeProducto(txtCodigo.getText())) {
-            if (!verificarCamposVacios()) {
-                Producto producto = new Producto(Long.parseLong(txtCodigo.getText()), txtNombre.getText(), txtDetalle.getText(), Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()), Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
-                serviceProducto.insertarProducto(producto);
-                listarProductoHabilitados();
-                limparTodosLosCampos();
-                Alerta.alertaProductoRegistrado();
-            } else {
-                Alerta.alertaCamposVaciosProducto();
+        if (!verificarCamposVacios()) {
+            if(!existeProducto(txtCodigo.getText())) {
+                    Producto producto = new Producto(Long.parseLong(txtCodigo.getText()), txtNombre.getText(), txtDetalle.getText(), Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()), Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
+                    serviceProducto.insertarProducto(producto);
+                    listarProductos();
+                    limparTodosLosCampos();
+                    Alerta.alertaProductoRegistrado();
+                }
+                else{
+                Alerta.alertaExisteProducto();
+                }
             }
-        }
-        else{
-            Alerta.alertaExisteProducto();
+        else {
+            Alerta.alertaCamposVaciosProducto();
         }
     }
 
-    public void listarProductoHabilitados() {
+    public void listarProductos() {
         productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductosHabilitados());
         columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columNombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
@@ -243,8 +252,66 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
     @FXML
     public void accionDeshabilitarProducto(){
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Confirmación de deshabilitación de producto");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        List<Producto> filaSeleccionada = tablaProductos.getSelectionModel().getSelectedItems();
+        if(filaSeleccionada.size() == 1 ) {
+                alert.setContentText("¿Está seguro de deshabilitar el producto: " + filaSeleccionada.get(0).getNombre() + "?");
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        serviceProducto.deshabilitarProducto(filaSeleccionada.get(0).getCodigo().toString());
+                        Alerta.alertaProductoDeshabilitado(filaSeleccionada.get(0).getNombre());
+                        listarProductos();
+                    }
+                });
+                }
     }
+
+    @FXML
+    public void accionHabilitarProducto(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Confirmación de habilitacion de producto");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        List<Producto> filaSeleccionada = tablaProductos.getSelectionModel().getSelectedItems();
+        if(filaSeleccionada.size() == 1 ) {
+            alert.setContentText("¿Está seguro de habilitar el producto: " + filaSeleccionada.get(0).getNombre() + "?");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    serviceProducto.habilitarProducto(filaSeleccionada.get(0).getCodigo().toString());
+                    Alerta.alertaProductoHabilitado(filaSeleccionada.get(0).getNombre());
+                    listarProductos();
+                }
+            });
+        }
+    }
+
+    /*Solo campos numericos*/
+    public static void soloNumeros(TextField txtCodigo) {
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^\\d*$")) {
+                return change;
+            }
+            return null;
+        };
+        txtCodigo.setTextFormatter(
+                new TextFormatter<Integer>(
+                        new IntegerStringConverter(), null, integerFilter));
+    }
+
+    public static void soloDouble(TextField txtMonto) {
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^\\d*\\.?\\d{0,2}$")) {
+                return change;
+            }
+            return null;
+        };
+        txtMonto.setTextFormatter(new TextFormatter<Double>(new DoubleStringConverter(), null, integerFilter));
+    }
+
+
 
     @FXML
     public void accionVolver(ActionEvent event) throws IOException {

@@ -265,4 +265,24 @@ public class Alerta {
         return true;
     }
 
+    public static boolean alertaProductoDeshabilitado(String nombre) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡ "+nombre+" deshabilitado con éxito !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertaProductoHabilitado(String nombre) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡"+nombre+" habilitado con éxito !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
 }
