@@ -34,7 +34,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private HomeVentasController homeVentasController;
 
     @FXML private ComboBox<String> comboBoxCliente = new ComboBox<>();
-    @FXML private AnchorPane panelRegistro = new AnchorPane();
+    @FXML private AnchorPane panelRegistro;
 
     //Tabla
     @FXML private TableView<TablaPersona> tablaPersonas = new TableView<>();
@@ -59,11 +59,11 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtTelefono;
 
     //Persona Juridica
-    @FXML private TextField txtCuitJ;
-    @FXML private TextField txtEmailJ;
-    @FXML private TextField txtTelefonoJ;
-    @FXML private TextField txtDireccionJ;
-    @FXML private TextField txtRazonSocialJ;
+    @FXML private TextField txtCuitJ = new TextField();
+    @FXML private TextField txtEmailJ = new TextField();
+    @FXML private TextField txtTelefonoJ = new TextField();
+    @FXML private TextField txtDireccionJ = new TextField();
+    @FXML private TextField txtRazonSocialJ = new TextField();
 
     private Persona persona;
 
@@ -103,15 +103,17 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     /**
      *   Paneles de registros de personas
      */
-    public AnchorPane personaFisica()throws IOException{
+    public void personaFisica()throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-fisica.fxml"));
         Parent parent = loader.load();
-        return  (AnchorPane) parent;
+        getPanelRegistro().getChildren().clear();
+        getPanelRegistro().getChildren().addAll(parent);
     }
-    public AnchorPane personaJuridica() throws IOException{
+    public void personaJuridica() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Ventas-View/clientes/persona-juridica.fxml"));
         Parent parent = loader.load();
-        return  (AnchorPane) parent;
+        getPanelRegistro().getChildren().clear();
+        getPanelRegistro().getChildren().addAll(parent);
     }
 
 
@@ -119,18 +121,16 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public void accionCambiarPersona() throws IOException {
         String tipoPersona = getComboBoxCliente().getValue();
         if (tipoPersona.equals("Persona Fisica")){
-            getPanelRegistro().getChildren().clear();
-            getPanelRegistro().getChildren().setAll(personaFisica());
+            personaFisica();
         }else if (tipoPersona.equals("Persona Juridica")){
-            getPanelRegistro().getChildren().clear();
-            getPanelRegistro().getChildren().setAll(personaJuridica());
+            personaJuridica();
         }
     }
     private void accionElegirPersona() throws NullPointerException{ //Si selecciona una persona se carga el panel con los datos de dicha persona
        try {
            String tipoPersona = getComboBoxCliente().getValue();
            if (tipoPersona.equals("Persona Fisica")) {
-               if (!comprobarPersonaFisicaNoNula()) {
+               if (comprobarPersonaFisicaNoNula()) {
                    //setear panel persona fisica
                    setPersona(getPersonaFisica());
                    getServicio().insertarPersona(getPersona());
@@ -175,7 +175,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
 
     private Persona getPersonaFisica(){
-        return new Persona(   Long.valueOf(getTxtDni().getText())
+        long dni = Long.parseLong((getTxtDni().getText()));
+        return new Persona(  dni
                             , getTxtCuit().getText()
                             , getTxtNombre().getText()
                             , getTxtApellido().getText()
