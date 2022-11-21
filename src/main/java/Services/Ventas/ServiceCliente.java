@@ -1,9 +1,9 @@
 package Services.Ventas;
 
 import DataBase.ConexionBD;
-import Model.Ventas.Persona;
+import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
-import Querys.Ventas.PersonaQuery;
+import Querys.Ventas.ClienteQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,14 +16,14 @@ public class ServiceCliente {
     private PreparedStatement ps;
     private ResultSet resultSet;
 
-    public Persona getPersonaByEmail(String email){
+    public Cliente getPersonaByEmail(String email){
         try{ //Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono
             setConnection(ConexionBD.conexion());
-            setPs(getConnection().prepareStatement(PersonaQuery.getPersonaById()));
+            setPs(getConnection().prepareStatement(ClienteQuery.getPersonaById()));
             getPs().setString(1, email);
             setResultSet(getPs().executeQuery());
             if (getResultSet().first()){
-                return new Persona(
+                return new Cliente(
                          getResultSet().getLong("dni")
                         ,getResultSet().getString("cuit")
                         ,getResultSet().getString("nombre")
@@ -38,21 +38,21 @@ public class ServiceCliente {
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
     }
-    public boolean insertarPersona(Persona persona){
+    public boolean insertarPersona(Cliente cliente){
         //dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona
         try {
             setConnection(ConexionBD.conexion());
-            setPs(getConnection().prepareStatement(PersonaQuery.insertarPersona()));
-            getPs().setLong(1, persona.getDni());
-            getPs().setString(2, persona.getCuit());
-            getPs().setString(3, persona.getNombre());
-            getPs().setString(4, persona.getApellido());
-            getPs().setString(5, persona.getEmail());
-            getPs().setString(6, persona.getDireccion());
-            getPs().setString(7, persona.getTelefono());
-            getPs().setString(8, persona.getRazonSocial());
-            getPs().setBoolean(9, persona.isEstado());
-            getPs().setInt(10, persona.tipoPersona());
+            setPs(getConnection().prepareStatement(ClienteQuery.insertarPersona()));
+            getPs().setLong(1, cliente.getDni());
+            getPs().setString(2, cliente.getCuit());
+            getPs().setString(3, cliente.getNombre());
+            getPs().setString(4, cliente.getApellido());
+            getPs().setString(5, cliente.getEmail());
+            getPs().setString(6, cliente.getDireccion());
+            getPs().setString(7, cliente.getTelefono());
+            getPs().setString(8, cliente.getRazonSocial());
+            getPs().setBoolean(9, cliente.isEstado());
+            getPs().setInt(10, cliente.tipoPersona());
             return getPs().executeUpdate() != 0;
         }catch (SQLException e){ System.out.println(e.getMessage());}
         return false;
@@ -61,12 +61,12 @@ public class ServiceCliente {
         ArrayList<TablaPersona> lista = new ArrayList<>();
         try{
             setConnection(ConexionBD.conexion());
-            setPs(getConnection().prepareStatement(PersonaQuery.getListadoPersonas()));
+            setPs(getConnection().prepareStatement(ClienteQuery.getListadoPersonas()));
             setResultSet(getPs().executeQuery());
             while (getResultSet().next()) {
                 //Long dni, String cuit, String nombre, String apellido, String email, String direccion
                 // String telefono, String razonSocial, String tipoPersona , boolean estado
-                Persona persona = new Persona(
+                Cliente cliente = new Cliente(
                                           getResultSet().getLong("dni")
                                         , getResultSet().getString("cuit")
                                         , getResultSet().getString("nombre")
@@ -78,7 +78,7 @@ public class ServiceCliente {
                                         , getResultSet().getString("tipo")
                                         , getResultSet().getBoolean("estado")
                 );
-                TablaPersona tablaPersona = new TablaPersona(persona);
+                TablaPersona tablaPersona = new TablaPersona(cliente);
                 lista.add(tablaPersona);
             }
             return lista;

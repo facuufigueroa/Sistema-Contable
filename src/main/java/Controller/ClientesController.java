@@ -1,8 +1,7 @@
 package Controller;
 
-import Model.TablaVistaAsiento;
 import Model.Ventas.AlertaVenta;
-import Model.Ventas.Persona;
+import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
 import Model.ViewFuntionality;
 import Services.Ventas.ServiceCliente;
@@ -27,7 +26,6 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ClientesController extends ViewFuntionality implements Initializable {
@@ -65,7 +63,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtDireccionJ = new TextField();
     @FXML private TextField txtRazonSocialJ = new TextField();
 
-    private Persona persona;
+    private Cliente cliente;
 
     //Servicio
     private ServiceCliente servicio = new ServiceCliente();
@@ -130,7 +128,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
        try {
            String tipoPersona = getComboBoxCliente().getValue();
            if (tipoPersona.equals("Persona Fisica")) {
-               if (comprobarPersonaFisicaNoNula()) {
+               if (!comprobarPersonaFisicaNoNula()) {
                    //setear panel persona fisica
                    setPersona(getPersonaFisica());
                    getServicio().insertarPersona(getPersona());
@@ -174,9 +172,9 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         return cuit || dni || nombre || apellido || email || direccion || telefono;
     }
 
-    private Persona getPersonaFisica(){
+    private Cliente getPersonaFisica(){
         long dni = Long.parseLong((getTxtDni().getText()));
-        return new Persona(  dni
+        return new Cliente(  dni
                             , getTxtCuit().getText()
                             , getTxtNombre().getText()
                             , getTxtApellido().getText()
@@ -185,8 +183,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                             , getTxtTelefono().getText()
         );
     }
-    private Persona getPersonaJuridica(){ //cuit, razonSocial, email, direccion, telefono
-        return new Persona(   getTxtCuitJ().getText()
+    private Cliente getPersonaJuridica(){ //cuit, razonSocial, email, direccion, telefono
+        return new Cliente(   getTxtCuitJ().getText()
                             , getTxtRazonSocialJ().getText()
                             , getTxtEmailJ().getText()
                             , getTxtDireccionJ().getText()
@@ -301,12 +299,12 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         return txtRazonSocialJ;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public Cliente getPersona() {
+        return cliente;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setPersona(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public TableColumn<TablaPersona, Long> getColDni() {

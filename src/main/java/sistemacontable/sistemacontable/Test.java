@@ -14,7 +14,7 @@ public class Test extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/registro-clientes2.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/registro-clientes.fxml"));
             Parent root = fxmlLoader.load();
             getClass().getClassLoader().getResource("/Controller/ClientesController.java");
             Scene scene = new Scene(root);
