@@ -72,10 +72,14 @@ public class ProductosController extends ViewFuntionality implements Initializab
     ObservableList<Producto> productObservableList;
     ObservableList<Producto> productoFiltradoPorCodigo;
 
+    ObservableList<Producto> productoFiltradoPorNombre;
+
     private ServiceProducto serviceProducto = new ServiceProducto();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        productoFiltradoPorCodigo = FXCollections.observableArrayList();
+        productoFiltradoPorNombre = FXCollections.observableArrayList();
         iniciarCbbAlicuota();
         listarProductoHabilitados();
     }
@@ -120,7 +124,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     /*Búsquedas Filtradas*/
     @FXML
     public void  buscarPorCodigo(){
-        String filtroCodigo = txtCodigo.getText();
+        String filtroCodigo = txtBuscarPorCodigo.getText();
         try{
             if(filtroCodigo.isEmpty()){
                 tablaProductos.setItems(productObservableList);
@@ -142,7 +146,24 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
     @FXML
     public void buscarPorNombre(){
-
+        String filtroNombre = txtBuscarPorNombre.getText();
+        try{
+            if(filtroNombre.isEmpty()){
+                tablaProductos.setItems(productObservableList);
+            }
+            else{
+                productoFiltradoPorCodigo.clear();
+                for(Producto p : productObservableList){
+                    String nombreP=String.valueOf(p.getNombre());
+                    if(nombreP.contains(filtroNombre)){
+                        productoFiltradoPorCodigo.add(p);
+                    }
+                }
+                tablaProductos.setItems(productoFiltradoPorCodigo);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     @FXML
