@@ -243,4 +243,26 @@ public class Alerta {
         return true;
     }
 
+    public static boolean alertaExisteProducto() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" El codigo de producto ingresado ya se encuentra registrado. \n"+
+                "Verifique e intente nuevamente con diferente codigo.\n" +
+                "En caso de querer modificar el producto, debe presionar el boton Modificar.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertaProductoModificado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡ Producto modificado con éxito !");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
 }

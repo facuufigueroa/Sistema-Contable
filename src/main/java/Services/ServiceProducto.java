@@ -4,6 +4,7 @@ import DataBase.ConexionBD;
 import Model.Cuenta;
 import Model.Producto;
 import Querys.ProductoQuery;
+import Querys.QueryAsiento;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,6 +59,46 @@ public class ServiceProducto {
         return productos;
     }
 
+    public boolean existeProducto(String codigo){
+        boolean codigo_existe = false;
+        try {
+            setConnection(ConexionBD.conexion());
+            String codigoCuenta = productoQuery.existeProducto(Long.valueOf(codigo));
+            setPreparedStatement(getConnection().prepareStatement(codigoCuenta));
+            setResultSet(preparedStatement.executeQuery());
+            if (resultSet.next()) {
+                codigo_existe = true;
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return codigo_existe;
+    }
+
+    public String obtenerAlicuotaProducto(String codigo){
+        try{
+            Long codProducto = Long.valueOf(codigo);
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerAlicuota(codProducto)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return "Error en el servicio/query al obtener alicuota";
+    }
+
+    public void modificarProducto(String codigo, Producto producto){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.modificarProducto(Long.valueOf(codigo),producto)));
+            getPreparedStatement().executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     public ConexionBD getConexionBD() {
         return conexionBD;

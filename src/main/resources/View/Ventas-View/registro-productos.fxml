@@ -113,7 +113,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnModificar" layoutX="707.0" layoutY="261.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
+            <Button fx:id="btnModificar" layoutX="707.0" layoutY="261.0" mnemonicParsing="false" onAction="#accionModificarProducto" prefHeight="46.0" prefWidth="111.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -147,7 +147,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button fx:id="btnDeshabilitar" layoutX="889.0" layoutY="158.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Deshabilitar Producto" textFill="WHITE">
+            <Button fx:id="btnDeshabilitar" layoutX="889.0" layoutY="158.0" mnemonicParsing="false" onAction="#accionDeshabilitarProducto" prefHeight="46.0" prefWidth="189.0" stylesheets="@../../Style/botones.css" text="Deshabilitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -171,7 +171,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnEditar" layoutX="931.0" layoutY="319.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="147.0" stylesheets="@../../Style/botones.css" text="Editar Producto" textFill="WHITE">
+            <Button fx:id="btnEditar" layoutX="931.0" layoutY="319.0" mnemonicParsing="false" onAction="#accionEditarProducto" prefHeight="46.0" prefWidth="147.0" stylesheets="@../../Style/botones.css" text="Editar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

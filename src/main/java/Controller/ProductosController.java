@@ -57,7 +57,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     @FXML
     private Button btnLimpiar;
     @FXML
-    private TableView tablaProductos;
+    private TableView<Producto> tablaProductos;
     @FXML
     private TableColumn columCodigo;
     @FXML
@@ -86,18 +86,23 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
     @FXML
     public void accionGuardarProducto() throws SQLException {
-        if(!verificarCamposVacios()){
-            Producto producto = new Producto(Long.parseLong(txtCodigo.getText()),txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()),Integer.parseInt(txtStock.getText()),Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
-            serviceProducto.insertarProducto(producto);
-            listarProductoHabilitados();
-            Alerta.alertaProductoRegistrado();
+        if(!existeProducto(txtCodigo.getText())) {
+            if (!verificarCamposVacios()) {
+                Producto producto = new Producto(Long.parseLong(txtCodigo.getText()), txtNombre.getText(), txtDetalle.getText(), Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()), Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
+                serviceProducto.insertarProducto(producto);
+                listarProductoHabilitados();
+                limparTodosLosCampos();
+                Alerta.alertaProductoRegistrado();
+            } else {
+                Alerta.alertaCamposVaciosProducto();
+            }
         }
         else{
-            Alerta.alertaCamposVaciosProducto();
+            Alerta.alertaExisteProducto();
         }
     }
 
-    public void listarProductoHabilitados(){
+    public void listarProductoHabilitados() {
         productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductosHabilitados());
         columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columNombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
@@ -107,14 +112,14 @@ public class ProductosController extends ViewFuntionality implements Initializab
         tablaProductos.setItems(productObservableList);
     }
 
-    public void iniciarCbbAlicuota(){
+    public void iniciarCbbAlicuota() {
         ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("21.0", "10.50","27.0");
+        items.addAll("21.0", "10.50", "27.0");
         comboBoxAlicuota.setItems(items);
     }
 
 
-    public Boolean verificarCamposVacios(){
+    public Boolean verificarCamposVacios() {
         return txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() ||
                 txtDetalle.getText().isEmpty() || txtPrecio.getText().isEmpty()
                 || txtStock.getText().isEmpty() || comboBoxAlicuota.getValue() == null;
@@ -123,55 +128,123 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
     /*Búsquedas Filtradas*/
     @FXML
-    public void  buscarPorCodigo(){
+    public void buscarPorCodigo() {
         String filtroCodigo = txtBuscarPorCodigo.getText();
-        try{
-            if(filtroCodigo.isEmpty()){
+        try {
+            if (filtroCodigo.isEmpty()) {
                 tablaProductos.setItems(productObservableList);
-            }
-            else{
+            } else {
                 productoFiltradoPorCodigo.clear();
-                for(Producto p : productObservableList){
-                    String codigoP=String.valueOf(p.getCodigo());
-                    if(codigoP.contains(filtroCodigo)){
+                for (Producto p : productObservableList) {
+                    String codigoP = String.valueOf(p.getCodigo());
+                    if (codigoP.contains(filtroCodigo)) {
                         productoFiltradoPorCodigo.add(p);
                     }
                 }
                 tablaProductos.setItems(productoFiltradoPorCodigo);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     @FXML
-    public void buscarPorNombre(){
+    public void buscarPorNombre() {
         String filtroNombre = txtBuscarPorNombre.getText();
-        try{
-            if(filtroNombre.isEmpty()){
+        try {
+            if (filtroNombre.isEmpty()) {
                 tablaProductos.setItems(productObservableList);
-            }
-            else{
+            } else {
                 productoFiltradoPorCodigo.clear();
-                for(Producto p : productObservableList){
-                    String nombreP=String.valueOf(p.getNombre());
-                    if(nombreP.contains(filtroNombre)){
+                for (Producto p : productObservableList) {
+                    String nombreP = String.valueOf(p.getNombre());
+                    if (nombreP.toLowerCase().contains(filtroNombre.toLowerCase())) {
                         productoFiltradoPorCodigo.add(p);
                     }
                 }
                 tablaProductos.setItems(productoFiltradoPorCodigo);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     @FXML
-    public void accionLimpiarBusqueda(){
-
+    public void accionLimpiarBusqueda() {
+        limpiarCamposBusqueda();
     }
     /* ---------------------------- */
 
+    public void limpiarCamposBusqueda() {
+        txtBuscarPorCodigo.setText("");
+        txtBuscarPorNombre.setText("");
+    }
+
+    public void limparTodosLosCampos() {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtDetalle.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        comboBoxAlicuota.setItems(null);
+        iniciarCbbAlicuota();
+    }
+
+    @FXML
+    public void accionEditarProducto() {
+        traerProductoSeleccionFila();
+    }
+
+    @FXML
+    public void accionModificarProducto(){
+        if(!verificarCamposVacios()){
+            Producto producto = new Producto(txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()));
+            serviceProducto.modificarProducto(txtCodigo.getText(),producto);
+            limparTodosLosCampos();
+            Alerta.alertaProductoModificado();
+        }
+        else{
+            Alerta.alertaCamposVaciosProducto();
+        }
+    }
+
+
+    /*Método para traer el producto seleccionado en la fila*/
+    public void traerProductoSeleccionFila() {
+        try {
+            limparTodosLosCampos();
+            txtCodigo.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getCodigo()));
+            txtNombre.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getNombre()));
+            txtDetalle.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getDetalle()));
+            txtPrecio.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getPrecio()));
+            txtStock.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getStock()));
+
+            txtCodigo.setDisable(true);
+            comboBoxAlicuota.getSelectionModel().select(obtenerAlicuotaProducto(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getCodigo())));
+            comboBoxAlicuota.setDisable(true);
+
+        } catch (NullPointerException e) {
+        }
+
+    }
+
+    public String obtenerAlicuotaProducto(String codigoProducto){
+            String alicuotaP = serviceProducto.obtenerAlicuotaProducto(codigoProducto);
+            return  alicuotaP;
+    }
+
+    public boolean existeProducto(String codigo){
+        boolean existencia = serviceProducto.existeProducto(codigo);
+        if(existencia == true){
+            return true;
+        }
+        return false;
+    }
+
+    @FXML
+    public void accionDeshabilitarProducto(){
+
+    }
 
     @FXML
     public void accionVolver(ActionEvent event) throws IOException {
