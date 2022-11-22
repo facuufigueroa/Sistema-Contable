@@ -25,23 +25,23 @@ public class TablaPersona {
         setTipoPersona(tipoPersona);
         setEstado(estado);
     }
-    public TablaPersona(Persona persona){
-        if (persona.getDni() == null){
+    public TablaPersona(Cliente cliente){
+        if (cliente.getDni() == null){
             setDni(0L);
             setNombre("");
             setApellido("");
         }else{
-            setDni(persona.getDni());
-            setNombre(persona.getNombre());
-            setApellido(persona.getApellido());
-            setCuit(persona.getCuit());
-            setDireccion(persona.getDireccion());
-            setTelefono(persona.getTelefono());
-            setEmail(persona.getEmail());
-            setRazonSocial(persona.getRazonSocial());
+            setDni(cliente.getDni());
+            setNombre(cliente.getNombre());
+            setApellido(cliente.getApellido());
+            setCuit(cliente.getCuit());
+            setDireccion(cliente.getDireccion());
+            setTelefono(cliente.getTelefono());
+            setEmail(cliente.getEmail());
+            setRazonSocial(cliente.getRazonSocial());
         }
-        setTipoPersona(persona.getTipoPersona());
-        if (persona.isEstado()){ setEstado("Habilitado");
+        setTipoPersona(cliente.getTipoPersona());
+        if (cliente.isEstado()){ setEstado("Habilitado");
         }else { setEstado("Deshabilitado"); }
     }
 

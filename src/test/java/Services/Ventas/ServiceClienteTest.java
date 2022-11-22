@@ -1,5 +1,5 @@
 package Services.Ventas;
-import Model.Ventas.Persona;
+import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -10,15 +10,15 @@ class ServiceClienteTest extends ServiceCliente{
     @Test
     void testGetPersonaByEmail() {
         String email = "empresa@gmail.com";
-        Persona persona = getPersonaByEmail(email);
+        Cliente persona = getPersonaByEmail(email);
         assertEquals("empresa@gmail.com", persona.getEmail());
     }
 
     @Test
     void testInsertarPersona() {
-        Long dni = 41203108L;
-        Persona persona = new Persona(dni, "20412031085", "Fernando", "Andana"
-                            , "fenando@gmail.com", "Simon Bolivar 25", "2364111111", null
+        Long dni = 11111111L;
+        Cliente persona = new Cliente(dni, "20111111115", "Leonel", "Messi"
+                            , "leo10@gmail.com", "5 de copa", "2364555555", null
                             , true
         );
         assertTrue(insertarPersona(persona), "No se registro la persona");
@@ -27,6 +27,6 @@ class ServiceClienteTest extends ServiceCliente{
     @Test
     void testListadoPersona() {
         ArrayList<TablaPersona> personas = listadoPersona();
-        assertEquals(2, personas.size());
+        assertEquals(3, personas.size());
     }
 }

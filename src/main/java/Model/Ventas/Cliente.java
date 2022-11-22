@@ -1,6 +1,6 @@
 package Model.Ventas;
 
-public class Persona {
+public class Cliente {
     private Long dni;
     private String cuit;
     private String nombre;
@@ -12,8 +12,8 @@ public class Persona {
     private String tipoPersona;
     private boolean estado;
 
-    public Persona(){}
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono){
+    public Cliente(){}
+    public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono){
         setDni(dni);
         setCuit(cuit);
         setNombre(nombre);
@@ -26,7 +26,7 @@ public class Persona {
         setRazonSocial(null);
         setEstado(true);
     }
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, boolean estado){
+    public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, boolean estado){
         setDni(dni);
         setCuit(cuit);
         setNombre(nombre);
@@ -39,7 +39,7 @@ public class Persona {
         setRazonSocial(null);
         setEstado(estado);
     }
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, boolean estado){
+    public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, boolean estado){
         setDni(dni);
         setCuit(cuit);
         setNombre(nombre);
@@ -52,7 +52,7 @@ public class Persona {
         setRazonSocial(razonSocial);
         setEstado(estado);
     }
-    public Persona(String cuit, String razonSocial, String email, String direccion, String telefono){
+    public Cliente(String cuit, String razonSocial, String email, String direccion, String telefono){
         //Persona Fisica
         setDni(null);
         setNombre(null);
@@ -66,7 +66,7 @@ public class Persona {
         setTelefono(telefono);
         setEstado(true);
     }
-    public Persona(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, String tipoPersona , boolean estado){
+    public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, String tipoPersona , boolean estado){
         setDni(dni);
         setCuit(cuit);
         setNombre(nombre);
