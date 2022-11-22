@@ -80,8 +80,29 @@ public class Cliente {
         setEstado(estado);
     }
 
+    @Override
+    public String toString() {
+        if (getDni() != null) {
+            return "{ Nombre y apellido: "
+                    + getNombre() + " " + getApellido()
+                    + "\nDni: " + getDni()
+                    + "\nCuit: " + getCuit()
+                    + "\nEmail: " + getEmail()
+                    + "\nDireccion: " + getDireccion()
+                    + "\nTelefono: " + getTelefono()
+                    + "\n}";
+        }
+        return "{ Razon social: "
+                + getRazonSocial()
+                + "\nCuit: " + getCuit()
+                + "\nEmail: " + getEmail()
+                + "\nDireccion: " + getDireccion()
+                + "\nTelefono: " + getTelefono()
+                + "\n}";
+    }
+
     public int tipoPersona(){
-        return (getDni() == null) ? 2 : 1;
+        return (getDni() == null || getDni() == 0L) ? 2 : 1;
     }
 
     public Long getDni() {

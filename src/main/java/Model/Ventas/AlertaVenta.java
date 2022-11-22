@@ -12,6 +12,22 @@ public class AlertaVenta {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+    public static void clienteRegistrado(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Usuario registrado exitosamente.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
+    public static void clienteNoRegistrado(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error al registrar el usuario.\n¡Por favor! Intentelo nuevamente");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
     public static void seleccioneTipoPersona(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);

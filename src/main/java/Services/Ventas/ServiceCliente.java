@@ -43,7 +43,11 @@ public class ServiceCliente {
         try {
             setConnection(ConexionBD.conexion());
             setPs(getConnection().prepareStatement(ClienteQuery.insertarPersona()));
-            getPs().setLong(1, cliente.getDni());
+            if (cliente.getDni() == null) {
+                getPs().setNull(1,-5);
+            }else {
+                getPs().setLong(1, cliente.getDni());
+            }
             getPs().setString(2, cliente.getCuit());
             getPs().setString(3, cliente.getNombre());
             getPs().setString(4, cliente.getApellido());
