@@ -218,14 +218,10 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     private void insertarPersona(Cliente cliente){
         try {
-            boolean isInsertado = getServicio().insertarPersona(cliente);
-            if (isInsertado){
                 getServicio().insertarPersona(cliente);
                 AlertaVenta.clienteRegistrado();
                 actualizarListadoPersonas();
-            }else{
-                AlertaVenta.clienteNoRegistrado();
-            }
+
         }catch (Exception e){ AlertaVenta.clienteNoRegistrado(); }
     }
     public void actualizarListadoPersonas(){
