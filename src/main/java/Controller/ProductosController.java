@@ -208,7 +208,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     @FXML
     public void accionModificarProducto(){
         if(!verificarCamposVacios()){
-            Producto producto = new Producto(txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()));
+            Producto producto = new Producto(txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
             serviceProducto.modificarProducto(txtCodigo.getText(),producto);
 
             limparTodosLosCampos();
@@ -234,7 +234,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
             txtCodigo.setDisable(true);
             comboBoxAlicuota.getSelectionModel().select(obtenerAlicuotaProducto(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getCodigo())));
-            comboBoxAlicuota.setDisable(true);
+
 
         } catch (NullPointerException e) {
         }

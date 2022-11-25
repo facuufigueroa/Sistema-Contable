@@ -21,7 +21,7 @@ public class ProductoQuery {
     }
 
     public static String modificarProducto(Long codigo, Producto p){
-        return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", stock= "+p.getStock()+"" +
+        return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", stock= "+p.getStock()+"" +", alicuota= "+p.getAlicuota()+
                 " WHERE codigo ='"+codigo+"'";
     }
 

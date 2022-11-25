@@ -22,11 +22,12 @@ public class Producto {
         this.estado=true;
     }
 
-    public Producto(String nombre, String detalle, Double precio, int stock) {
+    public Producto(String nombre, String detalle, Double precio, int stock,double alicuota) {
         this.nombre = nombre;
         this.detalle = detalle;
         this.precio = precio;
         this.stock = stock;
+        this.alicuota=alicuota;
     }
 
     public Producto() {
