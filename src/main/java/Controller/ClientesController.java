@@ -17,14 +17,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ClientesController extends ViewFuntionality implements Initializable {
     private HomeVentasController homeVentasController;
@@ -45,6 +47,10 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TableColumn<TablaPersona, String> colTipoPersona = new TableColumn<>();
     @FXML private TableColumn<TablaPersona, String> colEstado = new TableColumn<>();
 
+    //Busqueda
+    @FXML private TextField txtBuscarPorDni;
+    @FXML private TextField txtBuscarPorNombre;
+
     //Persona Fisica
     @FXML private TextField txtDni;
     @FXML private TextField txtCuit;
@@ -63,11 +69,16 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     private Cliente cliente;
 
+    private ObservableList<TablaPersona> personasPorDni;
+
+    private HashSet<TablaPersona> personas = new HashSet<>();
+
     //Servicio
     private ServiceCliente servicio = new ServiceCliente();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        personasPorDni = FXCollections.observableArrayList();
         iniciarTabla();
         iniciarComboBox();
     }
@@ -228,19 +239,44 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         ObservableList<TablaPersona> tablaVistaAsientos = FXCollections.observableArrayList(getServicio().listadoPersona());
         getTablaPersonas().setItems(tablaVistaAsientos);
     }
+    /**Metodos buscar cliente por dni**/
+    @FXML
+    public void accionBuscarClientePorDni(KeyEvent event){
+        ObservableList<TablaPersona> listadoPersonas = getTablaPersonas().getItems();
+        try{
+            String filtroCodigo = getTxtBuscarPorDni().getText();
+            if (filtroCodigo.isEmpty()){
+                actualizarListadoPersonas();
+                personas.clear();
+            }else{
+                personas.clear();
+                listadoPersonas.forEach(persona ->
+                        {
+                            String dni = String.valueOf(persona.getDni());
+                            if (dni.contains(filtroCodigo)){
+                                personas.add(persona);
+                                personasPorDni.setAll(personas);
+                            }
+                        }
+                );
+                getTablaPersonas().setItems(personasPorDni);
+            }
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+    }
+
     /**Metodos modificar cliente**/
     @FXML
     public void accionModificarCliente(){
         if (getPersona() == null) {
             AlertaVenta.seleccioneCliente();
         }else if (getPersona().getDni() == null){
-            //obtenerPersonaJuridica();
             setPersona(getPersonaJuridica());
             getServicio().modificarCliente(getPersona());
             limpiarCampoPersonaJuridica();
             actualizarListadoPersonas();
         }else{
-            //obtenerPersonaFisica();
             setPersona(getPersonaFisica());
             getServicio().modificarCliente(getPersona());
             limpiarCampoPersonaFisica();
@@ -349,178 +385,53 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         stage.show();
     }
     private HomeVentasController loadMenuVenta(HomeVentasController menuVentaseController){ return menuVentaseController; }
-
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
-
-
-    public HomeVentasController getHomeVentasController() {
-        return homeVentasController;
-    }
-
-    public void setHomeVentasController(HomeVentasController homeVentasController) {
-        this.homeVentasController = homeVentasController;
-    }
-
-    public ComboBox<String> getComboBoxCliente() {
-        return comboBoxCliente;
-    }
-
-    public AnchorPane getPanelRegistro() {
-        return panelRegistro;
-    }
-
-    public ServiceCliente getServicio() {
-        return servicio;
-    }
-
-    public TableView getTablaPersonas() {
-        return tablaPersonas;
-    }
-    public void setPanelRegistro(AnchorPane panelRegistro) {
-        this.panelRegistro = panelRegistro;
-    }
-
-    public TextField getTxtDni() {
-        return txtDni;
-    }
-
-    public TextField getTxtCuit() {
-        return txtCuit;
-    }
-
-    public TextField getTxtNombre() {
-        return txtNombre;
-    }
-
-    public TextField getTxtApellido() {
-        return txtApellido;
-    }
-
-    public TextField getTxtEmail() {
-        return txtEmail;
-    }
-
-    public TextField getTxtDireccion() {
-        return txtDireccion;
-    }
-
-    public TextField getTxtTelefono() {
-        return txtTelefono;
-    }
-    public void setTxtDni(TextField txtDni) {
-        this.txtDni = txtDni;
-    }
-
-    public void setTxtCuit(TextField txtCuit) {
-        this.txtCuit = txtCuit;
-    }
-
-    public void setTxtNombre(TextField txtNombre) {
-        this.txtNombre = txtNombre;
-    }
-
-    public void setTxtApellido(TextField txtApellido) {
-        this.txtApellido = txtApellido;
-    }
-
-    public void setTxtEmail(TextField txtEmail) {
-        this.txtEmail = txtEmail;
-    }
-
-    public void setTxtDireccion(TextField txtDireccion) {
-        this.txtDireccion = txtDireccion;
-    }
-
-    public void setTxtTelefono(TextField txtTelefono) {
-        this.txtTelefono = txtTelefono;
-    }
-
-    public TextField getTxtCuitJ() {
-        return txtCuitJ;
-    }
-
-    public TextField getTxtEmailJ() {
-        return txtEmailJ;
-    }
-
-    public TextField getTxtTelefonoJ() {
-        return txtTelefonoJ;
-    }
-
-    public TextField getTxtDireccionJ() {
-        return txtDireccionJ;
-    }
-
-    public TextField getTxtRazonSocialJ() {
-        return txtRazonSocialJ;
-    }
-
-    public void setTxtCuitJ(TextField txtCuitJ) {
-        this.txtCuitJ = txtCuitJ;
-    }
-
-    public void setTxtEmailJ(TextField txtEmailJ) {
-        this.txtEmailJ = txtEmailJ;
-    }
-
-    public void setTxtTelefonoJ(TextField txtTelefonoJ) {
-        this.txtTelefonoJ = txtTelefonoJ;
-    }
-
-    public void setTxtDireccionJ(TextField txtDireccionJ) {
-        this.txtDireccionJ = txtDireccionJ;
-    }
-
-    public void setTxtRazonSocialJ(TextField txtRazonSocialJ) {
-        this.txtRazonSocialJ = txtRazonSocialJ;
-    }
-
-    public Cliente getPersona() {
-        return cliente;
-    }
-
-    public void setPersona(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public TableColumn<TablaPersona, Long> getColDni() {
-        return colDni;
-    }
-
-    public TableColumn<TablaPersona, String> getColNombre() {
-        return colNombre;
-    }
-
-    public TableColumn<TablaPersona, String> getColApellido() {
-        return colApellido;
-    }
-
-    public TableColumn<TablaPersona, String> getColCuit() {
-        return colCuit;
-    }
-
-    public TableColumn<TablaPersona, String> getColDireccion() {
-        return colDireccion;
-    }
-
-    public TableColumn<TablaPersona, String> getColTelefono() {
-        return colTelefono;
-    }
-
-    public TableColumn<TablaPersona, String> getColEmail() {
-        return colEmail;
-    }
-
-    public TableColumn<TablaPersona, String> getColRazonSocial() {
-        return colRazonSocial;
-    }
-
-    public TableColumn<TablaPersona, String> getColTipoPersona() {
-        return colTipoPersona;
-    }
-
-    public TableColumn<TablaPersona, String> getColEstado() {
-        return colEstado;
-    }
+    public HomeVentasController getHomeVentasController() { return homeVentasController; }
+    public void setHomeVentasController(HomeVentasController homeVentasController) { this.homeVentasController = homeVentasController; }
+    public ComboBox<String> getComboBoxCliente() { return comboBoxCliente; }
+    public AnchorPane getPanelRegistro() { return panelRegistro; }
+    public ServiceCliente getServicio() { return servicio; }
+    public TextField getTxtBuscarPorDni() { return txtBuscarPorDni; }
+    public void setTxtBuscarPorDni(TextField txtBuscarPorDni) { this.txtBuscarPorDni = txtBuscarPorDni; }
+    public TextField getTxtBuscarPorNombre() { return txtBuscarPorNombre; }
+    public void setTxtBuscarPorNombre(TextField txtBuscarPorNombre) { this.txtBuscarPorNombre = txtBuscarPorNombre; }
+    public TableView getTablaPersonas() { return tablaPersonas; }
+    public void setPanelRegistro(AnchorPane panelRegistro) { this.panelRegistro = panelRegistro; }
+    public TextField getTxtDni() { return txtDni; }
+    public TextField getTxtCuit() { return txtCuit; }
+    public TextField getTxtNombre() { return txtNombre; }
+    public TextField getTxtApellido() { return txtApellido; }
+    public TextField getTxtEmail() { return txtEmail; }
+    public TextField getTxtDireccion() { return txtDireccion; }
+    public TextField getTxtTelefono() { return txtTelefono; }
+    public void setTxtDni(TextField txtDni) { this.txtDni = txtDni; }
+    public void setTxtCuit(TextField txtCuit) { this.txtCuit = txtCuit; }
+    public void setTxtNombre(TextField txtNombre) { this.txtNombre = txtNombre; }
+    public void setTxtApellido(TextField txtApellido) { this.txtApellido = txtApellido; }
+    public void setTxtEmail(TextField txtEmail) { this.txtEmail = txtEmail; }
+    public void setTxtDireccion(TextField txtDireccion) { this.txtDireccion = txtDireccion; }
+    public void setTxtTelefono(TextField txtTelefono) { this.txtTelefono = txtTelefono; }
+    public TextField getTxtCuitJ() { return txtCuitJ; }
+    public TextField getTxtEmailJ() { return txtEmailJ; }
+    public TextField getTxtTelefonoJ() { return txtTelefonoJ; }
+    public TextField getTxtDireccionJ() { return txtDireccionJ; }
+    public TextField getTxtRazonSocialJ() { return txtRazonSocialJ; }
+    public void setTxtCuitJ(TextField txtCuitJ) { this.txtCuitJ = txtCuitJ; }
+    public void setTxtEmailJ(TextField txtEmailJ) { this.txtEmailJ = txtEmailJ; }
+    public void setTxtTelefonoJ(TextField txtTelefonoJ) { this.txtTelefonoJ = txtTelefonoJ; }
+    public void setTxtDireccionJ(TextField txtDireccionJ) { this.txtDireccionJ = txtDireccionJ; }
+    public void setTxtRazonSocialJ(TextField txtRazonSocialJ) { this.txtRazonSocialJ = txtRazonSocialJ; }
+    public Cliente getPersona() { return cliente; }
+    public void setPersona(Cliente cliente) { this.cliente = cliente; }
+    public TableColumn<TablaPersona, Long> getColDni() { return colDni; }
+    public TableColumn<TablaPersona, String> getColNombre() { return colNombre; }
+    public TableColumn<TablaPersona, String> getColApellido() { return colApellido; }
+    public TableColumn<TablaPersona, String> getColCuit() { return colCuit; }
+    public TableColumn<TablaPersona, String> getColDireccion() { return colDireccion; }
+    public TableColumn<TablaPersona, String> getColTelefono() { return colTelefono; }
+    public TableColumn<TablaPersona, String> getColEmail() { return colEmail; }
+    public TableColumn<TablaPersona, String> getColRazonSocial() { return colRazonSocial; }
+    public TableColumn<TablaPersona, String> getColTipoPersona() { return colTipoPersona; }
+    public TableColumn<TablaPersona, String> getColEstado() { return colEstado; }
 }

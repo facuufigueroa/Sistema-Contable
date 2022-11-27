@@ -67,7 +67,7 @@
             <Font name="Lucida Sans Unicode" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnModificar" onAction="#accionModificarCliente" layoutX="891.0" layoutY="95.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
+      <Button fx:id="btnModificar" layoutX="891.0" layoutY="95.0" mnemonicParsing="false" onAction="#accionModificarCliente" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -130,7 +130,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtBuscarPorCodigo" layoutX="10.0" layoutY="183.0" prefHeight="32.0" prefWidth="150.0" promptText="Buscar por DNI">
+      <TextField fx:id="txtBuscarPorDni" onKeyReleased="#accionBuscarClientePorDni" layoutX="10.0" layoutY="183.0" prefHeight="32.0" prefWidth="150.0" promptText="Buscar por DNI">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -140,7 +140,7 @@
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="btnEditar" onAction="#accionEditarCliente" layoutX="891.0" layoutY="157.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE">
+      <Button fx:id="btnEditar" layoutX="891.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionEditarCliente" prefHeight="35.0" prefWidth="130.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
