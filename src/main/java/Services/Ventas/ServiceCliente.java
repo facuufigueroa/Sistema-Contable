@@ -1,6 +1,7 @@
 package Services.Ventas;
 
 import DataBase.ConexionBD;
+import Model.Ventas.AlertaVenta;
 import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
 import Querys.Ventas.ClienteQuery;
@@ -37,6 +38,37 @@ public class ServiceCliente {
             }
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
+    }
+    public void modificarCliente(Cliente persona) {
+        setConnection(null);
+        setPs(null);
+        try {
+            setConnection(ConexionBD.conexion());
+            if (persona.getDni() == null || persona.getDni().equals(0L)){
+                setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaJuridica()));
+                // 1|razon_social, 2|email, 3|direccion, 4|telefono, 5|cuit
+                getPs().setString(1, persona.getRazonSocial());
+                getPs().setString(2, persona.getEmail());
+                getPs().setString(3, persona.getDireccion());
+                getPs().setString(4, persona.getTelefono());
+                getPs().setString(5, persona.getCuit());
+                getPs().executeUpdate();
+            }else{
+                setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaFisica()));
+                //1|nombre, 2|apellido, 3|email, 4|direccion, 5|telefono, 6|cuit
+                getPs().setString(1, persona.getNombre());
+                getPs().setString(2, persona.getApellido());
+                getPs().setString(3, persona.getEmail());
+                getPs().setString(4, persona.getDireccion());
+                getPs().setString(5, persona.getTelefono());
+                getPs().setString(6, persona.getCuit());
+                getPs().executeUpdate();
+            }
+            AlertaVenta.clienteModificadoCorrectamente();
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
+            AlertaVenta.clienteNoModificado();
+        }
     }
     public boolean insertarPersona(Cliente cliente){
         //dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona

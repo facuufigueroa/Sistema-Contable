@@ -228,6 +228,26 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         ObservableList<TablaPersona> tablaVistaAsientos = FXCollections.observableArrayList(getServicio().listadoPersona());
         getTablaPersonas().setItems(tablaVistaAsientos);
     }
+    /**Metodos modificar cliente**/
+    @FXML
+    public void accionModificarCliente(){
+        if (getPersona() == null) {
+            AlertaVenta.seleccioneCliente();
+        }else if (getPersona().getDni() == null){
+            //obtenerPersonaJuridica();
+            setPersona(getPersonaJuridica());
+            getServicio().modificarCliente(getPersona());
+            limpiarCampoPersonaJuridica();
+            actualizarListadoPersonas();
+        }else{
+            //obtenerPersonaFisica();
+            setPersona(getPersonaFisica());
+            getServicio().modificarCliente(getPersona());
+            limpiarCampoPersonaFisica();
+            actualizarListadoPersonas();
+        }
+        setPersona(null);
+    }
 
     /**Metodos editar cliente**/
     private void limpiarCampoPersonaFisica(){
@@ -310,7 +330,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public void accionEditarCliente() throws NullPointerException{
         TablaPersona tablaPersona = getClienteSeleccionado();
         if (tablaPersona != null){
-            Cliente cliente = getClienteSegunTipo(tablaPersona);
+            setPersona(getClienteSegunTipo(tablaPersona));
         }
     }
     @FXML

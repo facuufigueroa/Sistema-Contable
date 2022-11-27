@@ -16,7 +16,23 @@ public class AlertaVenta {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText("Usuario registrado exitosamente.");
+        alert.setContentText("Cliente registrado exitosamente.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
+    public static void clienteModificadoCorrectamente(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Cliente modificado exitosamente.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
+    public static void clienteNoModificado(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Error al modificar el cliente.\n¡Por favor! Intentelo nuevamente");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
@@ -24,7 +40,7 @@ public class AlertaVenta {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText("Error al registrar el usuario.\n¡Por favor! Intentelo nuevamente");
+        alert.setContentText("Error al registrar el cliente.\n¡Por favor! Intentelo nuevamente");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }

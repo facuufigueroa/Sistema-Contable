@@ -16,4 +16,15 @@ public class ClienteQuery {
         return "INSERT INTO clientes (dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     }
+
+    public static String modificarPersonaJuridica(){
+        return    "UPDATE clientes "
+                + "SET  razon_social = ?, email = ?, direccion = ?, telefono = ?"
+                + "WHERE cuit = ?"; //
+    }
+    public static String modificarPersonaFisica(){
+        return    "UPDATE clientes "
+                + "SET nombre = ?, apellido = ?, email = ?, direccion = ?, telefono = ? "
+                + "WHERE cuit = ?";
+    }
 }
