@@ -140,7 +140,7 @@
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="btnEditar" layoutX="891.0" layoutY="157.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE">
+      <Button fx:id="btnEditar" onAction="#accionEditarCliente" layoutX="891.0" layoutY="157.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>

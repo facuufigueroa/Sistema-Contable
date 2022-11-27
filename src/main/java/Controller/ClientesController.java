@@ -188,7 +188,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         return cuit || dni || nombre || apellido || email || direccion || telefono;
     }
 
-    private Cliente getPersonaFisica(){
+    private Cliente getPersonaFisica(){ //dni, cuit, nombre, apellido, email, direccion, telefono
         String dni = "+" + getTxtDni().getText();
         return new Cliente(Long.parseLong(dni)
                             , getTxtCuit().getText()
@@ -229,6 +229,90 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         getTablaPersonas().setItems(tablaVistaAsientos);
     }
 
+    /**Metodos editar cliente**/
+    private void limpiarCampoPersonaFisica(){
+        getTxtDni().setText(null);
+        getTxtDni().setEditable(true);
+        getTxtCuit().setEditable(true);
+        getTxtCuit().setText(null);
+        getTxtNombre().setText(null);
+        getTxtApellido().setText(null);
+        getTxtEmail().setText(null);
+        getTxtDireccion().setText(null);
+        getTxtTelefono().setText(null);
+    }
+    private void setearCampoPersonaFisica(Cliente cliente){
+        //dni, cuit, nombre, apellido, email, direccion, telefono
+        getTxtDni().setText(String.valueOf(cliente.getDni()));
+        getTxtDni().setEditable(false);
+        getTxtCuit().setEditable(false);
+        getTxtCuit().setText(cliente.getCuit());
+        getTxtNombre().setText(cliente.getNombre());
+        getTxtApellido().setText(cliente.getApellido());
+        getTxtEmail().setText(cliente.getEmail());
+        getTxtDireccion().setText(cliente.getDireccion());
+        getTxtTelefono().setText(cliente.getTelefono());
+    }
+    private void limpiarCampoPersonaJuridica(){
+        getTxtCuitJ().setText(null);
+        getTxtCuitJ().setEditable(true);
+        getTxtRazonSocialJ().setText(null);
+        getTxtEmailJ().setText(null);
+        getTxtDireccionJ().setText(null);
+        getTxtTelefonoJ().setText(null);
+    }
+    private void setearCampoPersonaJuridica(Cliente cliente){
+        //cuit, razonSocial, email, direccion, telefono
+        getTxtCuitJ().setText(cliente.getCuit());
+        getTxtCuitJ().setEditable(false);
+        getTxtRazonSocialJ().setText(cliente.getRazonSocial());
+        getTxtEmailJ().setText(cliente.getEmail());
+        getTxtDireccionJ().setText(cliente.getDireccion());
+        getTxtTelefonoJ().setText(cliente.getTelefono());
+    }
+    private TablaPersona getClienteSeleccionado(){
+        try {
+            return  (TablaPersona) getTablaPersonas().getSelectionModel().getSelectedItem();
+        }catch (NullPointerException e){ System.out.println(e.getMessage()); AlertaVenta.seleccioneCliente(); }
+        return null;
+    }
+    private Cliente getClienteSegunTipo(TablaPersona cliente){
+        Cliente cliente1;
+        if(cliente.getDni().equals(0L) || cliente.getDni() == null){ //Persona juridica
+            cliente1 = new Cliente(       //cuit, razonSocial, email, direccion, telefono
+                                      cliente.getCuit()
+                                    , cliente.getRazonSocial()
+                                    , cliente.getEmail()
+                                    , cliente.getDireccion()
+                                    , cliente.getTelefono()
+            );
+            getComboBoxCliente().setValue("Persona Juridica");
+            accionElegirPersona(); //Cambio al panel de persona juridica
+            setearCampoPersonaJuridica(cliente1);
+            return cliente1;
+        }
+        cliente1 = new Cliente(       //dni, cuit, nombre, apellido, email, direccion, telefono
+                                  cliente.getDni()
+                                , cliente.getCuit()
+                                , cliente.getNombre()
+                                , cliente.getApellido()
+                                , cliente.getEmail()
+                                , cliente.getDireccion()
+                                , cliente.getTelefono()
+        );
+        getComboBoxCliente().setValue("Persona Fisica");
+        accionElegirPersona(); //Cambio al panel de persona fisica
+        setearCampoPersonaFisica(cliente1);
+        return cliente1;
+    }
+
+    @FXML
+    public void accionEditarCliente() throws NullPointerException{
+        TablaPersona tablaPersona = getClienteSeleccionado();
+        if (tablaPersona != null){
+            Cliente cliente = getClienteSegunTipo(tablaPersona);
+        }
+    }
     @FXML
     public void accionVolver(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/menu-ventas.fxml"));

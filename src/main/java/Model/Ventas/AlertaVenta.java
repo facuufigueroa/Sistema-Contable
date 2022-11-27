@@ -36,4 +36,12 @@ public class AlertaVenta {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
     }
+    public static void seleccioneCliente(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("No selecciono ningún cliente de la tabla.\n¡Por favor! Elija un cliente para modificar");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 }
