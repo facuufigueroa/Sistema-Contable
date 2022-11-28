@@ -1,5 +1,5 @@
 package Controller;
-
+import Model.Validacion;
 import Model.Ventas.AlertaVenta;
 import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
@@ -21,16 +21,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicReference;
-
 public class ClientesController extends ViewFuntionality implements Initializable {
     private HomeVentasController homeVentasController;
-
+    @FXML private Button btnEditar;
+    @FXML private Button btnHabilitarCliente;
+    @FXML private Button btnDeshabilitar;
+    @FXML private Button btnGuardar;
     @FXML private ComboBox<String> comboBoxCliente = new ComboBox<>();
     @FXML private AnchorPane panelRegistro = new AnchorPane();
 
@@ -52,8 +52,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtBuscarPorNombre;
 
     //Persona Fisica
-    @FXML private TextField txtDni;
-    @FXML private TextField txtCuit;
+    @FXML private TextField txtDni = new TextField();
+    @FXML private TextField txtCuit = new TextField();
     @FXML private TextField txtNombre;
     @FXML private TextField txtApellido;
     @FXML private TextField txtEmail;
@@ -61,16 +61,14 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtTelefono;
 
     //Persona Juridica
-    @FXML private TextField txtCuitJ;
+    @FXML private TextField txtCuitJ = new TextField();
     @FXML private TextField txtEmailJ;
     @FXML private TextField txtTelefonoJ;
     @FXML private TextField txtDireccionJ;
     @FXML private TextField txtRazonSocialJ;
 
     private Cliente cliente;
-
     private ObservableList<TablaPersona> personasPorDni;
-
     private HashSet<TablaPersona> personas = new HashSet<>();
 
     //Servicio
@@ -81,6 +79,9 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         personasPorDni = FXCollections.observableArrayList();
         iniciarTabla();
         iniciarComboBox();
+        Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtDni(), 8);
+        Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtCuit(), 11);
+        Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtCuitJ(), 11);
     }
 
     private void iniciarComboBox() {
@@ -88,8 +89,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         cuentas.addAll("Persona Fisica", "Persona Juridica");
         getComboBoxCliente().setItems(cuentas);
     }
-    //Long dni, String nombre, String apellido, String cuit, String direccion, String telefono
-    //            , String email, String razonSocial, String  tipoPersona, String estado
+
     private void iniciarTabla(){
         ObservableList<TablaPersona> tablaVistaAsientos = FXCollections.observableArrayList(getServicio().listadoPersona());
         getColDni().setCellValueFactory(new PropertyValueFactory<>("dni"));
@@ -138,7 +138,9 @@ public class ClientesController extends ViewFuntionality implements Initializabl
             setCamposPersonaFisica(node);
             if (!comprobarPersonaFisicaNoNula()) {
                 setPersona(getPersonaFisica());
-                insertarPersona(getPersona());
+                if (!getServicio().existeDni(getPersona().getDni())){
+                    insertarPersona(getPersona());
+                }else{ AlertaVenta.dniExistente(); }
             }else{ AlertaVenta.datosPersonaIncompleta(); }
         }catch (NullPointerException exception){ AlertaVenta.datosPersonaIncompleta(); }
     }
@@ -202,12 +204,12 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private Cliente getPersonaFisica(){ //dni, cuit, nombre, apellido, email, direccion, telefono
         String dni = "+" + getTxtDni().getText();
         return new Cliente(Long.parseLong(dni)
-                            , getTxtCuit().getText()
-                            , getTxtNombre().getText()
-                            , getTxtApellido().getText()
-                            , getTxtEmail().getText()
-                            , getTxtDireccion().getText()
-                            , getTxtTelefono().getText()
+                , getTxtCuit().getText()
+                , getTxtNombre().getText()
+                , getTxtApellido().getText()
+                , getTxtEmail().getText()
+                , getTxtDireccion().getText()
+                , getTxtTelefono().getText()
         );
     }
     private Cliente getPersonaJuridica(){ //cuit, razonSocial, email, direccion, telefono
@@ -229,16 +231,81 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     private void insertarPersona(Cliente cliente){
         try {
+            if (!getServicio().existeCuit(cliente.getCuit())){
                 getServicio().insertarPersona(cliente);
                 AlertaVenta.clienteRegistrado();
                 actualizarListadoPersonas();
-
+            }else{ AlertaVenta.cuitExistente(); }
         }catch (Exception e){ AlertaVenta.clienteNoRegistrado(); }
     }
     public void actualizarListadoPersonas(){
         ObservableList<TablaPersona> tablaVistaAsientos = FXCollections.observableArrayList(getServicio().listadoPersona());
         getTablaPersonas().setItems(tablaVistaAsientos);
     }
+    private void deshabilitarBotones(){
+        getBtnDeshabilitar().setDisable(true);
+        getBtnGuardar().setDisable(true);
+        getBtnHabilitarCliente().setDisable(true);
+    }
+    private void habilitarBotones(){
+        getBtnDeshabilitar().setDisable(false);
+        getBtnGuardar().setDisable(false);
+        getBtnHabilitarCliente().setDisable(false);
+    }
+
+    /**Habilitar y deshabilitar cliente**/
+    private Cliente getClientePorEstado(TablaPersona cliente){
+        if(cliente.getDni().equals(0L) || cliente.getDni() == null){ //Persona juridica
+            return new Cliente(       //cuit, razonSocial, email, direccion, telefono
+                    cliente.getCuit()
+                    , cliente.getRazonSocial()
+                    , cliente.getEmail()
+                    , cliente.getDireccion()
+                    , cliente.getTelefono()
+            );
+        }
+        return new Cliente(       //dni, cuit, nombre, apellido, email, direccion, telefono
+                cliente.getDni()
+                , cliente.getCuit()
+                , cliente.getNombre()
+                , cliente.getApellido()
+                , cliente.getEmail()
+                , cliente.getDireccion()
+                , cliente.getTelefono()
+        );
+    }
+
+    @FXML
+    public void accionHabilitarCliente(){
+        try {
+            TablaPersona seleccionado =  (TablaPersona) getTablaPersonas().getSelectionModel().getSelectedItem();
+            Cliente cliente = getClientePorEstado(seleccionado);
+            if (seleccionado.getEstado().equals("Habilitado")){
+                AlertaVenta.clienteHabilitado();
+            }else {
+                cliente.setEstado(true);
+                getServicio().modificarEstado(cliente);
+                AlertaVenta.clienteHabilitadoCorrectamente();
+                actualizarListadoPersonas();
+            }
+        }catch (NullPointerException exception){ AlertaVenta.seleccioneCliente(); }
+    }
+    @FXML
+    public void accionDeshabilitarCliente(){
+        try {
+            TablaPersona seleccionado =  (TablaPersona) getTablaPersonas().getSelectionModel().getSelectedItem();
+            Cliente cliente = getClientePorEstado(seleccionado);
+            if (seleccionado.getEstado().equals("Deshabilitado")){
+                AlertaVenta.clienteDeshabilitado();
+            }else {
+                cliente.setEstado(false);
+                getServicio().modificarEstado(cliente);
+                AlertaVenta.clienteDeshabilitadoCorrectamente();
+                actualizarListadoPersonas();
+            }
+        }catch (NullPointerException exception){ AlertaVenta.seleccioneCliente(); }
+    }
+
     /**Metodos buscar cliente por dni**/
     @FXML
     public void accionBuscarClientePorDni(KeyEvent event){
@@ -261,11 +328,10 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                 );
                 getTablaPersonas().setItems(personasPorDni);
             }
-        }catch (Exception exception){
-            System.out.println(exception.getMessage());
-        }
+        }catch (Exception exception){ System.out.println(exception.getMessage()); }
     }
-    /**Metodos buscar cliente por nombre**/
+
+    /**Metodo buscar cliente por nombre**/
     @FXML
     public void accionBuscarClientePorNombre(KeyEvent event){
         ObservableList<TablaPersona> listadoPersonas = getTablaPersonas().getItems();
@@ -287,26 +353,25 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                 );
                 getTablaPersonas().setItems(personasPorDni);
             }
-        }catch (Exception exception){
-            System.out.println(exception.getMessage());
-        }
+        }catch (Exception exception){ System.out.println(exception.getMessage()); }
     }
 
-    /**Metodos modificar cliente**/
+    /**Metodo modificar cliente**/
     @FXML
     public void accionModificarCliente(){
-        if (getPersona() == null) {
-            AlertaVenta.seleccioneCliente();
-        }else if (getPersona().getDni() == null){
+        if (getPersona() == null) { AlertaVenta.seleccioneCliente(); }
+        else if (getPersona().getDni() == null){
             setPersona(getPersonaJuridica());
             getServicio().modificarCliente(getPersona());
             limpiarCampoPersonaJuridica();
             actualizarListadoPersonas();
+            habilitarBotones();
         }else{
             setPersona(getPersonaFisica());
             getServicio().modificarCliente(getPersona());
             limpiarCampoPersonaFisica();
             actualizarListadoPersonas();
+            habilitarBotones();
         }
         setPersona(null);
     }
@@ -361,7 +426,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private Cliente getClienteSegunTipo(TablaPersona cliente){
         Cliente cliente1;
         if(cliente.getDni().equals(0L) || cliente.getDni() == null){ //Persona juridica
-            cliente1 = new Cliente(       //cuit, razonSocial, email, direccion, telefono
+            cliente1 = new Cliente(
                                       cliente.getCuit()
                                     , cliente.getRazonSocial()
                                     , cliente.getEmail()
@@ -373,7 +438,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
             setearCampoPersonaJuridica(cliente1);
             return cliente1;
         }
-        cliente1 = new Cliente(       //dni, cuit, nombre, apellido, email, direccion, telefono
+        cliente1 = new Cliente(
                                   cliente.getDni()
                                 , cliente.getCuit()
                                 , cliente.getNombre()
@@ -393,7 +458,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         TablaPersona tablaPersona = getClienteSeleccionado();
         if (tablaPersona != null){
             setPersona(getClienteSegunTipo(tablaPersona));
-        }
+            deshabilitarBotones();
+        }else{ AlertaVenta.seleccioneCliente(); }
     }
     @FXML
     public void accionVolver(ActionEvent event) throws IOException {
@@ -460,4 +526,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public TableColumn<TablaPersona, String> getColRazonSocial() { return colRazonSocial; }
     public TableColumn<TablaPersona, String> getColTipoPersona() { return colTipoPersona; }
     public TableColumn<TablaPersona, String> getColEstado() { return colEstado; }
+    public Button getBtnEditar() { return btnEditar; }
+    public Button getBtnHabilitarCliente() { return btnHabilitarCliente; }
+    public Button getBtnDeshabilitar() { return btnDeshabilitar; }
+    public Button getBtnGuardar() { return btnGuardar; }
 }
