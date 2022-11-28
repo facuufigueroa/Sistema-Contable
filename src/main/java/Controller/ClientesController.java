@@ -265,6 +265,32 @@ public class ClientesController extends ViewFuntionality implements Initializabl
             System.out.println(exception.getMessage());
         }
     }
+    /**Metodos buscar cliente por nombre**/
+    @FXML
+    public void accionBuscarClientePorNombre(KeyEvent event){
+        ObservableList<TablaPersona> listadoPersonas = getTablaPersonas().getItems();
+        try{
+            String filtroCodigo = getTxtBuscarPorNombre().getText();
+            if (filtroCodigo.isEmpty()){
+                actualizarListadoPersonas();
+                personas.clear();
+            }else{
+                personas.clear();
+                listadoPersonas.forEach(persona ->
+                        {
+                            String nombre = String.valueOf(persona.getNombre()).toLowerCase();
+                            if (nombre.contains(filtroCodigo.toLowerCase())){
+                                personas.add(persona);
+                                personasPorDni.setAll(personas);
+                            }
+                        }
+                );
+                getTablaPersonas().setItems(personasPorDni);
+            }
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+    }
 
     /**Metodos modificar cliente**/
     @FXML
