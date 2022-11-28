@@ -9,13 +9,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="360.0" prefWidth="566.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SeleccionarPagoController">
+<AnchorPane prefHeight="463.0" prefWidth="775.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SeleccionarPagoController">
    <children>
-      <Pane prefHeight="36.0" prefWidth="566.0" style="-fx-background-color: #44878f;">
+      <Pane prefHeight="36.0" prefWidth="775.0" style="-fx-background-color: #44878f;">
          <children>
-            <Button fx:id="btnClose" layoutX="520.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnClose" layoutX="729.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="38.0" prefWidth="0.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -24,7 +25,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnMinimize" layoutX="480.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
+            <Button fx:id="btnMinimize" layoutX="689.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="38.0" prefWidth="27.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,7 +44,7 @@
             <DropShadow />
          </effect>
       </Pane>
-      <Button fx:id="btnVolver" layoutX="14.0" layoutY="54.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" stylesheets="@../../Style/botones.css" text="  Volver" textFill="WHITE">
+      <Button fx:id="btnVolver" layoutX="13.0" layoutY="54.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" stylesheets="@../../Style/botones.css" text="  Volver" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -55,7 +56,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnContinuar" layoutX="417.0" layoutY="54.0" mnemonicParsing="false" onAction="#accionContinuar" prefHeight="46.0" prefWidth="129.0" stylesheets="@../../Style/botones.css" text="Continuar" textFill="WHITE">
+      <Button fx:id="btnContinuar" layoutX="630.0" layoutY="54.0" mnemonicParsing="false" onAction="#accionContinuar" prefHeight="46.0" prefWidth="129.0" stylesheets="@../../Style/botones.css" text="Continuar" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -67,13 +68,13 @@
             </ImageView>
          </graphic>
       </Button>
-      <ComboBox fx:id="comboBoxSeleccionarPago" layoutX="88.0" layoutY="143.0" prefHeight="38.0" prefWidth="228.0" promptText="Seleccionar Forma de Pago" />
+      <ComboBox fx:id="comboBoxSeleccionarPago" layoutX="102.0" layoutY="164.0" onAction="#accionCbbFormaPago" prefHeight="38.0" prefWidth="228.0" promptText="Seleccionar Forma de Pago" />
       <Label layoutX="14.0" layoutY="131.0" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="242.0" text="Cantidad Cuotas" textFill="WHITE">
+      <Label layoutX="418.0" layoutY="168.0" text="Cantidad Cuotas" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -85,15 +86,66 @@
             </ImageView>
          </graphic>
       </Label>
-      <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="14.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="38.0" fitWidth="39.0" layoutX="48.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Images/cheque.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txtCantidadCuotas" layoutX="181.0" layoutY="238.0" prefHeight="38.0" prefWidth="102.0">
+      <TextField fx:id="txtCantidadCuotas" disable="true" layoutX="598.0" layoutY="164.0" prefHeight="38.0" prefWidth="102.0">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
+      <ImageView fitHeight="38.0" fitWidth="129.0" layoutX="227.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@../../Images/vista_mastercard%20logo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="37.0" layoutY="269.0" prefHeight="33.0" prefWidth="120.0" text="Tarjetas de " textFill="WHITE">
+         <font>
+            <Font name="Arial Narrow" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="302.0" prefHeight="33.0" prefWidth="170.0" text="crédito y débito" textFill="WHITE">
+         <font>
+            <Font name="Arial Narrow" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="46.0" fitWidth="90.0" layoutX="371.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Images/nativa%20logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="53.0" fitWidth="83.0" layoutX="476.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Images/Logo_Naranja.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="38.0" layoutY="374.0" prefHeight="33.0" prefWidth="69.0" text="Efectivo" textFill="WHITE">
+         <font>
+            <Font name="Arial Narrow" size="20.0" />
+         </font>
+      </Label>
+      <Line endX="561.0" layoutX="138.0" layoutY="350.0" startX="-100.0" stroke="WHITE" />
+      <ImageView fitHeight="60.0" fitWidth="69.0" layoutX="214.0" layoutY="360.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../Images/mercado%20pago.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="60.0" fitWidth="62.0" layoutX="303.0" layoutY="360.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../Images/pago%20facil%20logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="53.0" fitWidth="83.0" layoutX="387.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Images/rapi%20pago%20logo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="39.0" fitWidth="128.0" layoutX="569.0" layoutY="293.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../Images/sant%20rio%20logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
