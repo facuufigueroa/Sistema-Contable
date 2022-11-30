@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.ViewFuntionality;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,9 +37,38 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        iniciarCbbFormaPago();
+        txtCantidadCuotas.setDisable(true);
+        txtCantidadCuotas.setText("0");
     }
     public void hideStage(){ getVentana().hide(); }
+
+    /*Método para habilitar el campo cantidad de cuotas si la forma de pago elegida es en cuotas*/
+    public void accionCbbFormaPago(){
+        if(!comboBoxSeleccionarPago.getSelectionModel().isEmpty()){
+            String seleccion = (String) comboBoxSeleccionarPago.getValue();
+            evaluarSiEsCuotas(seleccion);
+        }
+    }
+
+    public void evaluarSiEsCuotas(String nombre){
+        if(nombre.equals("Cuotas")){
+            txtCantidadCuotas.setDisable(false);
+            txtCantidadCuotas.setText("");
+        }
+        else{
+            txtCantidadCuotas.setText("0");
+            txtCantidadCuotas.setDisable(true);
+        }
+    }
+
+
+    public void iniciarCbbFormaPago(){
+        ObservableList<String> items = FXCollections.observableArrayList();
+        items.addAll("Efectivo", "Cuotas","Tarjeta Crédito","Tarjeta Débito","Cheque","Pagaré");
+        comboBoxSeleccionarPago.setItems(items);
+    }
+
 
     @FXML
     public void accionVolver(ActionEvent event) throws IOException {

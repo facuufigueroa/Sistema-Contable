@@ -20,6 +20,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     private HomeVentasController homeVentasController;
 
+    private SeleccionarPagoController seleccionarPagoController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -30,21 +32,21 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     @FXML
     public void accionVolver(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/menu-ventas.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/seleccionar-forma-pago.fxml"));
         Parent parent = fxmlLoader.load();
-        setHomeVentasController(loadMenuVenta(fxmlLoader.getController()));
+        setSeleccionarPagoController(loadSeleccionFormaPago(fxmlLoader.getController()));
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
-        Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getHomeVentasController().setVentana(homeStage);
-        getHomeVentasController().hideStage();
+        Stage formaPagoStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getSeleccionarPagoController().setVentana(formaPagoStage);
+        getSeleccionarPagoController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
     }
 
-    private HomeVentasController loadMenuVenta(HomeVentasController menuVentaseController){ return menuVentaseController; }
+    private SeleccionarPagoController loadSeleccionFormaPago(SeleccionarPagoController selectPagoController){ return selectPagoController; }
 
 
     public HomeVentasController getHomeVentasController() {
@@ -53,5 +55,13 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     public void setHomeVentasController(HomeVentasController homeVentasController) {
         this.homeVentasController = homeVentasController;
+    }
+
+    public SeleccionarPagoController getSeleccionarPagoController() {
+        return seleccionarPagoController;
+    }
+
+    public void setSeleccionarPagoController(SeleccionarPagoController seleccionarPagoController) {
+        this.seleccionarPagoController = seleccionarPagoController;
     }
 }
