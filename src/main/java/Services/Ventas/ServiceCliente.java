@@ -1,20 +1,45 @@
 package Services.Ventas;
-
 import DataBase.ConexionBD;
+import Model.Ventas.AlertaVenta;
 import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
 import Querys.Ventas.ClienteQuery;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 public class ServiceCliente {
     private Connection connection;
     private PreparedStatement ps;
     private ResultSet resultSet;
+
+    public boolean existeDni(Long dni){
+        setConnection(null);
+        setPs(null);
+        setResultSet(null);
+        try {
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.existeDni()));
+            getPs().setLong(1, dni);
+            setResultSet(getPs().executeQuery());
+            if (getResultSet().next()){ return getResultSet().getLong(1) == dni; }
+        }catch (SQLException exception){ AlertaVenta.clienteNoRegistrado(); }
+        return false;
+    }
+    public boolean existeCuit(String cuit){
+        setConnection(null);
+        setPs(null);
+        setResultSet(null);
+        try {
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.existeCuit()));
+            getPs().setString(1, cuit);
+            setResultSet(getPs().executeQuery());
+            if (getResultSet().next()){ return getResultSet().getString(1).equals(cuit); }
+        }catch (SQLException exception){ AlertaVenta.clienteNoRegistrado(); }
+        return false;
+    }
 
     public Cliente getPersonaByEmail(String email){
         try{ //Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono
@@ -37,6 +62,50 @@ public class ServiceCliente {
             }
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
+    }
+    public void modificarEstado(Cliente cliente){
+        setConnection(null);
+        setPs(null);
+        try{
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.modificarEstado()));
+            getPs().setBoolean(1, cliente.isEstado());
+            getPs().setString(2, cliente.getCuit());
+            getPs().executeUpdate();
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
+        }
+    }
+    public void modificarCliente(Cliente persona) {
+        setConnection(null);
+        setPs(null);
+        try {
+            setConnection(ConexionBD.conexion());
+            if (persona.getDni() == null || persona.getDni().equals(0L)){
+                setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaJuridica()));
+                // 1|razon_social, 2|email, 3|direccion, 4|telefono, 5|cuit
+                getPs().setString(1, persona.getRazonSocial());
+                getPs().setString(2, persona.getEmail());
+                getPs().setString(3, persona.getDireccion());
+                getPs().setString(4, persona.getTelefono());
+                getPs().setString(5, persona.getCuit());
+                getPs().executeUpdate();
+            }else{
+                setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaFisica()));
+                //1|nombre, 2|apellido, 3|email, 4|direccion, 5|telefono, 6|cuit
+                getPs().setString(1, persona.getNombre());
+                getPs().setString(2, persona.getApellido());
+                getPs().setString(3, persona.getEmail());
+                getPs().setString(4, persona.getDireccion());
+                getPs().setString(5, persona.getTelefono());
+                getPs().setString(6, persona.getCuit());
+                getPs().executeUpdate();
+            }
+            AlertaVenta.clienteModificadoCorrectamente();
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
+            AlertaVenta.clienteNoModificado();
+        }
     }
     public boolean insertarPersona(Cliente cliente){
         //dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona
