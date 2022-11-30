@@ -6,7 +6,6 @@ import Model.ProductoAgregado;
 import Model.ViewFuntionality;
 import Services.ServiceProducto;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,7 +75,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productoFiltrado = FXCollections.observableArrayList();
-        listarProductos();
+        listarProductosHabilitados();
     }
     public void hideStage(){ getVentana().hide(); }
     @FXML
@@ -97,7 +96,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
         txtCantidadProductos.setText("");
         txtBuscarPorNombre.setText("");
         txtBuscarPorCodigo.setText("");
-        listarProductos();
+        listarProductosHabilitados();
     }
     public ProductoAgregado obtenerProductoSeleccionado(){
             ProductoAgregado productoAgregado = new ProductoAgregado();
@@ -164,7 +163,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
 
     private SeleccionarPagoController loadSeleccionarPago(SeleccionarPagoController pagoController){ return pagoController; }
 
-    public void listarProductos() {
+    public void listarProductosHabilitados() {
         productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductosHabilitados());
         columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columProducto.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
@@ -234,7 +233,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     public void accionBtnLimpiar() {
         txtBuscarPorCodigo.setText("");
         txtBuscarPorNombre.setText("");
-        listarProductos();
+        listarProductosHabilitados();
     }
 
 
