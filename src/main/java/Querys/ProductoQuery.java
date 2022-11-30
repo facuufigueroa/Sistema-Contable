@@ -12,6 +12,7 @@ public class ProductoQuery {
         return "SELECT * FROM productos as p ORDER BY p.codigo ASC";
     }
 
+
     public static String obtenerAlicuota(Long codigo){
         return "SELECT alicuota FROM productos as p WHERE p.codigo="+codigo;
     }

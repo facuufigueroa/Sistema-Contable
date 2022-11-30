@@ -285,4 +285,23 @@ public class Alerta {
         return true;
     }
 
+    public static boolean alertaCantidadVacia() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" No indicó la cantidad de productos a vender ");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertaStockInsuficiente() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" No hay stock suficiente del producto seleccionado");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
 }

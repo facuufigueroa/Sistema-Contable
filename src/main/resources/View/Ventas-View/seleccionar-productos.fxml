@@ -47,16 +47,16 @@
       </Pane>
       <TableView fx:id="tablaProductos" layoutX="14.0" layoutY="211.0" prefHeight="430.0" prefWidth="554.0" stylesheets="@../../Style/tablas.css">
         <columns>
-          <TableColumn prefWidth="128.0" text="Codigo" />
-          <TableColumn prefWidth="324.0" text="Producto" />
-            <TableColumn prefWidth="100.0" text="Stock" />
+          <TableColumn fx:id="columCodigo" prefWidth="128.0" text="Codigo" />
+          <TableColumn fx:id="columProducto" prefWidth="324.0" text="Producto" />
+            <TableColumn fx:id="columStock" prefWidth="100.0" text="Stock" />
         </columns>
       </TableView>
       <TableView fx:id="tablaProductosAgregados" layoutX="757.0" layoutY="204.0" prefHeight="436.0" prefWidth="458.0" stylesheets="@../../Style/tablas.css">
          <columns>
-            <TableColumn prefWidth="161.0" text="Codigo" />
-            <TableColumn prefWidth="195.0" text="Producto" />
-            <TableColumn prefWidth="101.0" text="Cantidad" />
+            <TableColumn fx:id="columCodigoAgregado" prefWidth="161.0" text="Codigo" />
+            <TableColumn fx:id="columProductoAgregado" prefWidth="195.0" text="Producto" />
+            <TableColumn fx:id="columCantidadAgregado" prefWidth="101.0" text="Cantidad" />
          </columns>
       </TableView>
       <Button fx:id="btnAgregarProducto" layoutX="586.0" layoutY="331.0" mnemonicParsing="false" onAction="#accionBtnAgregarProducto" prefHeight="45.0" prefWidth="160.0" stylesheets="@../../Style/botones.css" text="   Agregar" textFill="WHITE">
@@ -102,12 +102,12 @@
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtBuscarPorCodigo" layoutX="47.0" layoutY="166.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por código">
+      <TextField fx:id="txtBuscarPorCodigo" layoutX="47.0" layoutY="166.0" prefHeight="32.0" prefWidth="202.0" onKeyReleased="#buscarPorCodigo" promptText="Buscar por código">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtBuscarPorNombre" layoutX="290.0" layoutY="166.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre">
+      <TextField fx:id="txtBuscarPorNombre" layoutX="290.0" layoutY="166.0" prefHeight="32.0" prefWidth="202.0" onKeyReleased="#buscarPorNombre" promptText="Buscar por nombre">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
