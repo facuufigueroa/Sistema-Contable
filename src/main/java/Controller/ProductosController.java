@@ -112,7 +112,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     }
 
     public void listarProductos() {
-        productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductosHabilitados());
+        productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductos());
         columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columNombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
         columPrecio.setCellValueFactory(new PropertyValueFactory<Producto, String>("precio"));

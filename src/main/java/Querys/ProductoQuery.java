@@ -8,8 +8,12 @@ public class ProductoQuery {
         return "INSERT INTO productos (codigo,nombre,detalle,precio_venta,estado,alicuota,stock) VALUES (?,?,?,?,?,?,?)";
     }
 
-    public static String listarProductosHabilitados(){
+    public static String listarProductos(){
         return "SELECT * FROM productos as p ORDER BY p.codigo ASC";
+    }
+
+    public static String listarProductosHabilitados(){
+        return "SELECT * FROM productos as p WHERE p.estado = true ORDER BY p.codigo ASC";
     }
 
     public static String obtenerAlicuota(Long codigo){

@@ -36,6 +36,29 @@ public class ServiceProducto {
         }catch (SQLException exception){ System.out.println(exception.getMessage()); }
     }
 
+    public ArrayList<Producto> listarProductos() {
+        ArrayList<Producto> productos = new ArrayList<>();
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.listarProductos()));
+            setResultSet(preparedStatement.executeQuery());
+            while(resultSet.next()){
+                Producto producto = new Producto();
+                producto.setCodigo(getResultSet().getLong(2));
+                producto.setNombre(getResultSet().getString(3));
+                producto.setDetalle(getResultSet().getString(4));
+                producto.setPrecio(getResultSet().getDouble(5));
+                producto.setEstado(getResultSet().getBoolean(6));
+                producto.setAlicuota(getResultSet().getDouble(7));
+                producto.setStock(getResultSet().getInt(8));
+                productos.add(producto);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return productos;
+    }
+
     public ArrayList<Producto> listarProductosHabilitados() {
         ArrayList<Producto> productos = new ArrayList<>();
         try{
@@ -58,7 +81,6 @@ public class ServiceProducto {
         }
         return productos;
     }
-
     public boolean existeProducto(String codigo){
         boolean codigo_existe = false;
         try {
