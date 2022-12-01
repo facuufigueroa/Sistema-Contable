@@ -14,18 +14,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class SeleccionarProductoController extends ViewFuntionality implements Initializable {
 
@@ -76,6 +75,8 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productoFiltrado = FXCollections.observableArrayList();
         listarProductosHabilitados();
+        soloNumeros(txtBuscarPorCodigo);
+        soloNumeros(txtCantidadProductos);
     }
     public void hideStage(){ getVentana().hide(); }
     @FXML
@@ -236,6 +237,18 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
         listarProductosHabilitados();
     }
 
+    public static void soloNumeros(TextField txtCodigo) {
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("^\\d*$")) {
+                return change;
+            }
+            return null;
+        };
+        txtCodigo.setTextFormatter(
+                new TextFormatter<Integer>(
+                        new IntegerStringConverter(), null, integerFilter));
+    }
 
     public SeleccionarPagoController getSeleccionarPagoController() {
         return seleccionarPagoController;

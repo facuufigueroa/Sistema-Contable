@@ -10,6 +10,10 @@ public class ClienteQuery {
                "INNER JOIN tipo_persona AS t ON t.idtipopersona = clientes.id_tipo_persona;";
     }
 
+    public static String listarClientesHabilitados(){
+        return "SELECT * FROM clientes as c WHERE c.estado = true ORDER BY c.nombre ASC";
+    }
+
     public static String obtenerIdTipoPersona(String nombre){
         return "SELECT idtipopersona FROM tipo_persona WHERE nombre='"+nombre+"'";
     }
