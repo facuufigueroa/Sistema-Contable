@@ -1,6 +1,7 @@
 package Querys;
 
 import Model.Producto;
+import net.sf.jasperreports.crosstabs.fill.JRPercentageCalculatorFactory;
 
 public class ProductoQuery {
 
@@ -36,6 +37,8 @@ public class ProductoQuery {
     public static String habilitarProducto(Long codigo){
         return "UPDATE productos SET estado=true WHERE productos.codigo="+codigo;
     }
-
+    public static String obtenerProductoPorId(int idProducto) {
+        return "SELECT productos FROM productos as p WHERE p.idproducto=" + idProducto;
+    }
 
 }

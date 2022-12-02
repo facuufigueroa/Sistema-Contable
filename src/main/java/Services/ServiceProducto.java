@@ -3,8 +3,10 @@ package Services;
 import DataBase.ConexionBD;
 import Model.Cuenta;
 import Model.Producto;
+import Model.Ventas.Cliente;
 import Querys.ProductoQuery;
 import Querys.QueryAsiento;
+import Querys.Ventas.ClienteQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -142,7 +144,26 @@ public class ServiceProducto {
         }
     }
 
-
+    public Producto obtenerProductoPorId(int idProducto){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorId(idProducto)));
+            //getPreparedStatement().setInt(1, idProducto);
+            setResultSet(getPreparedStatement().executeQuery());
+            if (getResultSet().next()){
+                return new Producto(
+                        getResultSet().getLong("codigo")
+                        ,getResultSet().getString("nombre")
+                        ,getResultSet().getString("detalle")
+                        ,getResultSet().getDouble("precio")
+                        ,getResultSet().getInt("stock")
+                        ,getResultSet().getDouble("alicuota")
+                        ,getResultSet().getBoolean("estado")
+                );
+            }
+        }catch (SQLException e){ System.out.println(e.getMessage()); }
+        return null;
+    }
 
     public ConexionBD getConexionBD() {
         return conexionBD;

@@ -46,17 +46,17 @@
       </Pane>
       <TableView fx:id="tablaClientes" layoutX="22.0" layoutY="216.0" prefHeight="217.0" prefWidth="896.0" stylesheets="@../../Style/tablas.css">
         <columns>
-          <TableColumn prefWidth="215.0" text="DNI" />
-          <TableColumn prefWidth="419.0" text="Nombre" />
-            <TableColumn prefWidth="261.0" text="Razón Social" />
+          <TableColumn fx:id = "columDNI" prefWidth="215.0" text="DNI" />
+          <TableColumn fx:id = "columNombre" prefWidth="419.0" text="Nombre" />
+            <TableColumn fx:id = "columRazonSocial" prefWidth="261.0" text="Razón Social" />
         </columns>
       </TableView>
-      <TextField fx:id="txtBuscarPorCodigo" layoutX="22.0" layoutY="158.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por DNI">
+      <TextField fx:id="txtBuscarPorDNI" layoutX="22.0" layoutY="158.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por DNI" onKeyReleased="#buscarPorDNI">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtBuscarPorNombre" layoutX="268.0" layoutY="158.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre">
+      <TextField fx:id="txtBuscarPorNombre" layoutX="268.0" layoutY="158.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre" onKeyReleased="#buscarPorNombre">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>

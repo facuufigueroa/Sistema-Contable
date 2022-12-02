@@ -1,8 +1,10 @@
 package Services.Ventas;
 import DataBase.ConexionBD;
+import Model.Producto;
 import Model.Ventas.AlertaVenta;
 import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
+import Querys.QueryAsiento;
 import Querys.Ventas.ClienteQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -157,6 +159,46 @@ public class ServiceCliente {
             return lista;
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return lista;
+    }
+
+    public ArrayList<Cliente> listarClientesHabilitados() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        try{
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.listarClientesHabilitados()));
+            setResultSet(getPs().executeQuery());
+            while(getResultSet().next()){
+                Cliente cliente = new Cliente();
+                cliente.setNombre(getResultSet().getString(2));
+                cliente.setApellido(getResultSet().getString(3));
+                cliente.setDni(getResultSet().getLong(4));
+                cliente.setCuit(getResultSet().getString(5));
+                cliente.setDireccion(getResultSet().getString(6));
+                cliente.setTelefono(getResultSet().getString(7));
+                cliente.setEmail(getResultSet().getString(8));
+                cliente.setRazonSocial(getResultSet().getString(9));
+                cliente.setEstado(getResultSet().getBoolean(10));
+                cliente.setTipoPersona(getResultSet().getString(11));
+                clientes.add(cliente);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return clientes;
+    }
+
+    public int obtenerIdCliente(String nombre){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.obtenerIdCliente(nombre)));
+            setResultSet(getPs().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
     }
 
     public Connection getConnection() { return connection ;}

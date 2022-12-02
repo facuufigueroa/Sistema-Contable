@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
 
     private VentasController ventasController;
 
+    private Venta venta = Venta.getInstance();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarCbbFormaPago();
