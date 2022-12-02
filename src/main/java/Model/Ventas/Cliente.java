@@ -11,6 +11,7 @@ public class Cliente {
     private String razonSocial;
     private String tipoPersona;
     private boolean estado;
+    private String condicionIva;
 
     public Cliente(){}
     public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono){
@@ -183,5 +184,13 @@ public class Cliente {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getCondicionIva() {
+        return condicionIva;
+    }
+
+    public void setCondicionIva(String condicionIva) {
+        this.condicionIva = condicionIva;
     }
 }

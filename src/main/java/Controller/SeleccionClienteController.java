@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Producto;
 import Model.Ventas.Cliente;
+import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import Services.Ventas.ServiceCliente;
 import javafx.collections.FXCollections;
@@ -36,7 +36,7 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
     @FXML
     private Button btnLimpiar;
     @FXML
-    private TableView tablaClientes;
+    private TableView<Cliente> tablaClientes;
     @FXML
     private Button btnVolver;
 
@@ -57,6 +57,8 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
 
     private ServiceCliente serviceCliente = new ServiceCliente();
 
+    private Venta venta = Venta.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clienteFiltrado = FXCollections.observableArrayList();
@@ -71,6 +73,7 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
         accionContinuarSeleccionProduct(event);
+        obtenerClienteSeleccionado();
     }
 
     public void accionContinuarSeleccionProduct(ActionEvent event) throws IOException {
@@ -113,6 +116,19 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
         columNombre.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre"));
         columRazonSocial.setCellValueFactory(new PropertyValueFactory<Cliente, String>("razonSocial"));
         tablaClientes.setItems(clienteObservableList);
+    }
+
+    public void obtenerClienteSeleccionado(){
+        Cliente cliente = new Cliente();
+        try {
+            cliente = tablaClientes.getSelectionModel().getSelectedItem();
+            int idCliente = serviceCliente.obtenerIdCliente(cliente.getNombre());
+            venta.setIdCliente(idCliente);
+            venta.setNombreCliente(cliente.getNombre());
+            venta.setCondicionIva(cliente.getCondicionIva());
+
+        } catch (NullPointerException e) {
+        }
     }
 
     @FXML

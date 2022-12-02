@@ -4,6 +4,7 @@ import Model.Producto;
 import Model.Ventas.AlertaVenta;
 import Model.Ventas.Cliente;
 import Model.Ventas.TablaPersona;
+import Querys.QueryAsiento;
 import Querys.Ventas.ClienteQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -184,6 +185,20 @@ public class ServiceCliente {
             System.out.println(exception);
         }
         return clientes;
+    }
+
+    public int obtenerIdCliente(String nombre){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.obtenerIdCliente(nombre)));
+            setResultSet(getPs().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
     }
 
     public Connection getConnection() { return connection ;}

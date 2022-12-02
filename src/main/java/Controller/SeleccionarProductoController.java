@@ -3,6 +3,7 @@ package Controller;
 import Model.Alerta;
 import Model.Producto;
 import Model.ProductoAgregado;
+import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import Services.ServiceProducto;
 import javafx.collections.FXCollections;
@@ -71,6 +72,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
 
     private ServiceProducto serviceProducto = new ServiceProducto();
 
+    private Venta venta = Venta.getInstance();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productoFiltrado = FXCollections.observableArrayList();
@@ -145,6 +147,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
         continuarASeleccionPago(event);
+        obtenerProductos();
     }
 
     public void continuarASeleccionPago(ActionEvent event) throws IOException {
@@ -235,6 +238,14 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
         txtBuscarPorCodigo.setText("");
         txtBuscarPorNombre.setText("");
         listarProductosHabilitados();
+    }
+
+    public void obtenerProductos(){
+        ArrayList<Producto> productosSeleccionados = new ArrayList<Producto>();
+        for (ProductoAgregado p: productosAgregados) {
+            productosSeleccionados.add(serviceProducto.obtenerProductoPorId(p.getIdProducto()));
+        }
+        venta.setProductos(productosSeleccionados);
     }
 
     public static void soloNumeros(TextField txtCodigo) {

@@ -38,4 +38,9 @@ public class ClienteQuery {
                 + "SET estado = ? "
                 + "WHERE cuit = ?";
     }
+
+    public static String obtenerIdCliente(String nombre){
+        return "SELECT idcliente FROM clientes WHERE nombre='"+nombre+"'";
+    }
+
 }

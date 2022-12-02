@@ -1,6 +1,13 @@
 package Controller;
 
+import Model.Producto;
+import Model.Ventas.Venta;
 import Model.ViewFuntionality;
+import Services.ServiceProducto;
+import Services.Ventas.ServiceCliente;
+import Services.Ventas.ServiceVenta;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,9 +31,41 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     private SeleccionarPagoController seleccionarPagoController;
 
+    private SeleccionClienteController seleccionClienteController;
+
+    private SeleccionarProductoController seleccionarProductoController;
+
+    @FXML
+    private TextField txtNombre1;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private TextField txtFormaPago;
+   // @FXML
+    //private TextField txtPrecio1;
+    @FXML
+    private TextField txtCondicionIva;
+    //@FXML
+    //private TextField txtStockDisponible;
+
+
+    private Venta venta = Venta.getInstance();
+
+    private ServiceCliente serviceCliente;
+
+    private ServiceProducto serviceProducto;
+
+    private ServiceVenta serviceVenta;
+
+    private ObservableList ventaObservableList;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+    public void cargarDatosVenta(){
+        txtCondicionIva.setText(venta.getCondicionIva());
+        txtNombre1.setText(venta.getNombreCliente());
     }
 
     public void hideStage(){ getVentana().hide(); }

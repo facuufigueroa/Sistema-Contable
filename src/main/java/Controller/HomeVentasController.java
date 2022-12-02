@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.User;
+import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import Services.Service;
 import javafx.event.ActionEvent;
@@ -51,6 +52,7 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     private Service service = new Service();
     private User u = User.getInstance();
 
+    private Venta venta = Venta.getInstance();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cambiarTexto();
@@ -85,6 +87,7 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     @FXML
     public void seleccionCliente(ActionEvent event) throws IOException {
         loadSeleccionCliente(event);
+        venta = new Venta();
     }
 
     private void loadSeleccionCliente(ActionEvent event) throws IOException {
