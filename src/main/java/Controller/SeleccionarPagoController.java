@@ -1,5 +1,4 @@
 package Controller;
-
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import javafx.collections.FXCollections;
@@ -37,6 +36,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     private VentasController ventasController;
 
     private Venta venta = Venta.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarCbbFormaPago();
@@ -94,6 +94,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
         continuarNewVentas(event);
+        obtenerFormaPago();
     }
 
 
@@ -110,6 +111,14 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+    }
+
+    public void obtenerFormaPago(){
+        try {
+            String formaPago = comboBoxSeleccionarPago.getSelectionModel().getSelectedItem().toString();
+            venta.setFormaPago(formaPago);
+        } catch (NullPointerException e) {
+        }
     }
 
     private VentasController loadNewVenta(VentasController ventaController){ return ventaController; }

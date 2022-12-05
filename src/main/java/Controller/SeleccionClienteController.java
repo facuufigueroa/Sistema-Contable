@@ -124,9 +124,6 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
             cliente = tablaClientes.getSelectionModel().getSelectedItem();
             int idCliente = serviceCliente.obtenerIdCliente(cliente.getNombre());
             venta.setIdCliente(idCliente);
-            venta.setNombreCliente(cliente.getNombre());
-            venta.setCondicionIva(cliente.getCondicionIva());
-
         } catch (NullPointerException e) {
         }
     }

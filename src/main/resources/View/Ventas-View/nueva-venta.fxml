@@ -21,12 +21,13 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <TableView fx:id="tablaProductos" layoutX="27.0" layoutY="312.0" prefHeight="288.0" prefWidth="1045.0" stylesheets="@../../Style/tablas.css">
+            <TableView fx:id="tablaVenta" layoutX="27.0" layoutY="312.0" prefHeight="288.0" prefWidth="1045.0" stylesheets="@../../Style/tablas.css">
                <columns>
-                  <TableColumn minWidth="7.0" prefWidth="492.0" text="Descripción" />
-                  <TableColumn prefWidth="213.0" text="Cantidad" />
-                  <TableColumn prefWidth="176.0" text="Precio" />
-                  <TableColumn prefWidth="163.0" text="Total" />
+                  <TableColumn fx:id="columProducto" minWidth="7.0" prefWidth="231.0" text="Producto" />
+                  <TableColumn fx:id="columDescripcion" minWidth="7.0" prefWidth="387.0" text="Descripción" />
+                  <TableColumn fx:id="columCantidad" prefWidth="125.0" text="Cantidad" />
+                  <TableColumn fx:id="columPrecio" prefWidth="153.0" text="Precio" />
+                  <TableColumn fx:id="columTotal" prefWidth="148.0" text="Total" />
                </columns>
             </TableView>
             <Pane prefHeight="40.0" prefWidth="1335.0" style="-fx-background-color: #44878f;">
@@ -56,41 +57,7 @@
                   </Button>
                </children>
             </Pane>
-            <TextField fx:id="txtNombre" disable="true" layoutX="585.0" layoutY="178.0" prefHeight="27.0" prefWidth="202.0">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-            </TextField>
-            <Label layoutX="444.0" layoutY="188.0" prefHeight="26.0" prefWidth="95.0" text="Nombre" textFill="WHITE">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/producto%20nombre.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-            <Label layoutX="935.0" layoutY="181.0" prefHeight="26.0" prefWidth="154.0" text="Stock Disponible" textFill="WHITE">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/en-stock.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-            <TextField fx:id="txtPrecio11" disable="true" layoutX="1085.0" layoutY="178.0" prefHeight="27.0" prefWidth="202.0">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-            </TextField>
-            <Button fx:id="btnModificar1" layoutX="919.0" layoutY="245.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" stylesheets="@../../Style/botones.css" text="Quitar Producto" textFill="WHITE">
+            <Button fx:id="btnQuitarProducto" layoutX="919.0" layoutY="245.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" stylesheets="@../../Style/botones.css" text="Quitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -102,7 +69,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnModificar3" layoutX="1114.0" layoutY="443.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="   Nueva Venta" textFill="WHITE">
+            <Button fx:id="btnNuevaVenta" layoutX="1114.0" layoutY="443.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="   Nueva Venta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -126,7 +93,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnModificar31" layoutX="1114.0" layoutY="373.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="  Generar Venta" textFill="WHITE">
+            <Button fx:id="btnGenerarVenta" layoutX="1114.0" layoutY="373.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="  Generar Venta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -143,7 +110,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <DatePicker layoutX="133.0" layoutY="120.0" prefHeight="38.0" prefWidth="208.0" promptText="Seleccione fecha de venta" />
+            <DatePicker fx:id="Date" layoutX="133.0" layoutY="120.0" prefHeight="38.0" prefWidth="208.0" promptText="Seleccione fecha de venta" />
             <Label layoutX="27.0" layoutY="126.0" prefHeight="26.0" prefWidth="95.0" text="Fecha " textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
@@ -156,7 +123,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <TextField editable="false" layoutX="1145.0" layoutY="300.0" prefHeight="40.0" prefWidth="128.0">
+            <TextField fx:id="txtTotal" editable="false" layoutX="1145.0" layoutY="300.0" prefHeight="40.0" prefWidth="128.0">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -173,17 +140,17 @@
                   </ImageView>
                </graphic>
             </Label>
-            <TextField fx:id="txtNombre1" disable="true" layoutX="136.0" layoutY="185.0" prefHeight="27.0" prefWidth="202.0">
+            <TextField fx:id="txtCliente" disable="true" layoutX="136.0" layoutY="202.0" prefHeight="27.0" prefWidth="202.0">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtCondicionIva" disable="true" layoutX="1085.0" layoutY="116.0" prefHeight="27.0" prefWidth="202.0">
+            <TextField fx:id="txtCondicionIva" disable="true" layoutX="585.0" layoutY="201.0" prefHeight="27.0" prefWidth="202.0">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
             </TextField>
-            <Label layoutX="27.0" layoutY="188.0" prefHeight="26.0" prefWidth="95.0" text="Cliente" textFill="WHITE">
+            <Label layoutX="27.0" layoutY="204.0" prefHeight="26.0" prefWidth="95.0" text="Cliente" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -195,7 +162,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label layoutX="935.0" layoutY="120.0" text="Condicion IVA" textFill="WHITE">
+            <Label layoutX="446.0" layoutY="206.0" text="Condicion IVA" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -229,12 +196,12 @@
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtIVA" editable="false" layoutX="1186.0" layoutY="552.0" prefHeight="40.0" prefWidth="68.0">
+            <TextField fx:id="txtIVA" editable="false" layoutX="1142.0" layoutY="552.0" prefHeight="41.0" prefWidth="144.0">
                <font>
                   <Font name="Lucida Sans Unicode" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="1201.0" layoutY="516.0" prefHeight="36.0" prefWidth="38.0" text="IVA" textFill="WHITE">
+            <Label layoutX="1195.0" layoutY="516.0" prefHeight="36.0" prefWidth="38.0" text="IVA" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="22.0" />
                </font>

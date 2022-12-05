@@ -3,6 +3,7 @@ package Controller;
 import Model.Alerta;
 import Model.Producto;
 import Model.ProductoAgregado;
+import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import Services.ServiceProducto;
@@ -73,6 +74,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     private ServiceProducto serviceProducto = new ServiceProducto();
 
     private Venta venta = Venta.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productoFiltrado = FXCollections.observableArrayList();
@@ -233,7 +235,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
             System.out.println(e);
         }
     }
-@FXML
+    @FXML
     public void accionBtnLimpiar() {
         txtBuscarPorCodigo.setText("");
         txtBuscarPorNombre.setText("");
@@ -242,10 +244,18 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
 
     public void obtenerProductos(){
         ArrayList<Producto> productosSeleccionados = new ArrayList<Producto>();
+        ArrayList<TablaVistaVenta> ventaProductos = new ArrayList<>();
+        TablaVistaVenta ventaP;
         for (ProductoAgregado p: productosAgregados) {
-            productosSeleccionados.add(serviceProducto.obtenerProductoPorId(p.getIdProducto()));
+            productosSeleccionados.add(serviceProducto.obtenerProductoPorCodigo(p.getCodigo()));
+            Double precio = serviceProducto.obtenerProductoPorCodigo(p.getCodigo()).getPrecio();
+            String nombre = serviceProducto.obtenerProductoPorCodigo(p.getCodigo()).getNombre();
+            String descripcion = serviceProducto.obtenerProductoPorCodigo(p.getCodigo()).getDetalle();
+            ventaP = new TablaVistaVenta(nombre,descripcion,p.getCantidad(),precio,precio*p.getCantidad());
+            ventaProductos.add(ventaP);
         }
         venta.setProductos(productosSeleccionados);
+        venta.setVentaProductos(ventaProductos);
     }
 
     public static void soloNumeros(TextField txtCodigo) {

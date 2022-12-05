@@ -114,6 +114,21 @@ public class ServiceProducto {
         return "Error en el servicio/query al obtener alicuota";
     }
 
+    public int obtenerIdProducto(Long codigo) {
+        try{
+            Long codProducto = Long.valueOf(codigo);
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerId(codProducto)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
+    }
+
     public void modificarProducto(String codigo, Producto producto){
         try{
             setConnection(ConexionBD.conexion());
@@ -144,19 +159,19 @@ public class ServiceProducto {
         }
     }
 
-    public Producto obtenerProductoPorId(int idProducto){
+    public Producto obtenerProductoPorCodigo(Long codigoProducto){
         try{
             setConnection(ConexionBD.conexion());
-            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorId(idProducto)));
-            //getPreparedStatement().setInt(1, idProducto);
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorCodigo()));
+            getPreparedStatement().setLong(1, codigoProducto);
             setResultSet(getPreparedStatement().executeQuery());
             if (getResultSet().next()){
                 return new Producto(
                         getResultSet().getLong("codigo")
                         ,getResultSet().getString("nombre")
                         ,getResultSet().getString("detalle")
-                        ,getResultSet().getDouble("precio")
-                        ,getResultSet().getInt("stock")
+                        ,getResultSet().getDouble("precio_venta")
+                        ,getResultSet().getInt("id_stock")
                         ,getResultSet().getDouble("alicuota")
                         ,getResultSet().getBoolean("estado")
                 );
@@ -204,4 +219,5 @@ public class ServiceProducto {
     public void setProductoQuery(ProductoQuery productoQuery) {
         this.productoQuery = productoQuery;
     }
+
 }

@@ -1,15 +1,11 @@
 package Services.Ventas;
 
 import DataBase.ConexionBD;
-import Model.Producto;
-import Model.Ventas.Venta;
 import Querys.ProductoQuery;
-import Querys.VentaQuery;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class ServiceVenta {
     private ConexionBD conexionBD;
@@ -58,4 +54,6 @@ public class ServiceVenta {
     public void setProductoQuery(ProductoQuery productoQuery) {
         this.productoQuery = productoQuery;
     }
+
+
 }

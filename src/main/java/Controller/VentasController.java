@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Producto;
+import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import Services.ServiceProducto;
@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -23,6 +25,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class VentasController extends ViewFuntionality implements Initializable {
@@ -36,38 +39,56 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private SeleccionarProductoController seleccionarProductoController;
 
     @FXML
-    private TextField txtNombre1;
-    @FXML
-    private TextField txtNombre;
+    private TextField txtCliente;
     @FXML
     private TextField txtFormaPago;
-   // @FXML
-    //private TextField txtPrecio1;
+    @FXML
+    private TextField txtTotal;
     @FXML
     private TextField txtCondicionIva;
-    //@FXML
-    //private TextField txtStockDisponible;
-
-
+    @FXML
+    private TextField txtIVA;
+    @FXML
+    private TableView tablaVenta;
+    @FXML
+    private TableColumn columProducto;
+    @FXML
+    private TableColumn columDescripcion;
+    @FXML
+    private TableColumn columCantidad;
+    @FXML
+    private TableColumn columPrecio;
+    @FXML
+    private TableColumn columTotal;
     private Venta venta = Venta.getInstance();
 
-    private ServiceCliente serviceCliente;
+    private ServiceCliente serviceCliente = new ServiceCliente();
 
-    private ServiceProducto serviceProducto;
-
-    private ServiceVenta serviceVenta;
-
-    private ObservableList ventaObservableList;
+    private ObservableList<TablaVistaVenta> tablaVentaObservableList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        cargarDatosVenta();
     }
     public void cargarDatosVenta(){
-        txtCondicionIva.setText(venta.getCondicionIva());
-        txtNombre1.setText(venta.getNombreCliente());
+        txtCondicionIva.setText(serviceCliente.obtenerCondicionIva(venta.getIdCliente()));
+        txtCliente.setText(serviceCliente.obtenerNombreCliente(venta.getIdCliente()));
+        txtFormaPago.setText(venta.getFormaPago());
+        listarProductosVenta();
+        txtTotal.setText(String.valueOf((venta.obtenerTotalVenta() + venta.obtenerIVA())));
+        txtIVA.setText(venta.obtenerIVA().toString());
     }
 
+    public void listarProductosVenta(){
+        ArrayList<TablaVistaVenta> ventaProductos = venta.getVentaProductos();
+        tablaVentaObservableList = FXCollections.observableArrayList(ventaProductos);
+        columProducto.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta, String>("producto"));
+        columDescripcion.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta, String>("descripcion"));
+        columCantidad.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta,Integer>("cantidad"));
+        columPrecio.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta,Double>("precioUnitario"));
+        columTotal.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta, Double>("precioTotal"));
+        tablaVenta.setItems(tablaVentaObservableList);
+    }
     public void hideStage(){ getVentana().hide(); }
     public void showStage(){ getVentana().show(); }
 

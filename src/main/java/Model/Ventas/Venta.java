@@ -1,15 +1,15 @@
 package Model.Ventas;
 
 import Model.Producto;
+import Model.TablaVistaAsiento;
 
 import java.util.ArrayList;
 
 public class Venta {
     private int idCliente;
-    private String nombreCliente;
-
-    private String condicionIva;
     private ArrayList<Producto> productos;
+
+    private ArrayList<TablaVistaVenta> ventaProductos;
     private Double totalBruto;
     private Double totalNeto;
     private Double totales;
@@ -31,11 +31,34 @@ public class Venta {
         this.formaPago = formaPago;
     }
 
+    public Double obtenerTotalVenta(){
+        Double total = 0.0;
+        for(TablaVistaVenta producto : venta.getVentaProductos()){
+            total += producto.getPrecioTotal();
+        }
+        return total;
+    }
+    public Double obtenerIVA(){
+        Double totalIva = 0.0;
+        for (Producto p: getProductos()){
+            totalIva = (p.getAlicuota() * p.getPrecio())/100;
+        }
+        return totalIva;
+    }
+
     public static Venta getInstance(){
         if(venta == null){
             venta = new Venta();
         }
         return venta;
+    }
+
+    public ArrayList<TablaVistaVenta> getVentaProductos() {
+        return ventaProductos;
+    }
+
+    public void setVentaProductos(ArrayList<TablaVistaVenta> ventaProductos) {
+        this.ventaProductos = ventaProductos;
     }
 
     public int getIdCliente() {
@@ -45,14 +68,6 @@ public class Venta {
     public void setIdCliente(int cliente) {
         this.idCliente = cliente;
     }
-
-    public String getNombreCliente() { return nombreCliente; }
-
-    public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
-
-    public String getCondicionIva() { return condicionIva; }
-
-    public void setCondicionIva(String condicionIva) { this.condicionIva = condicionIva; }
 
     public ArrayList<Producto> getProductos() {
         return productos;

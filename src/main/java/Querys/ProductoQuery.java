@@ -37,8 +37,11 @@ public class ProductoQuery {
     public static String habilitarProducto(Long codigo){
         return "UPDATE productos SET estado=true WHERE productos.codigo="+codigo;
     }
-    public static String obtenerProductoPorId(int idProducto) {
-        return "SELECT productos FROM productos as p WHERE p.idproducto=" + idProducto;
+    public static String obtenerProductoPorCodigo() {
+        return "SELECT * FROM productos as p WHERE p.codigo= ?";
     }
 
+    public static String obtenerId(Long codigo) {
+        return "SELECT idProducto FROM productos as p WHERE p.codigo='"+codigo+"'";
+    }
 }
