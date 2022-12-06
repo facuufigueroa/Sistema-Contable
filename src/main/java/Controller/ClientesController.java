@@ -48,8 +48,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TableColumn<TablaPersona, String> colEstado = new TableColumn<>();
 
     //Busqueda
-    @FXML private TextField txtBuscarPorDni;
-    @FXML private TextField txtBuscarPorNombre;
+    @FXML private TextField txtBuscarPorDni = new TextField();
+    @FXML private TextField txtBuscarPorNombre = new TextField();
 
     //Persona Fisica
     @FXML private TextField txtDni = new TextField();
@@ -86,8 +86,12 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtDni(), 8);
         Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtCuit(), 11);
         Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtCuitJ(), 11);
+        Validacion.limitarCamposDeTexto(this.txtBuscarPorDni, 8);
+        Validacion.limitarCamposDeTexto(this.txtBuscarPorNombre, 30);
     }
-
+    private void deshabilitarComboBoxSeleccionarPersona(boolean deshabilitar){
+        getComboBoxCliente().setDisable(deshabilitar);
+    }
     private void iniciarComboBox() {
         ObservableList<String> cuentas= FXCollections.observableArrayList();
         cuentas.addAll("Persona Fisica", "Persona Juridica");
@@ -102,6 +106,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         ObservableList<String> tipo = FXCollections.observableArrayList();
         tipo.addAll("CONSUMIDOR FINAL");
         getComboIva().setItems(tipo);
+        getComboIva().setValue("CONSUMIDOR FINAL");
+        getComboIva().setDisable(true);
     }
 
     private void iniciarTabla(){
@@ -196,17 +202,18 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
 
     private boolean comprobarPersonaJuridicaNoNula() {
-        //cuit, razonSocial, email, direccion, telefono
+        //cuit, razonSocial, email, direccion, telefono, tipoIVa
         boolean cuit = getTxtCuitJ().getText().isEmpty();
         boolean razonSocial = getTxtRazonSocialJ().getText().isEmpty();
         boolean email = getTxtEmailJ().getText().isEmpty();
         boolean direccion = getTxtDireccionJ().getText().isEmpty();
         boolean telefono = getTxtTelefonoJ().getText().isEmpty();
-        return cuit || razonSocial || email || direccion || telefono;
+        boolean tipoIva = getComboIvaJ().getValue().isEmpty();
+        return cuit || razonSocial || email || direccion || telefono || tipoIva;
     }
 
     private boolean comprobarPersonaFisicaNoNula() {
-        //cuit, dni, nombre, apellido, email, direccion, telefono
+        //cuit, dni, nombre, apellido, email, direccion, telefono, tipoIVa
         boolean cuit = getTxtCuit().getText().isEmpty();
         boolean dni = getTxtDni().getText().isEmpty();
         boolean nombre = getTxtNombre().getText().isEmpty();
@@ -214,7 +221,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         boolean email = getTxtEmail().getText().isEmpty();
         boolean direccion = getTxtDireccion().getText().isEmpty();
         boolean telefono = getTxtTelefono().getText().isEmpty();
-        return cuit || dni || nombre || apellido || email || direccion || telefono;
+        boolean tipoIva = getComboIva().getValue().isEmpty();
+        return cuit || dni || nombre || apellido || email || direccion || telefono || tipoIva;
     }
 
     private Cliente getPersonaFisica(){ //dni, cuit, nombre, apellido, email, direccion, telefono
@@ -226,6 +234,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                 , getTxtEmail().getText()
                 , getTxtDireccion().getText()
                 , getTxtTelefono().getText()
+                , getComboIva().getValue()
         );
     }
     private Cliente getPersonaJuridica(){ //cuit, razonSocial, email, direccion, telefono
@@ -234,6 +243,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                             , getTxtEmailJ().getText()
                             , getTxtDireccionJ().getText()
                             , getTxtTelefonoJ().getText()
+                            , getComboIvaJ().getValue()
         );
     }
 
@@ -262,11 +272,15 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         getBtnDeshabilitar().setDisable(true);
         getBtnGuardar().setDisable(true);
         getBtnHabilitarCliente().setDisable(true);
+        getBtnEditar().setDisable(true);
+        deshabilitarComboBoxSeleccionarPersona(true);
     }
     private void habilitarBotones(){
         getBtnDeshabilitar().setDisable(false);
         getBtnGuardar().setDisable(false);
         getBtnHabilitarCliente().setDisable(false);
+        getBtnEditar().setDisable(false);
+        deshabilitarComboBoxSeleccionarPersona(false);
     }
 
     /**Habilitar y deshabilitar cliente**/

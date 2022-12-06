@@ -27,6 +27,20 @@ public class Cliente {
         setRazonSocial(null);
         setEstado(true);
     }
+    public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String condicionIva){
+        setDni(dni);
+        setCuit(cuit);
+        setNombre(nombre);
+        setApellido(apellido);
+        setEmail(email);
+        setDireccion(direccion);
+        setTelefono(telefono);
+        setCondicionIva(condicionIva);
+
+        //Persona Juridica
+        setRazonSocial(null);
+        setEstado(true);
+    }
     public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, boolean estado){
         setDni(dni);
         setCuit(cuit);
@@ -66,6 +80,21 @@ public class Cliente {
         setDireccion(direccion);
         setTelefono(telefono);
         setEstado(true);
+    }
+    public Cliente(String cuit, String razonSocial, String email, String direccion, String telefono, String condicionIva){
+        //Persona Fisica
+        setDni(null);
+        setNombre(null);
+        setApellido(null);
+
+        //Persona Juridica
+        setCuit(cuit);
+        setEmail(email);
+        setRazonSocial(razonSocial);
+        setDireccion(direccion);
+        setTelefono(telefono);
+        setEstado(true);
+        setCondicionIva(condicionIva);
     }
     public Cliente(Long dni, String cuit, String nombre, String apellido, String email, String direccion, String telefono, String razonSocial, String tipoPersona , boolean estado){
         setDni(dni);

@@ -19,18 +19,18 @@ public class ClienteQuery {
     }
 
     public static String insertarPersona(){
-        return "INSERT INTO clientes (dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO clientes (dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona, condicion_iva) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     public static String modificarPersonaJuridica(){
         return    "UPDATE clientes "
-                + "SET  razon_social = ?, email = ?, direccion = ?, telefono = ?"
+                + "SET  razon_social = ?, email = ?, direccion = ?, telefono = ?, condicion_iva= ?"
                 + "WHERE cuit = ?"; //
     }
     public static String modificarPersonaFisica(){
         return    "UPDATE clientes "
-                + "SET nombre = ?, apellido = ?, email = ?, direccion = ?, telefono = ? "
+                + "SET nombre = ?, apellido = ?, email = ?, direccion = ?, telefono = ?, condicion_iva = ? "
                 + "WHERE cuit = ?";
     }
     public static String modificarEstado(){

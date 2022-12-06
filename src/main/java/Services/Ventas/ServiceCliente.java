@@ -58,6 +58,7 @@ public class ServiceCliente {
                         ,getResultSet().getString("email")
                         ,getResultSet().getString("direccion")
                         ,getResultSet().getString("telefono")
+                        ,getResultSet().getString("condicion_iva")
                         //Ver el tipo de persona
                         //Si dni no es nulo, entonces es persona juridica
                 );
@@ -85,22 +86,24 @@ public class ServiceCliente {
             setConnection(ConexionBD.conexion());
             if (persona.getDni() == null || persona.getDni().equals(0L)){
                 setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaJuridica()));
-                // 1|razon_social, 2|email, 3|direccion, 4|telefono, 5|cuit
+                // 1|razon_social, 2|email, 3|direccion, 4|telefono, 5|condicionIVA 6|cuit
                 getPs().setString(1, persona.getRazonSocial());
                 getPs().setString(2, persona.getEmail());
                 getPs().setString(3, persona.getDireccion());
                 getPs().setString(4, persona.getTelefono());
-                getPs().setString(5, persona.getCuit());
+                getPs().setString(5, persona.getCondicionIva());
+                getPs().setString(6, persona.getCuit());
                 getPs().executeUpdate();
             }else{
                 setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaFisica()));
-                //1|nombre, 2|apellido, 3|email, 4|direccion, 5|telefono, 6|cuit
+                //1|nombre, 2|apellido, 3|email, 4|direccion, 5|telefono, 6|condicion_iva ,7|cuit
                 getPs().setString(1, persona.getNombre());
                 getPs().setString(2, persona.getApellido());
                 getPs().setString(3, persona.getEmail());
                 getPs().setString(4, persona.getDireccion());
                 getPs().setString(5, persona.getTelefono());
-                getPs().setString(6, persona.getCuit());
+                getPs().setString(6, persona.getCondicionIva());
+                getPs().setString(7, persona.getCuit());
                 getPs().executeUpdate();
             }
             AlertaVenta.clienteModificadoCorrectamente();
@@ -110,7 +113,7 @@ public class ServiceCliente {
         }
     }
     public boolean insertarPersona(Cliente cliente){
-        //dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona
+        //dni, cuit, nombre, apellido, email, direccion, telefono, razon_social, estado, id_tipo_persona, condicion_iva
         try {
             setConnection(ConexionBD.conexion());
             setPs(getConnection().prepareStatement(ClienteQuery.insertarPersona()));
@@ -128,6 +131,7 @@ public class ServiceCliente {
             getPs().setString(8, cliente.getRazonSocial());
             getPs().setBoolean(9, cliente.isEstado());
             getPs().setInt(10, cliente.tipoPersona());
+            getPs().setString(11, cliente.getCondicionIva());
             return getPs().executeUpdate() != 0;
         }catch (SQLException e){ System.out.println(e.getMessage());}
         return false;
