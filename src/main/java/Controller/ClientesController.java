@@ -59,6 +59,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtEmail;
     @FXML private TextField txtDireccion;
     @FXML private TextField txtTelefono;
+    @FXML private ComboBox<String> comboIva = new ComboBox<>();
 
     //Persona Juridica
     @FXML private TextField txtCuitJ = new TextField();
@@ -66,6 +67,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private TextField txtTelefonoJ;
     @FXML private TextField txtDireccionJ;
     @FXML private TextField txtRazonSocialJ;
+    @FXML private ComboBox<String> comboIvaJ = new ComboBox<>();
 
     private Cliente cliente;
     private ObservableList<TablaPersona> personasPorDni;
@@ -79,6 +81,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         personasPorDni = FXCollections.observableArrayList();
         iniciarTabla();
         iniciarComboBox();
+        iniciarComboBoxTipoIvaJ();
+        iniciarComboBoxTipoIva();
         Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtDni(), 8);
         Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtCuit(), 11);
         Validacion.limitarCantidadCaracteresYSoloNumero(this.getTxtCuitJ(), 11);
@@ -88,6 +92,16 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         ObservableList<String> cuentas= FXCollections.observableArrayList();
         cuentas.addAll("Persona Fisica", "Persona Juridica");
         getComboBoxCliente().setItems(cuentas);
+    }
+    private void iniciarComboBoxTipoIvaJ(){
+        ObservableList<String> tipo = FXCollections.observableArrayList();
+        tipo.addAll("RESPONSABLE INSCRIPTO", "MONOTRIBUTISTA", "EXCENTO");
+        getComboIvaJ().setItems(tipo);
+    }
+    private void iniciarComboBoxTipoIva(){
+        ObservableList<String> tipo = FXCollections.observableArrayList();
+        tipo.addAll("CONSUMIDOR FINAL");
+        getComboIva().setItems(tipo);
     }
 
     private void iniciarTabla(){
@@ -152,6 +166,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         setTxtEmail((TextField) node.getChildren().get(9));
         setTxtDireccion((TextField) node.getChildren().get(11));
         setTxtTelefono((TextField) node.getChildren().get(13));
+        setComboIva((ComboBox) node.getChildren().get(15));
     }
     private void obtenerPersonaJuridica(){
         try {
@@ -169,6 +184,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         setTxtTelefonoJ((TextField) node.getChildren().get(5));
         setTxtDireccionJ((TextField) node.getChildren().get(7));
         setTxtRazonSocialJ((TextField) node.getChildren().get(9));
+        setComboIvaJ((ComboBox) node.getChildren().get(11));
     }
     public void accionElegirPersona(){ //Si selecciona una persona se carga el panel con los datos de dicha persona
            String tipoPersona = getComboBoxCliente().getValue();
@@ -497,6 +513,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public TextField getTxtEmail() { return txtEmail; }
     public TextField getTxtDireccion() { return txtDireccion; }
     public TextField getTxtTelefono() { return txtTelefono; }
+    public ComboBox<String> getComboIva() { return comboIva; }
     public void setTxtDni(TextField txtDni) { this.txtDni = txtDni; }
     public void setTxtCuit(TextField txtCuit) { this.txtCuit = txtCuit; }
     public void setTxtNombre(TextField txtNombre) { this.txtNombre = txtNombre; }
@@ -504,16 +521,19 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public void setTxtEmail(TextField txtEmail) { this.txtEmail = txtEmail; }
     public void setTxtDireccion(TextField txtDireccion) { this.txtDireccion = txtDireccion; }
     public void setTxtTelefono(TextField txtTelefono) { this.txtTelefono = txtTelefono; }
+    public void setComboIva(ComboBox<String> comboIva) { this.comboIva = comboIva; }
     public TextField getTxtCuitJ() { return txtCuitJ; }
     public TextField getTxtEmailJ() { return txtEmailJ; }
     public TextField getTxtTelefonoJ() { return txtTelefonoJ; }
     public TextField getTxtDireccionJ() { return txtDireccionJ; }
     public TextField getTxtRazonSocialJ() { return txtRazonSocialJ; }
+    public ComboBox<String> getComboIvaJ() { return comboIvaJ; }
     public void setTxtCuitJ(TextField txtCuitJ) { this.txtCuitJ = txtCuitJ; }
     public void setTxtEmailJ(TextField txtEmailJ) { this.txtEmailJ = txtEmailJ; }
     public void setTxtTelefonoJ(TextField txtTelefonoJ) { this.txtTelefonoJ = txtTelefonoJ; }
     public void setTxtDireccionJ(TextField txtDireccionJ) { this.txtDireccionJ = txtDireccionJ; }
     public void setTxtRazonSocialJ(TextField txtRazonSocialJ) { this.txtRazonSocialJ = txtRazonSocialJ; }
+    public void setComboIvaJ(ComboBox<String> comboIvaJ) { this.comboIvaJ = comboIvaJ; }
     public Cliente getPersona() { return cliente; }
     public void setPersona(Cliente cliente) { this.cliente = cliente; }
     public TableColumn<TablaPersona, Long> getColDni() { return colDni; }
