@@ -1,4 +1,5 @@
 package Controller;
+import Model.Alerta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -93,10 +95,18 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     /*Método que continua a la vista para generar una nueva venta*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        obtenerFormaPago();
-        continuarNewVentas(event);
+        if (!verificarFormaPago()) {
+            obtenerFormaPago();
+            continuarNewVentas(event);
+        }
+        else{
+            Alerta.alertaSeleccioneFormaPago();
+        }
     }
 
+    public Boolean verificarFormaPago() {
+        return comboBoxSeleccionarPago.getSelectionModel().isEmpty();
+    }
 
     public void continuarNewVentas(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/nueva-venta.fxml"));
@@ -116,7 +126,13 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     public void obtenerFormaPago(){
         try {
             String formaPago = comboBoxSeleccionarPago.getSelectionModel().getSelectedItem().toString();
-            venta.setFormaPago(formaPago);
+            String cuotas = txtCantidadCuotas.getText();
+            if (formaPago.equalsIgnoreCase("cuotas")) {
+                venta.setFormaPago(cuotas + " " + formaPago);
+            }
+            else{
+                venta.setFormaPago(formaPago);
+            }
         } catch (NullPointerException e) {
         }
     }

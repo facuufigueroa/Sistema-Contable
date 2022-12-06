@@ -304,4 +304,33 @@ public class Alerta {
         alert.showAndWait();
         return true;
     }
+
+    public static boolean alertaSeleccioneCliente() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" No seleccionó al cliente que realizará la compra");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertaSeleccioneProductos() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" No hay productos seleccionados para la compra");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+    public static boolean alertaSeleccioneFormaPago() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" No seleccionó la forma de pago en que se realizará la compra");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
 }

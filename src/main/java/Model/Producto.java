@@ -1,7 +1,5 @@
 package Model;
 
-import java.math.BigInteger;
-
 public class Producto {
 
     private Long codigo;
@@ -30,12 +28,11 @@ public class Producto {
         this.alicuota=alicuota;
     }
 
-    public Producto(Long codigo, String nombre, String detalle, Double precio, int stock, Double alicuota, boolean estado) {
+    public Producto(Long codigo, String nombre, String detalle, Double precio, Double alicuota, boolean estado) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.detalle = detalle;
         this.precio = precio;
-        this.stock = stock;
         this.alicuota = alicuota;
         this.estado = estado;
     }

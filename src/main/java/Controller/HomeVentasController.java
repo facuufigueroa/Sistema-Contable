@@ -86,8 +86,8 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     /* Método para ir a la ventana de seleccionar el cliente de la venta */
     @FXML
     public void seleccionCliente(ActionEvent event) throws IOException {
-        loadSeleccionCliente(event);
         venta = new Venta();
+        loadSeleccionCliente(event);
     }
 
     private void loadSeleccionCliente(ActionEvent event) throws IOException {

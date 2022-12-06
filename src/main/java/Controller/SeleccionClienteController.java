@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Alerta;
 import Model.Ventas.Cliente;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
@@ -34,6 +35,8 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
     @FXML
     private TextField txtBuscarPorNombre;
     @FXML
+    private TextField txtClienteSeleccionado;
+    @FXML
     private Button btnLimpiar;
     @FXML
     private TableView<Cliente> tablaClientes;
@@ -64,7 +67,6 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
         clienteFiltrado = FXCollections.observableArrayList();
         listarClientesHabilitados();
         soloNumeros(txtBuscarPorDNI);
-
     }
     public void hideStage(){ getVentana().hide(); }
 
@@ -72,8 +74,13 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
     /*Método que continua a la vista para seleccionar el o los productos a vender*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        obtenerClienteSeleccionado();
-        accionContinuarSeleccionProduct(event);
+        if (!verificarSeleccionCliente()) {
+            obtenerClienteSeleccionado();
+            accionContinuarSeleccionProduct(event);
+        }
+        else{
+            Alerta.alertaSeleccioneCliente();
+        }
     }
 
     public void accionContinuarSeleccionProduct(ActionEvent event) throws IOException {
@@ -119,20 +126,30 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
     }
 
     public void obtenerClienteSeleccionado(){
-        Cliente cliente = new Cliente();
+        String nombreCliente = "";
         try {
-            cliente = tablaClientes.getSelectionModel().getSelectedItem();
-            int idCliente = serviceCliente.obtenerIdCliente(cliente.getNombre());
+            nombreCliente = txtClienteSeleccionado.getText();
+            int idCliente = serviceCliente.obtenerIdCliente(nombreCliente);
             venta.setIdCliente(idCliente);
         } catch (NullPointerException e) {
         }
     }
 
     @FXML
+    public void accionSeleccionarCliente(){
+        String nombre = tablaClientes.getSelectionModel().getSelectedItem().getNombre();
+        txtClienteSeleccionado.setText(nombre);
+    }
+    @FXML
     public void accionLimpiarCampos(){
         txtBuscarPorDNI.setText("");
         txtBuscarPorNombre.setText("");
         listarClientesHabilitados();
+        txtClienteSeleccionado.setText("");
+    }
+
+    public Boolean verificarSeleccionCliente() {
+        return txtClienteSeleccionado.getText().isEmpty();
     }
 
     @FXML

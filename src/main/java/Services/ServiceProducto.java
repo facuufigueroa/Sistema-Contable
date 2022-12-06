@@ -75,7 +75,6 @@ public class ServiceProducto {
                 producto.setPrecio(getResultSet().getDouble(5));
                 producto.setEstado(getResultSet().getBoolean(6));
                 producto.setAlicuota(getResultSet().getDouble(7));
-                producto.setStock(getResultSet().getInt(8));
                 productos.add(producto);
             }
         }catch (Exception exception){
@@ -112,6 +111,20 @@ public class ServiceProducto {
             System.out.println(exception);
         }
         return "Error en el servicio/query al obtener alicuota";
+    }
+
+    public int obtenerStockProducto(int idProducto){
+        try{
+        setConnection(ConexionBD.conexion());
+        setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerStockProducto(idProducto)));
+        setResultSet(getPreparedStatement().executeQuery());
+        if(getResultSet().next()){
+            return getResultSet().getInt(1);
+        }
+    }catch (Exception exception){
+        System.out.println(exception);
+    }
+        return -1;
     }
 
     public int obtenerIdProducto(Long codigo) {
@@ -171,7 +184,6 @@ public class ServiceProducto {
                         ,getResultSet().getString("nombre")
                         ,getResultSet().getString("detalle")
                         ,getResultSet().getDouble("precio_venta")
-                        ,getResultSet().getInt("stock")
                         ,getResultSet().getDouble("alicuota")
                         ,getResultSet().getBoolean("estado")
                 );

@@ -44,4 +44,8 @@ public class ProductoQuery {
     public static String obtenerId(Long codigo) {
         return "SELECT idProducto FROM productos as p WHERE p.codigo='"+codigo+"'";
     }
+
+    public static String obtenerStockProducto(int idProducto) {
+        return "SELECT SUM(s.stock_actual) FROM stock AS s WHERE id_producto = '"+idProducto+"'";
+    }
 }

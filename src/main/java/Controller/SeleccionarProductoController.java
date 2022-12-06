@@ -39,7 +39,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     @FXML
     private TextField txtBuscarPorNombre;
     @FXML
-    private TableView<Producto> tablaProductos;
+    private TableView<ProductoAgregado> tablaProductos;
     @FXML
     private TableView<ProductoAgregado> tablaProductosAgregados;
     @FXML
@@ -61,11 +61,14 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     @FXML
     private TextField txtCantidadProductos;
 
-    ObservableList<Producto> productObservableList;
-
-    ObservableList<Producto> productoFiltrado;
+    ObservableList<ProductoAgregado> productoFiltrado;
 
     ArrayList<ProductoAgregado> productosAgregados = new ArrayList<>();
+
+    ArrayList<ProductoAgregado> listadoProductos = new ArrayList<>();
+
+    ObservableList<ProductoAgregado> productObservableList;
+
 
     private SeleccionarPagoController seleccionarPagoController;
 
@@ -78,6 +81,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productoFiltrado = FXCollections.observableArrayList();
+        insertarProductos();
         listarProductosHabilitados();
         soloNumeros(txtBuscarPorCodigo);
         soloNumeros(txtCantidadProductos);
@@ -95,6 +99,10 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     }
     public Boolean verificarCantidadVacia() {
         return txtCantidadProductos.getText().isEmpty();
+    }
+
+    public Boolean verificarTablaVacia(){
+        return tablaProductosAgregados.getItems().isEmpty();
     }
 
     public void vaciarCampos(){
@@ -148,8 +156,13 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     /*Método que continua a la vista para seleccionar la forma de pago*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        continuarASeleccionPago(event);
-        obtenerProductos();
+        if (!verificarTablaVacia()) {
+            obtenerProductos();
+            continuarASeleccionPago(event);
+        }
+        else{
+            Alerta.alertaSeleccioneProductos();
+        }
     }
 
     public void continuarASeleccionPago(ActionEvent event) throws IOException {
@@ -170,19 +183,30 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     private SeleccionarPagoController loadSeleccionarPago(SeleccionarPagoController pagoController){ return pagoController; }
 
     public void listarProductosHabilitados() {
-        productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductosHabilitados());
+        productObservableList = FXCollections.observableArrayList(listadoProductos);
         columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columProducto.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
-        columStock.setCellValueFactory(new PropertyValueFactory<Producto, String>("stock"));
+        columStock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
         tablaProductos.setItems(productObservableList);
     }
     public void listarProductosAgregados(){
         ObservableList productoAgregadoObservableList = FXCollections.observableArrayList(productosAgregados);
         columCodigoAgregado.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columProductoAgregado.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
-        columCantidadAgregado.setCellValueFactory(new PropertyValueFactory<Producto, String>("cantidad"));
+        columCantidadAgregado.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("cantidad"));
         tablaProductosAgregados.setItems(productoAgregadoObservableList);
     }
+
+    public void insertarProductos() {
+        for(Producto p:serviceProducto.listarProductosHabilitados()) {
+            int idProducto = serviceProducto.obtenerIdProducto(p.getCodigo());
+            int stock= serviceProducto.obtenerStockProducto(idProducto);
+            ProductoAgregado producto = new ProductoAgregado(p.getCodigo(),p.getNombre(),0,stock);
+            listadoProductos.add(producto);
+        }
+    }
+
+
     public void insertarProductosAgregados(ProductoAgregado productoAgregado) {
         int stockActual = tablaProductos.getSelectionModel().getSelectedItem().getStock();
         int cantidadRequerida = Integer.valueOf(txtCantidadProductos.getText());
@@ -202,7 +226,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
                 tablaProductos.setItems(productObservableList);
             } else {
                 productoFiltrado.clear();
-                for (Producto p : productObservableList) {
+                for (ProductoAgregado p : productObservableList) {
                     String codigoP = String.valueOf(p.getCodigo());
                     if (codigoP.contains(filtroCodigo)) {
                         productoFiltrado.add(p);
@@ -223,7 +247,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
                 tablaProductos.setItems(productObservableList);
             } else {
                 productoFiltrado.clear();
-                for (Producto p : productObservableList) {
+                for (ProductoAgregado p : productObservableList) {
                     String nombreP = String.valueOf(p.getNombre());
                     if (nombreP.toLowerCase().contains(filtroNombre.toLowerCase())) {
                         productoFiltrado.add(p);
