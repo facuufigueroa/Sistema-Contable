@@ -72,8 +72,8 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
     /*Método que continua a la vista para seleccionar el o los productos a vender*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        accionContinuarSeleccionProduct(event);
         obtenerClienteSeleccionado();
+        accionContinuarSeleccionProduct(event);
     }
 
     public void accionContinuarSeleccionProduct(ActionEvent event) throws IOException {
@@ -204,5 +204,8 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
 
     public void setHomeVentasController(HomeVentasController homeVentasController) {
         this.homeVentasController = homeVentasController;
+    }
+
+    public void accionAgregarCliente(ActionEvent actionEvent) {
     }
 }

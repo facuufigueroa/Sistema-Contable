@@ -3,9 +3,7 @@ package Controller;
 import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
-import Services.ServiceProducto;
 import Services.Ventas.ServiceCliente;
-import Services.Ventas.ServiceVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,10 +31,6 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private HomeVentasController homeVentasController;
 
     private SeleccionarPagoController seleccionarPagoController;
-
-    private SeleccionClienteController seleccionClienteController;
-
-    private SeleccionarProductoController seleccionarProductoController;
 
     @FXML
     private TextField txtCliente;

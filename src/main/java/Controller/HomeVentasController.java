@@ -87,7 +87,7 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     @FXML
     public void seleccionCliente(ActionEvent event) throws IOException {
         loadSeleccionCliente(event);
-        //venta = new Venta();
+        venta = new Venta();
     }
 
     private void loadSeleccionCliente(ActionEvent event) throws IOException {

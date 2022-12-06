@@ -171,7 +171,7 @@ public class ServiceProducto {
                         ,getResultSet().getString("nombre")
                         ,getResultSet().getString("detalle")
                         ,getResultSet().getDouble("precio_venta")
-                        ,getResultSet().getInt("id_stock")
+                        ,getResultSet().getInt("stock")
                         ,getResultSet().getDouble("alicuota")
                         ,getResultSet().getBoolean("estado")
                 );

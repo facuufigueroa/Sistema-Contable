@@ -46,17 +46,17 @@
       </Pane>
       <TableView fx:id="tablaClientes" layoutX="22.0" layoutY="216.0" prefHeight="217.0" prefWidth="896.0" stylesheets="@../../Style/tablas.css">
         <columns>
-          <TableColumn fx:id = "columDNI" prefWidth="215.0" text="DNI" />
-          <TableColumn fx:id = "columNombre" prefWidth="419.0" text="Nombre" />
-            <TableColumn fx:id = "columRazonSocial" prefWidth="261.0" text="Razón Social" />
+          <TableColumn fx:id="columDNI" prefWidth="215.0" text="DNI" />
+          <TableColumn fx:id="columNombre" prefWidth="419.0" text="Nombre" />
+            <TableColumn fx:id="columRazonSocial" prefWidth="261.0" text="Razón Social" />
         </columns>
       </TableView>
-      <TextField fx:id="txtBuscarPorDNI" layoutX="22.0" layoutY="158.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por DNI" onKeyReleased="#buscarPorDNI">
+      <TextField fx:id="txtBuscarPorDNI" layoutX="22.0" layoutY="158.0" onKeyReleased="#buscarPorDNI" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por DNI">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtBuscarPorNombre" layoutX="268.0" layoutY="158.0" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre" onKeyReleased="#buscarPorNombre">
+      <TextField fx:id="txtBuscarPorNombre" layoutX="268.0" layoutY="158.0" onKeyReleased="#buscarPorNombre" prefHeight="32.0" prefWidth="202.0" promptText="Buscar por nombre">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -109,5 +109,15 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="btnAgregarCliente" layoutX="544.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionAgregarCliente" prefHeight="35.0" prefWidth="160.0" stylesheets="@../../Style/botones.css" text="   Agregar Cliente" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="13.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="554.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Images/guardar%20producto.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

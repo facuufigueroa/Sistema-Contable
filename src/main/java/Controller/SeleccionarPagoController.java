@@ -93,8 +93,8 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     /*Método que continua a la vista para generar una nueva venta*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        continuarNewVentas(event);
         obtenerFormaPago();
+        continuarNewVentas(event);
     }
 
 

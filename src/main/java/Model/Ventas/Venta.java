@@ -1,14 +1,12 @@
 package Model.Ventas;
 
 import Model.Producto;
-import Model.TablaVistaAsiento;
 
 import java.util.ArrayList;
 
 public class Venta {
     private int idCliente;
     private ArrayList<Producto> productos;
-
     private ArrayList<TablaVistaVenta> ventaProductos;
     private Double totalBruto;
     private Double totalNeto;
