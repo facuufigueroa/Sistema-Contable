@@ -56,7 +56,18 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cambiarTexto();
+        verificarRolUser();
     }
+
+    private void verificarRolUser(){
+        String rol = service.obtenerRolPorEmail(u.getEmail()).toUpperCase();
+        if (rol.equals("vendedor".toUpperCase())) {
+            deshabilitarBoton(getBtnFacturas(), true);
+            deshabilitarBoton(getBtnProductos(), true);
+        }
+    }
+
+    private void deshabilitarBoton(Button boton, boolean deshabilitar){ boton.setDisable(deshabilitar); }
 
     public void hideStage(){ getVentana().hide(); }
 
@@ -192,7 +203,9 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
         return productosController;
     }
 
-    public void setProductosController(ProductosController productosController) {
-        this.productosController = productosController;
-    }
+    public void setProductosController(ProductosController productosController) { this.productosController = productosController; }
+    public Button getBtnRegistrarVenta() { return btnRegistrarVenta; }
+    public Button getBtnClientes() { return btnClientes; }
+    public Button getBtnProductos() { return btnProductos; }
+    public Button getBtnFacturas() { return btnFacturas; }
 }

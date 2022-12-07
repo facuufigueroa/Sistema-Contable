@@ -50,7 +50,20 @@ public class HomeController extends ViewFuntionality implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cambiarTexto();
+        verificarRolUser();
     }
+    private void verificarRolUser(){
+        String rol = service.obtenerRolPorEmail(u.getEmail()).toUpperCase();
+        if(rol.equals("usuario".toUpperCase())){
+            deshabilitarBoton(getBtnVentas(), true);
+        } else if (rol.equals("vendedor".toUpperCase())) {
+            deshabilitarBoton(getBtnAdminContable(), true);
+        } else if (rol.equals("jefe venta".toUpperCase())) {
+            deshabilitarBoton(getBtnAdminContable(), true);
+        }
+    }
+
+    private void deshabilitarBoton(Button boton, boolean deshabilitar){ boton.setDisable(deshabilitar); }
 
     private void loadAdminContable(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/home-principal.fxml"));
