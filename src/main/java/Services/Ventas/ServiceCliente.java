@@ -86,13 +86,14 @@ public class ServiceCliente {
             setConnection(ConexionBD.conexion());
             if (persona.getDni() == null || persona.getDni().equals(0L)){
                 setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaJuridica()));
-                // 1|razon_social, 2|email, 3|direccion, 4|telefono, 5|condicionIVA 6|cuit
-                getPs().setString(1, persona.getRazonSocial());
-                getPs().setString(2, persona.getEmail());
-                getPs().setString(3, persona.getDireccion());
-                getPs().setString(4, persona.getTelefono());
-                getPs().setString(5, persona.getCondicionIva());
-                getPs().setString(6, persona.getCuit());
+                // 1|nombre 2|razon_social, 3|email, 4|direccion, 5|telefono, 6|condicionIVA 7|cuit
+                getPs().setString(1, persona.getNombre());
+                getPs().setString(2, persona.getRazonSocial());
+                getPs().setString(3, persona.getEmail());
+                getPs().setString(4, persona.getDireccion());
+                getPs().setString(5, persona.getTelefono());
+                getPs().setString(6, persona.getCondicionIva());
+                getPs().setString(7, persona.getCuit());
                 getPs().executeUpdate();
             }else{
                 setPs(getConnection().prepareStatement(ClienteQuery.modificarPersonaFisica()));

@@ -80,6 +80,21 @@ public class Cliente {
         setDireccion(direccion);
         setTelefono(telefono);
         setEstado(true);
+    } //
+    public Cliente(String cuit, String nombre, String razonSocial, String email, String direccion, String telefono, String condicionIva){
+        //Persona Fisica
+        setDni(null);
+        setApellido(null);
+
+        //Persona Juridica
+        setCuit(cuit);
+        setNombre(nombre);
+        setEmail(email);
+        setRazonSocial(razonSocial);
+        setDireccion(direccion);
+        setTelefono(telefono);
+        setEstado(true);
+        setCondicionIva(condicionIva);
     }
     public Cliente(String cuit, String razonSocial, String email, String direccion, String telefono, String condicionIva){
         //Persona Fisica

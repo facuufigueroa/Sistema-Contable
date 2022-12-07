@@ -63,6 +63,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
 
     //Persona Juridica
     @FXML private TextField txtCuitJ = new TextField();
+    @FXML private TextField txtNombreJ;
     @FXML private TextField txtEmailJ;
     @FXML private TextField txtTelefonoJ;
     @FXML private TextField txtDireccionJ;
@@ -186,11 +187,12 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
     private void setCamposPersonaJuridica(AnchorPane node){
         setTxtCuitJ((TextField) node.getChildren().get(1));
-        setTxtEmailJ((TextField) node.getChildren().get(3));
-        setTxtTelefonoJ((TextField) node.getChildren().get(5));
-        setTxtDireccionJ((TextField) node.getChildren().get(7));
-        setTxtRazonSocialJ((TextField) node.getChildren().get(9));
-        setComboIvaJ((ComboBox) node.getChildren().get(11));
+        setTxtNombreJ((TextField) node.getChildren().get(3));
+        setTxtEmailJ((TextField) node.getChildren().get(5));
+        setTxtTelefonoJ((TextField) node.getChildren().get(7));
+        setTxtDireccionJ((TextField) node.getChildren().get(9));
+        setTxtRazonSocialJ((TextField) node.getChildren().get(11));
+        setComboIvaJ((ComboBox) node.getChildren().get(13));
     }
     public void accionElegirPersona(){ //Si selecciona una persona se carga el panel con los datos de dicha persona
            String tipoPersona = getComboBoxCliente().getValue();
@@ -204,12 +206,13 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private boolean comprobarPersonaJuridicaNoNula() {
         //cuit, razonSocial, email, direccion, telefono, tipoIVa
         boolean cuit = getTxtCuitJ().getText().isEmpty();
+        boolean nombre = getTxtNombreJ().getText().isEmpty();
         boolean razonSocial = getTxtRazonSocialJ().getText().isEmpty();
         boolean email = getTxtEmailJ().getText().isEmpty();
         boolean direccion = getTxtDireccionJ().getText().isEmpty();
         boolean telefono = getTxtTelefonoJ().getText().isEmpty();
         boolean tipoIva = getComboIvaJ().getValue().isEmpty();
-        return cuit || razonSocial || email || direccion || telefono || tipoIva;
+        return cuit || nombre || razonSocial || email || direccion || telefono || tipoIva;
     }
 
     private boolean comprobarPersonaFisicaNoNula() {
@@ -237,8 +240,9 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                 , getComboIva().getValue()
         );
     }
-    private Cliente getPersonaJuridica(){ //cuit, razonSocial, email, direccion, telefono
+    private Cliente getPersonaJuridica(){ //cuit, nombre, razonSocial, email, direccion, telefono
         return new Cliente(   getTxtCuitJ().getText()
+                            , getTxtNombreJ().getText()
                             , getTxtRazonSocialJ().getText()
                             , getTxtEmailJ().getText()
                             , getTxtDireccionJ().getText()
@@ -286,8 +290,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     /**Habilitar y deshabilitar cliente**/
     private Cliente getClientePorEstado(TablaPersona cliente){
         if(cliente.getDni().equals(0L) || cliente.getDni() == null){ //Persona juridica
-            return new Cliente(       //cuit, razonSocial, email, direccion, telefono
-                    cliente.getCuit()
+            return new Cliente(       //cuit, nombre, razonSocial, email, direccion, telefono, condicionIva
+                      cliente.getCuit()
                     , cliente.getRazonSocial()
                     , cliente.getEmail()
                     , cliente.getDireccion()
@@ -433,6 +437,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private void limpiarCampoPersonaJuridica(){
         getTxtCuitJ().setText(null);
         getTxtCuitJ().setEditable(true);
+        getTxtNombreJ().setText(null);
         getTxtRazonSocialJ().setText(null);
         getTxtEmailJ().setText(null);
         getTxtDireccionJ().setText(null);
@@ -442,6 +447,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         //cuit, razonSocial, email, direccion, telefono
         getTxtCuitJ().setText(cliente.getCuit());
         getTxtCuitJ().setEditable(false);
+        getTxtNombreJ().setText(cliente.getNombre());
         getTxtRazonSocialJ().setText(cliente.getRazonSocial());
         getTxtEmailJ().setText(cliente.getEmail());
         getTxtDireccionJ().setText(cliente.getDireccion());
@@ -458,10 +464,12 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         if(cliente.getDni().equals(0L) || cliente.getDni() == null){ //Persona juridica
             cliente1 = new Cliente(
                                       cliente.getCuit()
+                                    , cliente.getNombre()
                                     , cliente.getRazonSocial()
                                     , cliente.getEmail()
                                     , cliente.getDireccion()
                                     , cliente.getTelefono()
+                                    , ""
             );
             getComboBoxCliente().setValue("Persona Juridica");
             accionElegirPersona(); //Cambio al panel de persona juridica
@@ -537,12 +545,14 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public void setTxtTelefono(TextField txtTelefono) { this.txtTelefono = txtTelefono; }
     public void setComboIva(ComboBox<String> comboIva) { this.comboIva = comboIva; }
     public TextField getTxtCuitJ() { return txtCuitJ; }
+    public TextField getTxtNombreJ() { return txtNombreJ; }
     public TextField getTxtEmailJ() { return txtEmailJ; }
     public TextField getTxtTelefonoJ() { return txtTelefonoJ; }
     public TextField getTxtDireccionJ() { return txtDireccionJ; }
     public TextField getTxtRazonSocialJ() { return txtRazonSocialJ; }
     public ComboBox<String> getComboIvaJ() { return comboIvaJ; }
     public void setTxtCuitJ(TextField txtCuitJ) { this.txtCuitJ = txtCuitJ; }
+    public void setTxtNombreJ(TextField txtNombreJ) { this.txtNombreJ = txtNombreJ; }
     public void setTxtEmailJ(TextField txtEmailJ) { this.txtEmailJ = txtEmailJ; }
     public void setTxtTelefonoJ(TextField txtTelefonoJ) { this.txtTelefonoJ = txtTelefonoJ; }
     public void setTxtDireccionJ(TextField txtDireccionJ) { this.txtDireccionJ = txtDireccionJ; }
