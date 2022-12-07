@@ -153,7 +153,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
             personaJuridica();
         }
     }
-    private void obtenerPersonaFisica(){
+    private void obtenerPersonaFisica(String operacion){
         try {
             AnchorPane node = (AnchorPane) getPanelRegistro().getChildren().get(0);
             setCamposPersonaFisica(node);
@@ -161,9 +161,9 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                 setPersona(getPersonaFisica());
                 if (!getServicio().existeDni(getPersona().getDni())){
                     insertarPersona(getPersona());
-                }else{ AlertaVenta.dniExistente(); }
-            }else{ AlertaVenta.datosPersonaIncompleta(); }
-        }catch (NullPointerException exception){ AlertaVenta.datosPersonaIncompleta(); }
+                }else{ if(operacion.equals("GUARDAR")){ AlertaVenta.dniExistente();} }
+            }else{ if(operacion.equals("GUARDAR")){ AlertaVenta.datosPersonaIncompleta();} }
+        }catch (NullPointerException exception){ if(operacion.equals("GUARDAR")){ AlertaVenta.datosPersonaIncompleta(); }; }
     }
     private void setCamposPersonaFisica(AnchorPane node){
         setTxtCuit((TextField) node.getChildren().get(1));
@@ -175,7 +175,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         setTxtTelefono((TextField) node.getChildren().get(13));
         setComboIva((ComboBox) node.getChildren().get(15));
     }
-    private void obtenerPersonaJuridica(){
+    private void obtenerPersonaJuridica(String operacion){
         try {
             Node node = getPanelRegistro().getChildren().get(0);
             setCamposPersonaJuridica((AnchorPane) node);
@@ -183,7 +183,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                 setPersona(getPersonaJuridica());
                 insertarPersona(getPersona());
             }else{ AlertaVenta.datosPersonaIncompleta(); }
-        }catch (NullPointerException exception){ AlertaVenta.datosPersonaIncompleta(); }
+        }catch (NullPointerException exception){ if (operacion.equals("GUARDAR")){ AlertaVenta.datosPersonaIncompleta(); } }
     }
     private void setCamposPersonaJuridica(AnchorPane node){
         setTxtCuitJ((TextField) node.getChildren().get(1));
@@ -194,12 +194,12 @@ public class ClientesController extends ViewFuntionality implements Initializabl
         setTxtRazonSocialJ((TextField) node.getChildren().get(11));
         setComboIvaJ((ComboBox) node.getChildren().get(13));
     }
-    public void accionElegirPersona(){ //Si selecciona una persona se carga el panel con los datos de dicha persona
+    public void accionElegirPersona(String operacion){ //Si selecciona una persona se carga el panel con los datos de dicha persona
            String tipoPersona = getComboBoxCliente().getValue();
            if (tipoPersona.equals("Persona Fisica")) {
-               obtenerPersonaFisica();
+               obtenerPersonaFisica(operacion);
            }else if (tipoPersona.equals("Persona Juridica")) {
-               obtenerPersonaJuridica();
+               obtenerPersonaJuridica(operacion);
            }
     }
 
@@ -255,7 +255,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     private void accionGuardarPersona() {
         boolean isComboBoxVacio = getComboBoxCliente().getValue() == null;
         if (!isComboBoxVacio){
-            accionElegirPersona();
+            accionElegirPersona("GUARDAR");
         }else{ AlertaVenta.seleccioneTipoPersona(); }
     }
 
@@ -472,7 +472,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                                     , ""
             );
             getComboBoxCliente().setValue("Persona Juridica");
-            accionElegirPersona(); //Cambio al panel de persona juridica
+            accionElegirPersona("MODIFICAR"); //Cambio al panel de persona juridica
             setearCampoPersonaJuridica(cliente1);
             return cliente1;
         }
@@ -486,7 +486,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
                                 , cliente.getTelefono()
         );
         getComboBoxCliente().setValue("Persona Fisica");
-        accionElegirPersona(); //Cambio al panel de persona fisica
+        accionElegirPersona("MODIFICAR"); //Cambio al panel de persona fisica
         setearCampoPersonaFisica(cliente1);
         return cliente1;
     }
