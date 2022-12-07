@@ -8,7 +8,6 @@ public class Producto {
     private Double precio;
     private Double alicuota;
     private boolean estado;
-
     private int stock;
 
     public Producto(long codigo, String nombre, String detalle, Double precio, Double alicuota) {
