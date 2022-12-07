@@ -6,7 +6,7 @@ import net.sf.jasperreports.crosstabs.fill.JRPercentageCalculatorFactory;
 public class ProductoQuery {
 
     public static String insertarProducto(){
-        return "INSERT INTO productos (codigo,nombre,detalle,precio_venta,estado,alicuota,stock) VALUES (?,?,?,?,?,?,?)";
+        return "INSERT INTO productos (codigo,nombre,detalle,precio_venta,estado,alicuota) VALUES (?,?,?,?,?,?)";
     }
 
     public static String listarProductos(){
@@ -26,7 +26,7 @@ public class ProductoQuery {
     }
 
     public static String modificarProducto(Long codigo, Producto p){
-        return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", stock= "+p.getStock()+"" +", alicuota= "+p.getAlicuota()+
+        return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", alicuota= "+p.getAlicuota()+
                 " WHERE codigo ='"+codigo+"'";
     }
 

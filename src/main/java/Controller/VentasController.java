@@ -59,6 +59,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private ServiceCliente serviceCliente = new ServiceCliente();
 
     private ObservableList<TablaVistaVenta> tablaVentaObservableList;
+    ArrayList<TablaVistaVenta> ventaProductos = venta.getVentaProductos();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,7 +76,6 @@ public class VentasController extends ViewFuntionality implements Initializable 
     }
 
     public void listarProductosVenta(){
-        ArrayList<TablaVistaVenta> ventaProductos = venta.getVentaProductos();
         tablaVentaObservableList = FXCollections.observableArrayList(ventaProductos);
         columProducto.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta, String>("producto"));
         columDescripcion.setCellValueFactory(new PropertyValueFactory<TablaVistaVenta, String>("descripcion"));
@@ -100,6 +101,16 @@ public class VentasController extends ViewFuntionality implements Initializable 
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+    }
+
+    @FXML
+    public void accionBtnQuitarProducto(){
+        try {
+            ventaProductos.remove(tablaVenta.getSelectionModel().getSelectedIndex());
+            cargarDatosVenta();
+        }
+        catch (NullPointerException e){
+        }
     }
 
     private SeleccionarPagoController loadSeleccionFormaPago(SeleccionarPagoController selectPagoController){ return selectPagoController; }

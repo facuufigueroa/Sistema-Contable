@@ -12,12 +12,6 @@ public class ProductoAgregado {
     public ProductoAgregado() {
     }
 
-    public ProductoAgregado(Long codigo, String nombre, int cantidad) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-    }
-
     public ProductoAgregado (Long codigo, String nombre,int cantidad, int stock) {
         this.codigo = codigo;
         this.nombre = nombre;

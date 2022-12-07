@@ -57,7 +57,7 @@
                   </Button>
                </children>
             </Pane>
-            <Button fx:id="btnQuitarProducto" layoutX="919.0" layoutY="245.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" stylesheets="@../../Style/botones.css" text="Quitar Producto" textFill="WHITE">
+            <Button fx:id="btnQuitarProducto" onAction="#accionBtnQuitarProducto" layoutX="919.0" layoutY="245.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="154.0" stylesheets="@../../Style/botones.css" text="Quitar Producto" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

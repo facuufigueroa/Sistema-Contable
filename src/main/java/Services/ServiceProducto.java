@@ -33,7 +33,6 @@ public class ServiceProducto {
             getPreparedStatement().setDouble(4,producto.getPrecio());
             getPreparedStatement().setBoolean(5,producto.isEstado());
             getPreparedStatement().setDouble(6, producto.getAlicuota());
-            getPreparedStatement().setInt(7, producto.getStock());
             getPreparedStatement().executeUpdate();
         }catch (SQLException exception){ System.out.println(exception.getMessage()); }
     }
@@ -52,7 +51,6 @@ public class ServiceProducto {
                 producto.setPrecio(getResultSet().getDouble(5));
                 producto.setEstado(getResultSet().getBoolean(6));
                 producto.setAlicuota(getResultSet().getDouble(7));
-                producto.setStock(getResultSet().getInt(8));
                 productos.add(producto);
             }
         }catch (Exception exception){
