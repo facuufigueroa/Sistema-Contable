@@ -88,6 +88,22 @@ public class ServiceVenta {
         }
         return -1;
     }
+
+    public String obtenerCondicionIvaCliente(int idCliente){
+        String ci="";
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(VentaQuery.obtenerCondicionIvaCliente(idCliente)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                ci=getResultSet().getString(1);
+                return ci.trim();
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return "error";
+    }
     public ConexionBD getConexionBD() { return conexionBD; }
 
     public void setConexionBD(ConexionBD conexionBD) { this.conexionBD = conexionBD; }

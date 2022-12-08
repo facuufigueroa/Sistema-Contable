@@ -21,4 +21,8 @@ public class VentaQuery {
         return "SELECT MAX(idventa) FROM ventas";
     }
 
+    public static String obtenerCondicionIvaCliente(int idCliente) {
+        return "SELECT condicion_iva FROM clientes as c WHERE c.idcliente="+idCliente;
+    }
+
 }

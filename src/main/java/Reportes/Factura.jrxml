@@ -3,12 +3,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="595" pageHeight="560" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3980b15b-66c1-415f-9cf2-262532a47c2b">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaContable"/>
 	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[Y2xpZW50ZXMgLDYxNCwxNSw5MTlkYjA1MS02ODhlLTRiMDgtOGI5NS04Yzg2MzFiYjUwMmI7Zm9y
-bWFfcGFnbyAsNzgyLDM0NCwyMzhkZTkwZi00YzI5LTQ5NzUtOWM5Yi02NmIyMTZkZThkMWI7cHJv
-ZHVjdG9zICwxNjQsODEsNDkwMTc4OTItNWQ4Mi00ZDc5LWE1NmEtYjA4NjdlMDM2OGEzO2ZhY3R1
-cmFzICwzMDgsNTQsNDg2YjgyNDgtOTg4Yy00YzgzLTgyZWUtZDg3OGUwMDY2OGY4O3ZlbnRhcyAs
-NDUwLDIyNSwxOGY2NjEwZC01MDkwLTRiZDItOTUyMC04NmE4NzBmZWVhNzk7dmVudGFfcHJvZHVj
-dG8gLDE1LDI3OSwyYjdlMzY5Ny1kNGM2LTQxN2ItOTM2NS1jNDI5YjA2NjNkMTA7]]>
+		<![CDATA[Zm9ybWFfcGFnbyAsMzIyLDIzMywyZTZiYzExOC1hYmJhLTQxNmQtODA2MC1hNDM2NTBmNzEzMTE7
+cHJvZHVjdG9zICwxODksMjYxLDk3OTZhZDEwLTA5MTYtNGUwYi1hODU3LTgyY2JhZjU4ODQ1YTt2
+ZW50YV9wcm9kdWN0byAsMzIyLDQwLDYyOGE1NjFmLTNkMzgtNDg2NS05MjVlLTdjMmU3MmRkZDNl
+NDtjbGllbnRlcyAsNDAsNDQyLGM2ZWZhYzM0LTY0MmMtNGNlMi1iYWU1LTg4ZjEwMjI2N2ViMzt2
+ZW50YXMgLDQ2NywzNjEsYmZlNmVkMDMtNDIzMi00ZWUxLWIwYTYtNGNjNTc2ODM3NmQ4O2ZhY3R1
+cmFzICwzMjIsMzQ4LGU5YjMxMzYxLWRhYzQtNGViMS05MGI4LWJkZTVhNzQwY2M1Mjs=]]>
 	</property>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="370"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="625"/>
@@ -23,44 +23,83 @@ dG8gLDE1LDI3OSwyYjdlMzY5Ny1kNGM2LTQxN2ItOTM2NS1jNDI5YjA2NjNkMTA7]]>
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="subtotal" class="java.lang.Double"/>
+	<parameter name="iva" class="java.lang.Double"/>
+	<parameter name="total" class="java.lang.Double"/>
 	<queryString>
-		<![CDATA[SELECT clientes.nombre,
-	clientes.apellido,
-	clientes.direccion,
-	clientes.cuit,
-	clientes.email,
-	clientes.apellido,
-	clientes.nombre,
-	clientes.email,
-	clientes.direccion,
-	clientes.cuit,
-	venta_producto.cantidad,
-	venta_producto.precio_unitario,
-	productos.detalle,
+		<![CDATA[SELECT productos.detalle,
 	productos.nombre,
-	facturas.numero,
-	facturas.fecha_emision,
-	clientes.condicion_iva,
+	venta_producto.precio_unitario,
+	venta_producto.importe,
+	venta_producto.cantidad,
 	forma_pago.forma_pago,
-	facturas.letra_factura
-FROM venta_producto
-	INNER JOIN ventas ON 
+	facturas.fecha_emision,
+	facturas.letra_factura,
+	clientes.email,
+	clientes.nombre,
+	clientes.apellido,
+	clientes.condicion_iva,
+	clientes.direccion,
+	clientes.cuit,
+	facturas.numero
+FROM ventas
+	INNER JOIN venta_producto ON 
 	 venta_producto.id_venta = ventas.idventa 
+	INNER JOIN productos ON 
+	 productos.idproducto = venta_producto.id_producto 
+	INNER JOIN forma_pago ON 
+	 forma_pago.idformapago = ventas.id_forma_pago 
 	INNER JOIN facturas ON 
 	 facturas.id_venta = ventas.idventa 
 	INNER JOIN clientes ON 
-	 ventas.id_cliente = clientes.idcliente 
-	INNER JOIN productos ON 
-	 venta_producto.id_producto = productos.idproducto 
-	INNER JOIN forma_pago ON 
-	 ventas.id_forma_pago = forma_pago.idformapago]]>
+	 clientes.idcliente = ventas.id_cliente]]>
 	</queryString>
+	<field name="detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="detalle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
 	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="precio_unitario" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="precio_unitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venta_producto"/>
+	</field>
+	<field name="importe" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="importe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venta_producto"/>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venta_producto"/>
+	</field>
+	<field name="forma_pago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="forma_pago"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="forma_pago"/>
+	</field>
+	<field name="fecha_emision" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_emision"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="facturas"/>
+	</field>
+	<field name="letra_factura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="letra_factura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="facturas"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="COLUMN_10" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
 	</field>
 	<field name="apellido" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
+	</field>
+	<field name="condicion_iva" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="condicion_iva"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
 	</field>
 	<field name="direccion" class="java.lang.String">
@@ -71,64 +110,8 @@ FROM venta_producto
 		<property name="com.jaspersoft.studio.field.label" value="cuit"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
 	</field>
-	<field name="email" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="email"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="COLUMN_6" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="COLUMN_7" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="COLUMN_8" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="email"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="COLUMN_9" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="COLUMN_10" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="cuit"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="cantidad" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="venta_producto"/>
-	</field>
-	<field name="precio_unitario" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="precio_unitario"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="venta_producto"/>
-	</field>
-	<field name="detalle" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="detalle"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
-	</field>
-	<field name="COLUMN_14" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
-	</field>
-	<field name="numero" class="java.lang.Long">
+	<field name="numero" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="numero"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="facturas"/>
-	</field>
-	<field name="fecha_emision" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="fecha_emision"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="facturas"/>
-	</field>
-	<field name="condicion_iva" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="condicion_iva"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="clientes"/>
-	</field>
-	<field name="forma_pago" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="forma_pago"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="forma_pago"/>
-	</field>
-	<field name="letra_factura" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="letra_factura"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="facturas"/>
 	</field>
 	<title>
@@ -331,79 +314,79 @@ FROM venta_producto
 				<text><![CDATA[Email:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="420" y="190" width="50" height="19" uuid="3e9d8f37-64a2-40e1-91f1-59ebb0f015b7"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial Narrow" size="14"/>
+				<reportElement x="261" y="43" width="48" height="25" uuid="e08a5d9d-957a-40ea-94e8-a224b5892bcf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="20" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{letra_factura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="470" y="190" width="50" height="19" uuid="05696c2d-b843-46f3-ba3e-56f49ed4e268"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
+				<reportElement x="390" y="135" width="90" height="20" uuid="3d068aee-7681-4d79-aca6-d8942448aa3a"/>
+				<textElement textAlignment="Left">
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="367" y="210" width="94" height="19" uuid="7c34d12e-8d73-4e6f-9016-d178907a2f55"/>
+				<reportElement x="367" y="112" width="123" height="22" uuid="664df511-ad8a-4add-97b1-3f5197fd2beb"/>
 				<textElement>
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="60" y="190" width="90" height="19" uuid="47c09290-8a53-4e1d-bbba-5562f3195a9e"/>
+				<reportElement x="60" y="190" width="88" height="19" uuid="46dd9f8c-899d-4230-b8df-4fbaa8b0d787"/>
 				<textElement>
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cuit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="230" width="103" height="19" uuid="f92f8409-861e-402b-8904-42a015afc2c3"/>
+				<reportElement x="150" y="210" width="130" height="19" uuid="00e811ae-9133-40b2-99ef-aa58c41c5b47"/>
 				<textElement>
-					<font fontName="Arial Narrow" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="390" y="135" width="50" height="22" uuid="30e4d5db-387f-4a92-8eb3-adfd156c61b6"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial Narrow" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="367" y="112" width="62" height="22" uuid="7f679ef0-60ec-494b-a384-68573faa3953"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Arial Narrow" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="150" y="210" width="130" height="18" uuid="d58d9e39-dfba-4e34-b936-a24a6e348008"/>
-				<textElement textAlignment="Left">
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{condicion_iva}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="130" y="230" width="100" height="19" uuid="e0fba371-7d4a-46af-a0ca-a5ce644c4f77"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
+				<reportElement x="130" y="230" width="130" height="19" uuid="1b203971-cb08-4dba-b12d-00971d6c9325"/>
+				<textElement textAlignment="Left">
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{forma_pago}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="260" y="41" width="51" height="28" uuid="fa99260a-ae96-493b-a84b-bc7a0d74e333"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial Narrow" size="20"/>
+				<reportElement x="420" y="190" width="40" height="19" uuid="2982cfdd-e34d-4b40-9f60-d537a942ba98"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{letra_factura}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{COLUMN_10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="190" width="76" height="19" uuid="54b182dc-976e-44d2-89b7-749e9ed257f3"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="367" y="210" width="133" height="19" uuid="542564e7-45dd-45a0-8499-ecaac37a69bc"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="230" width="122" height="19" uuid="32b0bb72-e9c8-48c8-8efe-6399bed7f2e3"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="44" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<line>
 				<reportElement x="4" y="30" width="549" height="1" uuid="fae65b4a-5beb-4a96-838f-8d7d5597768d"/>
 			</line>
@@ -423,25 +406,39 @@ FROM venta_producto
 				<reportElement x="471" y="0" width="1" height="30" uuid="c4c7a17e-d95a-41ae-97a0-74c377bd8402"/>
 			</line>
 			<textField>
-				<reportElement x="366" y="-1" width="100" height="30" uuid="4dc1268e-f8a6-45a9-a936-e8bda4490c7f"/>
+				<reportElement x="102" y="-1" width="80" height="30" uuid="2971cd18-9085-4122-92ed-2c279e9328e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="0" width="100" height="30" uuid="164afb1a-13f8-4bb9-b115-3a1623a8e78b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{detalle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="0" width="75" height="30" uuid="bed14cd1-bfdc-436c-b049-e6d299043c45"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="1" width="81" height="28" uuid="e7730c47-155f-46c1-a4c2-449861a2744d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{precio_unitario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="130" y="3" width="150" height="22" uuid="150411e6-e744-4a7f-9c1d-676ed1ca6e3f"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial Narrow" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{detalle}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="3" y="3" width="78" height="18" uuid="864de804-b8db-438e-9b08-4ee688881551"/>
+				<reportElement x="480" y="0" width="64" height="30" uuid="9bf72053-83e7-4759-9d5e-4bc324c2fccb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -480,6 +477,27 @@ FROM venta_producto
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="441" y="10" width="100" height="25" uuid="4d43a385-662f-4de2-85fa-5cf3dd67375d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="36" width="96" height="24" uuid="da05437e-c5cd-477c-9ff2-c111c849aa41"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="61" width="98" height="25" uuid="363dc00e-e3f8-42a6-bd99-9267d6f3d430"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
