@@ -275,7 +275,7 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
             Double precio = serviceProducto.obtenerProductoPorCodigo(p.getCodigo()).getPrecio();
             String nombre = serviceProducto.obtenerProductoPorCodigo(p.getCodigo()).getNombre();
             String descripcion = serviceProducto.obtenerProductoPorCodigo(p.getCodigo()).getDetalle();
-            ventaP = new TablaVistaVenta(nombre,descripcion,p.getCantidad(),precio,precio*p.getCantidad());
+            ventaP = new TablaVistaVenta(nombre,descripcion,p.getCantidad(),precio,precio*p.getCantidad(),serviceProducto.obtenerIdProducto(p.getCodigo()));
             ventaProductos.add(ventaP);
         }
         venta.setProductos(productosSeleccionados);

@@ -1,9 +1,14 @@
 package Controller;
 
+import Model.Alerta;
+import Model.Producto;
+import Model.User;
 import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
+import Services.ServiceProducto;
 import Services.Ventas.ServiceCliente;
+import Services.Ventas.ServiceVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +28,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -31,6 +37,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private HomeVentasController homeVentasController;
 
     private SeleccionarPagoController seleccionarPagoController;
+
+    private SeleccionClienteController seleccionClienteController;
 
     @FXML
     private TextField txtCliente;
@@ -43,7 +51,7 @@ public class VentasController extends ViewFuntionality implements Initializable 
     @FXML
     private TextField txtIVA;
     @FXML
-    private TableView tablaVenta;
+    private TableView<TablaVistaVenta> tablaVenta;
     @FXML
     private TableColumn columProducto;
     @FXML
@@ -55,11 +63,18 @@ public class VentasController extends ViewFuntionality implements Initializable 
     @FXML
     private TableColumn columTotal;
     private Venta venta = Venta.getInstance();
+    private User user = User.getInstance();
 
     private ServiceCliente serviceCliente = new ServiceCliente();
 
+    private ServiceVenta serviceVenta = new ServiceVenta();
+
+    private ServiceProducto serviceProducto = new ServiceProducto();
+
     private ObservableList<TablaVistaVenta> tablaVentaObservableList;
     ArrayList<TablaVistaVenta> ventaProductos = venta.getVentaProductos();
+
+    ArrayList<Producto> productos = venta.getProductos();
 
 
     @Override
@@ -69,10 +84,26 @@ public class VentasController extends ViewFuntionality implements Initializable 
     public void cargarDatosVenta(){
         txtCondicionIva.setText(serviceCliente.obtenerCondicionIva(venta.getIdCliente()));
         txtCliente.setText(serviceCliente.obtenerNombreCliente(venta.getIdCliente()));
-        txtFormaPago.setText(venta.getFormaPago());
+        txtFormaPago.setText(obtenerTxtFP());
         listarProductosVenta();
-        txtTotal.setText(String.valueOf((venta.obtenerTotalVenta() + venta.obtenerIVA())));
-        txtIVA.setText(venta.obtenerIVA().toString());
+        txtIVA.setText(obtenerIVA().toString());
+        venta.setTotalBruto(obtenerTotalVenta());
+        venta.setTotalNeto((obtenerTotalVenta() + obtenerIVA()));
+        txtTotal.setText(String.valueOf(venta.getTotalNeto()));
+        venta.setTotales(obtenerTotales(venta.getCuotas()));
+    }
+
+    public String obtenerTxtFP(){
+        String formaPago = obtenerFormaPago(venta.getFormaPago());
+       if(formaPago.toUpperCase() == "CUOTAS"){
+          return formaPago + " " + venta.getCuotas();
+       }
+       else{
+           return formaPago;
+       }
+    }
+    public String obtenerFormaPago(int formaPago){
+        return serviceVenta.obtenerFormaPago(formaPago);
     }
 
     public void listarProductosVenta(){
@@ -106,7 +137,9 @@ public class VentasController extends ViewFuntionality implements Initializable 
     @FXML
     public void accionBtnQuitarProducto(){
         try {
+            TablaVistaVenta producto = tablaVenta.getSelectionModel().getSelectedItem();
             ventaProductos.remove(tablaVenta.getSelectionModel().getSelectedIndex());
+            productos.remove(serviceProducto.obtenerProductoPorId(producto.getIdProducto()));
             cargarDatosVenta();
         }
         catch (NullPointerException e){
@@ -130,5 +163,73 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     public void setSeleccionarPagoController(SeleccionarPagoController seleccionarPagoController) {
         this.seleccionarPagoController = seleccionarPagoController;
+    }
+
+    private SeleccionClienteController loadSeleccionCliente(SeleccionClienteController selectClienteController){ return selectClienteController; }
+
+    public SeleccionClienteController getSeleccionClienteController() {
+        return seleccionClienteController;
+    }
+
+    public void setSeleccionClienteController(SeleccionClienteController seleccionClienteController) {
+        this.seleccionClienteController = seleccionClienteController;
+    }
+
+    public void accionBtnGenerarVenta(ActionEvent actionEvent) throws SQLException {
+            Venta venta1 = new Venta(venta.getIdCliente(), venta.getTotalBruto(), venta.getTotalNeto(),
+                    venta.getTotales(), venta.getFormaPago(), user.getId());
+            serviceVenta.insertarVenta(venta1);
+            insertarVentaProducto();
+            Alerta.alertaVentaRegistrada();
+    }
+
+    public void insertarVentaProducto() throws SQLException{
+        int idVenta = serviceVenta.obtenerIdVenta();
+            for (TablaVistaVenta venta1 : ventaProductos) {
+                TablaVistaVenta ventaProducto = new TablaVistaVenta(idVenta, venta1.getIdProducto(),
+                        venta1.getCantidad(), venta1.getPrecioUnitario(),venta1.getPrecioTotal());
+                serviceVenta.insertarVenta_producto(ventaProducto);
+            }
+    }
+    public Double obtenerTotalVenta(){
+        Double total = 0.0;
+        for(TablaVistaVenta producto : ventaProductos){
+            total += producto.getPrecioTotal();
+        }
+        return total;
+    }
+    public Double obtenerIVA(){
+        Double totalIva = 0.0;
+        for (Producto p: productos){
+            for (TablaVistaVenta tv:ventaProductos) {
+                if(serviceProducto.obtenerIdProducto(p.getCodigo()) == tv.getIdProducto()) {
+                    totalIva += ((p.getAlicuota() * p.getPrecio()) / 100) * tv.getCantidad();
+                }
+            }
+        }
+        return totalIva;
+    }
+
+    public Double obtenerTotales(int cuotas) {
+        if (cuotas != 0) {
+            return (Double.parseDouble(txtTotal.getText()) / cuotas);
+        }
+        else {
+            return Double.parseDouble(txtTotal.getText());
+        }
+    }
+    public void accionBtnNuevaVenta(ActionEvent event)throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/seleccionar-clientes.fxml"));
+        Parent parent = fxmlLoader.load();
+        setSeleccionClienteController(loadSeleccionCliente(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage pagoStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getSeleccionClienteController().setVentana(pagoStage);
+        getSeleccionClienteController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
     }
 }

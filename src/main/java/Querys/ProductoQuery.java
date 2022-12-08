@@ -48,4 +48,8 @@ public class ProductoQuery {
     public static String obtenerStockProducto(int idProducto) {
         return "SELECT SUM(s.stock_actual) FROM stock AS s WHERE id_producto = '"+idProducto+"'";
     }
+
+    public static String obtenerProductoPorId() {
+        return "SELECT * FROM productos as p WHERE p.idproducto= ?";
+    }
 }

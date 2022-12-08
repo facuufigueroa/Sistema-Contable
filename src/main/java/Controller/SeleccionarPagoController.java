@@ -2,6 +2,7 @@ package Controller;
 import Model.Alerta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
+import Services.Ventas.ServiceVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +35,8 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     private TextField txtCantidadCuotas;
 
     private SeleccionarProductoController seleccionarProductoController;
+
+    private ServiceVenta serviceVenta = new ServiceVenta();
 
     private VentasController ventasController;
 
@@ -95,8 +98,8 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     /*Método que continua a la vista para generar una nueva venta*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        if (!verificarFormaPago()) {
-            obtenerFormaPago();
+        if (!verificarFormaPago() && !verificarCuotas()) {
+            obtenerIdFormaPago();
             continuarNewVentas(event);
         }
         else{
@@ -106,6 +109,10 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
 
     public Boolean verificarFormaPago() {
         return comboBoxSeleccionarPago.getSelectionModel().isEmpty();
+    }
+
+    public Boolean verificarCuotas() {
+        return txtCantidadCuotas.getText().isEmpty();
     }
 
     public void continuarNewVentas(ActionEvent event) throws IOException {
@@ -123,16 +130,12 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
         stage.show();
     }
 
-    public void obtenerFormaPago(){
+    public void obtenerIdFormaPago(){
         try {
             String formaPago = comboBoxSeleccionarPago.getSelectionModel().getSelectedItem().toString();
-            String cuotas = txtCantidadCuotas.getText();
-            if (formaPago.equalsIgnoreCase("cuotas")) {
-                venta.setFormaPago(cuotas + " " + formaPago);
-            }
-            else{
-                venta.setFormaPago(formaPago);
-            }
+            int cuotas = Integer.parseInt(txtCantidadCuotas.getText());
+            venta.setCuotas(cuotas);
+            venta.setFormaPago(serviceVenta.obtenerIdformaPago(formaPago.toUpperCase()));
         } catch (NullPointerException e) {
         }
     }

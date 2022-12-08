@@ -328,7 +328,17 @@ public class Alerta {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setTitle(null);
-        alert.setContentText(" No seleccionó la forma de pago en que se realizará la compra");
+        alert.setContentText(" No seleccionó la forma de pago en que se realizará la compra o las cuotas de la misma");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
+
+    public static boolean alertaVentaRegistrada() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("¡Venta registrada con exito!");
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
         return true;

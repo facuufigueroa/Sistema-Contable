@@ -69,7 +69,7 @@
                   <Font name="Lucida Sans Unicode" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnNuevaVenta" layoutX="1114.0" layoutY="443.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="   Nueva Venta" textFill="WHITE">
+            <Button fx:id="btnNuevaVenta" onAction="#accionBtnNuevaVenta" layoutX="1114.0" layoutY="443.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="   Nueva Venta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -93,7 +93,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnGenerarVenta" layoutX="1114.0" layoutY="373.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="  Generar Venta" textFill="WHITE">
+            <Button fx:id="btnGenerarVenta" onAction="#accionBtnGenerarVenta" layoutX="1114.0" layoutY="373.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="191.0" stylesheets="@../../Style/botones.css" text="  Generar Venta" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>

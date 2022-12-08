@@ -11,38 +11,33 @@ public class Venta {
     private Double totalBruto;
     private Double totalNeto;
     private Double totales;
-    private int factura;
-    private int remito;
-    private String formaPago;
+    private int formaPago;
+
+    private int idUsuario;
+    private int cuotas;
     private static Venta venta;
 
     public Venta(){}
 
-    public Venta(int idCliente, ArrayList<Producto> productos, Double totalBruto, Double totalNeto, Double totales, int factura, int remito, String formaPago) {
+    public Venta(int idCliente, ArrayList<Producto> productos, Double totalBruto, Double totalNeto, Double totales, int formaPago) {
         this.idCliente = idCliente;
         this.productos = productos;
         this.totalBruto = totalBruto;
         this.totalNeto = totalNeto;
         this.totales = totales;
-        this.factura = factura;
-        this.remito = remito;
         this.formaPago = formaPago;
     }
 
-    public Double obtenerTotalVenta(){
-        Double total = 0.0;
-        for(TablaVistaVenta producto : venta.getVentaProductos()){
-            total += producto.getPrecioTotal();
-        }
-        return total;
+    public Venta(int idCliente, Double totalBruto, Double totalNeto, Double totales, int formaPago, int idUsuario) {
+        this.idCliente = idCliente;
+        this.totalBruto = totalBruto;
+        this.totalNeto = totalNeto;
+        this.totales = totales;
+        this.formaPago = formaPago;
+        this.idUsuario = idUsuario;
     }
-    public Double obtenerIVA(){
-        Double totalIva = 0.0;
-        for (Producto p: getProductos()){
-            totalIva = (p.getAlicuota() * p.getPrecio())/100;
-        }
-        return totalIva;
-    }
+
+
 
     public static Venta getInstance(){
         if(venta == null){
@@ -97,27 +92,19 @@ public class Venta {
         this.totales = totales;
     }
 
-    public int getFactura() {
-        return factura;
-    }
-
-    public void setFactura(int factura) {
-        this.factura = factura;
-    }
-
-    public int getRemito() {
-        return remito;
-    }
-
-    public void setRemito(int remito) {
-        this.remito = remito;
-    }
-
-    public String getFormaPago() {
+    public int getFormaPago() {
         return formaPago;
     }
 
-    public void setFormaPago(String formaPago) {
+    public void setFormaPago(int formaPago) {
         this.formaPago = formaPago;
     }
+
+    public int getIdUsuario() { return idUsuario; }
+
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
+
+    public int getCuotas() { return cuotas; }
+
+    public void setCuotas(int cuotas) { this.cuotas = cuotas; }
 }

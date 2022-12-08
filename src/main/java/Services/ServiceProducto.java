@@ -190,6 +190,25 @@ public class ServiceProducto {
         return null;
     }
 
+    public Producto obtenerProductoPorId(int idProducto){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorId()));
+            getPreparedStatement().setLong(1, idProducto);
+            setResultSet(getPreparedStatement().executeQuery());
+            if (getResultSet().next()){
+                return new Producto(
+                        getResultSet().getLong("codigo")
+                        ,getResultSet().getString("nombre")
+                        ,getResultSet().getString("detalle")
+                        ,getResultSet().getDouble("precio_venta")
+                        ,getResultSet().getDouble("alicuota")
+                        ,getResultSet().getBoolean("estado")
+                );
+            }
+        }catch (SQLException e){ System.out.println(e.getMessage()); }
+        return null;
+    }
     public ConexionBD getConexionBD() {
         return conexionBD;
     }
