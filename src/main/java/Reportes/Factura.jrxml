@@ -2,14 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="595" pageHeight="560" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3980b15b-66c1-415f-9cf2-262532a47c2b">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaContable"/>
-	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[Zm9ybWFfcGFnbyAsMzIyLDIzMywyZTZiYzExOC1hYmJhLTQxNmQtODA2MC1hNDM2NTBmNzEzMTE7
-cHJvZHVjdG9zICwxODksMjYxLDk3OTZhZDEwLTA5MTYtNGUwYi1hODU3LTgyY2JhZjU4ODQ1YTt2
-ZW50YV9wcm9kdWN0byAsMzIyLDQwLDYyOGE1NjFmLTNkMzgtNDg2NS05MjVlLTdjMmU3MmRkZDNl
-NDtjbGllbnRlcyAsNDAsNDQyLGM2ZWZhYzM0LTY0MmMtNGNlMi1iYWU1LTg4ZjEwMjI2N2ViMzt2
-ZW50YXMgLDQ2NywzNjEsYmZlNmVkMDMtNDIzMi00ZWUxLWIwYTYtNGNjNTc2ODM3NmQ4O2ZhY3R1
-cmFzICwzMjIsMzQ4LGU5YjMxMzYxLWRhYzQtNGViMS05MGI4LWJkZTVhNzQwY2M1Mjs=]]>
-	</property>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="370"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="625"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="699"/>
@@ -26,6 +19,7 @@ cmFzICwzMjIsMzQ4LGU5YjMxMzYxLWRhYzQtNGViMS05MGI4LWJkZTVhNzQwY2M1Mjs=]]>
 	<parameter name="subtotal" class="java.lang.Double"/>
 	<parameter name="iva" class="java.lang.Double"/>
 	<parameter name="total" class="java.lang.Double"/>
+	<parameter name="numFac" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT productos.detalle,
 	productos.nombre,
@@ -52,7 +46,8 @@ FROM ventas
 	INNER JOIN facturas ON 
 	 facturas.id_venta = ventas.idventa 
 	INNER JOIN clientes ON 
-	 clientes.idcliente = ventas.id_cliente]]>
+	 clientes.idcliente = ventas.id_cliente
+WHERE facturas.numero LIKE  $P{numFac} ]]>
 	</queryString>
 	<field name="detalle" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="detalle"/>

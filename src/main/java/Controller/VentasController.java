@@ -195,8 +195,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
             serviceVenta.insertarVenta(venta1);
             insertarVentaProducto();
             Alerta.alertaVentaRegistrada();
-            insertarFactura();
-            reporteFactura.loadFactura(obtenerTotalVenta(),obtenerIVA(),venta.getTotalNeto());
+            String numeroFactura=insertarFactura();
+            reporteFactura.loadFactura(obtenerTotalVenta(),obtenerIVA(),venta.getTotalNeto(),numeroFactura);
 
     }
 
@@ -236,10 +236,11 @@ public class VentasController extends ViewFuntionality implements Initializable 
         }
     }
 
-    public void insertarFactura() throws SQLException {
+    public String insertarFactura() throws SQLException {
         LocalDate localDate = fechaVentaFactura.getValue();
         Factura factura = new Factura(null,crearNumeroFactura(),false,venta.getTotalNeto(), java.sql.Date.valueOf( localDate ),evaluarLetraFactura(),serviceVenta.obtenerIdVenta());
         serviceFactura.insertarFactura(factura);
+        return factura.getNumero();
     }
 
     public String crearNumeroFactura() throws SQLException {

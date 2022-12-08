@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class ReporteFactura {
 
-    public void loadFactura(double subtotal, double iva, double total){
+    public void loadFactura(double subtotal, double iva, double total,String numeroFactura){
         try {
             ConexionBD con = new ConexionBD();
             Connection conn = con.conexion();
@@ -20,6 +20,7 @@ public class ReporteFactura {
             parameters.put("subtotal",subtotal);
             parameters.put("iva",iva);
             parameters.put("total",total);
+            parameters.put("numFac",numeroFactura);
             JasperReport archivo = JasperCompileManager.compileReport("src\\main\\java\\Reportes\\Factura.jrxml");
             JasperPrint prin = JasperFillManager.fillReport(archivo,parameters, conn);
             JasperViewer ver = new JasperViewer(prin, false);
