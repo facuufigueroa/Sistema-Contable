@@ -1,13 +1,14 @@
 package Controller;
 
-import Model.Alerta;
-import Model.Producto;
-import Model.User;
+import Model.*;
+import Model.DatePickerConverter;
+import Model.Ventas.Factura;
 import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
-import Model.ViewFuntionality;
+import Reportes.ReporteFactura;
 import Services.ServiceProducto;
 import Services.Ventas.ServiceCliente;
+import Services.Ventas.ServiceFactura;
 import Services.Ventas.ServiceVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,8 +30,13 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class VentasController extends ViewFuntionality implements Initializable {
@@ -40,6 +47,10 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     private SeleccionClienteController seleccionClienteController;
 
+    @FXML
+    private DatePicker fechaVentaFactura;
+
+    private final LocalDate fechaActual = LocalDate.now();
     @FXML
     private TextField txtCliente;
     @FXML
@@ -76,6 +87,9 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     ArrayList<Producto> productos = venta.getProductos();
 
+    private ServiceFactura serviceFactura = new ServiceFactura();
+
+    private ReporteFactura reporteFactura = new ReporteFactura();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -181,6 +195,9 @@ public class VentasController extends ViewFuntionality implements Initializable 
             serviceVenta.insertarVenta(venta1);
             insertarVentaProducto();
             Alerta.alertaVentaRegistrada();
+            String numeroFactura=insertarFactura();
+            reporteFactura.loadFactura(obtenerTotalVenta(),obtenerIVA(),venta.getTotalNeto(),numeroFactura);
+
     }
 
     public void insertarVentaProducto() throws SQLException{
@@ -218,6 +235,45 @@ public class VentasController extends ViewFuntionality implements Initializable 
             return Double.parseDouble(txtTotal.getText());
         }
     }
+
+    public String insertarFactura() throws SQLException {
+        LocalDate localDate = fechaVentaFactura.getValue();
+        Factura factura = new Factura(null,crearNumeroFactura(),false,venta.getTotalNeto(), java.sql.Date.valueOf( localDate ),evaluarLetraFactura(),serviceVenta.obtenerIdVenta());
+        serviceFactura.insertarFactura(factura);
+        return factura.getNumero();
+    }
+
+    public String crearNumeroFactura() throws SQLException {
+        String numB = "";
+        if(serviceFactura.ultimaFactura() == 0){
+            return "B-0002-00000000";
+        }
+        else{
+            int numFactura = serviceFactura.ultimaFactura();
+            numB = String.format("%08d", numFactura);
+        }
+        return "0002-" + numB;
+    }
+
+
+
+    public String evaluarLetraFactura(){
+        String condicion_iva = serviceVenta.obtenerCondicionIvaCliente(venta.getIdCliente());
+        String letra="";
+        String ri="Responsable Inscripto";
+        if(condicion_iva.trim().equals(ri)){
+            letra="A";
+            System.out.println(letra);
+        }
+        else{
+            if(condicion_iva.equals("Consumidor Final")){
+                letra="B";
+            }
+        }
+        return letra;
+    }
+
+
     public void accionBtnNuevaVenta(ActionEvent event)throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/seleccionar-clientes.fxml"));
         Parent parent = fxmlLoader.load();

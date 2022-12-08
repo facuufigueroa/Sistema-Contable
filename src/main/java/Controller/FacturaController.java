@@ -30,7 +30,6 @@ public class FacturaController extends ViewFuntionality implements Initializable
 
     @FXML
     public void accionPrueba(){
-        ReporteFactura reporteFactura = new ReporteFactura();
-        reporteFactura.loadFactura();
+
     }
 }

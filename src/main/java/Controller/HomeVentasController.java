@@ -237,10 +237,6 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     public Button getBtnProductos() { return btnProductos; }
     public Button getBtnFacturas() { return btnFacturas; }
 
-    public void setProductosController(ProductosController productosController) {
-        this.productosController = productosController;
-    }
-
 
     public FacturaController getFacturaController() {
         return facturaController;
