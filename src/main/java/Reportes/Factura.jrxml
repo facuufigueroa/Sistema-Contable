@@ -245,7 +245,7 @@ WHERE facturas.numero LIKE  $P{numFac} ]]>
 			</staticText>
 			<image>
 				<reportElement x="470" y="45" width="68" height="67" uuid="9ab3ff50-aade-4efb-8201-5c9069fe062f"/>
-				<imageExpression><![CDATA["C:/Users/Facundo/Desktop/Facultad 2022/Segundo Cuatrimestre/Sistemas Administrativos II/Sistema Contable/src/main/resources/Images/Icono.png"]]></imageExpression>
+				<imageExpression><![CDATA["src/main/resources/Images/Icono.png"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="3" y="160" width="1" height="90" uuid="4b058237-1737-49ef-97b2-3f51e0a56a2b"/>
