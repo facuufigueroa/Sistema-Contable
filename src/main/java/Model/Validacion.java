@@ -72,7 +72,7 @@ public class Validacion {
         };
         txt.setTextFormatter(new TextFormatter<Long>(new LongStringConverter(), null, integerFilter));
     }
-    private static void limitarCamposDeTexto(final TextField campoTexto, final int tamanoMaximo){
+    public static void limitarCamposDeTexto(final TextField campoTexto, final int tamanoMaximo){
         UnaryOperator<TextFormatter.Change> textLimitFilter = change -> {
             if (change.isContentChange()) {
                 int newLength = change.getControlNewText().length();

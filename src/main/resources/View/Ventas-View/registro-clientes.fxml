@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="1216.0" prefHeight="500.0" prefWidth="1216.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+<AnchorPane minWidth="1216.0" prefHeight="500.0" prefWidth="1230.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
    <children>
       <Pane layoutX="2.0" prefHeight="40.0" prefWidth="1244.0" style="-fx-background-color: #44878f;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -22,7 +22,7 @@
                   <Font name="Lucida Sans Unicode" size="25.0" />
                </font>
             </Label>
-            <Button fx:id="buttonMin" layoutX="1129.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+            <Button fx:id="buttonMin" layoutX="1148.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionMinStage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -31,7 +31,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="buttonClose" layoutX="1165.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+            <Button fx:id="buttonClose" layoutX="1184.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionCloseStage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -55,7 +55,7 @@
          </graphic>
       </Button>
       <ComboBox fx:id="comboBoxCliente" layoutX="10.0" layoutY="95.0" onAction="#accionCambiarPersona" prefHeight="35.0" prefWidth="150.0" promptText="Seleccione Cliente" stylesheets="@../../Style/comboBox.css" AnchorPane.leftAnchor="10.0" />
-      <Button fx:id="btnGuardar" layoutX="890.0" layoutY="48.0" mnemonicParsing="false" onAction="#accionGuardarPersona" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE">
+      <Button fx:id="btnGuardar" layoutX="890.0" layoutY="48.0" mnemonicParsing="false" onAction="#accionGuardarPersona" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Guardar" textFill="WHITE" AnchorPane.rightAnchor="5.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -67,7 +67,7 @@
             <Font name="Lucida Sans Unicode" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnModificar" layoutX="891.0" layoutY="95.0" mnemonicParsing="false" onAction="#accionModificarCliente" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE">
+      <Button fx:id="btnModificar" layoutX="891.0" layoutY="95.0" mnemonicParsing="false" onAction="#accionModificarCliente" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Modificar" textFill="WHITE" AnchorPane.rightAnchor="5.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -93,8 +93,8 @@
             <TableColumn fx:id="colEstado" prefWidth="108.0" text="Estado" />
          </columns>
       </TableView>
-      <AnchorPane fx:id="panelRegistro" layoutX="178.0" layoutY="50.0" prefHeight="200.0" prefWidth="700.0" />
-      <Button fx:id="btnDeshabilitar" onAction="#accionDeshabilitarCliente" layoutX="892.0" layoutY="215.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Deshabilitar Cliente" textFill="WHITE">
+      <AnchorPane fx:id="panelRegistro" layoutX="178.0" layoutY="50.0" prefHeight="200.0" prefWidth="724.0" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="330.0" />
+      <Button fx:id="btnDeshabilitar" layoutX="892.0" layoutY="215.0" mnemonicParsing="false" onAction="#accionDeshabilitarCliente" prefHeight="35.0" prefWidth="310.0" stylesheets="@../../Style/botones.css" text="Deshabilitar Cliente" textFill="WHITE" AnchorPane.rightAnchor="5.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -106,7 +106,7 @@
             <Font name="Lucida Sans Unicode" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnHabilitarCliente" onAction="#accionHabilitarCliente" layoutX="1027.0" layoutY="157.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="175.0" stylesheets="@../../Style/botones.css" text="Habilitar Cliente" textFill="WHITE">
+      <Button fx:id="btnHabilitarCliente" layoutX="1027.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionHabilitarCliente" prefHeight="35.0" prefWidth="175.0" stylesheets="@../../Style/botones.css" text="Habilitar Cliente" textFill="WHITE" AnchorPane.rightAnchor="5.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -130,17 +130,17 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtBuscarPorDni" onKeyReleased="#accionBuscarClientePorDni" layoutX="10.0" layoutY="183.0" prefHeight="32.0" prefWidth="150.0" promptText="Buscar por DNI">
+      <TextField fx:id="txtBuscarPorDni" layoutX="10.0" layoutY="183.0" onKeyReleased="#accionBuscarClientePorDni" prefHeight="32.0" prefWidth="150.0" promptText="Buscar por DNI">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="txtBuscarPorNombre" onKeyReleased="#accionBuscarClientePorNombre" layoutX="9.0" layoutY="224.0" prefHeight="32.0" prefWidth="150.0" promptText="Buscar por nombre">
+      <TextField fx:id="txtBuscarPorNombre" layoutX="9.0" layoutY="224.0" onKeyReleased="#accionBuscarClientePorNombre" prefHeight="32.0" prefWidth="150.0" promptText="Buscar por nombre">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="btnEditar" layoutX="891.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionEditarCliente" prefHeight="35.0" prefWidth="130.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE">
+      <Button fx:id="btnEditar" layoutX="891.0" layoutY="157.0" mnemonicParsing="false" onAction="#accionEditarCliente" prefHeight="35.0" prefWidth="130.0" stylesheets="@../../Style/botones.css" text="Editar Cliente" textFill="WHITE" AnchorPane.rightAnchor="185.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>

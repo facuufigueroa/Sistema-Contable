@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -7,10 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane minHeight="200.0" minWidth="700.0" prefHeight="200.0" prefWidth="700.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
+<AnchorPane minHeight="200.0" minWidth="724.0" prefHeight="200.0" prefWidth="724.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ClientesController">
    <children>
-      <Label layoutX="24.0" layoutY="26.0" text="CUIT" textFill="WHITE">
+      <Label layoutX="24.0" layoutY="11.0" text="CUIT" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -22,12 +22,29 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtCuitJ" layoutX="141.0" layoutY="23.0" prefHeight="27.0" prefWidth="180.0" promptText="CUIT">
+      <TextField fx:id="txtCuitJ" layoutX="141.0" layoutY="8.0" prefHeight="27.0" prefWidth="180.0" promptText="CUIT">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="24.0" layoutY="94.0" text="Email" textFill="WHITE">
+      <Label layoutX="23.0" layoutY="57.0" prefHeight="32.0" prefWidth="95.0" text="Nombre" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/nombre%20y%20apellido.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextField fx:id="txtNombreJ" layoutX="141.0" layoutY="57.0" prefHeight="27.0" prefWidth="180.0" promptText="Nombre">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="24.0" layoutY="113.0" text="Email" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -39,7 +56,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtEmailJ" layoutX="141.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Correo electronico">
+      <TextField fx:id="txtEmailJ" layoutX="141.0" layoutY="109.0" prefHeight="27.0" prefWidth="180.0" promptText="Correo electronico">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -78,7 +95,7 @@
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="370.0" layoutY="95.0" text="Razón Social" textFill="WHITE">
+      <Label layoutX="370.0" layoutY="89.0" text="Razón Social" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -90,10 +107,16 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextField fx:id="txtRazonSocialJ" layoutX="493.0" layoutY="90.0" prefHeight="27.0" prefWidth="180.0" promptText="Razón Social">
+      <TextField fx:id="txtRazonSocialJ" layoutX="493.0" layoutY="84.0" prefHeight="27.0" prefWidth="180.0" promptText="Razón Social">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
       </TextField>
+      <Label layoutX="393.0" layoutY="149.0" text="Cond. IVA" textFill="WHITE">
+         <font>
+            <Font name="Lucida Sans Unicode" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboIvaJ" layoutX="493.0" layoutY="145.0" prefHeight="30.0" prefWidth="180.0" promptText="Condición IVA" stylesheets="@../../../Style/comboBox.css" />
    </children>
 </AnchorPane>
