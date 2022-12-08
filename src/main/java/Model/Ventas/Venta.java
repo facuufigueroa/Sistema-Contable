@@ -6,36 +6,52 @@ import java.util.ArrayList;
 
 public class Venta {
     private int idCliente;
-    private String nombreCliente;
-
-    private String condicionIva;
     private ArrayList<Producto> productos;
+    private ArrayList<TablaVistaVenta> ventaProductos;
     private Double totalBruto;
     private Double totalNeto;
     private Double totales;
-    private int factura;
-    private int remito;
-    private String formaPago;
+    private int formaPago;
+
+    private int idUsuario;
+    private int cuotas;
     private static Venta venta;
 
     public Venta(){}
 
-    public Venta(int idCliente, ArrayList<Producto> productos, Double totalBruto, Double totalNeto, Double totales, int factura, int remito, String formaPago) {
+    public Venta(int idCliente, ArrayList<Producto> productos, Double totalBruto, Double totalNeto, Double totales, int formaPago) {
         this.idCliente = idCliente;
         this.productos = productos;
         this.totalBruto = totalBruto;
         this.totalNeto = totalNeto;
         this.totales = totales;
-        this.factura = factura;
-        this.remito = remito;
         this.formaPago = formaPago;
     }
+
+    public Venta(int idCliente, Double totalBruto, Double totalNeto, Double totales, int formaPago, int idUsuario) {
+        this.idCliente = idCliente;
+        this.totalBruto = totalBruto;
+        this.totalNeto = totalNeto;
+        this.totales = totales;
+        this.formaPago = formaPago;
+        this.idUsuario = idUsuario;
+    }
+
+
 
     public static Venta getInstance(){
         if(venta == null){
             venta = new Venta();
         }
         return venta;
+    }
+
+    public ArrayList<TablaVistaVenta> getVentaProductos() {
+        return ventaProductos;
+    }
+
+    public void setVentaProductos(ArrayList<TablaVistaVenta> ventaProductos) {
+        this.ventaProductos = ventaProductos;
     }
 
     public int getIdCliente() {
@@ -45,14 +61,6 @@ public class Venta {
     public void setIdCliente(int cliente) {
         this.idCliente = cliente;
     }
-
-    public String getNombreCliente() { return nombreCliente; }
-
-    public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
-
-    public String getCondicionIva() { return condicionIva; }
-
-    public void setCondicionIva(String condicionIva) { this.condicionIva = condicionIva; }
 
     public ArrayList<Producto> getProductos() {
         return productos;
@@ -84,27 +92,19 @@ public class Venta {
         this.totales = totales;
     }
 
-    public int getFactura() {
-        return factura;
-    }
-
-    public void setFactura(int factura) {
-        this.factura = factura;
-    }
-
-    public int getRemito() {
-        return remito;
-    }
-
-    public void setRemito(int remito) {
-        this.remito = remito;
-    }
-
-    public String getFormaPago() {
+    public int getFormaPago() {
         return formaPago;
     }
 
-    public void setFormaPago(String formaPago) {
+    public void setFormaPago(int formaPago) {
         this.formaPago = formaPago;
     }
+
+    public int getIdUsuario() { return idUsuario; }
+
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
+
+    public int getCuotas() { return cuotas; }
+
+    public void setCuotas(int cuotas) { this.cuotas = cuotas; }
 }

@@ -33,7 +33,6 @@ public class ServiceProducto {
             getPreparedStatement().setDouble(4,producto.getPrecio());
             getPreparedStatement().setBoolean(5,producto.isEstado());
             getPreparedStatement().setDouble(6, producto.getAlicuota());
-            getPreparedStatement().setInt(7, producto.getStock());
             getPreparedStatement().executeUpdate();
         }catch (SQLException exception){ System.out.println(exception.getMessage()); }
     }
@@ -52,7 +51,6 @@ public class ServiceProducto {
                 producto.setPrecio(getResultSet().getDouble(5));
                 producto.setEstado(getResultSet().getBoolean(6));
                 producto.setAlicuota(getResultSet().getDouble(7));
-                producto.setStock(getResultSet().getInt(8));
                 productos.add(producto);
             }
         }catch (Exception exception){
@@ -75,7 +73,6 @@ public class ServiceProducto {
                 producto.setPrecio(getResultSet().getDouble(5));
                 producto.setEstado(getResultSet().getBoolean(6));
                 producto.setAlicuota(getResultSet().getDouble(7));
-                producto.setStock(getResultSet().getInt(8));
                 productos.add(producto);
             }
         }catch (Exception exception){
@@ -114,6 +111,35 @@ public class ServiceProducto {
         return "Error en el servicio/query al obtener alicuota";
     }
 
+    public int obtenerStockProducto(int idProducto){
+        try{
+        setConnection(ConexionBD.conexion());
+        setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerStockProducto(idProducto)));
+        setResultSet(getPreparedStatement().executeQuery());
+        if(getResultSet().next()){
+            return getResultSet().getInt(1);
+        }
+    }catch (Exception exception){
+        System.out.println(exception);
+    }
+        return -1;
+    }
+
+    public int obtenerIdProducto(Long codigo) {
+        try{
+            Long codProducto = Long.valueOf(codigo);
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerId(codProducto)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
+    }
+
     public void modificarProducto(String codigo, Producto producto){
         try{
             setConnection(ConexionBD.conexion());
@@ -144,19 +170,18 @@ public class ServiceProducto {
         }
     }
 
-    public Producto obtenerProductoPorId(int idProducto){
+    public Producto obtenerProductoPorCodigo(Long codigoProducto){
         try{
             setConnection(ConexionBD.conexion());
-            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorId(idProducto)));
-            //getPreparedStatement().setInt(1, idProducto);
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorCodigo()));
+            getPreparedStatement().setLong(1, codigoProducto);
             setResultSet(getPreparedStatement().executeQuery());
             if (getResultSet().next()){
                 return new Producto(
                         getResultSet().getLong("codigo")
                         ,getResultSet().getString("nombre")
                         ,getResultSet().getString("detalle")
-                        ,getResultSet().getDouble("precio")
-                        ,getResultSet().getInt("stock")
+                        ,getResultSet().getDouble("precio_venta")
                         ,getResultSet().getDouble("alicuota")
                         ,getResultSet().getBoolean("estado")
                 );
@@ -165,6 +190,25 @@ public class ServiceProducto {
         return null;
     }
 
+    public Producto obtenerProductoPorId(int idProducto){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerProductoPorId()));
+            getPreparedStatement().setLong(1, idProducto);
+            setResultSet(getPreparedStatement().executeQuery());
+            if (getResultSet().next()){
+                return new Producto(
+                        getResultSet().getLong("codigo")
+                        ,getResultSet().getString("nombre")
+                        ,getResultSet().getString("detalle")
+                        ,getResultSet().getDouble("precio_venta")
+                        ,getResultSet().getDouble("alicuota")
+                        ,getResultSet().getBoolean("estado")
+                );
+            }
+        }catch (SQLException e){ System.out.println(e.getMessage()); }
+        return null;
+    }
     public ConexionBD getConexionBD() {
         return conexionBD;
     }
@@ -204,4 +248,5 @@ public class ServiceProducto {
     public void setProductoQuery(ProductoQuery productoQuery) {
         this.productoQuery = productoQuery;
     }
+
 }

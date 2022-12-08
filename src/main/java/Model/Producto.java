@@ -1,41 +1,36 @@
 package Model;
 
-import java.math.BigInteger;
-
 public class Producto {
 
     private Long codigo;
     private String nombre;
     private String detalle;
     private Double precio;
-    private int stock;
     private Double alicuota;
     private boolean estado;
+    private int stock;
 
-    public Producto(long codigo, String nombre, String detalle, Double precio, int stock, Double alicuota) {
+    public Producto(long codigo, String nombre, String detalle, Double precio, Double alicuota) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.detalle = detalle;
         this.precio = precio;
-        this.stock = stock;
         this.alicuota = alicuota;
         this.estado=true;
     }
 
-    public Producto(String nombre, String detalle, Double precio, int stock,double alicuota) {
+    public Producto(String nombre, String detalle, Double precio,double alicuota) {
         this.nombre = nombre;
         this.detalle = detalle;
         this.precio = precio;
-        this.stock = stock;
         this.alicuota=alicuota;
     }
 
-    public Producto(Long codigo, String nombre, String detalle, Double precio, int stock, Double alicuota, boolean estado) {
+    public Producto(Long codigo, String nombre, String detalle, Double precio, Double alicuota, boolean estado) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.detalle = detalle;
         this.precio = precio;
-        this.stock = stock;
         this.alicuota = alicuota;
         this.estado = estado;
     }
@@ -75,14 +70,6 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public Double getAlicuota() {
         return alicuota;
     }
@@ -98,4 +85,8 @@ public class Producto {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    public int getStock() { return stock; }
+
+    public void setStock(int stock) { this.stock = stock;}
 }

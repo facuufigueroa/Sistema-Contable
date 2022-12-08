@@ -1,5 +1,7 @@
 package Querys.Ventas;
 
+import DataBase.ConexionBD;
+
 public class ClienteQuery {
     public static String existeDni(){ return "SELECT dni FROM clientes WHERE dni = ?"; }
     public static String existeCuit(){ return "SELECT cuit FROM clientes WHERE cuit = ?"; }
@@ -43,4 +45,11 @@ public class ClienteQuery {
         return "SELECT idcliente FROM clientes WHERE nombre='"+nombre+"'";
     }
 
+    public static String obtenerCondicionIva(){
+        return "SELECT c.condicion_iva FROM clientes AS c WHERE c.idcliente=?";
+    }
+
+    public static String obtenerNombreCliente(){
+        return "SELECT c.nombre FROM clientes AS c WHERE c.idcliente=?";
+    }
 }

@@ -1,21 +1,22 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class ProductoAgregado {
     private Long codigo;
     private String nombre;
     private int cantidad;
 
-    private int idProducto;
+    private int stock;
 
     public ProductoAgregado() {
     }
 
-    public ProductoAgregado(Long codigo, String nombre, int cantidad) {
+    public ProductoAgregado (Long codigo, String nombre,int cantidad, int stock) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.cantidad = cantidad;
+        this.stock = stock;
     }
-
     public Long getCodigo() { return codigo; }
 
     public void setCodigo(Long codigo) { this.codigo = codigo; }
@@ -28,11 +29,7 @@ public class ProductoAgregado {
 
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
 
-    public int getIdProducto() {
-        return idProducto;
-    }
+    public int getStock() {return stock;}
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
-    }
+    public void setStock(int stock) {this.stock = stock;}
 }

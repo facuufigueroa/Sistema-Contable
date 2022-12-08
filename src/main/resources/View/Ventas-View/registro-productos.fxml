@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="630.0" prefWidth="1085.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductosController">
    <children>
-      <Pane layoutX="-5.0" prefHeight="631.0" prefWidth="1091.0" style="-fx-background-color: #0D3E59;" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="-1.0">
+      <Pane prefHeight="631.0" prefWidth="1091.0" style="-fx-background-color: #0D3E59;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0">
          <children>
             <TextField fx:id="txtCodigo" layoutX="137.0" layoutY="107.0" prefHeight="27.0" prefWidth="202.0" promptText="Código ">
                <font>
@@ -32,11 +32,6 @@
                </font>
             </TextField>
             <TextField fx:id="txtPrecio" layoutX="606.0" layoutY="108.0" prefHeight="27.0" prefWidth="202.0" promptText="Precio venta">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtStock" layoutX="606.0" layoutY="160.0" prefHeight="27.0" prefWidth="202.0" promptText="Stock ">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -85,18 +80,6 @@
                   <ImageView fitHeight="23.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Images/precio%20producto.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-            <Label layoutX="468.0" layoutY="165.0" text="Stock" textFill="WHITE">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="31.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Images/en-stock.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -204,7 +187,7 @@
                   <TableColumn fx:id="columEstado" prefWidth="114.0" text="Estado" />
               </columns>
             </TableView>
-            <Label layoutX="468.0" layoutY="208.0" text="Alicuota" textFill="WHITE">
+            <Label layoutX="468.0" layoutY="158.0" text="Alicuota" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -216,7 +199,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <ComboBox fx:id="comboBoxAlicuota" layoutX="606.0" layoutY="210.0" prefHeight="32.0" prefWidth="202.0" />
+            <ComboBox fx:id="comboBoxAlicuota" layoutX="606.0" layoutY="160.0" prefHeight="32.0" prefWidth="202.0" />
             <Label layoutX="930.0" layoutY="113.0" text="Acciones" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
