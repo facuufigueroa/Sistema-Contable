@@ -30,13 +30,9 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class VentasController extends ViewFuntionality implements Initializable {
@@ -263,7 +259,6 @@ public class VentasController extends ViewFuntionality implements Initializable 
         String ri="Responsable Inscripto";
         if(condicion_iva.trim().equals(ri)){
             letra="A";
-            System.out.println(letra);
         }
         else{
             if(condicion_iva.equals("Consumidor Final")){
