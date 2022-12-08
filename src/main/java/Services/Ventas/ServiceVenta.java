@@ -2,6 +2,7 @@ package Services.Ventas;
 
 import DataBase.ConexionBD;
 import Model.Producto;
+import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
 import Querys.ProductoQuery;
 import Querys.VentaQuery;
@@ -9,53 +10,101 @@ import Querys.VentaQuery;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.SQLException;
 
 public class ServiceVenta {
+
     private ConexionBD conexionBD;
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ProductoQuery productoQuery;
 
+    private VentaQuery ventaQuery;
 
-    public ConexionBD getConexionBD() {
-        return conexionBD;
+    public void insertarVenta(Venta venta) throws SQLException {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ventaQuery.insertarVenta()));
+            getPreparedStatement().setDouble(1, venta.getTotalBruto());
+            getPreparedStatement().setDouble(2, venta.getTotalNeto());
+            getPreparedStatement().setDouble(3,venta.getTotales());
+            getPreparedStatement().setInt(4,venta.getFormaPago());
+            getPreparedStatement().setInt(5, venta.getIdCliente());
+            getPreparedStatement().setInt(6,venta.getIdUsuario());
+            getPreparedStatement().executeUpdate();
+        }catch (SQLException exception){ System.out.println(exception.getMessage()); }
     }
 
-    public void setConexionBD(ConexionBD conexionBD) {
-        this.conexionBD = conexionBD;
+    public void insertarVenta_producto(TablaVistaVenta venta) throws SQLException {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ventaQuery.insertarVenta_producto()));
+            getPreparedStatement().setInt(1, venta.getIdVenta());
+            getPreparedStatement().setInt(2, venta.getIdProducto());
+            getPreparedStatement().setInt(3,venta.getCantidad());
+            getPreparedStatement().setDouble(4,venta.getPrecioUnitario());
+            getPreparedStatement().setDouble(5,venta.getPrecioTotal());
+            getPreparedStatement().executeUpdate();
+        }catch (SQLException exception){ System.out.println(exception.getMessage()); }
+    }
+    public String obtenerFormaPago(int formaPago) {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(VentaQuery.obtenerFormaPago(formaPago)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return "Error";
     }
 
-    public Connection getConnection() {
-        return connection;
+    public int obtenerIdformaPago(String formaPago) {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(VentaQuery.obtenerIdFormaPago(formaPago)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public int obtenerIdVenta() {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(VentaQuery.obtenerIdVenta()));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
     }
+    public ConexionBD getConexionBD() { return conexionBD; }
 
-    public PreparedStatement getPreparedStatement() {
-        return preparedStatement;
-    }
+    public void setConexionBD(ConexionBD conexionBD) { this.conexionBD = conexionBD; }
 
-    public void setPreparedStatement(PreparedStatement preparedStatement) {
-        this.preparedStatement = preparedStatement;
-    }
+    public Connection getConnection() { return connection; }
 
-    public ResultSet getResultSet() {
-        return resultSet;
-    }
+    public void setConnection(Connection connection) { this.connection = connection; }
 
-    public void setResultSet(ResultSet resultSet) {
-        this.resultSet = resultSet;
-    }
+    public PreparedStatement getPreparedStatement() { return preparedStatement; }
 
-    public ProductoQuery getProductoQuery() {
-        return productoQuery;
-    }
+    public void setPreparedStatement(PreparedStatement preparedStatement) { this.preparedStatement = preparedStatement; }
 
-    public void setProductoQuery(ProductoQuery productoQuery) {
-        this.productoQuery = productoQuery;
-    }
+    public ResultSet getResultSet() { return resultSet; }
+
+    public void setResultSet(ResultSet resultSet) { this.resultSet = resultSet; }
+
+    public VentaQuery getVentaQuery() { return ventaQuery; }
+
+    public void setVentaQuery(VentaQuery ventaQuery) { this.ventaQuery = ventaQuery; }
 }

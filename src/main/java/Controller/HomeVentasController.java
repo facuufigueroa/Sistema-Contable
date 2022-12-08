@@ -49,6 +49,8 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
 
     private ProductosController productosController;
 
+    private FacturaController facturaController;
+
     private Service service = new Service();
     private User u = User.getInstance();
 
@@ -97,8 +99,8 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
     /* Método para ir a la ventana de seleccionar el cliente de la venta */
     @FXML
     public void seleccionCliente(ActionEvent event) throws IOException {
-        loadSeleccionCliente(event);
         venta = new Venta();
+        loadSeleccionCliente(event);
     }
 
     private void loadSeleccionCliente(ActionEvent event) throws IOException {
@@ -173,6 +175,31 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
 
     /* ------- Fin -----------*/
 
+
+    @FXML
+    public void  accionGestionFacturas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/gestionar-factura.fxml"));
+        Parent parent = fxmlLoader.load();
+        setFacturaController(loadGestionFactura(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage facturaStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getFacturaController().setVentana(facturaStage);
+        getFacturaController().hideStage();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.showAndWait();
+    }
+
+    public FacturaController loadGestionFactura(FacturaController facturaController){ return facturaController; }
+
+
+
+
+
+
+
     private void cambiarTexto(){ txtUsuarioLogueado.setText(u.getNombre().toUpperCase()+" "+u.getApellido().toUpperCase()+" "+"| "+service.obtenerRolPorEmail(u.getEmail()).toUpperCase()); }
 
     public HomeController getHomeController() {
@@ -203,9 +230,24 @@ public class HomeVentasController extends ViewFuntionality implements Initializa
         return productosController;
     }
 
+
     public void setProductosController(ProductosController productosController) { this.productosController = productosController; }
     public Button getBtnRegistrarVenta() { return btnRegistrarVenta; }
     public Button getBtnClientes() { return btnClientes; }
     public Button getBtnProductos() { return btnProductos; }
     public Button getBtnFacturas() { return btnFacturas; }
+
+    public void setProductosController(ProductosController productosController) {
+        this.productosController = productosController;
+    }
+
+
+    public FacturaController getFacturaController() {
+        return facturaController;
+    }
+
+    public void setFacturaController(FacturaController facturaController) {
+        this.facturaController = facturaController;
+    }
+
 }

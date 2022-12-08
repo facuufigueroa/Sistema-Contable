@@ -1,7 +1,8 @@
 package Controller;
-
+import Model.Alerta;
 import Model.Ventas.Venta;
 import Model.ViewFuntionality;
+import Services.Ventas.ServiceVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -34,9 +36,12 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
 
     private SeleccionarProductoController seleccionarProductoController;
 
+    private ServiceVenta serviceVenta = new ServiceVenta();
+
     private VentasController ventasController;
 
     private Venta venta = Venta.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarCbbFormaPago();
@@ -93,9 +98,22 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     /*Método que continua a la vista para generar una nueva venta*/
     @FXML
     public void accionContinuar(ActionEvent event) throws IOException {
-        continuarNewVentas(event);
+        if (!verificarFormaPago() && !verificarCuotas()) {
+            obtenerIdFormaPago();
+            continuarNewVentas(event);
+        }
+        else{
+            Alerta.alertaSeleccioneFormaPago();
+        }
     }
 
+    public Boolean verificarFormaPago() {
+        return comboBoxSeleccionarPago.getSelectionModel().isEmpty();
+    }
+
+    public Boolean verificarCuotas() {
+        return txtCantidadCuotas.getText().isEmpty();
+    }
 
     public void continuarNewVentas(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/nueva-venta.fxml"));
@@ -110,6 +128,16 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+    }
+
+    public void obtenerIdFormaPago(){
+        try {
+            String formaPago = comboBoxSeleccionarPago.getSelectionModel().getSelectedItem().toString();
+            int cuotas = Integer.parseInt(txtCantidadCuotas.getText());
+            venta.setCuotas(cuotas);
+            venta.setFormaPago(serviceVenta.obtenerIdformaPago(formaPago.toUpperCase()));
+        } catch (NullPointerException e) {
+        }
     }
 
     private VentasController loadNewVenta(VentasController ventaController){ return ventaController; }

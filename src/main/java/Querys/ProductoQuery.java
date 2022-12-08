@@ -6,7 +6,7 @@ import net.sf.jasperreports.crosstabs.fill.JRPercentageCalculatorFactory;
 public class ProductoQuery {
 
     public static String insertarProducto(){
-        return "INSERT INTO productos (codigo,nombre,detalle,precio_venta,estado,alicuota,stock) VALUES (?,?,?,?,?,?,?)";
+        return "INSERT INTO productos (codigo,nombre,detalle,precio_venta,estado,alicuota) VALUES (?,?,?,?,?,?)";
     }
 
     public static String listarProductos(){
@@ -26,7 +26,7 @@ public class ProductoQuery {
     }
 
     public static String modificarProducto(Long codigo, Producto p){
-        return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", stock= "+p.getStock()+"" +", alicuota= "+p.getAlicuota()+
+        return "UPDATE productos SET nombre='"+p.getNombre()+"', detalle='"+p.getDetalle()+"', precio_venta="+p.getPrecio()+", alicuota= "+p.getAlicuota()+
                 " WHERE codigo ='"+codigo+"'";
     }
 
@@ -37,8 +37,19 @@ public class ProductoQuery {
     public static String habilitarProducto(Long codigo){
         return "UPDATE productos SET estado=true WHERE productos.codigo="+codigo;
     }
-    public static String obtenerProductoPorId(int idProducto) {
-        return "SELECT productos FROM productos as p WHERE p.idproducto=" + idProducto;
+    public static String obtenerProductoPorCodigo() {
+        return "SELECT * FROM productos as p WHERE p.codigo= ?";
     }
 
+    public static String obtenerId(Long codigo) {
+        return "SELECT idProducto FROM productos as p WHERE p.codigo='"+codigo+"'";
+    }
+
+    public static String obtenerStockProducto(int idProducto) {
+        return "SELECT SUM(s.stock_actual) FROM stock AS s WHERE id_producto = '"+idProducto+"'";
+    }
+
+    public static String obtenerProductoPorId() {
+        return "SELECT * FROM productos as p WHERE p.idproducto= ?";
+    }
 }

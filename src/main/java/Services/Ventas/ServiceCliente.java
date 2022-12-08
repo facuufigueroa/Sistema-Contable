@@ -206,6 +206,36 @@ public class ServiceCliente {
         return -1;
     }
 
+    public String obtenerCondicionIva(int id) {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.obtenerCondicionIva()));
+            getPs().setInt(1,id);
+            setResultSet(getPs().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return null;
+    }
+
+    public String obtenerNombreCliente(int idCliente) {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(ClienteQuery.obtenerNombreCliente()));
+            getPs().setInt(1,idCliente);
+            setResultSet(getPs().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return null;
+    }
+
     public Connection getConnection() { return connection ;}
     public void setConnection(Connection connection) { this.connection = connection; }
     public PreparedStatement getPs() { return ps; }

@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Alerta;
-import Model.Cuenta;
-import Model.Producto;
-import Model.ViewFuntionality;
+import Model.*;
 import Services.ServiceProducto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,12 +18,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.UnaryOperator;
 
 public class ProductosController extends ViewFuntionality implements Initializable {
@@ -41,8 +36,6 @@ public class ProductosController extends ViewFuntionality implements Initializab
     private TextField txtDetalle;
     @FXML
     private TextField txtPrecio;
-    @FXML
-    private TextField txtStock;
     @FXML
     private TextField txtBuscarPorCodigo;
     @FXML
@@ -79,6 +72,8 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
     ObservableList<Producto> productoFiltradoPorNombre;
 
+    ArrayList<Producto> listadoProductos = new ArrayList<>();
+
     private ServiceProducto serviceProducto = new ServiceProducto();
 
     @Override
@@ -87,7 +82,6 @@ public class ProductosController extends ViewFuntionality implements Initializab
         productoFiltradoPorNombre = FXCollections.observableArrayList();
         iniciarCbbAlicuota();
         soloNumeros(txtCodigo);
-        soloNumeros(txtStock);
         soloDouble(txtPrecio);
         listarProductos();
     }
@@ -96,7 +90,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     public void accionGuardarProducto() throws SQLException {
         if (!verificarCamposVacios()) {
             if(!existeProducto(txtCodigo.getText())) {
-                    Producto producto = new Producto(Long.parseLong(txtCodigo.getText()), txtNombre.getText(), txtDetalle.getText(), Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()), Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
+                    Producto producto = new Producto(Long.parseLong(txtCodigo.getText()), txtNombre.getText(), txtDetalle.getText(), Double.parseDouble(txtPrecio.getText()), Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
                     serviceProducto.insertarProducto(producto);
                     listarProductos();
                     limparTodosLosCampos();
@@ -112,15 +106,26 @@ public class ProductosController extends ViewFuntionality implements Initializab
     }
 
     public void listarProductos() {
-        productObservableList = FXCollections.observableArrayList(serviceProducto.listarProductos());
+        insertarProductos();
+        productObservableList = FXCollections.observableArrayList(listadoProductos);
         columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
         columNombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
-        columPrecio.setCellValueFactory(new PropertyValueFactory<Producto, String>("precio"));
-        columStock.setCellValueFactory(new PropertyValueFactory<Producto, String>("stock"));
-        columEstado.setCellValueFactory(new PropertyValueFactory<Producto, String>("estado"));
+        columPrecio.setCellValueFactory(new PropertyValueFactory<Producto, Double>("precio"));
+        columStock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
+        columEstado.setCellValueFactory(new PropertyValueFactory<Producto, Boolean>("estado"));
         tablaProductos.setItems(productObservableList);
     }
 
+    public void insertarProductos() {
+        listadoProductos = new ArrayList<>();
+        for(Producto p:serviceProducto.listarProductos()) {
+            int idProducto = serviceProducto.obtenerIdProducto(p.getCodigo());
+            int stock= serviceProducto.obtenerStockProducto(idProducto);
+            Producto producto = new Producto(p.getCodigo(),p.getNombre(),p.getDetalle(),p.getPrecio(),p.getAlicuota(),p.isEstado());
+            producto.setStock(stock);
+            listadoProductos.add(producto);
+        }
+    }
     public void iniciarCbbAlicuota() {
         ObservableList<String> items = FXCollections.observableArrayList();
         items.addAll("21.0", "10.50", "27.0");
@@ -131,7 +136,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     public Boolean verificarCamposVacios() {
         return txtCodigo.getText().isEmpty() || txtNombre.getText().isEmpty() ||
                 txtDetalle.getText().isEmpty() || txtPrecio.getText().isEmpty()
-                || txtStock.getText().isEmpty() || comboBoxAlicuota.getValue() == null;
+                || comboBoxAlicuota.getValue() == null;
     }
 
 
@@ -195,7 +200,6 @@ public class ProductosController extends ViewFuntionality implements Initializab
         txtNombre.setText("");
         txtDetalle.setText("");
         txtPrecio.setText("");
-        txtStock.setText("");
         comboBoxAlicuota.setItems(null);
         iniciarCbbAlicuota();
     }
@@ -208,12 +212,12 @@ public class ProductosController extends ViewFuntionality implements Initializab
     @FXML
     public void accionModificarProducto(){
         if(!verificarCamposVacios()){
-            Producto producto = new Producto(txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()), Integer.parseInt(txtStock.getText()),Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
+            Producto producto = new Producto(txtNombre.getText(),txtDetalle.getText(),Double.parseDouble(txtPrecio.getText()),Double.parseDouble(String.valueOf(comboBoxAlicuota.getValue())));
             serviceProducto.modificarProducto(txtCodigo.getText(),producto);
-
             limparTodosLosCampos();
             txtCodigo.setDisable(false);
             comboBoxAlicuota.setDisable(false);
+            listarProductos();
             Alerta.alertaProductoModificado();
         }
         else{
@@ -230,8 +234,6 @@ public class ProductosController extends ViewFuntionality implements Initializab
             txtNombre.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getNombre()));
             txtDetalle.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getDetalle()));
             txtPrecio.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getPrecio()));
-            txtStock.setText(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getStock()));
-
             txtCodigo.setDisable(true);
             comboBoxAlicuota.getSelectionModel().select(obtenerAlicuotaProducto(String.valueOf(tablaProductos.getSelectionModel().getSelectedItem().getCodigo())));
 
