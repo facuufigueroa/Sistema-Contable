@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="491.0" prefWidth="807.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FacturaController">
+<AnchorPane prefHeight="491.0" prefWidth="807.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FacturaController">
    <children>
       <Pane prefHeight="40.0" prefWidth="807.0" style="-fx-background-color: #44878f;">
          <children>
@@ -41,10 +41,10 @@
       </Pane>
       <TableView fx:id="tablaProductos" layoutX="19.0" layoutY="177.0" prefHeight="288.0" prefWidth="770.0" stylesheets="@../../Style/tablas.css">
          <columns>
-            <TableColumn minWidth="7.0" prefWidth="248.0" text="Numero" />
-            <TableColumn prefWidth="198.0" text="Cliente" />
-            <TableColumn prefWidth="187.0" text="Fecha" />
-            <TableColumn prefWidth="136.0" text="Total" />
+            <TableColumn fx:id="colNumFactura" minWidth="7.0" prefWidth="248.0" text="Número de factura " />
+            <TableColumn fx:id="colCliente" prefWidth="198.0" text="Cliente" />
+            <TableColumn fx:id="colFechaCobro" prefWidth="187.0" text="Fecha de cobro" />
+            <TableColumn fx:id="colTotal" prefWidth="136.0" text="Total" />
          </columns>
       </TableView>
       <Label layoutX="19.0" layoutY="127.0" prefHeight="40.0" prefWidth="229.0" text=" Facturas Pagadas" textFill="WHITE">
@@ -71,7 +71,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnPrueba" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionPrueba" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Facturas sin pagar" textFill="WHITE">
+      <Button fx:id="btnPrueba" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Facturas sin pagar" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
