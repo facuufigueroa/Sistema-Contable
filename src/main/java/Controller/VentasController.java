@@ -1,14 +1,15 @@
 package Controller;
 
 import Model.*;
-import Model.DatePickerConverter;
 import Model.Ventas.Factura;
+import Model.Ventas.Remito;
 import Model.Ventas.TablaVistaVenta;
 import Model.Ventas.Venta;
 import Reportes.ReporteFactura;
 import Services.ServiceProducto;
 import Services.Ventas.ServiceCliente;
 import Services.Ventas.ServiceFactura;
+import Services.Ventas.ServiceRemito;
 import Services.Ventas.ServiceVenta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -30,6 +28,8 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Array;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -69,6 +69,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private TableColumn columPrecio;
     @FXML
     private TableColumn columTotal;
+    @FXML
+    private Button btnContinuar;
     private Venta venta = Venta.getInstance();
     private User user = User.getInstance();
 
@@ -86,6 +88,22 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private ServiceFactura serviceFactura = new ServiceFactura();
 
     private ReporteFactura reporteFactura = new ReporteFactura();
+
+    private RemitoFacturaController remitoFacturaController;
+
+    private ServiceRemito serviceRemito = new ServiceRemito();
+
+    private ArrayList<Remito> remitos = new ArrayList<Remito>();
+
+    /*Atributos para enviar a remito y factura*/
+
+    private String numeroFac;
+    private double iva;
+    private double subtotal;
+    private double total;
+    private String numRemito;
+
+    /*-----------------*/
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -192,8 +210,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
             insertarVentaProducto();
             Alerta.alertaVentaRegistrada();
             String numeroFactura=insertarFactura();
-            reporteFactura.loadFactura(obtenerTotalVenta(),obtenerIVA(),venta.getTotalNeto(),numeroFactura);
-
+            numeroFac=numeroFactura;
+            numRemito=insertarRemito();
     }
 
     public void insertarVentaProducto() throws SQLException{
@@ -268,19 +286,86 @@ public class VentasController extends ViewFuntionality implements Initializable 
         return letra;
     }
 
+    public String obtenerNumero(String numero){
+        return numero;
+    }
 
-    public void accionBtnNuevaVenta(ActionEvent event)throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/seleccionar-clientes.fxml"));
+    @FXML
+    public void accionContinuar(ActionEvent event)throws IOException {
+        continuarVerRemitoFactura(event);
+    }
+
+    public void continuarVerRemitoFactura(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/ver-remito-factura.fxml"));
         Parent parent = fxmlLoader.load();
-        setSeleccionClienteController(loadSeleccionCliente(fxmlLoader.getController()));
+        setRemitoFacturaController(loadRemitoFactura(fxmlLoader.getController()));
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
         Stage pagoStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getSeleccionClienteController().setVentana(pagoStage);
-        getSeleccionClienteController().hideStage();
+        getRemitoFacturaController().setVentana(pagoStage);
+        getRemitoFacturaController().recibirDatos(numeroFac,obtenerTotalVenta(),obtenerIVA(),venta.getTotalNeto());
+        getRemitoFacturaController().recibirNumRemito(numRemito);
+        getRemitoFacturaController().hideStage();
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
+    }
+
+
+    private RemitoFacturaController loadRemitoFactura(RemitoFacturaController remitoFacturaController){ return remitoFacturaController; }
+
+    public RemitoFacturaController getRemitoFacturaController() {
+        return remitoFacturaController;
+    }
+
+    public void setRemitoFacturaController(RemitoFacturaController remitoFacturaController) {
+        this.remitoFacturaController = remitoFacturaController;
+    }
+
+    public String insertarRemito() throws SQLException {
+        ArrayList<Remito> remitos1 = productosDeRemito(tablaVentaObservableList);
+        String numeroRemito = "";
+        for(Remito remito : remitos1){
+            serviceRemito.insertarRemito(remito);
+            numeroRemito = remito.getNumero();
+        }
+        return numeroRemito;
+    }
+
+    public ArrayList<Remito> productosDeRemito(ObservableList<TablaVistaVenta>  tablaVentaObservableList) throws SQLException {
+
+        LocalDate localDate = fechaVentaFactura.getValue();
+        ArrayList<Remito> remitosArray = new ArrayList<>();
+        for(TablaVistaVenta tb : tablaVentaObservableList){
+            Remito remito = new Remito();
+            remito.setFecha(Date.valueOf(localDate));
+            remito.setCantidad(tb.getCantidad());
+            remito.setDescripcion(tb.getDescripcion());
+            remito.setId_venta(serviceVenta.obtenerIdVenta());
+            remito.setNumero(crearNumeroRemito());
+            remitosArray.add(remito);
+        }
+        return  remitosArray;
+    }
+
+    public String crearNumeroRemito() throws SQLException {
+        String numB = "";
+        if(serviceRemito.ultimoRemito() == 0){
+            return "0001-00000000";
+        }
+        else{
+            int numFactura = serviceFactura.ultimaFactura();
+            numB = String.format("%08d", numFactura);
+        }
+        return "0002-" + numB;
+    }
+
+    public ServiceRemito getServiceRemito() {
+        return serviceRemito;
+    }
+
+    public void setServiceRemito(ServiceRemito serviceRemito) {
+        this.serviceRemito = serviceRemito;
     }
 }

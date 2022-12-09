@@ -12,6 +12,7 @@ public class Factura {
     private String letra;
     private int id_venta;
 
+
     public Factura(Date fecha_pago, String numero, boolean facturada, double total_pagado, Date fecha_emision, String letra, int id_venta) {
         this.fecha_pago = fecha_pago;
         this.numero = numero;
@@ -21,6 +22,7 @@ public class Factura {
         this.letra = letra;
         this.id_venta = id_venta;
     }
+
 
     public Date getFecha_pago() {
         return fecha_pago;
