@@ -4,6 +4,14 @@ import javafx.scene.control.Alert;
 import javafx.stage.StageStyle;
 
 public class AlertaVenta {
+    public static void errorAlCobrarFactura(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Ocurrio un error al cobrar la factura.\n¡Por favor! Intente nuevamente.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
     public static void noHayFacturas(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);

@@ -23,5 +23,9 @@ public class GestionFacturaQuery {//numero, nombre, apellido, fecha_pago, total_
                 + "INNER JOIN productos AS p ON p.idproducto = vp.id_producto\n"
                 + "WHERE numero = ? LIMIT 1";
     }
-
+    public static String cobrarFactura(){
+        return    "UPDATE facturas "
+                + "SET fecha_pago = ?, facturada = ? "
+                + "WHERE numero = ? ";
+    }
 }

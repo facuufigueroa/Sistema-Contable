@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class FacturaController extends ViewFuntionality implements Initializable {
@@ -102,8 +103,15 @@ public class FacturaController extends ViewFuntionality implements Initializable
     }
     @FXML
     public void accionCobrarFactura(){
-        getBtnFactura().setDisable(true);
-        obtenerFactura();
+        TablaGestionFactura factura = obtenerFactura();
+        if (factura != null){
+            getBtnFactura().setDisable(true);
+            try {
+                serviceGestionFactura.cobrarFactura(factura);
+                getBtnFactura().setDisable(false);
+                getChoiceBoxFacturada().getSelectionModel().select(0);
+            }catch (SQLException e){ AlertaVenta.errorAlCobrarFactura(); }
+        }
     }
     private void cambiarLabel(String texto) { getLabelFactura().setText(texto); }
     private void cambiarImagenLabel(String url) {

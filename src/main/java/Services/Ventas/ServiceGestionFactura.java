@@ -7,10 +7,14 @@ import Querys.Ventas.GestionFacturaQuery;
 import java.sql.*;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ServiceGestionFactura {
+    private final LocalDate fechaLD = LocalDate.now();
     private Connection connection;
     private PreparedStatement ps;
     private ResultSet resultSet;
@@ -21,6 +25,21 @@ public class ServiceGestionFactura {
         setConnection(null);
         setPs(null);
         setResultSet(null);
+    }
+
+    public void cobrarFactura(TablaGestionFactura factura) throws SQLException{
+        try{
+            java.sql.Date fecha = java.sql.Date.valueOf(fechaLD);
+            cerrarConexion();
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(GestionFacturaQuery.cobrarFactura()));
+            getPs().setDate(1, fecha);
+            getPs().setBoolean(2, true);
+            getPs().setString(3, factura.getNumeroFactura());
+            getPs().executeUpdate();
+        }catch (SQLException e){
+
+        }
     }
 
     public FacturaReporte obtenerFactura(String numeroFactura){

@@ -85,7 +85,7 @@
          </graphic>
       </Button>
       <ChoiceBox fx:id="choiceBoxFacturada" layoutX="404.0" layoutY="55.0" onAction="#darEventoChoiceBox" prefHeight="46.0" prefWidth="175.0" />
-      <Button fx:id="btnCobrarFactura" layoutX="601.0" layoutY="124.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
+      <Button fx:id="btnCobrarFactura" onAction="#accionCobrarFactura" layoutX="601.0" layoutY="124.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
