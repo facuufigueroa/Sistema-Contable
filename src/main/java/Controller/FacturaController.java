@@ -1,7 +1,9 @@
 package Controller;
 import Model.Ventas.AlertaVenta;
+import Model.Ventas.FacturaReporte;
 import Model.Ventas.TablaGestionFactura;
 import Model.ViewFuntionality;
+import Reportes.ReporteFactura;
 import Services.Ventas.ServiceGestionFactura;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,8 +25,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FacturaController extends ViewFuntionality implements Initializable {
+    private final ReporteFactura reporteFactura = new ReporteFactura();
     private HomeVentasController homeVentasController;
     private ServiceGestionFactura serviceGestionFactura = new ServiceGestionFactura();
+    private FacturaReporte factura;
 
     @FXML private TableView<TablaGestionFactura> tablaProductos = new TableView();
     @FXML private TableColumn<TablaGestionFactura, String> colNumFactura = new TableColumn<>();
@@ -32,7 +36,7 @@ public class FacturaController extends ViewFuntionality implements Initializable
     @FXML private TableColumn<TablaGestionFactura, String> colFecha = new TableColumn<>();
     @FXML private TableColumn<TablaGestionFactura, Double> colTotal = new TableColumn<>();
     @FXML private Button btnVolver;
-    @FXML private Button btnVerMas;
+    @FXML private Button btnFactura;
     @FXML private Button btnCobrarFactura;
 
     @FXML private ChoiceBox<String> choiceBoxFacturada = new ChoiceBox<>();
@@ -82,14 +86,24 @@ public class FacturaController extends ViewFuntionality implements Initializable
         }
     }
     @FXML
-    public void accionVerMas(){
+    public void accionVerFactura(){
         //Abrir venta factura
-        getFactura();
+        TablaGestionFactura seleccionada = obtenerFactura();
+        try {
+            setFactura(serviceGestionFactura.obtenerFactura(seleccionada.getNumeroFactura()));
+            reporteFactura.loadFactura(   getFactura().getTotalBruto()
+                                        , getFactura().getAlicuota()
+                                        , getFactura().getTotalNeto()
+                                        , getFactura().getNumero()
+            );
+        }catch (NullPointerException e){
+            System.out.println(e.getMessage());
+        }
     }
     @FXML
     public void accionCobrarFactura(){
-        getBtnVerMas().setDisable(true);
-        getFactura();
+        getBtnFactura().setDisable(true);
+        obtenerFactura();
     }
 
     private void cambiarLabel(String texto) { getLabelFactura().setText(texto); }
@@ -97,7 +111,7 @@ public class FacturaController extends ViewFuntionality implements Initializable
         setImageLabel(new Image(getClass().getResourceAsStream(url)));
         getImageView().setImage(getImageLabel());
     }
-    private TablaGestionFactura getFactura(){
+    private TablaGestionFactura obtenerFactura(){
         try {
             int indice = getTablaProductos().getSelectionModel().getSelectedIndex();
             TablaGestionFactura factura = getTablaProductos().getItems().get(indice);
@@ -132,12 +146,14 @@ public class FacturaController extends ViewFuntionality implements Initializable
     private HomeVentasController homeVentasController(HomeVentasController controller){ return controller; }
     public HomeVentasController getHomeVentasController() { return homeVentasController; }
     public void setHomeVentasController(HomeVentasController homeVentasController) { this.homeVentasController = homeVentasController; }
+    public FacturaReporte getFactura() { return this.factura; }
+    public void setFactura(FacturaReporte factura) { this.factura = factura; }
     public TableView<TablaGestionFactura> getTablaProductos() { return tablaProductos; }
     public ChoiceBox<String> getChoiceBoxFacturada() { return choiceBoxFacturada; }
     public Label getLabelFactura() { return labelFactura; }
     public Image getImageLabel() { return imageLabel; }
     public void setImageLabel(Image imageLabel) { this.imageLabel = imageLabel; }
     public ImageView getImageView() { return imageView; }
-    public Button getBtnVerMas() { return btnVerMas; }
+    public Button getBtnFactura() { return btnFactura; }
     public Button getBtnCobrarFactura() { return btnCobrarFactura; }
 }

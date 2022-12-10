@@ -1,5 +1,6 @@
 package Services.Ventas;
 import DataBase.ConexionBD;
+import Model.Ventas.FacturaReporte;
 import Model.Ventas.TablaGestionFactura;
 import Querys.Ventas.GestionFacturaQuery;
 
@@ -20,6 +21,26 @@ public class ServiceGestionFactura {
         setConnection(null);
         setPs(null);
         setResultSet(null);
+    }
+
+    public FacturaReporte obtenerFactura(String numeroFactura){
+        try {
+            cerrarConexion();
+            setConnection(ConexionBD.conexion());
+            setPs(getConnection().prepareStatement(GestionFacturaQuery.obtenerFactura()));
+            getPs().setString(1, numeroFactura);
+            setResultSet(getPs().executeQuery());
+            if (getResultSet().next()){
+                String numero = getResultSet().getString("numero");
+                Double totalBruto = getResultSet().getDouble("total_bruto");
+                Integer alicuota = getResultSet().getInt("alicuota");
+                Double totalNeto = getResultSet().getDouble("totales");
+                return new FacturaReporte(numero, totalBruto, alicuota, totalNeto);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     public ArrayList<TablaGestionFactura> listarFacturas(boolean facturada){

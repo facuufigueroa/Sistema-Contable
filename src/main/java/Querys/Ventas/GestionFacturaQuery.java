@@ -15,6 +15,13 @@ public class GestionFacturaQuery {//numero, nombre, apellido, fecha_pago, total_
                     + "INNER JOIN clientes AS c ON c.idcliente = v.id_cliente "
                     + "WHERE facturada = ? ";
     }
-
+    public static String obtenerFactura(){
+        return    "SELECT numero, v.total_bruto, p.alicuota, v.totales\n"
+                + "FROM facturas \n"
+                + "INNER JOIN ventas AS v ON v.idventa = facturas.id_venta \n"
+                + "INNER JOIN venta_producto AS vp ON vp.id_venta = facturas.id_venta\n"
+                + "INNER JOIN productos AS p ON p.idproducto = vp.id_producto\n"
+                + "WHERE numero = ? LIMIT 1";
+    }
 
 }

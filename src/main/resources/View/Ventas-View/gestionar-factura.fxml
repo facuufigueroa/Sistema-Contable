@@ -72,7 +72,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnVerMas" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVerMas" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Ver Más" textFill="WHITE" AnchorPane.rightAnchor="15.0">
+      <Button fx:id="btnFactura" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVerFactura" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Ver Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
