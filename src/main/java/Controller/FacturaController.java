@@ -2,20 +2,23 @@ package Controller;
 import Model.Ventas.TablaGestionFactura;
 import Model.ViewFuntionality;
 import Services.Ventas.ServiceGestionFactura;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
@@ -33,10 +36,17 @@ public class FacturaController extends ViewFuntionality implements Initializable
     @FXML private TableColumn<TablaGestionFactura, Double> colTotal = new TableColumn<>();
     @FXML private Button btnVolver;
 
+    @FXML private ChoiceBox<String> choiceBoxFacturada = new ChoiceBox<>();
+    @FXML private Label labelFactura;
+    @FXML private Image imageLabel;
+    @FXML private ImageView imageView;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         iniciarTabla();
+        iniciarChoiceBox();
+        darEventoChoiceBox();
     }
 
     private void iniciarTabla() {
@@ -44,14 +54,36 @@ public class FacturaController extends ViewFuntionality implements Initializable
         colCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
         colFechaCobro.setCellValueFactory(new PropertyValueFactory<>("fechaCobro"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        actualizarDatosTabla();
+        actualizarDatosTabla(true);
+    }
+    private void iniciarChoiceBox(){
+        ObservableList<String> facturado = FXCollections.observableArrayList("FACTURAS COBRADAS", "FACTURAS NO COBRADAS");
+        getChoiceBoxFacturada().setItems(facturado);
     }
 
-    private void actualizarDatosTabla(){
-        ObservableList<TablaGestionFactura> listado = FXCollections.observableArrayList(serviceGestionFactura.listarFacturas());
+    private void actualizarDatosTabla(boolean facturada){
+        ObservableList<TablaGestionFactura> listado = FXCollections.observableArrayList(serviceGestionFactura.listarFacturas(facturada));
         getTablaProductos().setItems(listado);
     }
+    @FXML
+    private void darEventoChoiceBox(){
+        boolean isCobrada = getChoiceBoxFacturada().getSelectionModel().getSelectedIndex() == 0;
+        if (isCobrada){
+            actualizarDatosTabla(true);
+            cambiarLabel("FACTURAS COBRADAS");
+            cambiarImagenLabel("/Images/check.png");
+        }else{
+            actualizarDatosTabla(false);
+            cambiarLabel("FACTURAS NO COBRADAS");
+            cambiarImagenLabel("/Images/cancelar.png");
+        }
+    }
 
+    private void cambiarLabel(String texto) { getLabelFactura().setText(texto); }
+    private void cambiarImagenLabel(String url) {
+        setImageLabel(new Image(getClass().getResourceAsStream(url)));
+        getImageView().setImage(getImageLabel());
+    }
 
     public void hideStage(){ getVentana().hide(); }
 
@@ -71,8 +103,12 @@ public class FacturaController extends ViewFuntionality implements Initializable
         stage.showAndWait();
     }
     private HomeVentasController homeVentasController(HomeVentasController controller){ return controller; }
-
     public HomeVentasController getHomeVentasController() { return homeVentasController; }
     public void setHomeVentasController(HomeVentasController homeVentasController) { this.homeVentasController = homeVentasController; }
     public TableView<TablaGestionFactura> getTablaProductos() { return tablaProductos; }
+    public ChoiceBox<String> getChoiceBoxFacturada() { return choiceBoxFacturada; }
+    public Label getLabelFactura() { return labelFactura; }
+    public Image getImageLabel() { return imageLabel; }
+    public void setImageLabel(Image imageLabel) { this.imageLabel = imageLabel; }
+    public ImageView getImageView() { return imageView; }
 }

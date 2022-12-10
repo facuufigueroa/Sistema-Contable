@@ -22,13 +22,14 @@ public class ServiceGestionFactura {
         setResultSet(null);
     }
 
-    public ArrayList<TablaGestionFactura> listarFacturas(){
+    public ArrayList<TablaGestionFactura> listarFacturas(boolean facturada){
         try{
             cerrarConexion();
             ArrayList<TablaGestionFactura> listado = new ArrayList<>();
 
             setConnection(ConexionBD.conexion());
-            setPs(getConnection().prepareStatement(GestionFacturaQuery.listarFacturas()));
+            setPs(getConnection().prepareStatement(GestionFacturaQuery.listarFacturasCobradas()));
+            getPs().setBoolean(1, facturada);
             setResultSet(getPs().executeQuery());
             while (getResultSet().next()){
                 TablaGestionFactura factura = crearFactura(getResultSet());
@@ -50,13 +51,14 @@ public class ServiceGestionFactura {
         //Format formato = new SimpleDateFormat("dd/MM/yyyy");
         //String fechaAString = formato.format(fecha);
         double totalPagado = getResultSet().getDouble("total_pagado");
+        int idFactura = getResultSet().getInt("idfactura");
         if (fecha != null){
             if (apellido == null){
-                return new TablaGestionFactura(numero, nombre, fecha.toString(), totalPagado);
+                return new TablaGestionFactura(numero, nombre, fecha.toString(), totalPagado, idFactura);
             }
-            return new TablaGestionFactura(numero, nombreCompleto, fecha.toString(), totalPagado);
+            return new TablaGestionFactura(numero, nombreCompleto, fecha.toString(), totalPagado, idFactura);
         }
-        return new TablaGestionFactura(numero, nombre, "Fecha nula", totalPagado);
+        return new TablaGestionFactura(numero, nombre, "Fecha nula", totalPagado, idFactura);
     }
 
     public Connection getConnection() { return connection; }

@@ -5,13 +5,15 @@ public class TablaGestionFactura {
     private String cliente;
     private String fechaCobro;
     private double total;
+    private int idFactura;
 
     public TablaGestionFactura(){}
-    public TablaGestionFactura(String numeroFactura, String cliente, String fechaCobrom, double total){
+    public TablaGestionFactura(String numeroFactura, String cliente, String fechaCobrom, double total, int idFactura){
         setNumeroFactura(numeroFactura);
         setCliente(cliente);
         setFechaCobro(fechaCobrom);
         setTotal(total);
+        setIdFactura(idFactura);
     }
 
     public String getNumeroFactura() { return numeroFactura; }
@@ -22,4 +24,6 @@ public class TablaGestionFactura {
     public void setFechaCobro(String fechaCobro) { this.fechaCobro = fechaCobro; }
     public double getTotal() { return total; }
     public void setTotal(double total) { this.total = total; }
+    public int getIdFactura() { return idFactura; }
+    public void setIdFactura(int idFactura) { this.idFactura = idFactura; }
 }
