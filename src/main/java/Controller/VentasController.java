@@ -1,11 +1,10 @@
 package Controller;
 
 import Model.*;
-import Model.Ventas.Factura;
-import Model.Ventas.Remito;
-import Model.Ventas.TablaVistaVenta;
-import Model.Ventas.Venta;
+import Model.Ventas.*;
 import Reportes.ReporteFactura;
+import Services.ServiceAsiento;
+import Services.ServiceCalcularSaldoCuenta;
 import Services.ServiceProducto;
 import Services.Ventas.ServiceCliente;
 import Services.Ventas.ServiceFactura;
@@ -83,6 +82,7 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private ObservableList<TablaVistaVenta> tablaVentaObservableList;
     ArrayList<TablaVistaVenta> ventaProductos = venta.getVentaProductos();
 
+    ArrayList<TablaVistaAsiento> asientoCuentas = new ArrayList<>();
     ArrayList<Producto> productos = venta.getProductos();
 
     private ServiceFactura serviceFactura = new ServiceFactura();
@@ -91,9 +91,13 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     private RemitoFacturaController remitoFacturaController;
 
+    private ServiceAsiento serviceAsiento = new ServiceAsiento();
+
     private ServiceRemito serviceRemito = new ServiceRemito();
 
     private ArrayList<Remito> remitos = new ArrayList<Remito>();
+
+    private ServiceCalcularSaldoCuenta serviceCalcularSaldo = new ServiceCalcularSaldoCuenta();
 
     /*Atributos para enviar a remito y factura*/
 
@@ -255,6 +259,46 @@ public class VentasController extends ViewFuntionality implements Initializable 
         Factura factura = new Factura(null,crearNumeroFactura(),false,venta.getTotalNeto(), java.sql.Date.valueOf( localDate ),evaluarLetraFactura(),serviceVenta.obtenerIdVenta());
         serviceFactura.insertarFactura(factura);
         return factura.getNumero();
+    }
+
+   /*public void asientosCuentasVentas(){
+        int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText());
+        String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
+        Double total = Double.parseDouble(txtTotal.getText());
+        TablaVistaAsiento formaPago = new TablaVistaAsiento(nombreCuenta,txtTotal.getText(),"",total);
+        asientoCuentas.add(formaPago);
+        TablaVistaAsiento ventas = new TablaVistaAsiento("Venta", "",txtTotal.getText(),total);
+        asientoCuentas.add(ventas);
+        TablaVistaAsiento cmv = new TablaVistaAsiento("Costo de Mercadería Vendida", obtenerCMV().toString(), "",obtenerCMV());
+        asientoCuentas.add(cmv);
+        TablaVistaAsiento mercaderias= new TablaVistaAsiento("Mercaderias", "",obtenerCMV().toString(),obtenerCMV());
+        asientoCuentas.add(mercaderias);
+   }*/
+
+    /*public Double obtenerCMV(int cantidad, int idProducto) {
+        Double cmv = 0.0;
+        ArrayList<Stock> stocks = serviceProducto.obtenerStocks(idProducto);
+        Stock primerStock = new Stock();
+        for (Stock s: stocks) {
+            if (s.getIdStock()< menorId){
+
+            }
+        }
+        if (primerStock >= cantidad) {
+            cmv = precioCosto * cantidad;
+        } else {
+            (primerStock<cantidad) {
+                    cmv = precioCosto * cantidad;
+            cantidad -= stock.getActual;
+            serviceProducto.eliminarStock( int idStock);
+            cmv += primerStock * cantidad
+            }
+        }
+    }*/
+    public void insertarAsientoVenta() {
+        Asiento asiento = new Asiento(fechaActual, "venta de mercaderías en " + txtFormaPago.getText(), user.getId());
+        serviceAsiento.insertarAsiento(asiento);
+
     }
 
     public String crearNumeroFactura() throws SQLException {

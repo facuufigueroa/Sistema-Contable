@@ -61,6 +61,20 @@ public class ServiceVenta {
         return "Error";
     }
 
+    public String obtenerNombreCuenta(int formaPago) {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(VentaQuery.obtenerNombreCuenta(formaPago)));
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getString(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return "Error";
+    }
+
     public int obtenerIdformaPago(String formaPago) {
         try{
             setConnection(ConexionBD.conexion());
