@@ -105,7 +105,6 @@ public class FacturaController extends ViewFuntionality implements Initializable
         getBtnFactura().setDisable(true);
         obtenerFactura();
     }
-
     private void cambiarLabel(String texto) { getLabelFactura().setText(texto); }
     private void cambiarImagenLabel(String url) {
         setImageLabel(new Image(getClass().getResourceAsStream(url)));
@@ -141,7 +140,7 @@ public class FacturaController extends ViewFuntionality implements Initializable
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.showAndWait();
+        stage.show();
     }
     private HomeVentasController homeVentasController(HomeVentasController controller){ return controller; }
     public HomeVentasController getHomeVentasController() { return homeVentasController; }
