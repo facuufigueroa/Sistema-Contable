@@ -40,15 +40,15 @@
             </Button>
          </children>
       </Pane>
-      <TableView fx:id="tablaProductos" layoutX="19.0" layoutY="177.0" prefHeight="288.0" prefWidth="770.0" stylesheets="@../../Style/tablas.css">
+      <TableView fx:id="tablaProductos" layoutX="19.0" layoutY="177.0" prefHeight="288.0" prefWidth="770.0" stylesheets="@../../Style/tablas.css" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
          <columns>
             <TableColumn fx:id="colNumFactura" minWidth="7.0" prefWidth="248.0" text="Número de factura " />
             <TableColumn fx:id="colCliente" prefWidth="198.0" text="Cliente" />
-            <TableColumn fx:id="colFechaCobro" prefWidth="187.0" text="Fecha de cobro" />
-            <TableColumn fx:id="colTotal" prefWidth="136.0" text="Total" />
+            <TableColumn fx:id="colFecha" prefWidth="187.0" text="Fecha de cobro" />
+            <TableColumn fx:id="colTotal" prefWidth="143.0" text="Total" />
          </columns>
       </TableView>
-      <Label fx:id="labelFactura" layoutX="19.0" layoutY="127.0" prefHeight="40.0" prefWidth="235.0" text="Facturas" textFill="WHITE">
+      <Label fx:id="labelFactura" layoutX="19.0" layoutY="127.0" prefHeight="40.0" prefWidth="235.0" text="Facturas" textFill="WHITE" AnchorPane.leftAnchor="15.0">
          <font>
             <Font name="Arial Narrow" size="19.0" />
          </font>
@@ -60,7 +60,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <Button fx:id="btnVolver" layoutX="19.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" stylesheets="@../../Style/botones.css" text="  Volver" textFill="WHITE">
+      <Button fx:id="btnVolver" layoutX="19.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVolver" prefHeight="46.0" prefWidth="120.0" stylesheets="@../../Style/botones.css" text="  Volver" textFill="WHITE" AnchorPane.leftAnchor="15.0">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
@@ -72,18 +72,23 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnPrueba" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Ver factura" textFill="WHITE">
+      <Button fx:id="btnVerMas" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVerMas" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Ver Más" textFill="WHITE" AnchorPane.rightAnchor="15.0">
          <font>
             <Font name="Lucida Sans Unicode" size="14.0" />
          </font>
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Images/fire-alarm.png" />
+                  <Image url="@../../Images/mas.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
       <ChoiceBox fx:id="choiceBoxFacturada" layoutX="404.0" layoutY="55.0" onAction="#darEventoChoiceBox" prefHeight="46.0" prefWidth="175.0" />
+      <Button fx:id="btnCobrarFactura" layoutX="601.0" layoutY="124.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

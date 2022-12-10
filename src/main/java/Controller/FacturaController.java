@@ -1,14 +1,11 @@
 package Controller;
+import Model.Ventas.AlertaVenta;
 import Model.Ventas.TablaGestionFactura;
 import Model.ViewFuntionality;
 import Services.Ventas.ServiceGestionFactura;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,9 +29,11 @@ public class FacturaController extends ViewFuntionality implements Initializable
     @FXML private TableView<TablaGestionFactura> tablaProductos = new TableView();
     @FXML private TableColumn<TablaGestionFactura, String> colNumFactura = new TableColumn<>();
     @FXML private TableColumn<TablaGestionFactura, String> colCliente = new TableColumn<>();
-    @FXML private TableColumn<TablaGestionFactura, String> colFechaCobro = new TableColumn<>();
+    @FXML private TableColumn<TablaGestionFactura, String> colFecha = new TableColumn<>();
     @FXML private TableColumn<TablaGestionFactura, Double> colTotal = new TableColumn<>();
     @FXML private Button btnVolver;
+    @FXML private Button btnVerMas;
+    @FXML private Button btnCobrarFactura;
 
     @FXML private ChoiceBox<String> choiceBoxFacturada = new ChoiceBox<>();
     @FXML private Label labelFactura;
@@ -52,7 +51,7 @@ public class FacturaController extends ViewFuntionality implements Initializable
     private void iniciarTabla() {
         colNumFactura.setCellValueFactory(new PropertyValueFactory<>("numeroFactura"));
         colCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
-        colFechaCobro.setCellValueFactory(new PropertyValueFactory<>("fechaCobro"));
+        colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         actualizarDatosTabla(true);
     }
@@ -72,17 +71,45 @@ public class FacturaController extends ViewFuntionality implements Initializable
             actualizarDatosTabla(true);
             cambiarLabel("FACTURAS COBRADAS");
             cambiarImagenLabel("/Images/check.png");
+            getBtnCobrarFactura().setVisible(false);
+            colFecha.setText("Fecha de cobro");
         }else{
             actualizarDatosTabla(false);
             cambiarLabel("FACTURAS NO COBRADAS");
             cambiarImagenLabel("/Images/cancelar.png");
+            getBtnCobrarFactura().setVisible(true);
+            colFecha.setText("Fecha de emision");
         }
+    }
+    @FXML
+    public void accionVerMas(){
+        //Abrir venta factura
+        getFactura();
+    }
+    @FXML
+    public void accionCobrarFactura(){
+        getBtnVerMas().setDisable(true);
+        getFactura();
     }
 
     private void cambiarLabel(String texto) { getLabelFactura().setText(texto); }
     private void cambiarImagenLabel(String url) {
         setImageLabel(new Image(getClass().getResourceAsStream(url)));
         getImageView().setImage(getImageLabel());
+    }
+    private TablaGestionFactura getFactura(){
+        try {
+            int indice = getTablaProductos().getSelectionModel().getSelectedIndex();
+            TablaGestionFactura factura = getTablaProductos().getItems().get(indice);
+            return factura;
+        }catch (IndexOutOfBoundsException e){
+            if (getTablaProductos().getItems().isEmpty()){
+                AlertaVenta.noHayFacturas();
+            }else{
+                AlertaVenta.seleccioneFactura();
+            }
+            return null;
+        }
     }
 
     public void hideStage(){ getVentana().hide(); }
@@ -111,4 +138,6 @@ public class FacturaController extends ViewFuntionality implements Initializable
     public Image getImageLabel() { return imageLabel; }
     public void setImageLabel(Image imageLabel) { this.imageLabel = imageLabel; }
     public ImageView getImageView() { return imageView; }
+    public Button getBtnVerMas() { return btnVerMas; }
+    public Button getBtnCobrarFactura() { return btnCobrarFactura; }
 }

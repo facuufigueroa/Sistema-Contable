@@ -28,11 +28,15 @@ public class ServiceGestionFactura {
             ArrayList<TablaGestionFactura> listado = new ArrayList<>();
 
             setConnection(ConexionBD.conexion());
-            setPs(getConnection().prepareStatement(GestionFacturaQuery.listarFacturasCobradas()));
+            if (facturada){
+                setPs(getConnection().prepareStatement(GestionFacturaQuery.listarFacturasCobradas()));
+            }else{
+                setPs(getConnection().prepareStatement(GestionFacturaQuery.listarFacturasNoCobradas()));
+            }
             getPs().setBoolean(1, facturada);
             setResultSet(getPs().executeQuery());
             while (getResultSet().next()){
-                TablaGestionFactura factura = crearFactura(getResultSet());
+                TablaGestionFactura factura = crearFactura(getResultSet(), facturada);
                 listado.add(factura);
             }
             return listado;
@@ -42,21 +46,26 @@ public class ServiceGestionFactura {
 
 
     /**Metodos privados**/
-    private TablaGestionFactura crearFactura(ResultSet resultSet) throws SQLException {
+    private TablaGestionFactura crearFactura(ResultSet resultSet, boolean facturada) throws SQLException {
         String numero = getResultSet().getString("numero");
         String nombre = getResultSet().getString("nombre");
         String apellido = getResultSet().getString("apellido");
         String nombreCompleto = nombre + " " + apellido;
-        Date fecha = getResultSet().getDate("fecha_pago");
-        //Format formato = new SimpleDateFormat("dd/MM/yyyy");
-        //String fechaAString = formato.format(fecha);
+        Date fecha;
+        if (facturada){
+            fecha = getResultSet().getDate("fecha_pago");
+        }else{
+            fecha = getResultSet().getDate("fecha_emision");
+        }
         double totalPagado = getResultSet().getDouble("total_pagado");
         int idFactura = getResultSet().getInt("idfactura");
         if (fecha != null){
+            Format formato = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaAString = formato.format(fecha);
             if (apellido == null){
-                return new TablaGestionFactura(numero, nombre, fecha.toString(), totalPagado, idFactura);
+                return new TablaGestionFactura(numero, nombre, fechaAString, totalPagado, idFactura);
             }
-            return new TablaGestionFactura(numero, nombreCompleto, fecha.toString(), totalPagado, idFactura);
+            return new TablaGestionFactura(numero, nombreCompleto, fechaAString, totalPagado, idFactura);
         }
         return new TablaGestionFactura(numero, nombre, "Fecha nula", totalPagado, idFactura);
     }

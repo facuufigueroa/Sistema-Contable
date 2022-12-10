@@ -3,15 +3,15 @@ package Model.Ventas;
 public class TablaGestionFactura {
     private String numeroFactura;
     private String cliente;
-    private String fechaCobro;
+    private String fecha;
     private double total;
     private int idFactura;
 
     public TablaGestionFactura(){}
-    public TablaGestionFactura(String numeroFactura, String cliente, String fechaCobrom, double total, int idFactura){
+    public TablaGestionFactura(String numeroFactura, String cliente, String fecha, double total, int idFactura){
         setNumeroFactura(numeroFactura);
         setCliente(cliente);
-        setFechaCobro(fechaCobrom);
+        setFecha(fecha);
         setTotal(total);
         setIdFactura(idFactura);
     }
@@ -20,8 +20,8 @@ public class TablaGestionFactura {
     public void setNumeroFactura(String numeroFactura) { this.numeroFactura = numeroFactura; }
     public String getCliente() { return cliente; }
     public void setCliente(String cliente) { this.cliente = cliente; }
-    public String getFechaCobro() { return fechaCobro; }
-    public void setFechaCobro(String fechaCobro) { this.fechaCobro = fechaCobro; }
+    public String getFecha() { return fecha; }
+    public void setFecha(String fechaCobro) { this.fecha = fechaCobro; }
     public double getTotal() { return total; }
     public void setTotal(double total) { this.total = total; }
     public int getIdFactura() { return idFactura; }

@@ -4,6 +4,22 @@ import javafx.scene.control.Alert;
 import javafx.stage.StageStyle;
 
 public class AlertaVenta {
+    public static void noHayFacturas(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("La tabla no contiene facturas\nEs posible que no haya registros de facturas.");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
+    public static void seleccioneFactura(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("No selecciono ninguna factura\n¡Por favor! elija una factura de la tabla");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
     public static void dniExistente(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
