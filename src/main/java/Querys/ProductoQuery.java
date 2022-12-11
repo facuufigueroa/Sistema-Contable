@@ -60,4 +60,8 @@ public class ProductoQuery {
     public static String obtenerMenorIdStock() {
         return "SELECT MIN(idstock) FROM stock WHERE stock.id_producto = ?";
     }
+
+        public static String modificarStock(int idStock, int stockActual){
+        return "UPDATE stock SET stock_actual='"+ stockActual +"' WHERE idstock ='"+idStock+"'";
+    }
 }

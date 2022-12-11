@@ -42,6 +42,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     private SeleccionClienteController seleccionClienteController;
 
+    private AsientoController asientoController = new AsientoController();
+
     @FXML
     private DatePicker fechaVentaFactura;
 
@@ -212,6 +214,7 @@ public class VentasController extends ViewFuntionality implements Initializable 
                     venta.getTotales(), venta.getFormaPago(), user.getId());
             serviceVenta.insertarVenta(venta1);
             insertarVentaProducto();
+            insertarAsientoVenta();
             Alerta.alertaVentaRegistrada();
             String numeroFactura=insertarFactura();
             numeroFac=numeroFactura;
@@ -261,44 +264,61 @@ public class VentasController extends ViewFuntionality implements Initializable 
         return factura.getNumero();
     }
 
-   /*public void asientosCuentasVentas(){
-        int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText());
-        String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
-        Double total = Double.parseDouble(txtTotal.getText());
-        TablaVistaAsiento formaPago = new TablaVistaAsiento(nombreCuenta,txtTotal.getText(),"",total);
-        asientoCuentas.add(formaPago);
-        TablaVistaAsiento ventas = new TablaVistaAsiento("Venta", "",txtTotal.getText(),total);
-        asientoCuentas.add(ventas);
-        TablaVistaAsiento cmv = new TablaVistaAsiento("Costo de Mercadería Vendida", obtenerCMV().toString(), "",obtenerCMV());
-        asientoCuentas.add(cmv);
-        TablaVistaAsiento mercaderias= new TablaVistaAsiento("Mercaderias", "",obtenerCMV().toString(),obtenerCMV());
-        asientoCuentas.add(mercaderias);
-   }*/
+   public void asientosCuentasVentas() {
+       int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText().toUpperCase());
+       String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
+       System.out.println(nombreCuenta);
+       Double total = Double.parseDouble(txtTotal.getText());
+       AsientoCuenta formaPago = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta(nombreCuenta),
+               getAsientoController().conversionDebeHaber(txtTotal.getText()), getAsientoController().conversionDebeHaber(""), total);
+       serviceAsiento.insertarAsientoCuenta(formaPago);
+       AsientoCuenta ventas = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta("Ventas"),
+               getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(txtTotal.getText()), total);
+       serviceAsiento.insertarAsientoCuenta(ventas);
+       AsientoCuenta cmv = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta("Costo de Mercadería Vendida")
+               ,getAsientoController().conversionDebeHaber(obtenerCMVProductos(ventaProductos).toString()),getAsientoController().conversionDebeHaber(""), obtenerCMVProductos(ventaProductos));
+       serviceAsiento.insertarAsientoCuenta(cmv);
+       AsientoCuenta mercaderias = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta("Mercaderias")
+               , getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(obtenerCMVProductos(ventaProductos).toString()), obtenerCMVProductos(ventaProductos));
+       serviceAsiento.insertarAsientoCuenta(mercaderias);
+   }
 
-    /*public Double obtenerCMV(int cantidad, int idProducto) {
+   public Double obtenerCMVProductos(ArrayList<TablaVistaVenta> ventaProductos){
+        Double cmvTotal = 0.0;
+        for (TablaVistaVenta tv: ventaProductos){
+            int idProducto = tv.getIdProducto();
+            int cantidad = tv.getCantidad();
+            cmvTotal = obtenerCMV(cantidad,idProducto);
+        }
+        System.out.println(cmvTotal);
+        return cmvTotal;
+   }
+
+    public Double obtenerCMV(int cantidad, int idProducto) {
         Double cmv = 0.0;
         ArrayList<Stock> stocks = serviceProducto.obtenerStocks(idProducto);
-        Stock primerStock = new Stock();
-        for (Stock s: stocks) {
-            if (s.getIdStock()< menorId){
+        int cant = cantidad;
+        for (Stock stock: stocks){
+            int idPrimerStock = serviceProducto.obtenerMenorIdStock(idProducto);
+            if (stock.getIdStock() == idPrimerStock) {
+                if (stock.getStockActual() >= cant) {
+                    cmv += stock.getPrecioCosto() * cant;
+                    serviceProducto.modificarStock(stock.getIdStock(), (stock.getStockActual() - cant));
+                    return cmv;
+                } else {
+                    cmv += stock.getPrecioCosto() * cant;
+                    cant -= stock.getStockActual();
+                    serviceProducto.modificarStock(stock.getIdStock(), 0);
+                }
+            }
+        }
+        return cmv;
+    }
 
-            }
-        }
-        if (primerStock >= cantidad) {
-            cmv = precioCosto * cantidad;
-        } else {
-            (primerStock<cantidad) {
-                    cmv = precioCosto * cantidad;
-            cantidad -= stock.getActual;
-            serviceProducto.eliminarStock( int idStock);
-            cmv += primerStock * cantidad
-            }
-        }
-    }*/
     public void insertarAsientoVenta() {
         Asiento asiento = new Asiento(fechaActual, "venta de mercaderías en " + txtFormaPago.getText(), user.getId());
         serviceAsiento.insertarAsiento(asiento);
-
+        asientosCuentasVentas();
     }
 
     public String crearNumeroFactura() throws SQLException {
@@ -365,6 +385,14 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     public void setRemitoFacturaController(RemitoFacturaController remitoFacturaController) {
         this.remitoFacturaController = remitoFacturaController;
+    }
+
+    public AsientoController getAsientoController() {
+        return asientoController;
+    }
+
+    public void setAsientoController(AsientoController asientoController) {
+        this.asientoController = asientoController;
     }
 
     public String insertarRemito() throws SQLException {

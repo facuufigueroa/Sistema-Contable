@@ -219,8 +219,7 @@ public class ServiceProducto {
             setResultSet(getPreparedStatement().executeQuery());
             ArrayList<Stock> stocks = new ArrayList<>();
             if (getResultSet().next()){
-                stocks.add(new Stock(
-                        getResultSet().getInt("idstock")
+                stocks.add(new Stock(getResultSet().getInt("idstock")
                         ,getResultSet().getInt("stock_actual")
                         ,getResultSet().getDouble("precio_costo")
                         ,getResultSet().getDate("fecha_compra")
@@ -245,6 +244,16 @@ public class ServiceProducto {
             System.out.println(exception);
         }
         return -1;
+    }
+
+    public void modificarStock(int idStock, int stockActual){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.modificarStock(idStock,stockActual)));
+            getPreparedStatement().executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
     public ConexionBD getConexionBD() {
         return conexionBD;

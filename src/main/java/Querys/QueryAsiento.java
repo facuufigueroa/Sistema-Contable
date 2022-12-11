@@ -10,7 +10,7 @@ public class QueryAsiento {
     }
 
     public static String obtenerIdCuenta(String nombre){
-        return "SELECT c.idcuenta FROM cuentas as c WHERE c.nombre='"+nombre+"'";
+        return "SELECT c.idcuenta FROM cuentas as c WHERE UPPER (c.nombre)='"+nombre+"'";
     }
 
     public static String obtenerIdAsiento(){
