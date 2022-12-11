@@ -2,6 +2,7 @@ package Controller;
 import Model.Ventas.AlertaVenta;
 import Model.Ventas.FacturaReporte;
 import Model.Ventas.TablaGestionFactura;
+import Model.Ventas.TablaPersona;
 import Model.ViewFuntionality;
 import Reportes.ReporteFactura;
 import Services.Ventas.ServiceGestionFactura;
@@ -18,11 +19,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class FacturaController extends ViewFuntionality implements Initializable {
@@ -36,7 +39,7 @@ public class FacturaController extends ViewFuntionality implements Initializable
     @FXML private TableColumn<TablaGestionFactura, String> colCliente = new TableColumn<>();
     @FXML private TableColumn<TablaGestionFactura, String> colFecha = new TableColumn<>();
     @FXML private TableColumn<TablaGestionFactura, Double> colTotal = new TableColumn<>();
-    @FXML private Button btnVolver;
+    @FXML private TextField txtNombreCliente = new TextField();
     @FXML private Button btnFactura;
     @FXML private Button btnCobrarFactura;
 
@@ -44,10 +47,12 @@ public class FacturaController extends ViewFuntionality implements Initializable
     @FXML private Label labelFactura;
     @FXML private Image imageLabel;
     @FXML private ImageView imageView;
-
+    private ObservableList<String> busquedaPorNombre;
+    private HashSet<TablaGestionFactura> facturas = new HashSet<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        busquedaPorNombre = FXCollections.observableArrayList();
         iniciarTabla();
         iniciarChoiceBox();
         darEventoChoiceBox();
@@ -68,6 +73,34 @@ public class FacturaController extends ViewFuntionality implements Initializable
     private void actualizarDatosTabla(boolean facturada){
         ObservableList<TablaGestionFactura> listado = FXCollections.observableArrayList(serviceGestionFactura.listarFacturas(facturada));
         getTablaProductos().setItems(listado);
+    }
+    @FXML
+    public void accionBuscarPorNombre(KeyEvent event){
+        ObservableList<TablaGestionFactura> listadoFacturas = getTablaProductos().getItems();
+        try{
+            String filtroCodigo = getTxtNombreCliente().getText();
+            if (filtroCodigo.isEmpty()){
+                String facturada = getChoiceBoxFacturada().getSelectionModel().getSelectedItem();
+                if (facturada.equals("FACTURAS COBRADAS")) {
+                    actualizarDatosTabla(true);
+                }else{
+                    actualizarDatosTabla(false);
+                }
+                facturas.clear();
+            }else{
+                facturas.clear();
+                listadoFacturas.forEach(factura ->
+                        {
+                            String nombre = String.valueOf(factura.getCliente()).toLowerCase();
+                            if (nombre.contains(filtroCodigo.toLowerCase())){
+                                facturas.add(factura);
+                                listadoFacturas.setAll(facturas);
+                            }
+                        }
+                );
+                getTablaProductos().setItems(listadoFacturas);
+            }
+        }catch (Exception exception){ System.out.println(exception.getMessage()); }
     }
     @FXML
     private void darEventoChoiceBox(){
@@ -110,8 +143,9 @@ public class FacturaController extends ViewFuntionality implements Initializable
                 serviceGestionFactura.cobrarFactura(factura);
                 getBtnFactura().setDisable(false);
                 getChoiceBoxFacturada().getSelectionModel().select(0);
+                AlertaVenta.facturaCobradaCorrectamente();
             }catch (SQLException e){ AlertaVenta.errorAlCobrarFactura(); }
-        }
+        }else{ AlertaVenta.seleccioneFactura(); }
     }
     private void cambiarLabel(String texto) { getLabelFactura().setText(texto); }
     private void cambiarImagenLabel(String url) {
@@ -156,6 +190,9 @@ public class FacturaController extends ViewFuntionality implements Initializable
     public FacturaReporte getFactura() { return this.factura; }
     public void setFactura(FacturaReporte factura) { this.factura = factura; }
     public TableView<TablaGestionFactura> getTablaProductos() { return tablaProductos; }
+    public TextField getTxtNombreCliente() { return txtNombreCliente; }
+    public ObservableList<String> getBusquedaPorNombre() { return busquedaPorNombre; }
+    public void setBusquedaPorNombre(ObservableList<String> busquedaPorNombre) { this.busquedaPorNombre = busquedaPorNombre; }
     public ChoiceBox<String> getChoiceBoxFacturada() { return choiceBoxFacturada; }
     public Label getLabelFactura() { return labelFactura; }
     public Image getImageLabel() { return imageLabel; }

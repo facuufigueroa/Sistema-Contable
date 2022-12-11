@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -85,10 +86,25 @@
          </graphic>
       </Button>
       <ChoiceBox fx:id="choiceBoxFacturada" layoutX="404.0" layoutY="55.0" onAction="#darEventoChoiceBox" prefHeight="46.0" prefWidth="175.0" />
-      <Button fx:id="btnCobrarFactura" onAction="#accionCobrarFactura" layoutX="601.0" layoutY="124.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
+      <Button fx:id="btnCobrarFactura" layoutX="600.0" layoutY="125.0" mnemonicParsing="false" onAction="#accionCobrarFactura" prefHeight="30.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
+      <Label layoutX="331.0" layoutY="67.0" text="Factura" textFill="WHITE">
+         <font>
+            <Font name="Arial Narrow" size="19.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNombreCliente" onKeyReleased="#accionBuscarPorNombre" layoutX="404.0" layoutY="126.0" prefHeight="44.0" prefWidth="175.0" promptText="Nombre">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label alignment="TOP_LEFT" layoutX="265.0" layoutY="137.0" prefHeight="29.0" prefWidth="132.0" text="Buscar por cliente" textFill="WHITE">
+         <font>
+            <Font name="Arial Narrow" size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
