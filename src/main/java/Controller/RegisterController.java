@@ -22,25 +22,18 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     @FXML private Button botonRegistrarse;
     @FXML private Button buttonMin;
     @FXML private Button buttonClose;
-
     @FXML private ComboBox<String> comboBox;
 
     private User u = User.getInstance();
-
     private RegisterController controller;
     private ServiceRegister serviceRegister = new ServiceRegister();
-
     private Service service = new Service();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getBotonRegistrarse().setDisable(false);
-        getComboBox().getItems().addAll("admin", "usuario");
+        getComboBox().getItems().addAll(service.listarRoles());
     }
-
-
-
     @FXML
     public void actionRegister(ActionEvent event) throws SQLException {
         if (noEstanCamposVaciosYExisteEmail()){
@@ -101,12 +94,8 @@ public class RegisterController extends ViewFuntionality implements Initializabl
     public RegisterController getController() { return controller; }
     public void setController(RegisterController controller) { this.controller = controller; }
     public ServiceRegister getServiceRegister() { return serviceRegister; }
-
-
     public ComboBox<String> getComboBox() { return comboBox; }
     public void setComboBox(ComboBox<String> comboBox) { this.comboBox = comboBox; }
-
     private boolean rolSeleccionado(){ return !getComboBox().getSelectionModel().isEmpty(); }
-
     private String obtenerRolSeleccionadoEnComboBox(){ return getComboBox().getValue(); }
 }

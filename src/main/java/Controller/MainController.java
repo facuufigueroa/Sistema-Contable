@@ -42,13 +42,10 @@ public class MainController extends ViewFuntionality implements Initializable {
     private Button btnCerrarSesion;
 
     private Service service = new Service();
-
-
     private User usuario;
 
     private RegisterController registerController;
     private FiltrarLibroDiarioController filtradoController;
-
 
     private User u = User.getInstance();
 
@@ -81,23 +78,6 @@ public class MainController extends ViewFuntionality implements Initializable {
         //controller.hideStage();
         stage.setScene(scene);
         stage.setTitle("Ver Libro Diario");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.show();
-    }
-
-    @FXML
-    public void accionRegistrarUsuario(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registro-user.fxml"));
-        Parent parent = fxmlLoader.load();
-        setRegisterController(loadRegister(fxmlLoader.getController()));
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        getRegisterController().setVentana(loginStage);
-        getRegisterController().hideStage();
-        stage.setScene(scene);
-        stage.setTitle("Registrar Usuario");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
