@@ -302,7 +302,7 @@ public class VentasController extends ViewFuntionality implements Initializable 
         return factura.getNumero();
     }
     public void asientosCuentasVentas() {
-        int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText());
+        int idFormaPago = venta.getFormaPago();
         String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
         String total = txtTotal.getText();
         double totalCmv = obtenerCMVProductos(ventaProductos);
