@@ -14,7 +14,7 @@ public class VentaQuery {
     }
 
     public static String obtenerIdFormaPago(String formaPago) {
-        return "SELECT idformapago FROM forma_pago WHERE UPPER (forma_pago.forma_pago) ='"+formaPago+"'";
+        return "SELECT idformapago FROM forma_pago  as fp WHERE fp.forma_pago ='"+formaPago+"'";
     }
 
     public static String obtenerIdVenta() {

@@ -59,7 +59,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     }
 
     public void evaluarSiEsCuotas(String nombre){
-        if(nombre.equals("Cuotas")){
+        if(nombre.equals("cuotas")){
             txtCantidadCuotas.setDisable(false);
             txtCantidadCuotas.setText("");
         }
@@ -72,7 +72,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
 
     public void iniciarCbbFormaPago(){
         ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Efectivo", "Cuotas","Tarjeta Crédito","Tarjeta Débito","Cheque","Pagaré");
+        items.addAll("efectivo", "cuotas","tarjeta de credito","tarjeta de debito","cheque","pagare");
         comboBoxSeleccionarPago.setItems(items);
     }
 
@@ -100,6 +100,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     public void accionContinuar(ActionEvent event) throws IOException {
         if (!verificarFormaPago() && !verificarCuotas()) {
             obtenerIdFormaPago();
+            obtenerCantCuotas();
             continuarNewVentas(event);
         }
         else{
@@ -130,12 +131,18 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
         stage.show();
     }
 
+    public void obtenerCantCuotas(){
+        if(!txtCantidadCuotas.getText().equals("")){
+            venta.setCuotas(Integer.parseInt(txtCantidadCuotas.getText()));
+        }
+    }
+
     public void obtenerIdFormaPago(){
         try {
             String formaPago = comboBoxSeleccionarPago.getSelectionModel().getSelectedItem().toString();
             int cuotas = Integer.parseInt(txtCantidadCuotas.getText());
             venta.setCuotas(cuotas);
-            venta.setFormaPago(serviceVenta.obtenerIdformaPago(formaPago.toUpperCase()));
+            venta.setFormaPago(serviceVenta.obtenerIdformaPago(formaPago));
         } catch (NullPointerException e) {
         }
     }

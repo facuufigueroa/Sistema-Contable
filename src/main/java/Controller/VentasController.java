@@ -72,6 +72,9 @@ public class VentasController extends ViewFuntionality implements Initializable 
     private TableColumn columTotal;
     @FXML
     private Button btnContinuar;
+
+    @FXML
+    private Button btnGenerarVenta;
     private Venta venta = Venta.getInstance();
     private User user = User.getInstance();
 
@@ -114,7 +117,9 @@ public class VentasController extends ViewFuntionality implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarDatosVenta();
+        getBtnContinuar().setDisable(true);
     }
+
     public void cargarDatosVenta(){
         txtCondicionIva.setText(serviceCliente.obtenerCondicionIva(venta.getIdCliente()));
         txtCliente.setText(serviceCliente.obtenerNombreCliente(venta.getIdCliente()));
@@ -129,7 +134,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     public String obtenerTxtFP(){
         String formaPago = obtenerFormaPago(venta.getFormaPago());
-       if(formaPago.toUpperCase() == "CUOTAS"){
+
+       if(formaPago.toUpperCase().equals("cuotas")){
           return formaPago + " " + venta.getCuotas();
        }
        else{
@@ -216,6 +222,8 @@ public class VentasController extends ViewFuntionality implements Initializable 
             insertarVentaProducto();
             insertarAsientoVenta();
             Alerta.alertaVentaRegistrada();
+            getBtnContinuar().setDisable(false);
+            getBtnGenerarVenta().setDisable(true);
             String numeroFactura=insertarFactura();
             numeroFac=numeroFactura;
             numRemito=insertarRemito();
@@ -334,12 +342,13 @@ public class VentasController extends ViewFuntionality implements Initializable 
     public String evaluarLetraFactura(){
         String condicion_iva = serviceVenta.obtenerCondicionIvaCliente(venta.getIdCliente());
         String letra="";
-        String ri="Responsable Inscripto";
-        if(condicion_iva.trim().equals(ri)){
+        String ri="responsable inscripto";
+        String cf="consumidor final";
+        if(condicion_iva.trim().toLowerCase().equals(ri)){
             letra="A";
         }
         else{
-            if(condicion_iva.equals("Consumidor Final")){
+            if(condicion_iva.trim().toLowerCase().equals(cf)){
                 letra="B";
             }
         }
@@ -435,5 +444,21 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     public void setServiceRemito(ServiceRemito serviceRemito) {
         this.serviceRemito = serviceRemito;
+    }
+
+    public Button getBtnContinuar() {
+        return btnContinuar;
+    }
+
+    public void setBtnContinuar(Button btnContinuar) {
+        this.btnContinuar = btnContinuar;
+    }
+
+    public Button getBtnGenerarVenta() {
+        return btnGenerarVenta;
+    }
+
+    public void setBtnGenerarVenta(Button btnGenerarVenta) {
+        this.btnGenerarVenta = btnGenerarVenta;
     }
 }

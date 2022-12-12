@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="491.0" prefWidth="807.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FacturaController">
+<AnchorPane prefHeight="491.0" prefWidth="807.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FacturaController">
    <children>
       <Pane prefHeight="40.0" prefWidth="807.0" style="-fx-background-color: #44878f;">
          <children>
@@ -51,7 +51,7 @@
       </TableView>
       <Label fx:id="labelFactura" layoutX="19.0" layoutY="127.0" prefHeight="40.0" prefWidth="235.0" text="Facturas" textFill="WHITE" AnchorPane.leftAnchor="15.0">
          <font>
-            <Font name="Arial Narrow" size="19.0" />
+            <Font name="Arial Narrow" size="18.0" />
          </font>
          <graphic>
             <ImageView fx:id="imageView" fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
@@ -73,9 +73,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btnFactura" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVerFactura" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Ver Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
+      <Button fx:id="btnFactura" layoutX="601.0" layoutY="55.0" mnemonicParsing="false" onAction="#accionVerFactura" prefHeight="46.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="   Ver Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
          <font>
-            <Font name="Lucida Sans Unicode" size="14.0" />
+            <Font name="Arial Narrow" size="18.0" />
          </font>
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
@@ -85,25 +85,32 @@
             </ImageView>
          </graphic>
       </Button>
-      <ChoiceBox fx:id="choiceBoxFacturada" layoutX="404.0" layoutY="55.0" onAction="#darEventoChoiceBox" prefHeight="46.0" prefWidth="175.0" />
-      <Button fx:id="btnCobrarFactura" layoutX="600.0" layoutY="125.0" mnemonicParsing="false" onAction="#accionCobrarFactura" prefHeight="30.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
+      <ChoiceBox fx:id="choiceBoxFacturada" layoutX="404.0" layoutY="63.0" onAction="#darEventoChoiceBox" prefHeight="38.0" prefWidth="175.0" />
+      <Button fx:id="btnCobrarFactura" layoutX="600.0" layoutY="125.0" mnemonicParsing="false" onAction="#accionCobrarFactura" prefHeight="38.0" prefWidth="192.0" stylesheets="@../../Style/botones.css" text="  Cobrar Factura" textFill="WHITE" AnchorPane.rightAnchor="15.0">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="Arial Narrow" size="19.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/dinero.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <Label layoutX="331.0" layoutY="67.0" text="Factura" textFill="WHITE">
          <font>
-            <Font name="Arial Narrow" size="19.0" />
+            <Font name="Arial Narrow" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNombreCliente" onKeyReleased="#accionBuscarPorNombre" layoutX="404.0" layoutY="126.0" prefHeight="44.0" prefWidth="175.0" promptText="Nombre">
+      <TextField fx:id="txtNombreCliente" layoutX="404.0" layoutY="123.0" onKeyReleased="#accionBuscarPorNombre" prefHeight="38.0" prefWidth="175.0" promptText="Nombre">
          <font>
-            <Font size="18.0" />
+            <Font size="16.0" />
          </font>
       </TextField>
-      <Label alignment="TOP_LEFT" layoutX="265.0" layoutY="137.0" prefHeight="29.0" prefWidth="132.0" text="Buscar por cliente" textFill="WHITE">
+      <Label alignment="TOP_LEFT" layoutX="265.0" layoutY="131.0" prefHeight="29.0" prefWidth="132.0" text="Buscar por cliente" textFill="WHITE">
          <font>
-            <Font name="Arial Narrow" size="19.0" />
+            <Font name="Arial Narrow" size="18.0" />
          </font>
       </Label>
    </children>
