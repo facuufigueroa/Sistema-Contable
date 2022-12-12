@@ -360,7 +360,7 @@ public class VentasController extends ViewFuntionality implements Initializable 
             int numFactura = serviceFactura.ultimaFactura();
             numB = String.format("%08d", numFactura);
         }
-        return "0002-" + numB;
+        return "B-0002-" + numB;
     }
 
 

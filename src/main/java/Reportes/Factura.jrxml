@@ -22,31 +22,31 @@
 	<parameter name="numFac" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT productos.detalle,
-	productos.nombre,
-	venta_producto.precio_unitario,
-	venta_producto.importe,
-	venta_producto.cantidad,
-	forma_pago.forma_pago,
-	facturas.fecha_emision,
-	facturas.letra_factura,
-	clientes.email,
-	clientes.nombre,
-	clientes.apellido,
-	clientes.condicion_iva,
-	clientes.direccion,
-	clientes.cuit,
-	facturas.numero
+    productos.nombre,
+    venta_producto.precio_unitario,
+    venta_producto.importe,
+    venta_producto.cantidad,
+    forma_pago.forma_pago,
+    facturas.fecha_emision,
+    facturas.letra_factura,
+    clientes.email,
+    clientes.nombre,
+     COALESCE (null,  clientes.apellido, '') as apellido,
+    clientes.condicion_iva,
+    clientes.direccion,
+    clientes.cuit,
+    facturas.numero
 FROM ventas
-	INNER JOIN venta_producto ON 
-	 venta_producto.id_venta = ventas.idventa 
-	INNER JOIN productos ON 
-	 productos.idproducto = venta_producto.id_producto 
-	INNER JOIN forma_pago ON 
-	 forma_pago.idformapago = ventas.id_forma_pago 
-	INNER JOIN facturas ON 
-	 facturas.id_venta = ventas.idventa 
-	INNER JOIN clientes ON 
-	 clientes.idcliente = ventas.id_cliente
+    INNER JOIN venta_producto ON 
+     venta_producto.id_venta = ventas.idventa 
+    INNER JOIN productos ON 
+     productos.idproducto = venta_producto.id_producto 
+    INNER JOIN forma_pago ON 
+     forma_pago.idformapago = ventas.id_forma_pago 
+    INNER JOIN facturas ON 
+     facturas.id_venta = ventas.idventa 
+    INNER JOIN clientes ON 
+     clientes.idcliente = ventas.id_cliente
 WHERE facturas.numero LIKE  $P{numFac} ]]>
 	</queryString>
 	<field name="detalle" class="java.lang.String">
@@ -245,7 +245,7 @@ WHERE facturas.numero LIKE  $P{numFac} ]]>
 			</staticText>
 			<image>
 				<reportElement x="470" y="45" width="68" height="67" uuid="9ab3ff50-aade-4efb-8201-5c9069fe062f"/>
-				<imageExpression><![CDATA["src/main/resources/Images/Icono.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:/Users/Facundo/Desktop/Facultad 2022/Segundo Cuatrimestre/Sistemas Administrativos II/Sistema Contable/src/main/resources/Images/Icono.png"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="3" y="160" width="1" height="90" uuid="4b058237-1737-49ef-97b2-3f51e0a56a2b"/>
@@ -351,14 +351,14 @@ WHERE facturas.numero LIKE  $P{numFac} ]]>
 				<textFieldExpression><![CDATA[$F{forma_pago}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="190" width="40" height="19" uuid="2982cfdd-e34d-4b40-9f60-d537a942ba98"/>
+				<reportElement x="420" y="190" width="58" height="19" uuid="2982cfdd-e34d-4b40-9f60-d537a942ba98"/>
 				<textElement>
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COLUMN_10}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="460" y="190" width="76" height="19" uuid="54b182dc-976e-44d2-89b7-749e9ed257f3"/>
+				<reportElement x="478" y="190" width="76" height="19" uuid="54b182dc-976e-44d2-89b7-749e9ed257f3"/>
 				<textElement textAlignment="Left">
 					<font fontName="Arial Narrow" size="14"/>
 				</textElement>
