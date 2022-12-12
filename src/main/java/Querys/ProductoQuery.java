@@ -54,7 +54,7 @@ public class ProductoQuery {
     }
 
     public static String obtenerStocks() {
-        return "SELECT * FROM stock as s WHERE s.stock_actual != 0 AND s.id_producto= ?";
+        return "SELECT * FROM stock as s WHERE s.stock_actual != 0 AND s.id_producto= ? ORDER BY idstock ASC";
     }
 
     public static String obtenerMenorIdStock() {

@@ -290,30 +290,32 @@ public class VentasController extends ViewFuntionality implements Initializable 
             int cantidad = tv.getCantidad();
             cmvTotal = obtenerCMV(cantidad,idProducto);
         }
-        System.out.println(cmvTotal);
         return cmvTotal;
    }
 
-    public Double obtenerCMV(int cantidad, int idProducto) {
-        Double cmv = 0.0;
-        ArrayList<Stock> stocks = serviceProducto.obtenerStocks(idProducto);
-        int cant = cantidad;
-        for (Stock stock: stocks){
-            int idPrimerStock = serviceProducto.obtenerMenorIdStock(idProducto);
-            if (stock.getIdStock() == idPrimerStock) {
-                if (stock.getStockActual() >= cant) {
-                    cmv += stock.getPrecioCosto() * cant;
-                    serviceProducto.modificarStock(stock.getIdStock(), (stock.getStockActual() - cant));
-                    return cmv;
-                } else {
-                    cmv += stock.getPrecioCosto() * cant;
-                    cant -= stock.getStockActual();
-                    serviceProducto.modificarStock(stock.getIdStock(), 0);
-                }
+
+
+    public Double obtenerCMV(int cantidadProductosVendidos, int id_producto){
+        double cmv = 0.0;
+        ArrayList<Stock> stocks = serviceProducto.obtenerStocks(id_producto);
+        int cant = cantidadProductosVendidos;
+        for(Stock stock : stocks){
+            if (stock.getStockActual() >= cant){
+                cmv += stock.getPrecioCosto() * cant;
+                serviceProducto.modificarStock(stock.getIdStock(), (stock.getStockActual() - cant));
+                return cmv;
+            } else {
+                cmv += stock.getPrecioCosto() * cant;
+                cant -= stock.getStockActual();
+                serviceProducto.modificarStock(stock.getIdStock(), 0);
             }
+
         }
         return cmv;
+
     }
+
+
 
     public void insertarAsientoVenta() {
         Asiento asiento = new Asiento(fechaActual, "venta de mercaderías en " + txtFormaPago.getText(), user.getId());

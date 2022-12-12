@@ -218,15 +218,16 @@ public class ServiceProducto {
             getPreparedStatement().setLong(1, idProducto);
             setResultSet(getPreparedStatement().executeQuery());
             ArrayList<Stock> stocks = new ArrayList<>();
-            if (getResultSet().next()){
+            while(getResultSet().next()){
                 stocks.add(new Stock(getResultSet().getInt("idstock")
                         ,getResultSet().getInt("stock_actual")
                         ,getResultSet().getDouble("precio_costo")
                         ,getResultSet().getDate("fecha_compra")
                         ,getResultSet().getInt("id_producto")
                 ));
-                return stocks;
+
             }
+            return stocks;
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
     }
