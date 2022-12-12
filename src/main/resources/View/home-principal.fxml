@@ -31,7 +31,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label layoutX="14.0" layoutY="2.0" prefHeight="33.0" prefWidth="160.0" text="Menu Principal" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="2.0" prefHeight="33.0" prefWidth="273.0" text="Administración Contable" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="21.0" />
                </font>
@@ -155,26 +155,7 @@
       <Line endX="215.0" layoutX="622.0" layoutY="520.0" opacity="0.35" startX="-605.0" stroke="WHITE" />
       <Line endX="-100.0" endY="50.0" layoutX="937.0" layoutY="466.0" opacity="0.46" startX="-100.0" startY="-225.0" />
       <Line endX="-100.0" endY="-79.0" layoutX="116.0" layoutY="519.0" startX="-100.0" />
-      <Button fx:id="btnCrearUsuario" layoutX="509.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionRegistrarUsuario" prefHeight="45.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Crear Usuario" textFill="WHITE">
-         <graphic>
-            <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/add-user.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <font>
-            <Font name="Lucida Sans Unicode" size="16.0" />
-         </font>
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color red="0.16995614767074585" green="0.22680920362472534" blue="0.2368421107530594" />
-               </color>
-            </DropShadow>
-         </effect>
-      </Button>
-      <Label fx:id="campoTexto" layoutX="31.0" layoutY="468.0" prefHeight="36.0" prefWidth="300.0" textFill="WHITE">
+      <Label fx:id="campoTexto" layoutX="31.0" layoutY="468.0" prefHeight="36.0" prefWidth="273.0" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="16.0" />
          </font>
@@ -186,7 +167,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <Button fx:id="btnCerrrarSesion" layoutX="678.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="46.0" prefWidth="150.0" stylesheets="@../Style/botones.css" text="Cerrar Sesión" textFill="WHITE">
+      <Button fx:id="btnCerrrarSesion" layoutX="668.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionBtnCerrarSesion" prefHeight="46.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Volver a Menú" textFill="WHITE">
          <font>
             <Font name="Lucida Sans Unicode" size="16.0" />
          </font>
@@ -205,7 +186,7 @@
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="btnVerUsuarios" layoutX="340.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionVerUsuarios" prefHeight="45.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Ver Usuarios" textFill="WHITE">
+      <Button fx:id="btnVerUsuarios" layoutX="497.0" layoutY="463.0" mnemonicParsing="false" onAction="#accionVerUsuarios" prefHeight="45.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Ver Usuarios" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>

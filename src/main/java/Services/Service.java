@@ -34,6 +34,19 @@ public class Service {
     public ResultSet getTupla() { return tupla; }
     public void setTupla(ResultSet tupla) { this.tupla = tupla; }
 
+    public ArrayList<String> listarRoles(){
+        try {
+            ArrayList<String> roles = new ArrayList<>();
+            vaciarConexion();
+            setConexion(ConexionBD.conexion());
+            setPs(getConexion().prepareStatement(RolesQuery.listarRoles()));
+            setResultSet(getPs().executeQuery());
+            while (getResultSet().next()){
+                roles.add(getResultSet().getString("nombre"));
+            }
+            return roles;
+        }catch (SQLException e){ return null; }
+    }
     public String obtenerTipoDeCuenta(String nombreCuenta){
         try{
             setConnection(ConexionBD.conexion());
@@ -205,36 +218,25 @@ public class Service {
         setConexionBD(null);
     }
 
-
-
     public ConexionBD getConexionBD() {
         return conexionBD;
     }
-
     public void setConexionBD(ConexionBD conexionBD) {
         this.conexionBD = conexionBD;
     }
-
     public Connection getConnection() {
         return connection;
     }
-
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-
     public PreparedStatement getPreparedStatement() {
         return preparedStatement;
     }
-
-    public void setPreparedStatement(PreparedStatement preparedStatement) {
-        this.preparedStatement = preparedStatement;
-    }
-
+    public void setPreparedStatement(PreparedStatement preparedStatement) {this.preparedStatement = preparedStatement; }
     public ResultSet getResultSet() {
         return resultSet;
     }
-
     public void setResultSet(ResultSet resultSet) {
         this.resultSet = resultSet;
     }
