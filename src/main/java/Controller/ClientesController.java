@@ -102,14 +102,14 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
     private void iniciarComboBoxTipoIvaJ(){
         ObservableList<String> tipo = FXCollections.observableArrayList();
-        tipo.addAll("RESPONSABLE INSCRIPTO", "MONOTRIBUTISTA", "EXCENTO");
+        tipo.addAll("responsable inscripto", "monotributista", "excento");
         getComboIvaJ().setItems(tipo);
     }
     private void iniciarComboBoxTipoIva(){
         ObservableList<String> tipo = FXCollections.observableArrayList();
-        tipo.addAll("CONSUMIDOR FINAL");
+        tipo.addAll("consumidor final");
         getComboIva().setItems(tipo);
-        getComboIva().setValue("CONSUMIDOR FINAL");
+        getComboIva().setValue("consumidor final");
         getComboIva().setDisable(true);
     }
 
@@ -254,7 +254,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
 
     @FXML
-    private void accionGuardarPersona() {
+    public void accionGuardarPersona(ActionEvent event) {
         boolean isComboBoxVacio = getComboBoxCliente().getValue() == null;
         if (!isComboBoxVacio){
             accionElegirPersona("GUARDAR");

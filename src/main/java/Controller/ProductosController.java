@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import Model.Ventas.TablaProductos;
 import Services.ServiceProducto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,7 +56,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
     @FXML
     private Button btnLimpiar;
     @FXML
-    private TableView<Producto> tablaProductos;
+    private TableView<TablaProductos> tablaProductos;
     @FXML
     private TableColumn columCodigo;
     @FXML
@@ -67,12 +68,12 @@ public class ProductosController extends ViewFuntionality implements Initializab
     @FXML
     private TableColumn columEstado;
 
-    ObservableList<Producto> productObservableList;
-    ObservableList<Producto> productoFiltradoPorCodigo;
+    ObservableList<TablaProductos> productObservableList;
+    ObservableList<TablaProductos> productoFiltradoPorCodigo;
 
-    ObservableList<Producto> productoFiltradoPorNombre;
+    ObservableList<TablaProductos> productoFiltradoPorNombre;
 
-    ArrayList<Producto> listadoProductos = new ArrayList<>();
+    ArrayList<TablaProductos> listadoProductos = new ArrayList<>();
 
     private ServiceProducto serviceProducto = new ServiceProducto();
 
@@ -108,20 +109,20 @@ public class ProductosController extends ViewFuntionality implements Initializab
     public void listarProductos() {
         insertarProductos();
         productObservableList = FXCollections.observableArrayList(listadoProductos);
-        columCodigo.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigo"));
-        columNombre.setCellValueFactory(new PropertyValueFactory<Producto, String>("nombre"));
-        columPrecio.setCellValueFactory(new PropertyValueFactory<Producto, Double>("precio"));
-        columStock.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("stock"));
-        columEstado.setCellValueFactory(new PropertyValueFactory<Producto, Boolean>("estado"));
+        columCodigo.setCellValueFactory(new PropertyValueFactory<TablaProductos, String>("codigo"));
+        columNombre.setCellValueFactory(new PropertyValueFactory<TablaProductos, String>("nombre"));
+        columPrecio.setCellValueFactory(new PropertyValueFactory<TablaProductos, Double>("precio"));
+        columStock.setCellValueFactory(new PropertyValueFactory<TablaProductos, Integer>("stock"));
+        columEstado.setCellValueFactory(new PropertyValueFactory<TablaProductos, String>("estado"));
         tablaProductos.setItems(productObservableList);
     }
 
     public void insertarProductos() {
         listadoProductos = new ArrayList<>();
-        for(Producto p:serviceProducto.listarProductos()) {
+        for(TablaProductos p:serviceProducto.listarTablaProductos()) {
             int idProducto = serviceProducto.obtenerIdProducto(p.getCodigo());
             int stock= serviceProducto.obtenerStockProducto(idProducto);
-            Producto producto = new Producto(p.getCodigo(),p.getNombre(),p.getDetalle(),p.getPrecio(),p.getAlicuota(),p.isEstado());
+            TablaProductos producto = new TablaProductos(p.getNombre(),p.getDetalle(),p.getCodigo(),p.getEstado(),p.getPrecio(),p.getStock());
             producto.setStock(stock);
             listadoProductos.add(producto);
         }
@@ -149,7 +150,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
                 tablaProductos.setItems(productObservableList);
             } else {
                 productoFiltradoPorCodigo.clear();
-                for (Producto p : productObservableList) {
+                for (TablaProductos p : productObservableList) {
                     String codigoP = String.valueOf(p.getCodigo());
                     if (codigoP.contains(filtroCodigo)) {
                         productoFiltradoPorCodigo.add(p);
@@ -170,7 +171,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
                 tablaProductos.setItems(productObservableList);
             } else {
                 productoFiltradoPorCodigo.clear();
-                for (Producto p : productObservableList) {
+                for (TablaProductos p : productObservableList) {
                     String nombreP = String.valueOf(p.getNombre());
                     if (nombreP.toLowerCase().contains(filtroNombre.toLowerCase())) {
                         productoFiltradoPorCodigo.add(p);
@@ -200,13 +201,14 @@ public class ProductosController extends ViewFuntionality implements Initializab
         txtNombre.setText("");
         txtDetalle.setText("");
         txtPrecio.setText("");
-        comboBoxAlicuota.setItems(null);
+        comboBoxAlicuota.setValue(null);
         iniciarCbbAlicuota();
     }
 
     @FXML
     public void accionEditarProducto() {
         traerProductoSeleccionFila();
+        getBtnGuardar().setDisable(true);
     }
 
     @FXML
@@ -218,6 +220,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
             txtCodigo.setDisable(false);
             comboBoxAlicuota.setDisable(false);
             listarProductos();
+            getBtnGuardar().setDisable(false);
             Alerta.alertaProductoModificado();
         }
         else{
@@ -261,7 +264,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Confirmación de deshabilitación de producto");
         alert.initStyle(StageStyle.TRANSPARENT);
-        List<Producto> filaSeleccionada = tablaProductos.getSelectionModel().getSelectedItems();
+        List<TablaProductos> filaSeleccionada = tablaProductos.getSelectionModel().getSelectedItems();
         if(filaSeleccionada.size() == 1 ) {
                 alert.setContentText("¿Está seguro de deshabilitar el producto: " + filaSeleccionada.get(0).getNombre() + "?");
                 alert.showAndWait().ifPresent(response -> {
@@ -279,7 +282,7 @@ public class ProductosController extends ViewFuntionality implements Initializab
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Confirmación de habilitacion de producto");
         alert.initStyle(StageStyle.TRANSPARENT);
-        List<Producto> filaSeleccionada = tablaProductos.getSelectionModel().getSelectedItems();
+        List<TablaProductos> filaSeleccionada = tablaProductos.getSelectionModel().getSelectedItems();
         if(filaSeleccionada.size() == 1 ) {
             alert.setContentText("¿Está seguro de habilitar el producto: " + filaSeleccionada.get(0).getNombre() + "?");
             alert.showAndWait().ifPresent(response -> {
@@ -346,5 +349,17 @@ public class ProductosController extends ViewFuntionality implements Initializab
 
     public void setHomeVentasController(HomeVentasController homeVentasController) {
         this.homeVentasController = homeVentasController;
+    }
+
+    public Button getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public Button getBtnModificar() {
+        return btnModificar;
+    }
+
+    public Button getBtnEditar() {
+        return btnEditar;
     }
 }

@@ -353,4 +353,13 @@ public class Alerta {
         alert.showAndWait();
         return true;
     }
+
+    public static void alertaAgregarClienteSeleccion() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Cliente agregado exitosamente");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+    }
 }

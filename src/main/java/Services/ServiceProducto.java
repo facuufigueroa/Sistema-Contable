@@ -5,9 +5,11 @@ import Model.Cuenta;
 import Model.Producto;
 import Model.Ventas.Cliente;
 import Model.Ventas.Stock;
+import Model.Ventas.TablaProductos;
 import Querys.ProductoQuery;
 import Querys.QueryAsiento;
 import Querys.Ventas.ClienteQuery;
+import net.sf.jasperreports.engine.util.AbstractTextMeasurerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,6 +83,31 @@ public class ServiceProducto {
         }
         return productos;
     }
+
+    public ArrayList<TablaProductos> listarTablaProductos(){
+        ArrayList<TablaProductos> tablaProductos = new ArrayList<>();
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.listarProductos()));
+            setResultSet(preparedStatement.executeQuery());
+            while(resultSet.next()){
+                Producto producto = new Producto();
+                producto.setCodigo(getResultSet().getLong(2));
+                producto.setNombre(getResultSet().getString(3));
+                producto.setDetalle(getResultSet().getString(4));
+                producto.setPrecio(getResultSet().getDouble(5));
+                producto.setEstado(getResultSet().getBoolean(6));
+                producto.setAlicuota(getResultSet().getDouble(7));
+                TablaProductos tablaProductos1 = new TablaProductos(producto);
+                tablaProductos.add(tablaProductos1);
+            }
+
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return tablaProductos;
+    }
+
     public boolean existeProducto(String codigo){
         boolean codigo_existe = false;
         try {

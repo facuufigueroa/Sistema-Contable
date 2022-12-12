@@ -369,12 +369,15 @@ public class VentasController extends ViewFuntionality implements Initializable 
         String condicion_iva = serviceVenta.obtenerCondicionIvaCliente(venta.getIdCliente());
         String letra="";
         String ri="responsable inscripto";
+
+        String ex="excento";
         String cf="consumidor final";
+        String m="monotributista";
         if(condicion_iva.trim().toLowerCase().equals(ri)){
             letra="A";
         }
         else{
-            if(condicion_iva.trim().toLowerCase().equals(cf)){
+            if(condicion_iva.trim().toLowerCase().equals(cf) || condicion_iva.trim().toLowerCase().equals(ex) || condicion_iva.trim().toLowerCase().equals(m)){
                 letra="B";
             }
         }
