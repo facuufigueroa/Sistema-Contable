@@ -45,6 +45,7 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
 
     private SeleccionarProductoController seleccionarProductoController;
 
+
     private HomeVentasController homeVentasController;
 
     ObservableList<Cliente> clienteObservableList;
@@ -137,8 +138,12 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
 
     @FXML
     public void accionSeleccionarCliente(){
-        String nombre = tablaClientes.getSelectionModel().getSelectedItem().getNombre();
-        txtClienteSeleccionado.setText(nombre);
+        if(!tablaClientes.getSelectionModel().isEmpty()) {
+            String nombre = tablaClientes.getSelectionModel().getSelectedItem().getNombre();
+            txtClienteSeleccionado.setText(nombre);
+        } else{
+            Alerta.alertaSeleccioneCliente();
+        }
     }
     @FXML
     public void accionLimpiarCampos(){
@@ -223,6 +228,4 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
         this.homeVentasController = homeVentasController;
     }
 
-    public void accionAgregarCliente(ActionEvent actionEvent) {
-    }
 }

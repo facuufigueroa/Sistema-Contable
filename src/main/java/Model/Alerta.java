@@ -324,6 +324,16 @@ public class Alerta {
         alert.showAndWait();
         return true;
     }
+
+    public static boolean alertaSeleccionProductoEliminar() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText(" No hay productos seleccionados para eliminar");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
+        return true;
+    }
     public static boolean alertaSeleccioneFormaPago() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
@@ -342,5 +352,14 @@ public class Alerta {
         alert.initStyle(StageStyle.TRANSPARENT);
         alert.showAndWait();
         return true;
+    }
+
+    public static void alertaAgregarClienteSeleccion() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle(null);
+        alert.setContentText("Cliente agregado exitosamente");
+        alert.initStyle(StageStyle.TRANSPARENT);
+        alert.showAndWait();
     }
 }

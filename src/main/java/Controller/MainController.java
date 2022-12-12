@@ -33,9 +33,6 @@ public class MainController extends ViewFuntionality implements Initializable {
     private Button btnLibroMayor;
 
     @FXML
-    private Button btnCrearUsuario;
-
-    @FXML
     private Label campoTexto;
 
     @FXML
@@ -173,7 +170,6 @@ public class MainController extends ViewFuntionality implements Initializable {
 
     public void verificarRolUser(){
         if((service.obtenerRolPorEmail(u.getEmail()).equals("usuario"))){
-            getBtnCrearUsuario().setDisable(true);
             btnVerUsuarios.setDisable(true);
         }
     }
@@ -238,15 +234,6 @@ public class MainController extends ViewFuntionality implements Initializable {
     public void setBtnLibroMayor(Button btnLibroMayor) {
         this.btnLibroMayor = btnLibroMayor;
     }
-
-    public Button getBtnCrearUsuario() {
-        return btnCrearUsuario;
-    }
-
-    public void setBtnCrearUsuario(Button btnCrearUsuario) {
-        this.btnCrearUsuario = btnCrearUsuario;
-    }
-
 
     public RegisterController getRegisterController() {
         return registerController;

@@ -9,7 +9,7 @@
 	remitos.cantidad,
 	remitos.descripcion,
 	remitos.numero,
-	clientes.apellido,
+	COALESCE (null,  clientes.apellido, '') as apellido,
 	clientes.nombre,
 	clientes.cuit,
 	clientes.condicion_iva,

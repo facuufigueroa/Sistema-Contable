@@ -31,6 +31,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private Button btnHabilitarCliente;
     @FXML private Button btnDeshabilitar;
     @FXML private Button btnGuardar;
+    @FXML private Button btnVolver;
+    @FXML private Button buttonClose;
     @FXML private ComboBox<String> comboBoxCliente = new ComboBox<>();
     @FXML private AnchorPane panelRegistro = new AnchorPane();
 
@@ -100,14 +102,14 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
     private void iniciarComboBoxTipoIvaJ(){
         ObservableList<String> tipo = FXCollections.observableArrayList();
-        tipo.addAll("RESPONSABLE INSCRIPTO", "MONOTRIBUTISTA", "EXCENTO");
+        tipo.addAll("responsable inscripto", "monotributista", "excento");
         getComboIvaJ().setItems(tipo);
     }
     private void iniciarComboBoxTipoIva(){
         ObservableList<String> tipo = FXCollections.observableArrayList();
-        tipo.addAll("CONSUMIDOR FINAL");
+        tipo.addAll("consumidor final");
         getComboIva().setItems(tipo);
-        getComboIva().setValue("CONSUMIDOR FINAL");
+        getComboIva().setValue("consumidor final");
         getComboIva().setDisable(true);
     }
 
@@ -252,7 +254,7 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     }
 
     @FXML
-    private void accionGuardarPersona() {
+    public void accionGuardarPersona(ActionEvent event) {
         boolean isComboBoxVacio = getComboBoxCliente().getValue() == null;
         if (!isComboBoxVacio){
             accionElegirPersona("GUARDAR");
@@ -574,4 +576,20 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public Button getBtnHabilitarCliente() { return btnHabilitarCliente; }
     public Button getBtnDeshabilitar() { return btnDeshabilitar; }
     public Button getBtnGuardar() { return btnGuardar; }
+
+    public Button getBtnVolver() {
+        return btnVolver;
+    }
+
+    public void setBtnVolver(Button btnVolver) {
+        this.btnVolver = btnVolver;
+    }
+
+    public Button getButtonClose() {
+        return buttonClose;
+    }
+
+    public void setButtonClose(Button buttonClose) {
+        this.buttonClose = buttonClose;
+    }
 }
