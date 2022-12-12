@@ -31,6 +31,8 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     @FXML private Button btnHabilitarCliente;
     @FXML private Button btnDeshabilitar;
     @FXML private Button btnGuardar;
+    @FXML private Button btnVolver;
+    @FXML private Button buttonClose;
     @FXML private ComboBox<String> comboBoxCliente = new ComboBox<>();
     @FXML private AnchorPane panelRegistro = new AnchorPane();
 
@@ -574,4 +576,20 @@ public class ClientesController extends ViewFuntionality implements Initializabl
     public Button getBtnHabilitarCliente() { return btnHabilitarCliente; }
     public Button getBtnDeshabilitar() { return btnDeshabilitar; }
     public Button getBtnGuardar() { return btnGuardar; }
+
+    public Button getBtnVolver() {
+        return btnVolver;
+    }
+
+    public void setBtnVolver(Button btnVolver) {
+        this.btnVolver = btnVolver;
+    }
+
+    public Button getButtonClose() {
+        return buttonClose;
+    }
+
+    public void setButtonClose(Button buttonClose) {
+        this.buttonClose = buttonClose;
+    }
 }

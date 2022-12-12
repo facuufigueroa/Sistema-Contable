@@ -45,6 +45,8 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
 
     private SeleccionarProductoController seleccionarProductoController;
 
+    private ClientesController clientesController;
+
     private HomeVentasController homeVentasController;
 
     ObservableList<Cliente> clienteObservableList;
@@ -227,6 +229,30 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
         this.homeVentasController = homeVentasController;
     }
 
-    public void accionAgregarCliente(ActionEvent actionEvent) {
+    public ClientesController loadClientesNew(ClientesController clientesController){ return clientesController; }
+
+    public ClientesController getClientesController() {
+        return clientesController;
+    }
+
+    public void setClientesController(ClientesController clientesController) {
+        this.clientesController = clientesController;
+    }
+
+    public void accionAgregarCliente(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Ventas-View/registro-clientes.fxml"));
+        Parent parent = fxmlLoader.load();
+        setClientesController(loadClientesNew(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getClientesController().setVentana(homeStage);
+        getClientesController().hideStage();
+        getClientesController().getBtnVolver().setDisable(true);
+        //getClientesController().getButtonClose().setOnAction();
+        stage.setScene(scene);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
     }
 }
