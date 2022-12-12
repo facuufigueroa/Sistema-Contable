@@ -267,19 +267,19 @@ public class VentasController extends ViewFuntionality implements Initializable 
    public void asientosCuentasVentas() {
        int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText().toUpperCase());
        String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
-       System.out.println(nombreCuenta);
-       Double total = Double.parseDouble(txtTotal.getText());
+       String total = txtTotal.getText();
+       double totalCmv = obtenerCMVProductos(ventaProductos);
        AsientoCuenta formaPago = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta(nombreCuenta),
-               getAsientoController().conversionDebeHaber(txtTotal.getText()), getAsientoController().conversionDebeHaber(""), total);
+               getAsientoController().conversionDebeHaber(total), getAsientoController().conversionDebeHaber(""),serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta(nombreCuenta)));
        serviceAsiento.insertarAsientoCuenta(formaPago);
        AsientoCuenta ventas = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta("Ventas"),
-               getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(txtTotal.getText()), total);
+               getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(total), serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta("Ventas")));
        serviceAsiento.insertarAsientoCuenta(ventas);
        AsientoCuenta cmv = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta("Costo de Mercadería Vendida")
-               ,getAsientoController().conversionDebeHaber(obtenerCMVProductos(ventaProductos).toString()),getAsientoController().conversionDebeHaber(""), obtenerCMVProductos(ventaProductos));
+               ,getAsientoController().conversionDebeHaber(String.valueOf(totalCmv)),getAsientoController().conversionDebeHaber(""), serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta("Costo de Mercadería Vendida")));
        serviceAsiento.insertarAsientoCuenta(cmv);
        AsientoCuenta mercaderias = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta("Mercaderias")
-               , getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(obtenerCMVProductos(ventaProductos).toString()), obtenerCMVProductos(ventaProductos));
+               , getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(String.valueOf(totalCmv)), serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta("Mercaderias")));
        serviceAsiento.insertarAsientoCuenta(mercaderias);
    }
 
@@ -293,8 +293,6 @@ public class VentasController extends ViewFuntionality implements Initializable 
         return cmvTotal;
    }
 
-
-
     public Double obtenerCMV(int cantidadProductosVendidos, int id_producto){
         double cmv = 0.0;
         ArrayList<Stock> stocks = serviceProducto.obtenerStocks(id_producto);
@@ -305,17 +303,13 @@ public class VentasController extends ViewFuntionality implements Initializable 
                 serviceProducto.modificarStock(stock.getIdStock(), (stock.getStockActual() - cant));
                 return cmv;
             } else {
-                cmv += stock.getPrecioCosto() * cant;
+                cmv += stock.getPrecioCosto() * stock.getStockActual();
                 cant -= stock.getStockActual();
                 serviceProducto.modificarStock(stock.getIdStock(), 0);
             }
-
         }
         return cmv;
-
     }
-
-
 
     public void insertarAsientoVenta() {
         Asiento asiento = new Asiento(fechaActual, "venta de mercaderías en " + txtFormaPago.getText(), user.getId());
