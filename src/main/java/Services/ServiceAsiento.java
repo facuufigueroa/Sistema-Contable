@@ -48,7 +48,7 @@ public class ServiceAsiento extends Service {
     public int obtenerIdCuenta(String nombreCuenta){
         try{
             setConnection(ConexionBD.conexion());
-            setPreparedStatement(getConnection().prepareStatement(QueryAsiento.obtenerIdCuenta(nombreCuenta)));
+            setPreparedStatement(getConnection().prepareStatement(QueryAsiento.obtenerIdCuenta(nombreCuenta.toUpperCase())));
             setResultSet(getPreparedStatement().executeQuery());
             if(getResultSet().next()){
                 return getResultSet().getInt(1);

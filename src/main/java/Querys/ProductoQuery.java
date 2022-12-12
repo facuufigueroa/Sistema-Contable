@@ -52,4 +52,16 @@ public class ProductoQuery {
     public static String obtenerProductoPorId() {
         return "SELECT * FROM productos as p WHERE p.idproducto= ?";
     }
+
+    public static String obtenerStocks() {
+        return "SELECT * FROM stock as s WHERE s.stock_actual != 0 AND s.id_producto= ? ORDER BY idstock ASC";
+    }
+
+    public static String obtenerMenorIdStock() {
+        return "SELECT MIN(idstock) FROM stock WHERE stock.id_producto = ?";
+    }
+
+        public static String modificarStock(int idStock, int stockActual){
+        return "UPDATE stock SET stock_actual='"+ stockActual +"' WHERE idstock ='"+idStock+"'";
+    }
 }

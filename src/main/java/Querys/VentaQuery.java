@@ -25,4 +25,7 @@ public class VentaQuery {
         return "SELECT condicion_iva FROM clientes as c WHERE c.idcliente="+idCliente;
     }
 
+    public static String obtenerNombreCuenta(int formaPago) {
+        return "SELECT c.nombre FROM cuentas AS c INNER JOIN forma_pago_cuenta AS fpc ON c.idcuenta = fpc.id_cuenta WHERE fpc.id_forma_pago="+formaPago;
+    }
 }

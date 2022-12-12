@@ -186,7 +186,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
             if (cumpleSaldo()) {
                 Asiento asiento = new Asiento(fechaActual, txtDescripcion.getText(), u.getId());
                 serviceAsiento.insertarAsiento(asiento);
-                insertarAsientoCuenta();
+                insertarAsientoCuenta(asientoCuentas);
                 Alerta.alertarAsientoRegistrado();
                 if (Alerta.alertaNuevoAsiento().getResult() == ButtonType.OK) {
                     setearCamposEnVacio();
@@ -218,7 +218,7 @@ public class AsientoController extends ViewFuntionality implements Initializable
         return true;
     }
 
-    public void insertarAsientoCuenta(){
+    public void insertarAsientoCuenta(ArrayList <TablaVistaAsiento> asientoCuentas){
         for (TablaVistaAsiento tablaAsientos : asientoCuentas) {
             String nombreCuenta = tablaAsientos.getNombreCuenta().trim();
             Cuenta cuenta = new Cuenta(nombreCuenta);

@@ -4,6 +4,7 @@ import DataBase.ConexionBD;
 import Model.Cuenta;
 import Model.Producto;
 import Model.Ventas.Cliente;
+import Model.Ventas.Stock;
 import Querys.ProductoQuery;
 import Querys.QueryAsiento;
 import Querys.Ventas.ClienteQuery;
@@ -208,6 +209,52 @@ public class ServiceProducto {
             }
         }catch (SQLException e){ System.out.println(e.getMessage()); }
         return null;
+    }
+
+    public ArrayList<Stock> obtenerStocks(int idProducto){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerStocks()));
+            getPreparedStatement().setLong(1, idProducto);
+            setResultSet(getPreparedStatement().executeQuery());
+            ArrayList<Stock> stocks = new ArrayList<>();
+            while(getResultSet().next()){
+                stocks.add(new Stock(getResultSet().getInt("idstock")
+                        ,getResultSet().getInt("stock_actual")
+                        ,getResultSet().getDouble("precio_costo")
+                        ,getResultSet().getDate("fecha_compra")
+                        ,getResultSet().getInt("id_producto")
+                ));
+
+            }
+            return stocks;
+        }catch (SQLException e){ System.out.println(e.getMessage()); }
+        return null;
+    }
+
+    public int obtenerMenorIdStock(int idProducto) {
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(ProductoQuery.obtenerMenorIdStock()));
+            getPreparedStatement().setLong(1, idProducto);
+            setResultSet(getPreparedStatement().executeQuery());
+            if(getResultSet().next()){
+                return getResultSet().getInt(1);
+            }
+        }catch (Exception exception){
+            System.out.println(exception);
+        }
+        return -1;
+    }
+
+    public void modificarStock(int idStock, int stockActual){
+        try{
+            setConnection(ConexionBD.conexion());
+            setPreparedStatement(getConnection().prepareStatement(productoQuery.modificarStock(idStock,stockActual)));
+            getPreparedStatement().executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
     public ConexionBD getConexionBD() {
         return conexionBD;
