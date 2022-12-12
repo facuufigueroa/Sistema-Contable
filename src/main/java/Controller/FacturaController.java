@@ -161,7 +161,7 @@ public class FacturaController extends ViewFuntionality implements Initializable
             if (getTablaProductos().getItems().isEmpty()){
                 AlertaVenta.noHayFacturas();
             }else{
-                AlertaVenta.seleccioneFactura();
+               /* AlertaVenta.seleccioneFactura()*/;
             }
             return null;
         }
