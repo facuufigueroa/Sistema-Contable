@@ -39,7 +39,7 @@ public class ServiceLibroMayor extends Service{
         ResultSet rs = null;
         try{
             connection = ConexionBD.conexion();
-            ps = connection.prepareStatement(QueryAsiento.obtenerIdCuenta(nombreCuenta));
+            ps = connection.prepareStatement(QueryAsiento.obtenerIdCuenta(nombreCuenta.toUpperCase()));
             rs = ps.executeQuery();
             if(rs.next()){
                 return rs.getInt(1);

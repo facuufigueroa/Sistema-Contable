@@ -128,8 +128,12 @@ public class SeleccionarProductoController extends ViewFuntionality implements I
     @FXML
     public void accionBtnQuitarProducto(){
         try {
-            productosAgregados.remove(tablaProductosAgregados.getSelectionModel().getSelectedIndex());
-            listarProductosAgregados();
+            if (!tablaProductosAgregados.getSelectionModel().isEmpty()) {
+                productosAgregados.remove(tablaProductosAgregados.getSelectionModel().getSelectedIndex());
+                listarProductosAgregados();
+            } else {
+                Alerta.alertaSeleccionProductoEliminar();
+            }
         }
         catch (NullPointerException e){
         }

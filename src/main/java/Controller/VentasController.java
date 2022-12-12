@@ -24,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -117,9 +118,37 @@ public class VentasController extends ViewFuntionality implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarDatosVenta();
+        restringirFecha();
         getBtnContinuar().setDisable(true);
     }
 
+    private void restringirFecha(){
+        String pattern = "dd/MM/yyyy";
+        DatePickerConverter converter = new DatePickerConverter(pattern);
+        getFechaVentaFactura().setConverter(converter);
+        Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>()
+        {
+            public DateCell call(final DatePicker datePicker)
+            {
+                return new DateCell()
+                {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty)
+                    {
+                        // Must call super
+                        super.updateItem(item, empty);
+                        // Disable all future date cells
+                        if (item.isBefore(fechaActual)) {
+                            this.setDisable(true);
+                        } else if (item.isAfter(fechaActual)) {
+                            this.setDisable(true);
+                        }
+                    }
+                };
+            }
+        };
+        getFechaVentaFactura().setDayCellFactory(dayCellFactory);
+    }
     public void cargarDatosVenta(){
         txtCondicionIva.setText(serviceCliente.obtenerCondicionIva(venta.getIdCliente()));
         txtCliente.setText(serviceCliente.obtenerNombreCliente(venta.getIdCliente()));
@@ -135,7 +164,7 @@ public class VentasController extends ViewFuntionality implements Initializable 
     public String obtenerTxtFP(){
         String formaPago = obtenerFormaPago(venta.getFormaPago());
 
-       if(formaPago.toUpperCase().equals("cuotas")){
+       if(formaPago.toUpperCase().equals("CUOTAS")){
           return formaPago + " " + venta.getCuotas();
        }
        else{
@@ -221,13 +250,14 @@ public class VentasController extends ViewFuntionality implements Initializable 
             serviceVenta.insertarVenta(venta1);
             insertarVentaProducto();
             insertarAsientoVenta();
-            Alerta.alertaVentaRegistrada();
             getBtnContinuar().setDisable(false);
             getBtnGenerarVenta().setDisable(true);
-            String numeroFactura=insertarFactura();
-            numeroFac=numeroFactura;
-            numRemito=insertarRemito();
+            String numeroFactura = insertarFactura();
+            numeroFac = numeroFactura;
+            numRemito = insertarRemito();
+            Alerta.alertaVentaRegistrada();
     }
+
 
     public void insertarVentaProducto() throws SQLException{
         int idVenta = serviceVenta.obtenerIdVenta();
@@ -271,32 +301,28 @@ public class VentasController extends ViewFuntionality implements Initializable 
         serviceFactura.insertarFactura(factura);
         return factura.getNumero();
     }
-
-   public void asientosCuentasVentas() {
-       int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText().toUpperCase());
-       String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
-       String total = txtTotal.getText();
-       double totalCmv = obtenerCMVProductos(ventaProductos);
-       AsientoCuenta formaPago = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta(nombreCuenta),
-               getAsientoController().conversionDebeHaber(total), getAsientoController().conversionDebeHaber(""),serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta(nombreCuenta)));
-       serviceAsiento.insertarAsientoCuenta(formaPago);
-       AsientoCuenta ventas = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(), serviceAsiento.obtenerIdCuenta("Ventas"),
-               getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(total), serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta("Ventas")));
-       serviceAsiento.insertarAsientoCuenta(ventas);
-       AsientoCuenta cmv = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta("Costo de Mercadería Vendida")
-               ,getAsientoController().conversionDebeHaber(String.valueOf(totalCmv)),getAsientoController().conversionDebeHaber(""), serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta("Costo de Mercadería Vendida")));
-       serviceAsiento.insertarAsientoCuenta(cmv);
-       AsientoCuenta mercaderias = new AsientoCuenta(serviceAsiento.obtenerIdAsiento(),serviceAsiento.obtenerIdCuenta("Mercaderias")
-               , getAsientoController().conversionDebeHaber(""), getAsientoController().conversionDebeHaber(String.valueOf(totalCmv)), serviceCalcularSaldo.obtenerSaldoCuenta(serviceAsiento.obtenerIdCuenta("Mercaderias")));
-       serviceAsiento.insertarAsientoCuenta(mercaderias);
-   }
+    public void asientosCuentasVentas() {
+        int idFormaPago = serviceVenta.obtenerIdformaPago(txtFormaPago.getText());
+        String nombreCuenta = serviceVenta.obtenerNombreCuenta(idFormaPago);
+        String total = txtTotal.getText();
+        double totalCmv = obtenerCMVProductos(ventaProductos);
+        TablaVistaAsiento formaPago = new TablaVistaAsiento(nombreCuenta, total, "", Double.parseDouble(total));
+        asientoCuentas.add(formaPago);
+        TablaVistaAsiento ventas = new TablaVistaAsiento("Ventas","" , total,Double.parseDouble(total));
+        asientoCuentas.add(ventas);
+        TablaVistaAsiento cmv = new TablaVistaAsiento("Costo de Mercadería Vendida", String.valueOf(totalCmv), "", totalCmv);
+        asientoCuentas.add(cmv);
+        TablaVistaAsiento mercaderias = new TablaVistaAsiento("Mercaderias", "", String.valueOf(totalCmv), totalCmv);
+        asientoCuentas.add(mercaderias);
+        getAsientoController().insertarAsientoCuenta(asientoCuentas);
+    }
 
    public Double obtenerCMVProductos(ArrayList<TablaVistaVenta> ventaProductos){
-        Double cmvTotal = 0.0;
+        double cmvTotal = 0.0;
         for (TablaVistaVenta tv: ventaProductos){
             int idProducto = tv.getIdProducto();
             int cantidad = tv.getCantidad();
-            cmvTotal = obtenerCMV(cantidad,idProducto);
+            cmvTotal += obtenerCMV(cantidad,idProducto);
         }
         return cmvTotal;
    }
@@ -460,5 +486,13 @@ public class VentasController extends ViewFuntionality implements Initializable 
 
     public void setBtnGenerarVenta(Button btnGenerarVenta) {
         this.btnGenerarVenta = btnGenerarVenta;
+    }
+
+    public DatePicker getFechaVentaFactura() {
+        return fechaVentaFactura;
+    }
+
+    public void setFechaVentaFactura(DatePicker fechaVentaFactura) {
+        this.fechaVentaFactura = fechaVentaFactura;
     }
 }

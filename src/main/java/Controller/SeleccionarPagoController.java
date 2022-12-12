@@ -100,7 +100,7 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
     public void accionContinuar(ActionEvent event) throws IOException {
         if (!verificarFormaPago() && !verificarCuotas()) {
             obtenerIdFormaPago();
-            obtenerCantCuotas();
+            //obtenerCantCuotas();
             continuarNewVentas(event);
         }
         else{
@@ -131,11 +131,11 @@ public class SeleccionarPagoController extends ViewFuntionality implements Initi
         stage.show();
     }
 
-    public void obtenerCantCuotas(){
+   /* public void obtenerCantCuotas(){
         if(!txtCantidadCuotas.getText().equals("")){
             venta.setCuotas(Integer.parseInt(txtCantidadCuotas.getText()));
         }
-    }
+    }*/
 
     public void obtenerIdFormaPago(){
         try {

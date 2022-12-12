@@ -137,8 +137,12 @@ public class SeleccionClienteController extends ViewFuntionality implements Init
 
     @FXML
     public void accionSeleccionarCliente(){
-        String nombre = tablaClientes.getSelectionModel().getSelectedItem().getNombre();
-        txtClienteSeleccionado.setText(nombre);
+        if(!tablaClientes.getSelectionModel().isEmpty()) {
+            String nombre = tablaClientes.getSelectionModel().getSelectedItem().getNombre();
+            txtClienteSeleccionado.setText(nombre);
+        } else{
+            Alerta.alertaSeleccioneCliente();
+        }
     }
     @FXML
     public void accionLimpiarCampos(){
