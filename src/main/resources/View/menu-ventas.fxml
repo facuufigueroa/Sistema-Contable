@@ -48,13 +48,6 @@
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="28.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/new%20venta.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
             </Button>
             <Button fx:id="btnClientes" layoutX="38.0" layoutY="130.0" mnemonicParsing="false" onAction="#loadNewCliente" prefHeight="54.0" prefWidth="193.0" stylesheets="@../Style/botones.css" text="   Gestionar Clientes" textFill="WHITE">
                <font>
@@ -72,25 +65,11 @@
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/producto%20nombre.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
             </Button>
             <Button fx:id="btnFacturas" layoutX="38.0" layoutY="273.0" mnemonicParsing="false" onAction="#accionGestionFacturas" prefHeight="54.0" prefWidth="193.0" stylesheets="@../Style/botones.css" text="Gestionar Facturas" textFill="WHITE">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/detalle%20producto.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
             </Button>
             <Label fx:id="txtUsuarioLogueado" layoutX="7.0" layoutY="493.0" prefHeight="36.0" prefWidth="272.0" textFill="WHITE">
                <font>

@@ -1,6 +1,4 @@
 package Controller;
-
-import Model.Alerta;
 import Model.User;
 import Model.ViewFuntionality;
 import Services.Service;
@@ -16,15 +14,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HomeController extends ViewFuntionality implements Initializable {
-
     @FXML
     private Button btnVentas;
+
+    @FXML
+    private Button btnCrearUsuario;
 
     @FXML
     private Button btnAdminContable;
@@ -42,6 +41,8 @@ public class HomeController extends ViewFuntionality implements Initializable {
 
     private HomeVentasController homeVentasController;
 
+    private RegisterController registerController;
+
     private User u = User.getInstance();
 
     private Service service = new Service();
@@ -54,12 +55,15 @@ public class HomeController extends ViewFuntionality implements Initializable {
     }
     private void verificarRolUser(){
         String rol = service.obtenerRolPorEmail(u.getEmail()).toUpperCase();
-        if(rol.equals("usuario".toUpperCase())){
-            deshabilitarBoton(getBtnVentas(), true);
-        } else if (rol.equals("vendedor".toUpperCase())) {
-            deshabilitarBoton(getBtnAdminContable(), true);
-        } else if (rol.equals("jefe venta".toUpperCase())) {
-            deshabilitarBoton(getBtnAdminContable(), true);
+        if (!rol.equals("admin".toUpperCase())){
+            deshabilitarBoton(getBtnCrearUsuario(), true);
+            if(rol.equals("usuario".toUpperCase())){
+                deshabilitarBoton(getBtnVentas(), true);
+            } else if (rol.equals("vendedor".toUpperCase())) {
+                deshabilitarBoton(getBtnAdminContable(), true);
+            } else if (rol.equals("jefe venta".toUpperCase())) {
+                deshabilitarBoton(getBtnAdminContable(), true);
+            }
         }
     }
 
@@ -112,6 +116,24 @@ public class HomeController extends ViewFuntionality implements Initializable {
         loadVentas(event);
     }
 
+    @FXML
+    public void accionRegistrarUsuario(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registro-user.fxml"));
+        Parent parent = fxmlLoader.load();
+        setRegisterController(loadRegister(fxmlLoader.getController()));
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        getRegisterController().setVentana(loginStage);
+        getRegisterController().hideStage();
+        stage.setScene(scene);
+        stage.setTitle("Registrar Usuario");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/Icono.png")));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.show();
+    }
+
+    private RegisterController loadRegister(RegisterController registerController){ return registerController; }
 
     private HomeVentasController loadVentasMain(HomeVentasController ventasController){ return ventasController; }
 
@@ -164,7 +186,7 @@ public class HomeController extends ViewFuntionality implements Initializable {
     public Button getBtnCerrarSesion() {
         return btnCerrarSesion;
     }
-
+    public Button getBtnCrearUsuario() { return btnCrearUsuario; }
     public void setBtnCerrarSesion(Button btnCerrarSesion) {
         this.btnCerrarSesion = btnCerrarSesion;
     }
@@ -200,4 +222,6 @@ public class HomeController extends ViewFuntionality implements Initializable {
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
+    public RegisterController getRegisterController() { return registerController ;}
+    public void setRegisterController(RegisterController registerController) { this.registerController = registerController; }
 }

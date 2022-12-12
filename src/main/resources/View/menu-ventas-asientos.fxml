@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="609.0" prefWidth="965.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeController">
+<AnchorPane prefHeight="609.0" prefWidth="965.0" style="-fx-background-color: #0D3E59;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeController">
    <children>
       <Pane layoutY="-4.0" prefHeight="43.0" prefWidth="977.0" style="-fx-background-color: #44878f;">
          <children>
@@ -100,6 +100,25 @@
                   </ImageView>
                </graphic>
             </Label>
+            <Button fx:id="btnCrearUsuario" layoutX="642.0" layoutY="4.0" mnemonicParsing="false" onAction="#accionRegistrarUsuario" prefHeight="45.0" prefWidth="160.0" stylesheets="@../Style/botones.css" text="Crear Usuario" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/add-user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Lucida Sans Unicode" size="16.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.16995614767074585" green="0.22680920362472534" blue="0.2368421107530594" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
          </children>
       </Pane>
       <Button fx:id="btnAdminContable" layoutX="14.0" layoutY="283.0" mnemonicParsing="false" onAction="#accionBtnMainContabilidad" prefHeight="76.0" prefWidth="211.0" stylesheets="@../Style/botones.css" text="Administración Contable" textAlignment="CENTER" textFill="WHITE">
